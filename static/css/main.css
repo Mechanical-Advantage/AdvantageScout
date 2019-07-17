@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "Robotech GP";
+    src: url("/static/fonts/robotechgp.ttf");
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 20px;
+    line-height: 35px;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.title {
+    font-family: "Robotech GP";
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
