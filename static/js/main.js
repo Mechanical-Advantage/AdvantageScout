@@ -4,6 +4,8 @@ if (window.localStorage.getItem("advantagescout_device") == null) {
 } else {
     var connected = true
     var state = 0
+    var team = 0
+    var match = 0
     function ping() {
         const http = new XMLHttpRequest()
         
@@ -23,4 +25,23 @@ if (window.localStorage.getItem("advantagescout_device") == null) {
     }
     ping()
     setInterval(function() {ping()}, 3000)
+}
+
+function scoutStart(mode) {
+    state = 1
+    team = document.getElementById("team").value
+    match = document.getElementById("match").value
+    if (team == "" && match == "") {
+        alert("Please enter a team and match number.")
+        return
+    }
+    if (team == "") {
+        alert("Please enter a team number.")
+        return
+    }
+    if (match == "") {
+        alert("Please enter a match number.")
+        return
+    }
+    document.getElementById("selectionDiv").hidden = true
 }

@@ -58,8 +58,30 @@ class main_server(object):
             Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
-    <script src="/static/js/main.js"></script>
+        <script src="/static/js/ButtonManager.js"></script>
     </head>
+    <body>
+        <div id="selectionDiv" class="centered">
+            <div class="title">
+                Advantage Scout
+            </div>
+            Team:
+            <input id="team" type="number" min="1" max="9999" step="1" style="width: 100px;"></input>
+            <br>
+            Match:
+            <input id="match" type="number" min="1" max="999" step="1" style="width: 100px;"></input>
+            <br>
+            <button class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                Scout! (visual)
+            </button>
+            <br>
+            <button class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                Scout! (classic)
+            </button>
+        </div>
+    
+        <script src="/static/js/main.js"></script>
+    </body>
 </html>
             """)
     
