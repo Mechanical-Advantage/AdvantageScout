@@ -20,7 +20,9 @@ def init_global():
     cur_global.execute("""CREATE TABLE devices (
         name TEXT,
         last_heartbeat INTEGER,
-        last_status TEXT
+        last_status INTEGER,
+        last_team INTEGER,
+        last_match INTEGER
         ); """)
     cur_global.execute("DROP TABLE IF EXISTS config")
     cur_global.execute("""CREATE TABLE config (
@@ -35,6 +37,12 @@ temp_path = Path(db_global)
 if not temp_path.is_file():
     print("Creating new global database")
     init_global()
+
+def quickread(file):
+    file = open(file, "r")
+    result = file.read()
+    file.close()
+    return(result)
 
 #Connect to appropriate game database
 def gamedb_connect():
@@ -65,11 +73,13 @@ class main_server(object):
             <div class="title">
                 Advantage Scout
             </div>
+            <div id="onlinetext" style="color: green;">
+            </div>
             Team:
-            <input id="team" type="number" min="1" max="9999" step="1" style="width: 100px;"></input>
+            <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
             <br>
             Match:
-            <input id="match" type="number" min="1" max="999" step="1" style="width: 100px;"></input>
+            <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
             <br>
             <button class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
                 Scout! (visual)
@@ -123,6 +133,44 @@ class main_server(object):
     </body>
 </html>
             """)
+    
+    @cherrypy.expose
+    def heartbeat(self, device_name, state, team=-1, match=-1):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT name FROM devices")
+        names = cur_global.fetchall()
+        for i in range(len(names)):
+            names[i] = names[i][0]
+        if device_name not in names:
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_status) VALUES (?, ?, ?)", (device_name, currentTime(), state))
+        else:
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_status = ? WHERE name = ?", (currentTime(), state, device_name))
+        if team != -1 and match != -1:
+            cur_global.execute("UPDATE devices SET last_team = ?, last_match = ? WHERE name = ?", (team, match, device_name))
+        conn_global.commit()
+        conn_global.close()
+        return()
+
+    @cherrypy.expose
+    def load_game(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT value FROM config WHERE key = 'game'")
+        game = cur_global.fetchall()[0][0]
+        conn_global.close()
+        
+        path = "games/" + str(game) + "/"
+        result = {
+            "prefs": json.loads(quickread(path + "prefs.json")),
+            "classic": {
+                "auto": quickread(path + "auto.html"),
+                "teleop": quickread(path + "teleop.html"),
+                "endgame": quickread(path + "endgame.html")
+            },
+            "CanvasManager": quickread(path + "CanvasManager.js")
+        }
+        return(json.dumps(result))
 
     @cherrypy.expose
     def admin(self):
@@ -163,155 +211,22 @@ class main_server(object):
             </tbody>
         </table>
         
-        <script>
-            //Get config values
-            const http = new XMLHttpRequest()
-            
-            http.onreadystatechange = function() {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {
-                        var result = JSON.parse(this.responseText)
-                        document.getElementById("game").value = result.game
-                        document.getElementById("event").value = result.event
-                    }
-                }
-            }
-            
-            http.open("GET", "/get_config", true)
-            http.send()
-            
-            //Save config values
-            function save(key) {
-                var value = document.getElementById(key).value
-                const http = new XMLHttpRequest()
-                http.open("POST", "/set_config", true)
-                http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-                http.send("key=" + key + "&value=" + encodeURI(value))
-            }
-            
-            //Retrieve device data from server
-            var devices = []
-            function getDevices() {
-                const http = new XMLHttpRequest()
-                
-                http.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {
-                            devices = JSON.parse(this.responseText)
-                        }
-                    }
-                }
-                
-                http.open("GET", "/get_devices", true)
-                http.send()
-            }
-            
-            //Recreate table based on local device data
-            function updateDeviceTable() {
-                var table = document.getElementById("deviceTable")
-                while (table.children[1]) {
-                    table.removeChild(table.children[1])
-                }
-                for (var i = 0; i < devices.length; i++) {
-                    var row = document.createElement("TR")
-                    for (var f = 0; f < 4; f++) {
-                        row.appendChild(document.createElement("TD"))
-                    }
-                    row.children[0].innerHTML = devices[i].name
-                    
-                    var diff = Math.round((Date.now() / 1000) - devices[i].last_heartbeat)
-                    var status
-                    if (diff > 8) {
-                        status = "Disconnected"
-                        row.classList.add("red")
-                    } else if (devices[i].last_status == 0) {
-                        status = "Idle"
-                        row.classList.add("yellow")
-                    } else if (devices[i].last_status == 1) {
-                        status = "Auto"
-                        row.classList.add("green")
-                    } else if (devices[i].last_status == 2) {
-                        status = "Tele-op"
-                        row.classList.add("green")
-                    } else if (devices[i].last_status == 3) {
-                        status = "Endgame"
-                        row.classList.add("green")
-                    } else if (devices[i].last_status == 4) {
-                        status = "Offline Warning"
-                        row.classList.add("yellow")
-                    } else {
-                        status = "Unknown"
-                        row.classList.add("yellow")
-                    }
-                    row.children[1].innerHTML = status
-                    
-                    hours = Math.floor(diff/3600)
-                    diff -= hours*3600
-                    minutes = Math.floor(diff/60)
-                    seconds = diff - minutes*60
-                    
-                    formatted = ""
-                    if (hours != 0) {
-                        formatted = String(hours) + "h "
-                    }
-                    if (minutes != 0) {
-                        formatted = formatted + String(minutes) + "m "
-                    }
-                    if (seconds != 0) {
-                        formatted = formatted + String(seconds) + "s "
-                    }
-                    formatted = formatted.substring(0, formatted.length - 1);
-                    if (formatted == "") {
-                        formatted = "0s"
-                    }
-                    row.children[2].innerHTML = formatted + " ago"
-                    
-                    row.children[3].appendChild(document.createElement("BUTTON"))
-                    row.children[3].firstChild.onclick = function() {removeDevice(this.parentElement.parentElement.children[0].innerHTML)}
-                    row.children[3].firstChild.innerHTML = "Remove"
-                    table.appendChild(row)
-                }
-            }
-            
-            //Remove device serverside
-            function removeDevice(device) {
-                const http = new XMLHttpRequest()
-                
-                http.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        getDevices()
-                        updateDeviceTable()
-                    }
-                }
-                
-                http.open("POST", "/remove_device", true)
-                http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-                http.send("name=" + encodeURI(device))
-            }
-            getDevices()
-            updateDeviceTable()
-            setInterval(function() {getDevices()}, 3000)
-            setInterval(function() {updateDeviceTable()}, 1000)
-        </script>
+        <script src="/static/js/admin.js"></script>
     </body>
 </html>
             """)
 
     @cherrypy.expose
-    def heartbeat(self, device_name, state):
+    def get_devices(self):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
-        cur_global.execute("SELECT name FROM devices")
-        names = cur_global.fetchall()
-        for i in range(len(names)):
-            names[i] = names[i][0]
-        if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_status) VALUES (?, ?, ?)", (device_name, currentTime(), state))
-        else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_status = ? WHERE name = ?", (currentTime(), state, device_name))
-        conn_global.commit()
+        cur_global.execute("SELECT * FROM devices ORDER BY name")
+        raw = cur_global.fetchall()
+        data = []
+        for i in range(len(raw)):
+            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_status": raw[i][2], "last_team": raw[i][3], "last_match": raw[i][4]})
         conn_global.close()
-        return()
+        return(json.dumps(data))
 
     @cherrypy.expose
     def set_config(self, key, value):
@@ -331,18 +246,6 @@ class main_server(object):
         data = {"game": cur_global.fetchall()[0][0]}
         cur_global.execute("SELECT value FROM config WHERE key = 'event'")
         data["event"] = cur_global.fetchall()[0][0]
-        conn_global.close()
-        return(json.dumps(data))
-
-    @cherrypy.expose
-    def get_devices(self):
-        conn_global = sql.connect(db_global)
-        cur_global = conn_global.cursor()
-        cur_global.execute("SELECT * FROM devices ORDER BY name")
-        raw = cur_global.fetchall()
-        data = []
-        for i in range(len(raw)):
-            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_status": raw[i][2]})
         conn_global.close()
         return(json.dumps(data))
 

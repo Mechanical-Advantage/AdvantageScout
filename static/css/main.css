@@ -37,6 +37,9 @@ button.scoutstart {
     border-radius: 8px;
 }
 
-button.scoutstart:hover {
-    background-color: #9ea9ff;
+input.teammatch {
+    width: 100px;
+    height: 25px;
+    font-size: 20px;
+    margin-top: 10px;
 }
