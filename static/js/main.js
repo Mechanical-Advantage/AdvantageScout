@@ -21,6 +21,13 @@ function ping() {
         }
     }
     
+    http.ontimeout = function(e) {
+        connected = false
+        connectedText.style.color = "red"
+        connectedText.innerHTML = "Offline"
+    }
+    
+    http.timeout = 2000
     http.open("POST", "/heartbeat", true)
     http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     var teammatch = ""
