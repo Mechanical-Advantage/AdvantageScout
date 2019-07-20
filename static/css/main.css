@@ -7,6 +7,12 @@ body {
     font-family: sans-serif;
     font-size: 20px;
     line-height: 25px;
+    
+    position: absolute;
+    top: 0px;
+    margin: 0px;
+    left: 0px;
+    width: 100%;
 }
 
 .centered {
@@ -96,7 +102,7 @@ canvas.visualcanvas {
 
 div.classicdiv {
     position: absolute;
-    top: 75px;
+    top: 90px;
     bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
@@ -104,9 +110,88 @@ div.classicdiv {
     text-align: center;
 }
 
-div.unit {
-    background-color: blue;
+div.classicunit {
+    position: relative;
     display: inline-block;
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 140px;
+    margin: 0px;
+}
+
+div.classicwide {
+    width: 330px;
+}
+
+div.classiclabelbox {
+    position: relative;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    height: 40%;
+}
+
+div.classiclabel {
+    position: absolute;
+    font-size: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.classiccontrols {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 40%;
+    height: 60%;
+}
+
+.classicinput {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+textarea.classicinput {
+    resize: none;
+    padding: 5px 5px;
+    font-size: 15px;
+    width: 90%;
+    height: 90%;
+}
+
+select.classicinput {
+    width: 75%;
+    height: 50%;
+    font-size: 13px;
+}
+
+
+div.classiccounter_number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+}
+
+button.classiccounter_button {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+button.classiccounter_down {
+    left: 20%;
+    background-color: #ff7575;
+}
+
+button.classiccounter_up {
+    left: 80%;
+    background-color: #75ff91;
 }

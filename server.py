@@ -87,7 +87,7 @@ class main_server(object):
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <script src="/static/js/ButtonManager.js"></script>
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         </meta>
     </head>
     <body>
@@ -103,24 +103,29 @@ class main_server(object):
             Match:
             <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
             <br>
-            <button class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
-                Scout! (visual)
-            </button>
-            <br>
-            <button class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
-                Scout! (classic)
-            </button>
+            <div id="loadingtext">
+                Loading...
+            </div>
+            <div id="startbuttons" hidden>
+                <button class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                    Scout! (visual)
+                </button>
+                <br>
+                <button class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                    Scout! (classic)
+                </button>
+            </div>
         </div>
         
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>
             <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
-                Auto
+                Autonomous
             </div>
             <div class="switcherbutton2" onclick="javascript:setMode(2)">
-                Tele-op
+                Tele-operated
             </div>
             <div class="switcherbutton3" onclick="javascript:setMode(3)">
-                End
+                End Game
             </div>
         </div>
         
@@ -129,20 +134,51 @@ class main_server(object):
         </div>
         
         <div id="classicDiv1" class="classicdiv" hidden>
-            <div class="unit">
-                Text 1
+            <div class="classicunit">
+                <div class="classiclabelbox">
+                    <div class="classiclabel">
+                        Starting Position
+                    </div>
+                </div>
+                <div class="classiccontrols">
+                    <select class="classicinput">
+                        <option>
+                            Left
+                        </option>
+                        <option>
+                            Center
+                        </option>
+                        <option>
+                            Right
+                        </option>
+                    </select>
+                </div>
             </div>
-            <div class="unit">
-            Text 2
+            
+            <div class="classicunit">
+                <div class="classiclabelbox">
+                    <div class="classiclabel">
+                        Counter
+                    </div>
+                </div>
+                <div class="classiccontrols">
+                    <button class="classiccounter_button classiccounter_down"></button>
+                    <div class="classiccounter_number">
+                        3
+                    </div>
+                    <button class="classiccounter_button classiccounter_up"></button>
+                </div>
             </div>
-            <div class="unit">
-            Text 3
-            </div>
-            <div class="unit">
-            Text 4
-            </div>
-            <div class="unit">
-            Text 5
+            
+            <div class="classicunit classicwide">
+                <div class="classiclabelbox">
+                    <div class="classiclabel">
+                        Comment
+                    </div>
+                </div>
+                <div class="classiccontrols">
+                    <textarea class="classicinput" placeholder="Enter text here..."></textarea>
+                </div>
             </div>
         </div>
         
