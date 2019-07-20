@@ -1,36 +1,56 @@
 // canvas object in variable 'canvas'
+// alliances reversed in variable 'reverseAlliances' -> no reverse = red on right
 // width = 3000px, height = 1600px
 var mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
 this.setMode = function(newMode) { // REQUIRED FUNCTION
     mode = newMode
-    var auto = mode == 0
-    buttonManager.setEnabled("blueHab1L", auto)
-    buttonManager.setEnabled("blueHab1C", auto)
-    buttonManager.setEnabled("blueHab1R", auto)
-    buttonManager.setEnabled("blueHab2L", auto)
-    buttonManager.setEnabled("blueHab2R", auto)
-    buttonManager.setEnabled("redHab1R", auto)
-    buttonManager.setEnabled("redHab1C", auto)
-    buttonManager.setEnabled("redHab1L", auto)
-    buttonManager.setEnabled("redHab2R", auto)
-    buttonManager.setEnabled("redHab2L", auto)
-    buttonManager.setEnabled("blueCrossedLineToggle", auto)
-    buttonManager.setEnabled("redCrossedLineToggle", auto)
+    dataLog = []
+    buttonManager.setEnabled("blueHab1L", mode == 0)
+    buttonManager.setEnabled("blueHab1C", mode == 0)
+    buttonManager.setEnabled("blueHab1R", mode == 0)
+    buttonManager.setEnabled("blueHab2L", mode == 0)
+    buttonManager.setEnabled("blueHab2R", mode == 0)
+    buttonManager.setEnabled("redHab1R", mode == 0)
+    buttonManager.setEnabled("redHab1C", mode == 0)
+    buttonManager.setEnabled("redHab1L", mode == 0)
+    buttonManager.setEnabled("redHab2R", mode == 0)
+    buttonManager.setEnabled("redHab2L", mode == 0)
+    buttonManager.setEnabled("blueCrossedLineToggle", mode == 0)
+    buttonManager.setEnabled("redCrossedLineToggle", mode == 0)
     render()
 }
 this.getData = function() { // REQUIRED FUNCTION
+    if (reverseAlliances) {
+        data["AllianceColor"] = 1 - data["AllianceColor"]
+    }
     return data
 }
 
 var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
 var data = {"AutoShipHatch": 0, "AutoShipHatchFailures": 0, "AutoShipCargo": 0, "AutoShipCargoFailures": 0, "ShipHatch": 0, "ShipHatchFailures": 0, "ShipCargo": 0, "ShipCargoFailures": 0, "AutoRocketHatch": 0, "AutoRocketHatchFailures": 0, "AutoRocketCargo": 0, "AutoRocketCargoFailures": 0, "RocketL1Hatch": 0, "RocketL2Hatch": 0, "RocketL3Hatch": 0, "RocketL1HatchFailures": 0, "RocketL2HatchFailures": 0, "RocketL3HatchFailures": 0, "RocketL1Cargo": 0, "RocketL2Cargo": 0, "RocketL3Cargo": 0, "RocketL1CargoFailures": 0, "RocketL2CargoFailures": 0, "RocketL3CargoFailures": 0}
+var dataLog = []
 var selectedPiece = "none"
+var redColor = "#ff0000"
+var redHighlightColor = "#ff7575"
+var blueColor = "#0000de"
+var blueHighlightColor = "#6666ff"
+if (reverseAlliances) {
+    redColor = "#0000de"
+    redHighlightColor = "#6666ff"
+    blueColor = "#ff0000"
+    blueHighlightColor = "#ff7575"
+}
 
 const rocketButtonX = [1825, 1825, 1825, 1975, 1975, 1975, 1825, 1825, 1825, 1975, 1975, 1975]
 const rocketButtonY = [30, 180, 330, 30, 180, 330, 1120, 1270, 1420, 1120, 1270, 1420]
 const rocketButtonSuccess = [false, false, false, true, true, true, false, false, false, true, true, true]
 const rocketButtonLevel = [3, 2, 1, 3, 2, 1, 1, 2, 3, 1, 2, 3]
+
+function saveData() {
+    dataLog.push({})
+    Object.assign(dataLog[dataLog.length - 1], data)
+}
 
 function render() {
     context.clearRect(0, 0, 3000, 1600)
@@ -40,18 +60,18 @@ function render() {
     context.fillRect(300, 200, 2400, 1200)
     
     // blue HAB background
-    context.fillStyle = "#0000de"
+    context.fillStyle = blueColor
     context.fillRect(300, 500, 350, 600)
     if ("StartLevel" in data && "StartPos" in data && data["AllianceColor"] == 1 && mode == 0) {
-        context.fillStyle = "#6666ff"
+        context.fillStyle = blueHighlightColor
         context.fillRect(650 + (data["StartLevel"] * -175), 500 + (data["StartPos"] * 200), 175, 200)
     }
     
     // red HAB background
-    context.fillStyle = "#ff0000"
+    context.fillStyle = redColor
     context.fillRect(2350, 500, 350, 600)
     if ("StartLevel" in data && "StartPos" in data && data["AllianceColor"] == 0 && mode == 0) {
-        context.fillStyle = "#ff7575"
+        context.fillStyle = redHighlightColor
         context.fillRect(2175 + (data["StartLevel"] * 175), 900 + (data["StartPos"] * -200), 175, 200)
     }
     
@@ -93,7 +113,7 @@ function render() {
     // blue cargo ship
     context.beginPath()
     context.lineWidth = 5
-    context.fillStyle = "#0000de"
+    context.fillStyle = blueColor
     context.moveTo(1000, 670)
     context.lineTo(1000, 930)
     context.lineTo(1200, 960)
@@ -107,7 +127,7 @@ function render() {
     // red cargo ship
     context.beginPath()
     context.lineWidth = 5
-    context.fillStyle = "#ff0000"
+    context.fillStyle = redColor
     context.moveTo(2000, 670)
     context.lineTo(2000, 930)
     context.lineTo(1800, 960)
@@ -203,7 +223,7 @@ function render() {
     
     // blue rockets
     context.lineWidth = 5
-    context.fillStyle = "#0000de"
+    context.fillStyle = blueColor
     context.fillRect(850, 5, 350, 500)
     context.strokeRect(850, 5, 350, 500)
     context.fillRect(850, 1095, 350, 500)
@@ -211,7 +231,7 @@ function render() {
     
     // red rockets
     context.lineWidth = 5
-    context.fillStyle = "#ff0000"
+    context.fillStyle = redColor
     context.fillRect(1800, 5, 350, 500)
     context.strokeRect(1800, 5, 350, 500)
     context.fillRect(1800, 1095, 350, 500)
@@ -307,12 +327,17 @@ function render() {
         }
     }
     
-    // finish text
-    context.textBaseline = "top"
-    context.font = "60px sans-serif"
-    context.fillStyle = "#000000"
-    context.textAlign = "left"
-    context.fillText("Show Result", 0, 0)
+    // undo button
+    if (dataLog.length > 0) {
+        context.fillStyle = "#e3e3e3"
+        context.fillRect(1375, 1450, 250, 150)
+        
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+        context.font = "70px sans-serif"
+        context.fillStyle = "#000000"
+        context.fillText("Undo", 1500, 1525)
+    }
 }
 render()
 
@@ -437,6 +462,7 @@ buttonManager.addButton("redHatchSelect", new Button(2700, 850, 300, 300, functi
                                                      }
                                                      }))
 function shipButton(failure) {
+    saveData()
     var failureText = ""
     if (failure) {
         failureText = "Failures"
@@ -477,11 +503,12 @@ buttonManager.addButton("redShipFailure", new Button(1540, 700, 200, 200, functi
                                                      }
                                                      }))
 function rocketButton(level, failure) {
+    saveData()
     var failureText = ""
     if (failure) {
         failureText = "Failures"
     }
-    if (auto) {
+    if (mode == 0) {
         if (selectedPiece == "hatch") {
             data["AutoRocketHatch" + failureText] ++
         } else if (selectedPiece == "cargo") {
@@ -516,3 +543,10 @@ for (var alliance = 0; alliance < 2; alliance++) {
         buttonManager.setData(allianceText + "RocketButton" + i.toString(), {"alliance": alliance, "level": rocketButtonLevel[i], "failure": !rocketButtonSuccess[i]})
     }
 }
+
+buttonManager.addButton("undoButton", new Button(1375, 1450, 250, 150, function() {
+                                                 if (dataLog.length > 0) {
+                                                     Object.assign(data, dataLog.pop())
+                                                     render()
+                                                 }
+                                                 }))

@@ -7,7 +7,7 @@ import json
 
 #Config
 port = 8000
-host = "192.168.0.68"
+host = "0.0.0.0"
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 default_game = "2019"
@@ -27,16 +27,44 @@ def init_global():
     cur_global.execute("DROP TABLE IF EXISTS config")
     cur_global.execute("""CREATE TABLE config (
         key TEXT,
-        value INTEGER
+        value TEXT
         ); """)
     cur_global.execute("INSERT INTO config (key, value) VALUES ('game', ?)", (default_game,))
     cur_global.execute("INSERT INTO config (key, value) VALUES ('event', '2017nhgrs')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('reverse_alliances', '0')")
     conn_global.commit()
     conn_global.close()
-temp_path = Path(db_global)
-if not temp_path.is_file():
+
+if not Path(db_global).is_file():
     print("Creating new global database")
     init_global()
+
+#Connect to appropriate game database
+def gamedb_connect():
+    conn_global = sql.connect(db_global)
+    cur_global = conn_global.cursor()
+    cur_global.execute("SELECT value FROM config WHERE key = 'game'")
+    game = str(cur_global.fetchall()[0][0])
+    conn_game = sql.connect(db_games.replace("$GAME", game))
+    conn_global.close()
+    return({"conn": conn_game, "name": game})
+
+#Initialize game db
+def init_game():
+    game_result = gamedb_connect()
+    conn_game = game_result["conn"]
+    cur_game = conn_game.cursor()
+
+    config = json.loads(quickread("games" + os.path.sep + game_result["name"] + os.path.sep + "prefs.json"))
+    create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Time INTEGER, UploadTime INTEGER, "
+    for i in range(len(config["fields"])):
+        create_text += config["fields"][i] + ","
+    create_text = create_text[:-1]
+    
+    cur_game.execute("DROP TABLE IF EXISTS scout")
+    cur_game.execute("CREATE TABLE scout (" + create_text + ")")
+    conn_game.commit()
+    conn_game.close()
 
 def quickread(file):
     file = open(file, "r")
@@ -44,14 +72,6 @@ def quickread(file):
     file.close()
     return(result)
 
-#Connect to appropriate game database
-def gamedb_connect():
-    conn_global = sql.connect(db_global)
-    cur_global = conn_global.cursor()
-    cur_global.execute("SELECT value FROM config WHERE key = 'game'")
-    conn_game = sql.connect(db_games.replace("$GAME", cur_global.fetchall()[0][0]))
-    conn_global.close()
-    return(conn_game)
 
 def currentTime():
     return(int(round(time.time())))
@@ -67,6 +87,8 @@ class main_server(object):
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <script src="/static/js/ButtonManager.js"></script>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        </meta>
     </head>
     <body>
         <div id="selectionDiv" class="centered">
@@ -88,6 +110,46 @@ class main_server(object):
             <button class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
                 Scout! (classic)
             </button>
+        </div>
+        
+        <div id="modeSwitcherDiv" class="modeswitcher" hidden>
+            <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
+                Auto
+            </div>
+            <div class="switcherbutton2" onclick="javascript:setMode(2)">
+                Tele-op
+            </div>
+            <div class="switcherbutton3" onclick="javascript:setMode(3)">
+                End
+            </div>
+        </div>
+        
+        <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
+            <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+        </div>
+        
+        <div id="classicDiv1" class="classicdiv" hidden>
+            <div class="unit">
+                Text 1
+            </div>
+            <div class="unit">
+            Text 2
+            </div>
+            <div class="unit">
+            Text 3
+            </div>
+            <div class="unit">
+            Text 4
+            </div>
+            <div class="unit">
+            Text 5
+            </div>
+        </div>
+        
+        <div id="classicDiv2" class="classicdiv" hidden>
+        </div>
+        
+        <div id="classicDiv3" class="classicdiv" hidden>
         </div>
     
         <script src="/static/js/main.js"></script>
@@ -160,14 +222,9 @@ class main_server(object):
         game = cur_global.fetchall()[0][0]
         conn_global.close()
         
-        path = "games/" + str(game) + "/"
+        path = "games" + os.path.sep + str(game) + os.path.sep
         result = {
             "prefs": json.loads(quickread(path + "prefs.json")),
-            "classic": {
-                "auto": quickread(path + "auto.html"),
-                "teleop": quickread(path + "teleop.html"),
-                "endgame": quickread(path + "endgame.html")
-            },
             "CanvasManager": quickread(path + "CanvasManager.js")
         }
         return(json.dumps(result))
@@ -189,9 +246,30 @@ class main_server(object):
         <h3>
             Config
         </h3>
-        Game: <input type="text" id="game"></input><button onclick="javascript:save(&quot;game&quot;)">Save</button>
+        Game: 
+        <input type="text" id="game"></input>
+        <button onclick="javascript:save(&quot;game&quot;)">
+            Save
+        </button>
         <br>
-        Event: <input type="text" id="event"></input><button onclick="javascript:save(&quot;event&quot;)">Save</button>
+        Event: 
+        <input type="text" id="event"></input>
+        <button onclick="javascript:save(&quot;event&quot;)">
+            Save
+        </button>
+        <br>
+        Alliance Position:
+        <select id="reverse_alliances">
+            <option value="0">
+                red right, blue left
+            </option>
+            <option value="1">
+                red left, blue right
+            </option>
+        </select>
+        <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
+        Save
+        </button>
         <h3>
             Devices
         </h3>
@@ -229,11 +307,10 @@ class main_server(object):
         return(json.dumps(data))
 
     @cherrypy.expose
-    def set_config(self, key, value):
+    def remove_device(self, name):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
-        cur_global.execute("UPDATE config SET value = ? WHERE key = ?", (value, key))
-        conn_global.commit()
+        cur_global.execute("DELETE FROM devices WHERE name = ?", (name,))
         conn_global.commit()
         conn_global.close()
         return()
@@ -246,17 +323,35 @@ class main_server(object):
         data = {"game": cur_global.fetchall()[0][0]}
         cur_global.execute("SELECT value FROM config WHERE key = 'event'")
         data["event"] = cur_global.fetchall()[0][0]
+        cur_global.execute("SELECT value FROM config WHERE key = 'reverse_alliances'")
+        data["reverse_alliances"] = cur_global.fetchall()[0][0]
         conn_global.close()
         return(json.dumps(data))
 
     @cherrypy.expose
-    def remove_device(self, name):
+    def set_config(self, key, value):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
-        cur_global.execute("DELETE FROM devices WHERE name = ?", (name,))
+        cur_global.execute("UPDATE config SET value = ? WHERE key = ?", (value, key))
         conn_global.commit()
         conn_global.close()
-        return()
+        
+        if key == "game":
+            if Path(db_games.replace("$GAME", value)).is_file():
+                response = "Updated game to \"" + value + "\""
+            else:
+                try:
+                    init_game()
+                    response = "Created database for game \"" + value + "\""
+                except:
+                    response = "Error: failed to create database for game \"" + value + "\". Check game prefs"
+        elif key == "event":
+            response = "Updated event to \"" + value + "\""
+        elif key == "reverse_alliances":
+            response = "Updated alliance positions"
+        else:
+            response = "Error: unknown key \"" + key + "\""
+        return(response)
 
 if __name__ == "__main__":
     cherrypy.config.update({'server.socket_port': port, 'server.socket_host': host})

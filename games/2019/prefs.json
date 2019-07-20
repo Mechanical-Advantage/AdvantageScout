@@ -47,5 +47,43 @@
         "auto": false,
         "teleop": false,
         "endgame": true
+    },
+    "classic": {
+        "auto": [
+            {
+                "type": "chooser",
+                "field": "AllianceColor",
+                "label": "Alliance",
+                "options": {
+                    "red": 0,
+                    "blue": 1
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "StartPos",
+                "label": "Start Pos",
+                "options": {
+                    "left": 0,
+                    "center": 1,
+                    "right": 2
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "StartLevel",
+                "label": "Start Level",
+                "options": {
+                    "Level 1": 1,
+                    "Level 2": 2
+                }
+            }
+        ],
+        "teleop": [
+        
+        ],
+        "endgame": [
+        
+        ]
     }
 }

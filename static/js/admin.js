@@ -7,6 +7,7 @@ http.onreadystatechange = function() {
             var result = JSON.parse(this.responseText)
             document.getElementById("game").value = result.game
             document.getElementById("event").value = result.event
+            document.getElementById("reverse_alliances").selectedIndex = result.reverse_alliances
         }
     }
 }
@@ -18,7 +19,20 @@ http.send()
 function save(key) {
     var value = document.getElementById(key).value
     const http = new XMLHttpRequest()
-    http.open("POST", "/set_config", true)
+    
+    http.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                alert(this.responseText)
+            } else if (this.status == 500){
+                alert("Error: internal server error")
+            } else {
+                alert("Error: unknown error")
+            }
+        }
+    }
+    
+    http.open("PUT", "/set_config", true)
     http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     http.send("key=" + key + "&value=" + encodeURI(value))
 }
@@ -53,7 +67,7 @@ function updateDeviceTable() {
         }
         row.children[0].innerHTML = devices[i].name
         
-        var diff = Math.round((Date.now() / 1000) - devices[i].last_heartbeat)
+        var diff = Math.round((Date.now() / 1000)) - devices[i].last_heartbeat
         var status
         if (diff > 8) {
             status = "Inactive"
