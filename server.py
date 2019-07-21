@@ -97,6 +97,8 @@ class main_server(object):
             </div>
             <div id="onlinetext" style="color: green;">
             </div>
+            <div id="localcount">
+            </div>
             Team:
             <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
             <br>
@@ -117,6 +119,24 @@ class main_server(object):
             </div>
         </div>
         
+        <div id="offlineWarningDiv" class="centered" hidden>
+            <div class="title">
+                Advantage Scout
+            </div>
+            <div class="subtitle">
+                You're offline!
+            </div>
+            You can keep scouting for now, but please reconnect if possible.
+            <br>
+            <br>
+            Ask someone on the scouting systems team for help if needed.
+            <br>
+            <br>
+            <button class="scoutstart" onclick="javascript:idleStart(true)">
+                Continue
+            </button>
+        </div>
+        
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>
             <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
                 Autonomous
@@ -134,52 +154,6 @@ class main_server(object):
         </div>
         
         <div id="classicDiv1" class="classicdiv" hidden>
-            <div class="classicunit">
-                <div class="classiclabelbox">
-                    <div class="classiclabel">
-                        Starting Position
-                    </div>
-                </div>
-                <div class="classiccontrols">
-                    <select class="classicinput">
-                        <option>
-                            Left
-                        </option>
-                        <option>
-                            Center
-                        </option>
-                        <option>
-                            Right
-                        </option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="classicunit">
-                <div class="classiclabelbox">
-                    <div class="classiclabel">
-                        Counter
-                    </div>
-                </div>
-                <div class="classiccontrols">
-                    <button class="classiccounter_button classiccounter_down"></button>
-                    <div class="classiccounter_number">
-                        3
-                    </div>
-                    <button class="classiccounter_button classiccounter_up"></button>
-                </div>
-            </div>
-            
-            <div class="classicunit classicwide">
-                <div class="classiclabelbox">
-                    <div class="classiclabel">
-                        Comment
-                    </div>
-                </div>
-                <div class="classiccontrols">
-                    <textarea class="classicinput" placeholder="Enter text here..."></textarea>
-                </div>
-            </div>
         </div>
         
         <div id="classicDiv2" class="classicdiv" hidden>
@@ -202,6 +176,7 @@ class main_server(object):
             Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <script>
             function finish() {
                 window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
@@ -263,6 +238,36 @@ class main_server(object):
             "prefs": json.loads(quickread(path + "prefs.json")),
             "CanvasManager": quickread(path + "CanvasManager.js")
         }
+        return(json.dumps(result))
+
+    @cherrypy.expose
+    def upload(self, data):
+        game_result = gamedb_connect()
+        conn_game = game_result["conn"]
+        cur_game = conn_game.cursor()
+        prefs = json.loads(quickread("games" + os.path.sep + str(game_result["name"]) + os.path.sep + "prefs.json"))
+        result = {"success": False, "count": 0}
+        try:
+            data = json.loads(data)
+        except:
+            return(json.dumps(result))
+        result["count"] = len(data)
+        for i in range(len(data)):
+            to_save = {}
+            fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Time INTEGER", "UploadTime INTEGER"]
+            for f in range(len(fields)):
+                field_name = fields[f].split(" ")[0]
+                if field_name in data[i]:
+                    to_save[field_name] = data[i][field_name]
+            fields = ["UploadTime"]
+            values = [str(currentTime())]
+            for field, value in to_save.items():
+                fields.append(field)
+                values.append(str(value))
+            cur_game.execute("INSERT INTO scout (" + ",".join(fields) + ") VALUES (" + ",".join(["?"] * len(fields)) + ")", tuple(values))
+        conn_game.commit()
+        conn_game.close()
+        result["success"] = True
         return(json.dumps(result))
 
     @cherrypy.expose

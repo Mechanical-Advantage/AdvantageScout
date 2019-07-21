@@ -31,7 +31,7 @@ body {
 
 .subtitle {
     font-size: 30px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 button.scoutstart {
@@ -110,6 +110,30 @@ div.classicdiv {
     text-align: center;
 }
 
+div.classicgroup {
+    position: relative;
+    display: inline-block;
+    width: 306px;
+    height: 185px;
+    margin: 0px;
+}
+
+div.classicgroup_labelbox {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 0px;
+    height: 25%;
+}
+
+div.classicgroup_units {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 25%;
+    height: 75%;
+}
+
 div.classicunit {
     position: relative;
     display: inline-block;
@@ -119,7 +143,7 @@ div.classicunit {
 }
 
 div.classicwide {
-    width: 330px;
+    width: 306px;
 }
 
 div.classiclabelbox {
@@ -194,4 +218,18 @@ button.classiccounter_down {
 button.classiccounter_up {
     left: 80%;
     background-color: #75ff91;
+}
+
+button.classicuploadbutton {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 75%;
+    width: 75%;
+    background-color: #c2f7ff;
+    border: 1px solid black;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 8px;
 }
