@@ -1,12 +1,13 @@
 import sqlite3 as sql
 import cherrypy
-import os
-from pathlib import Path
-import time
 import json
+import time
+from pathlib import Path
+import os
+import sys
 
 #Config
-port = 8000
+default_port = 8000 # can override w/ command line argument
 host = "0.0.0.0"
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
@@ -76,10 +77,23 @@ def quickread(file):
 def currentTime():
     return(int(round(time.time())))
 
+favicon_code = """
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png"></link>
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png"></link>
+<link rel="icon" type="image/png" sizes="192x192" href="/static/img/android-chrome-192x192.png"></link>
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png"></link>
+<link rel="manifest" href="/static/img/site.webmanifest"></link>
+<link rel="mask-icon" href="/static/img/safari-pinned-tab.svg" color="#012be5"></link>
+<link rel="shortcut icon" href="/static/img/favicon.ico"></link>
+<meta name="msapplication-TileColor" content="#012be5"></meta>
+<meta name="msapplication-config" content="/static/img/browserconfig.xml"></meta>
+<meta name="theme-color" content="#012be5"></meta>
+    """
+
 class main_server(object):
     @cherrypy.expose
     def index(self):
-        return("""
+        output = """
 <html>
     <head>
         <title>
@@ -88,6 +102,7 @@ class main_server(object):
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <script src="/static/js/ButtonManager.js"></script>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+        $FAVICON_CODE
         <noscript>
             <style>
                 div.hideonnoscript {
@@ -197,11 +212,12 @@ class main_server(object):
         <script src="/static/js/main.js"></script>
     </body>
 </html>
-            """)
+            """
+        return(output.replace("$FAVICON_CODE", favicon_code))
     
     @cherrypy.expose
     def config(self):
-        return("""
+        output = """
 <html>
     <head>
         <title>
@@ -209,6 +225,7 @@ class main_server(object):
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        $FAVICON_CODE
         <script>
             function finish() {
                 window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
@@ -237,7 +254,8 @@ class main_server(object):
         </div>
     </body>
 </html>
-            """)
+            """
+        return(output.replace("$FAVICON_CODE", favicon_code))
     
     @cherrypy.expose
     def heartbeat(self, device_name, state, team=-1, match=-1):
@@ -304,13 +322,14 @@ class main_server(object):
 
     @cherrypy.expose
     def admin(self):
-        return("""
+        output = """
 <html>
     <head>
         <title>
             Admin - Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/admin.css"></link>
+        $FAVICON_CODE
     </head>
     <body>
         <h1>
@@ -368,7 +387,8 @@ class main_server(object):
         <script src="/static/js/admin.js"></script>
     </body>
 </html>
-            """)
+            """
+        return(output.replace("$FAVICON_CODE", favicon_code))
 
     @cherrypy.expose
     def get_devices(self):
@@ -430,5 +450,8 @@ class main_server(object):
         return(response)
 
 if __name__ == "__main__":
+    port = default_port
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
     cherrypy.config.update({'server.socket_port': port, 'server.socket_host': host})
     cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}})
