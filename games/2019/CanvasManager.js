@@ -23,6 +23,22 @@ this.getData = function() { // REQUIRED FUNCTION
     if (reverseAlliances) {
         data["AllianceColor"] = 1 - data["AllianceColor"]
     }
+    data["AutoRocketCargo"] = rocketData[0]["cargo"][3] + rocketData[0]["cargo"][4] + rocketData[0]["cargo"][5] + rocketData[0]["cargo"][9] + rocketData[0]["cargo"][10] + rocketData[0]["cargo"][11]
+    data["AutoRocketCargoFailures"] = rocketData[0]["cargo"][0] + rocketData[0]["cargo"][1] + rocketData[0]["cargo"][2] + rocketData[0]["cargo"][6] + rocketData[0]["cargo"][7] + rocketData[0]["cargo"][8]
+    data["AutoRocketHatch"] = rocketData[0]["hatch"][3] + rocketData[0]["hatch"][4] + rocketData[0]["hatch"][5] + rocketData[0]["hatch"][9] + rocketData[0]["hatch"][10] + rocketData[0]["hatch"][11]
+    data["AutoRocketHatchFailures"] = rocketData[0]["hatch"][0] + rocketData[0]["hatch"][1] + rocketData[0]["hatch"][2] + rocketData[0]["hatch"][6] + rocketData[0]["hatch"][7] + rocketData[0]["hatch"][8]
+    data["RocketL1Cargo"] = rocketData[1]["cargo"][5] + rocketData[1]["cargo"][11]
+    data["RocketL1CargoFailures"] = rocketData[1]["cargo"][2] + rocketData[1]["cargo"][8]
+    data["RocketL1Hatch"] = rocketData[1]["hatch"][5] + rocketData[1]["hatch"][11]
+    data["RocketL1HatchFailures"] = rocketData[1]["hatch"][2] + rocketData[1]["hatch"][8]
+    data["RocketL2Cargo"] = rocketData[1]["cargo"][4] + rocketData[1]["cargo"][10]
+    data["RocketL2CargoFailures"] = rocketData[1]["cargo"][1] + rocketData[1]["cargo"][7]
+    data["RocketL2Hatch"] = rocketData[1]["hatch"][4] + rocketData[1]["hatch"][10]
+    data["RocketL2HatchFailures"] = rocketData[1]["hatch"][1] + rocketData[1]["hatch"][7]
+    data["RocketL3Cargo"] = rocketData[1]["cargo"][3] + rocketData[1]["cargo"][9]
+    data["RocketL3CargoFailures"] = rocketData[1]["cargo"][0] + rocketData[1]["cargo"][6]
+    data["RocketL3Hatch"] = rocketData[1]["hatch"][3] + rocketData[1]["hatch"][9]
+    data["RocketL3HatchFailures"] = rocketData[1]["hatch"][0] + rocketData[1]["hatch"][6]
     return data
 }
 function uploadData() { // Closes scouting interface and saves data (if using visual for end game, must have a call to this function)
@@ -31,8 +47,10 @@ function uploadData() { // Closes scouting interface and saves data (if using vi
 
 var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
-var data = {"AutoShipHatch": 0, "AutoShipHatchFailures": 0, "AutoShipCargo": 0, "AutoShipCargoFailures": 0, "ShipHatch": 0, "ShipHatchFailures": 0, "ShipCargo": 0, "ShipCargoFailures": 0, "AutoRocketHatch": 0, "AutoRocketHatchFailures": 0, "AutoRocketCargo": 0, "AutoRocketCargoFailures": 0, "RocketL1Hatch": 0, "RocketL2Hatch": 0, "RocketL3Hatch": 0, "RocketL1HatchFailures": 0, "RocketL2HatchFailures": 0, "RocketL3HatchFailures": 0, "RocketL1Cargo": 0, "RocketL2Cargo": 0, "RocketL3Cargo": 0, "RocketL1CargoFailures": 0, "RocketL2CargoFailures": 0, "RocketL3CargoFailures": 0}
+var data = {"AutoShipHatch": 0, "AutoShipHatchFailures": 0, "AutoShipCargo": 0, "AutoShipCargoFailures": 0, "ShipHatch": 0, "ShipHatchFailures": 0, "ShipCargo": 0, "ShipCargoFailures": 0}
 var dataLog = []
+var rocketData = {0: {"hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, 1: {"hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}}
+var rocketDataLog = []
 var selectedPiece = "none"
 var redColor = "#ff0000"
 var redHighlightColor = "#ff7575"
@@ -48,11 +66,14 @@ if (reverseAlliances) {
 const rocketButtonX = [1825, 1825, 1825, 1975, 1975, 1975, 1825, 1825, 1825, 1975, 1975, 1975]
 const rocketButtonY = [30, 180, 330, 30, 180, 330, 1120, 1270, 1420, 1120, 1270, 1420]
 const rocketButtonSuccess = [false, false, false, true, true, true, false, false, false, true, true, true]
-const rocketButtonLevel = [3, 2, 1, 3, 2, 1, 1, 2, 3, 1, 2, 3]
+
+function jsonCopy(original) {
+    return JSON.parse(JSON.stringify(original))
+}
 
 function saveData() {
-    dataLog.push({})
-    Object.assign(dataLog[dataLog.length - 1], data)
+    dataLog.push(jsonCopy(data))
+    rocketDataLog.push(jsonCopy(rocketData))
 }
 
 function render() {
@@ -157,14 +178,17 @@ function render() {
         context.textBaseline = "middle"
         context.font = "140px sans-serif"
         context.fillStyle = "#000000"
-        var shipSuccesses
-        var shipFailures
-        if (mode == 0) {
-            shipSuccesses = data["AutoShipCargo"] + data["AutoShipHatch"]
-            shipFailures = data["AutoShipCargoFailures"] + data["AutoShipHatchFailures"]
-        } else {
-            shipSuccesses = data["ShipCargo"] + data["ShipHatch"]
-            shipFailures = data["ShipCargoFailures"] + data["ShipHatchFailures"]
+        var shipSuccesses = ""
+        var shipFailures = ""
+        if (selectedPiece != "none") {
+            var pieceText = selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)
+            if (mode == 0) {
+                shipSuccesses = data["AutoShip" + pieceText]
+                shipFailures = data["AutoShip" + pieceText + "Failures"]
+            } else {
+                shipSuccesses = data["Ship" + pieceText]
+                shipFailures = data["Ship" + pieceText + "Failures"]
+            }
         }
         context.fillText(shipSuccesses, 1840 + (data["AllianceColor"] * -680), 800)
         context.fillText(shipFailures, 1640 + (data["AllianceColor"] * -280), 800)
@@ -258,19 +282,9 @@ function render() {
             context.fillRect(rocketButtonX[i] + (data["AllianceColor"] * allianceShift), rocketButtonY[i], 150, 150)
             context.strokeRect(rocketButtonX[i] + (data["AllianceColor"] * allianceShift), rocketButtonY[i], 150, 150)
             
-            var value
-            if (mode == 0) {
-                if (rocketButtonSuccess[i]) {
-                    value = data["AutoRocketHatch"] + data["AutoRocketCargo"]
-                } else {
-                    value = data["AutoRocketHatchFailures"] + data["AutoRocketCargoFailures"]
-                }
-            } else {
-                var failureText = ""
-                if (!rocketButtonSuccess[i]) {
-                    failureText = "Failures"
-                }
-                value = data["RocketL" + rocketButtonLevel[i].toString() + "Hatch" + failureText] + data["RocketL" + rocketButtonLevel[i].toString() + "Cargo" + failureText]
+            var value = ""
+            if (selectedPiece != "none") {
+                value = rocketData[mode][selectedPiece][i]
             }
             context.fillStyle = "#000000"
             context.fillText(value, rocketButtonX[i] + 75 + (data["AllianceColor"] * allianceShift), rocketButtonY[i] + 75)
@@ -316,17 +330,17 @@ function render() {
             context.fillText("L3", 1230, 105)
             context.fillText("L2", 1230, 255)
             context.fillText("L1", 1230, 405)
-            context.fillText("L1", 1230, 1195)
+            context.fillText("L3", 1230, 1195)
             context.fillText("L2", 1230, 1345)
-            context.fillText("L3", 1230, 1495)
+            context.fillText("L1", 1230, 1495)
         } else {
             context.textAlign = "right"
             context.fillText("L3", 1770, 105)
             context.fillText("L2", 1770, 255)
             context.fillText("L1", 1770, 405)
-            context.fillText("L1", 1770, 1195)
+            context.fillText("L3", 1770, 1195)
             context.fillText("L2", 1770, 1345)
-            context.fillText("L3", 1770, 1495)
+            context.fillText("L1", 1770, 1495)
         }
     }
     
@@ -505,25 +519,9 @@ buttonManager.addButton("redShipFailure", new Button(1540, 700, 200, 200, functi
                                                      shipButton(true)
                                                      }
                                                      }))
-function rocketButton(level, failure) {
+function rocketButton(id) {
     saveData()
-    var failureText = ""
-    if (failure) {
-        failureText = "Failures"
-    }
-    if (mode == 0) {
-        if (selectedPiece == "hatch") {
-            data["AutoRocketHatch" + failureText] ++
-        } else if (selectedPiece == "cargo") {
-            data["AutoRocketCargo" + failureText] ++
-        }
-    } else {
-        if (selectedPiece == "hatch") {
-            data["RocketL" + level.toString() + "Hatch" + failureText] ++
-        } else if (selectedPiece == "cargo") {
-            data["RocketL" + level.toString() + "Cargo" + failureText] ++
-        }
-    }
+    rocketData[mode][selectedPiece][id] ++
     render()
 }
 for (var alliance = 0; alliance < 2; alliance++) {
@@ -540,16 +538,17 @@ for (var alliance = 0; alliance < 2; alliance++) {
         }
         buttonManager.addButton(allianceText + "RocketButton" + i.toString(), new Button(rocketButtonX[i] + (alliance * allianceShift), rocketButtonY[i], 150, 150, function() {
                                                                                          if ("AllianceColor" in data && data["AllianceColor"] == this.data["alliance"]) {
-                                                                                         rocketButton(this.data["level"], this.data["failure"])
+                                                                                         rocketButton(this.data["id"])
                                                                                          }
                                                                                          }))
-        buttonManager.setData(allianceText + "RocketButton" + i.toString(), {"alliance": alliance, "level": rocketButtonLevel[i], "failure": !rocketButtonSuccess[i]})
+        buttonManager.setData(allianceText + "RocketButton" + i.toString(), {"alliance": alliance, "id": i})
     }
 }
 
 buttonManager.addButton("undoButton", new Button(1375, 1450, 250, 150, function() {
                                                  if (dataLog.length > 0) {
-                                                     Object.assign(data, dataLog.pop())
+                                                     data = jsonCopy(dataLog.pop())
+                                                     rocketData = jsonCopy(rocketDataLog.pop())
                                                      render()
                                                  }
                                                  }))
