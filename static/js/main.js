@@ -90,12 +90,23 @@ function loadGame() {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 gameData = JSON.parse(this.responseText)
-                try {
-                    GameCanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", gameData["CanvasManager"])
+                if (gameData.CanvasManager) {
+                    try {
+                        GameCanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", gameData["CanvasManager"])
+                    }
+                    catch(error) {
+                        alert("Failed to load game data. (" + error.message + ")")
+                    }
+                    document.getElementById("visualstart").innerHTML = "Scout! (visual)"
+                    document.getElementById("classicstart").innerHTML = "Scout! (classic)"
+                    document.getElementById("visualstart").hidden = false
+                    document.getElementById("twobuttonbreak").hidden = false
+                } else {
+                    document.getElementById("classicstart").innerHTML = "Scout!"
+                    document.getElementById("visualstart").hidden = true
+                    document.getElementById("twobuttonbreak").hidden = true
                 }
-                catch(error) {
-                    alert("Failed to load game data. (" + error.message + ")")
-                }
+                
                 document.getElementById("loadingtext").hidden = true
                 document.getElementById("startbuttons").hidden = false
             } else {
@@ -223,6 +234,20 @@ function unitFor(inputData, wideAllowed) {
                 this.parentElement.children[1].innerHTML = classicData[field]
             }
         }
+    } else if (inputData.type == "checkbox") {
+        var checkbox = document.createElement("BUTTON")
+        unit.children[1].appendChild(checkbox)
+        checkbox.classList.add("classicinput")
+        checkbox.classList.add("classiccheck")
+        checkbox.id = inputData.field
+        checkbox.style.backgroundColor = "#ff7575"
+        checkbox.onclick = function() {
+            if (this.style.backgroundColor == "rgb(255, 117, 117)") {
+                this.style.backgroundColor = "#75ff91"
+            } else {
+                this.style.backgroundColor = "#ff7575"
+            }
+        }
     } else if (inputData.type == "break") {
         unit = document.createElement("BR")
     } else if (inputData.type == "uploadButton") {
@@ -283,7 +308,10 @@ function scoutStart(mode) {
     state = 1
     scoutMode = mode
     setupClassic()
-    canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, uploadEvent)
+    if (gameData.CanvasManager) {
+        canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, uploadEvent)
+
+    }
     document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
     document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
     document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
@@ -325,7 +353,10 @@ function idleStart(forceTitle) {
 }
 
 function saveData() {
-    var toSave = canvasManager.getData()
+    var toSave = {}
+    if (gameData.CanvasManager) {
+        toSave = canvasManager.getData()
+    }
     var classicData = {}
     var useClassicData
     if (scoutMode == "classic") {
@@ -350,6 +381,12 @@ function saveData() {
                     
                 } else if (input.type == "textarea") {
                     classicData[fieldName] = input.value
+                } else if (input.type == "submit") {
+                    if (input.style.backgroundColor == "rgb(255, 117, 117)") {
+                        classicData[fieldName] = 0
+                    } else {
+                        classicData[fieldName] = 1
+                    }
                 }
             }
         }
@@ -374,7 +411,9 @@ function setMode(mode) {
     document.getElementById("classicDiv1").hidden = !((gameData.prefs.forceClassic["auto"] || scoutMode == "classic") && state == 1)
     document.getElementById("classicDiv2").hidden = !((gameData.prefs.forceClassic["teleop"] || scoutMode == "classic") && state == 2)
     document.getElementById("classicDiv3").hidden = !((gameData.prefs.forceClassic["endgame"] || scoutMode == "classic") && state == 3)
-    canvasManager.setMode(state - 1)
+    if (gameData.CanvasManager) {
+        canvasManager.setMode(state - 1)
+    }
     heartbeat()
     
 }

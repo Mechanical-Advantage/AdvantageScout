@@ -191,6 +191,13 @@ select.classicinput {
     font-size: 13px;
 }
 
+button.classiccheck {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 8px;
+    width: 60%;
+    height: 60%;
+}
 
 div.classiccounter_number {
     position: absolute;

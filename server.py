@@ -73,7 +73,6 @@ def quickread(file):
     file.close()
     return(result)
 
-
 def currentTime():
     return(int(round(time.time())))
 
@@ -144,11 +143,11 @@ class main_server(object):
                 Loading...
             </div>
             <div id="startbuttons" hidden>
-                <button class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                <button id="visualstart" class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
                     Scout! (visual)
                 </button>
-                <br>
-                <button class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                <br id="twobuttonbreak">
+                <button id="classicstart" class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
                     Scout! (classic)
                 </button>
             </div>
@@ -284,10 +283,15 @@ class main_server(object):
         conn_global.close()
         
         path = "games" + os.path.sep + str(game) + os.path.sep
-        result = {
-            "prefs": json.loads(quickread(path + "prefs.json")),
-            "CanvasManager": quickread(path + "CanvasManager.js")
-        }
+        if Path(path + "CanvasManager.js").is_file():
+            result = {
+                "prefs": json.loads(quickread(path + "prefs.json")),
+                "CanvasManager": quickread(path + "CanvasManager.js")
+            }
+        else:
+            result = {
+                "prefs": json.loads(quickread(path + "prefs.json"))
+            }
         return(json.dumps(result))
 
     @cherrypy.expose

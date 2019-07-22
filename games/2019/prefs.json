@@ -79,13 +79,9 @@
                 }
             },
             {
-                "type": "chooser",
+                "type": "checkbox",
                 "field": "CrossedLine",
-                "label": "Crossed Line",
-                "options": {
-                    "No": 0,
-                    "Yes": 1
-                }
+                "label": "Crossed Line"
             },
             {
                 "type": "break"
@@ -399,22 +395,14 @@
                 }
             },
             {
-                "type": "chooser",
+                "type": "checkbox",
                 "field": "WonMatch",
-                "label": "Won Match?",
-                "options": {
-                    "No": 0,
-                    "Yes": 1
-                }
+                "label": "Won Match?"
             },
             {
-                "type": "chooser",
+                "type": "checkbox",
                 "field": "Disabled",
-                "label": "Disabled/Fell?",
-                "options": {
-                    "No": 0,
-                    "Yes": 1
-                }
+                "label": "Disabled/Fell?"
             },
             {
                 "type": "break"
