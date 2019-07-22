@@ -96,7 +96,6 @@ function loadGame() {
                 catch(error) {
                     alert("Failed to load game data. (" + error.message + ")")
                 }
-                canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], config.reverse_alliances == 1, uploadEvent)
                 document.getElementById("loadingtext").hidden = true
                 document.getElementById("startbuttons").hidden = false
             } else {
@@ -246,6 +245,13 @@ function getConfig() {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 config = JSON.parse(this.responseText)
+                if (config.reverse_alliances == 2) {
+                    document.getElementById("reverseAlliancesDiv").hidden = false
+                    document.getElementById("reverseAlliances").selectedIndex = 0
+                } else {
+                    document.getElementById("reverseAlliancesDiv").hidden = true
+                    document.getElementById("reverseAlliances").selectedIndex = config.reverse_alliances
+                }
                 loadGame()
             } else {
                 alert("Failed to retrieve configuration data")
@@ -277,6 +283,7 @@ function scoutStart(mode) {
     state = 1
     scoutMode = mode
     setupClassic()
+    canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, uploadEvent)
     document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
     document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
     document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
@@ -414,7 +421,7 @@ function resizeText() {
 }
 window.addEventListener("resize", function() {resizeText()})
 
-// Check for device name
+//Check for device name
 if (window.localStorage.getItem("advantagescout_device") == null) {
     window.location = "/config"
 } else {

@@ -87,17 +87,25 @@ class main_server(object):
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <script src="/static/js/ButtonManager.js"></script>
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        </meta>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+        <noscript>
+            <style>
+                div.hideonnoscript {
+                    display: none;
+                }
+            </style>
+        </noscript>
     </head>
     <body>
-        <div id="selectionDiv" class="centered">
+        <div id="selectionDiv" class="centered hideonnoscript">
             <div class="title">
                 Advantage Scout
             </div>
             <div id="onlinetext" style="color: green;">
+                Online
             </div>
             <div id="localcount">
+                Loading...
             </div>
             Team:
             <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
@@ -105,6 +113,18 @@ class main_server(object):
             Match:
             <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
             <br>
+            <span id="reverseAlliancesDiv" hidden>
+                Alliance Position:
+                <select id="reverseAlliances">
+                    <option value="0">
+                        red right, blue left
+                    </option>
+                    <option value="1">
+                        red left, blue right
+                    </option>
+                </select>
+                <br>
+            </span>
             <div id="loadingtext">
                 Loading...
             </div>
@@ -161,6 +181,18 @@ class main_server(object):
         
         <div id="classicDiv3" class="classicdiv" hidden>
         </div>
+        
+        <noscript>
+            <div class="centered">
+                <div class="title">
+                    Advantage Scout
+                </div>
+                <div class="subtitle">
+                    Seriously?
+                </div>
+                You can't scout without JavaScript!
+            </div>
+        </noscript>
     
         <script src="/static/js/main.js"></script>
     </body>
@@ -193,7 +225,7 @@ class main_server(object):
             <br>
             <input type="text" id="name"></input>
             <br>
-            <button onclick="javascript:finish()">
+            <button onclick="javascript:finish()" class="scoutstart">
                 Finish
             </button>
             <script>
@@ -307,6 +339,9 @@ class main_server(object):
             <option value="1">
                 red left, blue right
             </option>
+            <option value="2">
+                select on device
+            </option>
         </select>
         <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
         Save
@@ -339,7 +374,7 @@ class main_server(object):
     def get_devices(self):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
-        cur_global.execute("SELECT * FROM devices ORDER BY name")
+        cur_global.execute("SELECT * FROM devices ORDER BY last_heartbeat DESC")
         raw = cur_global.fetchall()
         data = []
         for i in range(len(raw)):
@@ -389,7 +424,7 @@ class main_server(object):
         elif key == "event":
             response = "Updated event to \"" + value + "\""
         elif key == "reverse_alliances":
-            response = "Updated alliance positions"
+            response = "Updated alliance position setting"
         else:
             response = "Error: unknown key \"" + key + "\""
         return(response)
