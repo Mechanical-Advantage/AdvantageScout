@@ -257,6 +257,18 @@ class main_server(object):
         return(output.replace("$FAVICON_CODE", favicon_code))
     
     @cherrypy.expose
+    def export(self):
+        return("""
+<html>
+<body>
+<script>
+document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
+</script>
+</body>
+</html>
+            """)
+    
+    @cherrypy.expose
     def heartbeat(self, device_name, state, team=-1, match=-1):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
