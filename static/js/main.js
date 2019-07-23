@@ -370,7 +370,7 @@ function saveData() {
                 var fieldName = fieldModeLists[mode][i]
                 var input = document.getElementById(fieldName)
                 
-                if (input.type == "div") {
+                if (input.type == undefined) {
                     classicData[fieldName] = input.innerText
                 } else if (input.type == "select-one") {
                     if (isNaN(input.value)) {
