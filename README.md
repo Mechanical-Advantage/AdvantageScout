@@ -1,5 +1,4 @@
 # Advantage Scout
-## Overview
 Advantage Scout is a custom web based scouting system, which is intended to connect to both team and student devices over Bluetooth PAN. The site is build as a 'web app' using JavaScript, meaning it can run without a persistent connection to the server. It is designed to work on a wide variety of screen sizes in any orientation. Features two scouting layouts which can be switched based on user preference:
 
 * **Classic layout** - Uses standard inputs (selectors, counters, textboxes, etc.) simliar to many other scouting apps
@@ -20,3 +19,4 @@ The server will run on port 8000 by default. The default port, host ip, and data
 * **(host)/** - Main scouting page. Navigate here on scouting devices.
 * **(host)/config** - Sets device name. Will be opened automatically on new devices.
 * **(host)/admin** - System overview. Configures current game, event, and alliance positions. Shows the status of all devices.
+* **(host)/export** - Manual data export. Produces raw JSON of any matches currently saved offline.
