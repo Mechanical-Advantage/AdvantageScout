@@ -9,7 +9,7 @@
         },
         "release": {
             "keystore": "./android.keystore",
-            "storePassword": "",
+            "storePassword": "password",
             "alias": "mainkey",
             "password": "password",
             "keystoreType": ""
