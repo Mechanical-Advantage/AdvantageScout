@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var defaultServerAddress = "00:23:12:58:E9:BF"
 var app = {
     // Application Constructor
     initialize: function() {
@@ -34,8 +33,11 @@ var app = {
         //Initialize
         getConfig()
         resizeText()
-        if (window.localStorage.getItem("advantagescout_data") == null) {
-            window.localStorage.setItem("advantagescout_data", "[]")
+        if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
+            window.localStorage.setItem("advantagescout_scoutdata", "[]")
+        }
+        if (window.localStorage.getItem("advantagescout_gamedata") != null) {
+            loadConfig(JSON.parse(window.localStorage.getItem("advantagescout_gamedata")))
         }
         updateLocalCount()
         
@@ -46,11 +48,25 @@ var app = {
             document.getElementById("name").value = window.localStorage.getItem("advantagescout_device")
         }
         
-        //Check for server MAC
-        if (window.localStorage.getItem("advantagescout_server") == null) {
-            window.localStorage.setItem("advantagescout_server", defaultServerAddress)
-        }
-        document.getElementById("serverAddress").value = window.localStorage.getItem("advantagescout_server")
+        //Add possible server devices
+        bluetoothSerial.list(function(devices) {
+                             var serverSelect = document.getElementById("server")
+                             serverSelect.innerHTML = ""
+                             for (var i = 0; i < devices.length; i++) {
+                             var option = document.createElement("OPTION")
+                             option.value = devices[i].address
+                             option.innerHTML = devices[i].name
+                             serverSelect.appendChild(option)
+                             }
+                             
+                             if (window.localStorage.getItem("advantagescout_server") != null) {
+                             for (var i = 0; i < devices.length; i++) {
+                             if (devices[i].address == window.localStorage.getItem("advantagescout_server")) {
+                             serverSelect.selectedIndex = i
+                             }
+                             }
+                             }
+                             })
         
         //Add version number
         cordova.getAppVersion.getVersionNumber(function(version) {
@@ -74,48 +90,130 @@ var match = 0
 modeLookup = ["auto", "teleop", "endgame"]
 var classicData = {}
 
-var requestInProgress = false
-var currentResponse
-function serialRequest(query, args, response) {
-    requestInProgress = true
-    currentResponse = response
-    data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), query, args])
-    bluetoothSerial.connect(window.localStorage.getItem("advantagescout_server"), function() {
-                            bluetoothSerial.write(data + "\n", function() {
-                                                  bluetoothSerial.subscribe("\n", function(data) {
-                                                                            bluetoothSerial.unsubscribe()
-                                                                            bluetoothSerial.disconnect()
-                                                                            requestInProgress = false
-                                                                            currentResponse(data)
-                                                                            })
-                                                  })
-                            }, function() {})
-}
-
-function upload() {
-    if (JSON.parse(window.localStorage.getItem("advantagescout_data")).length > 0) {
-        serialRequest("upload", [window.localStorage.getItem("advantagescout_data")], function(data) {
-                      var response = JSON.parse(data)[1]
-                      if (response.success) {
-                          var stored = JSON.parse(window.localStorage.getItem("advantagescout_data"))
-                          stored.splice(0, response.count)
-                          window.localStorage.setItem("advantagescout_data", JSON.stringify(stored))
-                      }
-                      updateLocalCount()
-                      })
-    } else {
-        updateLocalCount()
+var serialQueue = []
+function addToSerialQueue(query, args, response) {
+    serialQueue.push({"query": query, "args": args, "response": response})
+    if (serialQueue.length == 1) {
+        pushSerialQueue()
     }
 }
 
+function getRandomDelay() {
+    return Math.random() * 6000
+}
+
+function pushSerialQueue() {
+    var responses = []
+    bluetoothSerial.isEnabled(function(){
+                              btEnabled()
+                              }, function() {
+                              setTimeout(function() {pushSerialQueue()}, getRandomDelay())
+                              })
+    function btEnabled() {
+        if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_server") == null || window.localStorage.getItem("advantagescout_device") == "" || window.localStorage.getItem("advantagescout_server") == "") {
+            setTimeout(function() {pushSerialQueue()}, getRandomDelay())
+        } else {
+            bluetoothSerial.connect(window.localStorage.getItem("advantagescout_server"), function() {
+                                    bluetoothSerial.subscribe("\n", function(data) {
+                                                              serialQueue.shift().response(data)
+                                                              if (serialQueue.length == 0) {
+                                                              bluetoothSerial.unsubscribe()
+                                                              bluetoothSerial.disconnect()
+                                                              }
+                                                              })
+                                    for (var i = 0; i < serialQueue.length; i++) {
+                                    data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[i].query, serialQueue[i].args()])
+                                    bluetoothSerial.write(data + "\n", function() {}, function() {})
+                                    }
+                                    }, function() {
+                                    setTimeout(function() {pushSerialQueue()}, getRandomDelay())
+                                    })
+        }
+    }
+    }
+
+var uploadQueued = false
+function upload() {
+    if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0 && !uploadQueued) {
+        uploadQueued = true
+        addToSerialQueue("upload", function() {return [window.localStorage.getItem("advantagescout_scoutdata")]}, function(data) {
+              uploadQueued = false
+              var response = JSON.parse(data)[1]
+              if (response.success) {
+                  var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
+                  stored.splice(0, response.count)
+                  window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
+              }
+              updateLocalCount()
+              })
+    }
+    updateLocalCount()
+}
+
 function updateLocalCount() {
-    var count = JSON.parse(window.localStorage.getItem("advantagescout_data")).length
+    var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
     if (count == 0) {
         document.getElementById("localcount").innerHTML = "All matches uploaded"
     } else if (count == 1) {
         document.getElementById("localcount").innerHTML = "1 match saved locally"
     } else {
         document.getElementById("localcount").innerHTML = count + " matches saved locally"
+    }
+}
+
+var config
+var GameCanvasManager
+var canvasManager
+var gameData
+function getConfig() {
+    addToSerialQueue("load_data", function() {return []}, function(data) {
+                     data = JSON.parse(data)[1]
+                     window.localStorage.setItem("advantagescout_gamedata", JSON.stringify(data))
+                     loadConfig(data)
+                     })
+}
+
+var outdatedAlertSent = false
+function loadConfig(data) {
+    // Process config
+    config = data.config
+    if (config.reverse_alliances == 2) {
+        document.getElementById("reverseAlliancesDiv").hidden = false
+        document.getElementById("reverseAlliances").selectedIndex = 0
+    } else {
+        document.getElementById("reverseAlliancesDiv").hidden = true
+        document.getElementById("reverseAlliances").selectedIndex = config.reverse_alliances
+    }
+    
+    // Process game
+    gameData = data.game
+    if (gameData.CanvasManager) {
+        try {
+            GameCanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", gameData["CanvasManager"])
+        }
+        catch(error) {
+            alert("Failed to load game data. (" + error.message + ")")
+        }
+        document.getElementById("visualstart").innerHTML = "Scout! (visual)"
+        document.getElementById("classicstart").innerHTML = "Scout! (classic)"
+        document.getElementById("visualstart").hidden = false
+        document.getElementById("twobuttonbreak").hidden = false
+    } else {
+        document.getElementById("classicstart").innerHTML = "Scout!"
+        document.getElementById("visualstart").hidden = true
+        document.getElementById("twobuttonbreak").hidden = true
+    }
+    document.getElementById("loadingtext").hidden = true
+    document.getElementById("startbuttons").hidden = false
+    
+    // Alert if version outdated
+    if (!outdatedAlertSent) {
+        cordova.getAppVersion.getVersionNumber(function(version) {
+                                               if (version.toString() != data.version) {
+                                               outdatedAlertSent = true
+                                               alert("This app version is outdated. Ask the scouting team for help updating.")
+                                               }
+                                               })
     }
 }
 
@@ -261,46 +359,6 @@ function unitFor(inputData, wideAllowed) {
     return unit
 }
 
-var config
-var GameCanvasManager
-var canvasManager
-var gameData
-function getConfig() {
-    serialRequest("load_data", [], function(data) {
-                  data = JSON.parse(data)[1]
-                  // Process config
-                  config = data.config
-                  if (config.reverse_alliances == 2) {
-                      document.getElementById("reverseAlliancesDiv").hidden = false
-                      document.getElementById("reverseAlliances").selectedIndex = 0
-                  } else {
-                      document.getElementById("reverseAlliancesDiv").hidden = true
-                      document.getElementById("reverseAlliances").selectedIndex = config.reverse_alliances
-                  }
-                  
-                  // Process game
-                  gameData = data.game
-                  if (gameData.CanvasManager) {
-                      try {
-                          GameCanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", gameData["CanvasManager"])
-                      }
-                      catch(error) {
-                          alert("Failed to load game data. (" + error.message + ")")
-                      }
-                      document.getElementById("visualstart").innerHTML = "Scout! (visual)"
-                      document.getElementById("classicstart").innerHTML = "Scout! (classic)"
-                      document.getElementById("visualstart").hidden = false
-                      document.getElementById("twobuttonbreak").hidden = false
-                  } else {
-                      document.getElementById("classicstart").innerHTML = "Scout!"
-                      document.getElementById("visualstart").hidden = true
-                      document.getElementById("twobuttonbreak").hidden = true
-                  }
-                  document.getElementById("loadingtext").hidden = true
-                  document.getElementById("startbuttons").hidden = false
-                  })
-}
-
 //Transition from team & match selection to scouting
 var scoutMode = "classic"
 function scoutStart(mode) {
@@ -362,7 +420,7 @@ function setConfig(open) {
     document.getElementById("configDiv").hidden = !open
     if (!open) {
         window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
-        window.localStorage.setItem("advantagescout_server", document.getElementById("serverAddress").value)
+        window.localStorage.setItem("advantagescout_server", document.getElementById("server").value)
     }
 }
 
@@ -411,9 +469,9 @@ function saveData() {
     toSave["Match"] = Number(match)
     toSave["DeviceName"] = window.localStorage.getItem("advantagescout_device")
     toSave["Time"] = Math.round(Date.now() / 1000)
-    var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_data"))
+    var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
     previouslySaved.push(toSave)
-    window.localStorage.setItem("advantagescout_data", JSON.stringify(previouslySaved))
+    window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(previouslySaved))
 }
 
 //Switch b/t auto, teleop, and endgame

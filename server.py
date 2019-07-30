@@ -12,7 +12,7 @@ import sys
 default_port = 8000 # can override w/ command line argument
 host = "0.0.0.0"
 bt_enable = True
-bt_port = "/dev/cu.Bluetooth-Incoming-Port"
+bt_ports = ["/dev/cu.Bluetooth-Incoming-Port"]
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 default_game = "2019"
@@ -524,7 +524,8 @@ def bluetooth_server(port):
             log("Unable to parse request \"" + raw + "\"")
 
         if msg[1] == "load_data":
-            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config())}
+            config = quickread("cordova/config.xml").split('"')
+            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "version": config[3]}
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
         else:
@@ -535,9 +536,11 @@ def bluetooth_server(port):
 
 
 if __name__ == "__main__":
-    #Start bluetooth server
-    bt_server = threading.Thread(target=bluetooth_server, args=(bt_port,), daemon=True)
-    bt_server.start()
+    #Start bluetooth servers
+    bt_servers = []
+    for i in range(len(bt_ports)):
+        bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports[i],), daemon=True))
+        bt_servers[i].start()
     
     #Start web server
     port = default_port

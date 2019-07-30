@@ -36,7 +36,7 @@ function heartbeat() {
 }
 
 function upload() {
-    if (JSON.parse(window.localStorage.getItem("advantagescout_data")).length > 0) {
+    if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0) {
         const http = new XMLHttpRequest()
         
         http.onreadystatechange = function() {
@@ -44,9 +44,9 @@ function upload() {
                 if (this.status == 200) {
                     var response = JSON.parse(this.responseText)
                     if (response.success) {
-                        var stored = JSON.parse(window.localStorage.getItem("advantagescout_data"))
+                        var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
                         stored.splice(0, response.count)
-                        window.localStorage.setItem("advantagescout_data", JSON.stringify(stored))
+                        window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
                     }
                 }
                 updateLocalCount()
@@ -63,14 +63,14 @@ function upload() {
         http.timeout = 2000
         http.open("POST", "/upload", true)
         http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-        http.send("data=" + encodeURI(window.localStorage.getItem("advantagescout_data")))
+        http.send("data=" + encodeURI(window.localStorage.getItem("advantagescout_scoutdata")))
     } else {
         updateLocalCount()
     }
 }
 
 function updateLocalCount() {
-    var count = JSON.parse(window.localStorage.getItem("advantagescout_data")).length
+    var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
     if (count == 0) {
         document.getElementById("localcount").innerHTML = "All matches uploaded"
     } else if (count == 1) {
@@ -397,9 +397,9 @@ function saveData() {
     toSave["Match"] = Number(match)
     toSave["DeviceName"] = window.localStorage.getItem("advantagescout_device")
     toSave["Time"] = Math.round(Date.now() / 1000)
-    var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_data"))
+    var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
     previouslySaved.push(toSave)
-    window.localStorage.setItem("advantagescout_data", JSON.stringify(previouslySaved))
+    window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(previouslySaved))
 }
 
 //Switch b/t auto, teleop, and endgame
@@ -468,8 +468,8 @@ if (window.localStorage.getItem("advantagescout_device") == null) {
     heartbeat()
     resizeText()
     setInterval(function() {heartbeat()}, 3000)
-    if (window.localStorage.getItem("advantagescout_data") == null) {
-        window.localStorage.setItem("advantagescout_data", "[]")
+    if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
+        window.localStorage.setItem("advantagescout_scoutdata", "[]")
     }
     updateLocalCount()
 }
