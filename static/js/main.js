@@ -414,8 +414,8 @@ function setMode(mode) {
     if (gameData.CanvasManager) {
         canvasManager.setMode(state - 1)
     }
+    window.scrollTo(0, 0)
     heartbeat()
-    
 }
 
 //Adjusts body size and text based on screen size

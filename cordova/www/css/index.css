@@ -29,7 +29,7 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color: "#FFFFFF";
+    background-color: "#ffffff";
     font-family: sans-serif;
     font-size: 20px;
     line-height: 25px;
@@ -81,13 +81,15 @@ input.teammatch {
 }
 
 div.modeswitcher {
+    position: fixed;
+    z-index: 1;
     text-align: center;
     font-size: 30px;
     line-height: 75px;
 }
 
 div.switcherbutton1 {
-    position: absolute;
+    position: fixed;
     top: 0px;
     height: 75px;
     left: 0%;
@@ -96,7 +98,7 @@ div.switcherbutton1 {
 }
 
 div.switcherbutton2 {
-    position: absolute;
+    position: fixed;
     top: 0px;
     height: 75px;
     left: 33.33%;
@@ -105,7 +107,7 @@ div.switcherbutton2 {
 }
 
 div.switcherbutton3 {
-    position: absolute;
+    position: fixed;
     top: 0px;
     height: 75px;
     left: 66.66%;

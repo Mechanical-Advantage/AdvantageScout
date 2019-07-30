@@ -15,6 +15,12 @@
     },
     "cordova-plugin-app-version": {
       "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
     }
   },
   "dependent_plugins": {}

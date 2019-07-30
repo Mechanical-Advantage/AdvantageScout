@@ -28,10 +28,18 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        StatusBar.backgroundColorByHexString("#000b3d");
         document.addEventListener('backbutton', function() {
                                   if (state != 0) {
-                                  if (confirm("Stop scouting? Your data will NOT be saved!")) {
-                                  idleStart(false)
+                                  if (state == 1) {
+                                  navigator.notification.confirm("Your data will NOT be saved!", function(result) {
+                                                                 if (result == 1) {
+                                                                 state = 0
+                                                                 idleStart(false)
+                                                                 }
+                                                                 }, "Stop Scouting?", ["Stop", "Continue"])
+                                  } else {
+                                  setMode(state - 1)
                                   }
                                   }
                                   }, false)
@@ -44,30 +52,12 @@ var app = {
             document.getElementById("name").value = window.localStorage.getItem("advantagescout_device")
         }
         
-        //Add possible server devices
-        bluetoothSerial.list(function(devices) {
-                             var serverSelect = document.getElementById("server")
-                             serverSelect.innerHTML = ""
-                             for (var i = 0; i < devices.length; i++) {
-                             var option = document.createElement("OPTION")
-                             option.value = devices[i].address
-                             option.innerHTML = devices[i].name
-                             serverSelect.appendChild(option)
-                             }
-                             
-                             if (window.localStorage.getItem("advantagescout_server") != null) {
-                             for (var i = 0; i < devices.length; i++) {
-                             if (devices[i].address == window.localStorage.getItem("advantagescout_server")) {
-                             serverSelect.selectedIndex = i
-                             }
-                             }
-                             }
-                             })
-        
         //Add version number
         cordova.getAppVersion.getVersionNumber(function(version) {
                                                document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
                                                })
+        
+        refreshDeviceList()
         
         //Initialize
         getConfig()
@@ -137,7 +127,29 @@ function pushSerialQueue() {
                                     })
         }
     }
-    }
+}
+
+//Add possible server devices
+function refreshDeviceList() {
+    bluetoothSerial.list(function(devices) {
+                         var serverSelect = document.getElementById("server")
+                         serverSelect.innerHTML = ""
+                         for (var i = 0; i < devices.length; i++) {
+                         var option = document.createElement("OPTION")
+                         option.value = devices[i].address
+                         option.innerHTML = devices[i].name
+                         serverSelect.appendChild(option)
+                         }
+                         
+                         if (window.localStorage.getItem("advantagescout_server") != null) {
+                         for (var i = 0; i < devices.length; i++) {
+                         if (devices[i].address == window.localStorage.getItem("advantagescout_server")) {
+                         serverSelect.selectedIndex = i
+                         }
+                         }
+                         }
+                         })
+}
 
 var uploadQueued = false
 function upload() {
@@ -199,7 +211,7 @@ function loadConfig(data) {
             GameCanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", gameData["CanvasManager"])
         }
         catch(error) {
-            alert("Failed to load game data. (" + error.message + ")")
+            navigator.notification.alert("Failed to load game data. (" + error.message + ")", function() {}, "Error")
         }
         document.getElementById("visualstart").innerHTML = "Scout! (visual)"
         document.getElementById("classicstart").innerHTML = "Scout! (classic)"
@@ -218,7 +230,7 @@ function loadConfig(data) {
         cordova.getAppVersion.getVersionNumber(function(version) {
                                                if (version.toString() != data.version) {
                                                outdatedAlertSent = true
-                                               alert("This app version is outdated. Ask the scouting team for help updating.")
+                                               navigator.notification.alert("This app version is outdated. Ask the scouting team for help updating.", function() {}, "Update Required")
                                                }
                                                })
     }
@@ -372,15 +384,15 @@ function scoutStart(mode) {
     team = document.getElementById("team").value
     match = document.getElementById("match").value
     if (team == "" && match == "") {
-        alert("Please enter a team and match number.")
+        navigator.notification.alert("Please enter a team and match number.", function() {}, "Error")
         return
     }
     if (team == "") {
-        alert("Please enter a team number.")
+        navigator.notification.alert("Please enter a team number.", function() {}, "Error")
         return
     }
     if (match == "") {
-        alert("Please enter a match number.")
+        navigator.notification.alert("Please enter a match number.", function() {}, "Error")
         return
     }
     state = 1
@@ -403,11 +415,13 @@ function scoutStart(mode) {
 //Save data to local storage
 var uploadEvent = new Event("uploadData")
 document.addEventListener("uploadData", function() {
-                          if (confirm("Are you sure you're ready to upload data?")) {
-                          saveData()
-                          upload()
-                          idleStart(true)
-                          }
+                          navigator.notification.confirm("Are you sure you're ready to upload data?", function(result) {
+                                                         if (result == 1) {
+                                                         saveData()
+                                                         upload()
+                                                         idleStart(true)
+                                                         }
+                                                         }, "Upload?", ["Upload", "Cancel"])
                           })
 
 //Transition to team match selection
@@ -431,6 +445,7 @@ function setConfig(open) {
     if (!open) {
         window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
         window.localStorage.setItem("advantagescout_server", document.getElementById("server").value)
+        getConfig()
     }
 }
 
@@ -496,6 +511,7 @@ function setMode(mode) {
     if (gameData.CanvasManager) {
         canvasManager.setMode(state - 1)
     }
+    window.scrollTo(0, 0)
 }
 
 //Adjusts body size and text based on screen size
