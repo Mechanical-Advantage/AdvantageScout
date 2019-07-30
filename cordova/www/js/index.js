@@ -66,7 +66,9 @@ var app = {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
         }
         if (window.localStorage.getItem("advantagescout_gamedata") != null) {
-            loadConfig(JSON.parse(window.localStorage.getItem("advantagescout_gamedata")))
+            if (Math.round(Date.now() / 1000) - window.localStorage.getItem("advantagescout_gamedatatimestamp") < cacheExpiration) {
+                loadConfig(JSON.parse(window.localStorage.getItem("advantagescout_gamedata")))
+            }
         }
         updateLocalCount()
         
@@ -86,6 +88,7 @@ var team = 0
 var match = 0
 modeLookup = ["auto", "teleop", "endgame"]
 var classicData = {}
+var cacheExpiration = 86400 //time to allow use of cached game data/config/version number (seconds)
 
 var serialQueue = []
 function addToSerialQueue(query, args, response) {
@@ -188,6 +191,7 @@ function getConfig() {
     addToSerialQueue("load_data", function() {return []}, function(data) {
                      data = JSON.parse(data)[1]
                      window.localStorage.setItem("advantagescout_gamedata", JSON.stringify(data))
+                     window.localStorage.setItem("advantagescout_gamedatatimestamp", Math.round(Date.now() / 1000))
                      loadConfig(data)
                      })
 }
