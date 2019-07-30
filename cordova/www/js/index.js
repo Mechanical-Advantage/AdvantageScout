@@ -28,18 +28,14 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        document.addEventListener('backbutton', function() {
+                                  if (state != 0) {
+                                  if (confirm("Stop scouting? Your data will NOT be saved!")) {
+                                  idleStart(false)
+                                  }
+                                  }
+                                  }, false)
         window.addEventListener("resize", function() {resizeText()})
-        
-        //Initialize
-        getConfig()
-        resizeText()
-        if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
-            window.localStorage.setItem("advantagescout_scoutdata", "[]")
-        }
-        if (window.localStorage.getItem("advantagescout_gamedata") != null) {
-            loadConfig(JSON.parse(window.localStorage.getItem("advantagescout_gamedata")))
-        }
-        updateLocalCount()
         
         //Check for device name
         if (window.localStorage.getItem("advantagescout_device") == null) {
@@ -72,6 +68,17 @@ var app = {
         cordova.getAppVersion.getVersionNumber(function(version) {
                                                document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
                                                })
+        
+        //Initialize
+        getConfig()
+        resizeText()
+        if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
+            window.localStorage.setItem("advantagescout_scoutdata", "[]")
+        }
+        if (window.localStorage.getItem("advantagescout_gamedata") != null) {
+            loadConfig(JSON.parse(window.localStorage.getItem("advantagescout_gamedata")))
+        }
+        updateLocalCount()
         
         //Create upload event
         setInterval(function() {upload()}, 20000)
@@ -399,18 +406,21 @@ document.addEventListener("uploadData", function() {
                           if (confirm("Are you sure you're ready to upload data?")) {
                           saveData()
                           upload()
-                          idleStart()
+                          idleStart(true)
                           }
                           })
 
-//Transition from scouting or offline warning to offline warning or title
-function idleStart() {
+//Transition to team match selection
+function idleStart(resetFields) {
     document.getElementById("modeSwitcherDiv").hidden = true
     document.getElementById("classicDiv1").hidden = true
     document.getElementById("classicDiv2").hidden = true
     document.getElementById("classicDiv3").hidden = true
-    document.getElementById("team").value = ""
-    document.getElementById("match").value = ""
+    document.getElementById("visualCanvasDiv").hidden = true
+    if (resetFields) {
+        document.getElementById("team").value = ""
+        document.getElementById("match").value = ""
+    }
     document.getElementById("selectionDiv").hidden = false
 }
 
