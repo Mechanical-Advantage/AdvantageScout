@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"></meta>-->
+        <meta name="format-detection" content="telephone=no"></meta>
+        <meta name="msapplication-tap-highlight" content="no"></meta>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover"></meta>
+        <link rel="stylesheet" type="text/css" href="css/index.css"></link>
+        <title>
+            Advantage Scout
+        </title>
+    </head>
+    <body>
+        <div id="selectionDiv" class="centered hideonnoscript">
+            <div class="title">
+                Advantage Scout
+            </div>
+            <div id="localcount">
+                Loading...
+            </div>
+            <button onclick="javascript:setConfig(true)">
+                Settings
+            </button>
+            <br>
+            Team:
+            <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
+            <br>
+            Match:
+            <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
+            <br>
+            <span id="reverseAlliancesDiv" hidden>
+                Alliance Position:
+                <select id="reverseAlliances">
+                    <option value="0">
+                        red right, blue left
+                    </option>
+                    <option value="1">
+                        red left, blue right
+                    </option>
+                </select>
+                <br>
+            </span>
+            <div id="loadingtext">
+                Loading...
+            </div>
+            <div id="startbuttons" hidden>
+                <button id="visualstart" class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                    Scout! (visual)
+                </button>
+                <br id="twobuttonbreak">
+                <button id="classicstart" class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                    Scout! (classic)
+                </button>
+            </div>
+        </div>
+        
+        <div id="configDiv" class="centered" hidden>
+            <div class="title">
+                Advantage Scout
+            </div>
+            Enter a device name:
+            <br>
+            <input type="text" id="name"></input>
+            <br>
+            <br>
+            Enter a server MAC address:
+            <br>
+            <input type="text" id="serverAddress"></input>
+            <br>
+            <button onclick="javascript:setConfig(false)" class="scoutstart">
+                Finish
+            </button>
+            <script>
+                
+            </script>
+        </div>
+        
+        <div id="modeSwitcherDiv" class="modeswitcher" hidden>
+            <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
+                Autonomous
+            </div>
+            <div class="switcherbutton2" onclick="javascript:setMode(2)">
+                Tele-operated
+            </div>
+            <div class="switcherbutton3" onclick="javascript:setMode(3)">
+                End Game
+            </div>
+        </div>
+        
+        <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
+            <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+        </div>
+        
+        <div id="classicDiv1" class="classicdiv" hidden>
+        </div>
+        
+        <div id="classicDiv2" class="classicdiv" hidden>
+        </div>
+        
+        <div id="classicDiv3" class="classicdiv" hidden>
+        </div>
+        
+        <script src="js/ButtonManager.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

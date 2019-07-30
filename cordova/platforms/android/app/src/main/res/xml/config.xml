@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.littletonrobotics.advantagescout" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="BluetoothSerial">
+        <param name="android-package" value="com.megster.cordova.BluetoothSerial" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="AppVersion">
+        <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion" />
+    </feature>
+    <name>Advantage Scout</name>
+    <description>
+        FRC Team 6328 custom scouting system
+    </description>
+    <author email="info@littletonrobotics.org" href="http://www.littletonrobotics.org">
+        Littleton Robotics Scouting
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon density="mdpi" height="256" platform="ios" src="www/img/logo.png" width="256" />
+    <icon density="mdpi" height="256" platform="android" src="www/img/logo.png" width="256" />
+    <icon density="mdpi" height="256" platform="osx" src="www/img/logo.png" width="256" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+</widget>

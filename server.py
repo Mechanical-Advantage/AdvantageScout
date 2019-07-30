@@ -1,7 +1,9 @@
 import sqlite3 as sql
 import cherrypy
 import json
+import serial
 import time
+import threading
 from pathlib import Path
 import os
 import sys
@@ -9,6 +11,8 @@ import sys
 #Config
 default_port = 8000 # can override w/ command line argument
 host = "0.0.0.0"
+bt_enable = True
+bt_port = "/dev/cu.Bluetooth-Incoming-Port"
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 default_game = "2019"
@@ -465,7 +469,43 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
             response = "Error: unknown key \"" + key + "\""
         return(response)
 
+def log(output, before_text=""):
+    if before_text == "":
+        print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
+    else:
+        print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
+
+def bluetooth_server(port):
+    try:
+        ser = serial.Serial(port)
+    except:
+        log("WARNING - failed to connect to \"" + port + "\" Is the connection busy?")
+        return()
+    log("Started Bluetooth server on port \"" + port + "\"")
+    while True:
+        raw = ser.readline().decode("utf-8")[:-1]
+        try:
+            msg = json.loads(raw)
+        except:
+            log("Unable to parse request \"" + raw + "\"")
+
+        if msg[1] == "load_data":
+            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config())}
+        elif msg[1] == "upload":
+            result = json.loads(main_server().upload(msg[2][0]))
+        else:
+            result = "error"
+        response = [msg[0], result]
+        ser.write((json.dumps(response) + "\n").encode('utf-8'))
+        log("\"" + msg[1] + "\" from \"" + msg[0] + "\"", "Bluetooth")
+
+
 if __name__ == "__main__":
+    #Start bluetooth server
+    bt_server = threading.Thread(target=bluetooth_server, args=(bt_port,), daemon=True)
+    bt_server.start()
+    
+    #Start web server
     port = default_port
     if len(sys.argv) > 1:
         port = int(sys.argv[1])

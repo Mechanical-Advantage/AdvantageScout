@@ -1,0 +1,268 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+@font-face {
+    font-family: "Robotech GP";
+    src: url("../fonts/robotechgp.ttf");
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color: "#FFFFFF";
+    font-family: sans-serif;
+    font-size: 20px;
+    line-height: 25px;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    /* Padding to avoid the "unsafe" areas behind notches in the screen */
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+    width: 100%;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    top: 25px;
+    transform: translate(-50%, 0%);
+    text-align: center;
+}
+
+.title {
+    font-family: "Robotech GP";
+    font-size: 45px;
+    margin-bottom: 25px;
+}
+
+.subtitle {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+button.scoutstart {
+    margin-top: 10px;
+    background-color: #c2f7ff;
+    border: 1px solid black;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+input.teammatch {
+    width: 100px;
+    height: 25px;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+div.modeswitcher {
+    text-align: center;
+    font-size: 30px;
+    line-height: 75px;
+}
+
+div.switcherbutton1 {
+    position: absolute;
+    top: 0px;
+    height: 75px;
+    left: 0%;
+    width: 33.33%;
+    background-color: #ffc7c7;
+}
+
+div.switcherbutton2 {
+    position: absolute;
+    top: 0px;
+    height: 75px;
+    left: 33.33%;
+    width: 33.33%;
+    background-color: #c7ffd1;
+}
+
+div.switcherbutton3 {
+    position: absolute;
+    top: 0px;
+    height: 75px;
+    left: 66.66%;
+    width: 33.33%;
+    background-color: #c3c9fa;
+}
+
+div.visualcanvasdiv {
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+
+canvas.visualcanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 95%;
+    max-height: 95%;
+}
+
+div.classicdiv {
+    position: absolute;
+    top: 90px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+}
+
+div.classicgroup {
+    position: relative;
+    display: inline-block;
+    width: 306px;
+    height: 185px;
+    margin: 0px;
+}
+
+div.classicgroup_labelbox {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 0px;
+    height: 25%;
+}
+
+div.classicgroup_units {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 25%;
+    height: 75%;
+}
+
+div.classicunit {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 140px;
+    margin: 0px;
+}
+
+div.classicwide {
+    width: 306px;
+}
+
+div.classiclabelbox {
+    position: relative;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    height: 40%;
+}
+
+div.classiclabel {
+    position: absolute;
+    font-size: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.classiccontrols {
+    position: relative;
+    left: 0px;
+    width: 100%:
+    top: 40%;
+    height: 60%;
+}
+
+.classicinput {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+textarea.classicinput {
+    resize: none;
+    padding: 5px 5px;
+    font-size: 15px;
+    width: 90%;
+    height: 90%;
+}
+
+select.classicinput {
+    width: 75%;
+    height: 50%;
+    font-size: 13px;
+}
+
+button.classiccheck {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 8px;
+    width: 60%;
+    height: 60%;
+}
+
+div.classiccounter_number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+}
+
+button.classiccounter_button {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+button.classiccounter_down {
+    left: 20%;
+    background-color: #ff7575;
+}
+
+button.classiccounter_up {
+    left: 80%;
+    background-color: #75ff91;
+}
+
+button.classicuploadbutton {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 75%;
+    width: 75%;
+    background-color: #c2f7ff;
+    border: 1px solid black;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 8px;
+}

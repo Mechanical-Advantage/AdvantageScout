@@ -69,7 +69,7 @@ function updateDeviceTable() {
         
         var diff = Math.round(Date.now() / 1000) - devices[i].last_heartbeat
         var status
-        if (diff > 8) {
+        if (diff > 15) {
             status = "Inactive"
             row.classList.add("red")
         } else if (devices[i].last_status == 0) {
