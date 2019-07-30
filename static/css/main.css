@@ -34,13 +34,15 @@ body {
     margin-bottom: 15px;
 }
 
-button.scoutstart {
+.scoutstart {
     margin-top: 10px;
     background-color: #c2f7ff;
     border: 1px solid black;
     font-size: 15px;
     padding: 10px;
     border-radius: 8px;
+    color: black;
+    text-decoration: none;
 }
 
 input.teammatch {

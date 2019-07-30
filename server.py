@@ -469,6 +469,40 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
             response = "Error: unknown key \"" + key + "\""
         return(response)
 
+    @cherrypy.expose
+    def download(self):
+        output = """
+            <html>
+                <head>
+                    <title>
+                        Download - Advantage Scout
+                    </title>
+                    <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
+                    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+                    $FAVICON_CODE
+                </head>
+                <body>
+                    <div class="centered">
+                        <div class="title">
+                            Advantage Scout
+                        </div>
+                        <div class="subtitle">
+                            App download
+                        </div>
+                        Note: this app is for ANDROID ONLY
+                        <br>
+                        <br>
+                        <a href="releases/AdvantageScout $VERSION.apk" download class="scoutstart">
+                            Download
+                        </a>
+                    </div>
+                </body>
+            </html>
+            """
+        config = quickread("cordova/config.xml").split('"')
+        output = output.replace("$VERSION", config[3])
+        return(output.replace("$FAVICON_CODE", favicon_code))
+
 def log(output, before_text=""):
     if before_text == "":
         print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
@@ -510,4 +544,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     cherrypy.config.update({'server.socket_port': port, 'server.socket_host': host})
-    cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}})
+    cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}, "/releases": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/cordova/releases"}})
