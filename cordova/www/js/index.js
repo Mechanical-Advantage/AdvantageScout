@@ -52,6 +52,11 @@ var app = {
         }
         document.getElementById("serverAddress").value = window.localStorage.getItem("advantagescout_server")
         
+        //Add version number
+        cordova.getAppVersion.getVersionNumber(function(version) {
+                                               document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
+                                               })
+        
         //Create upload event
         setInterval(function() {upload()}, 20000)
     },

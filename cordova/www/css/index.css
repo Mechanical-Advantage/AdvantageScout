@@ -60,6 +60,10 @@ body {
     margin-bottom: 15px;
 }
 
+.versiontext {
+    font-style: italic;
+}
+
 button.scoutstart {
     margin-top: 10px;
     background-color: #c2f7ff;
