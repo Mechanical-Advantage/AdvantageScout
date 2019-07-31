@@ -55,6 +55,7 @@ var app = {
         //Add version number
         cordova.getAppVersion.getVersionNumber(function(version) {
                                                document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
+                                               appVersion = version.toString()
                                                })
         
         refreshDeviceList()
@@ -89,6 +90,7 @@ var match = 0
 modeLookup = ["auto", "teleop", "endgame"]
 var classicData = {}
 var cacheExpiration = 86400 //time to allow use of cached game data/config/version number (seconds)
+var appVersion = "?"
 
 var serialQueue = []
 function addToSerialQueue(query, args, response) {
@@ -497,6 +499,8 @@ function saveData() {
     toSave["Team"] = Number(team)
     toSave["Match"] = Number(match)
     toSave["DeviceName"] = window.localStorage.getItem("advantagescout_device")
+    toSave["Version"] = cordova.platformId + " " + appVersion
+    toSave["InterfaceType"] = scoutMode
     toSave["Time"] = Math.round(Date.now() / 1000)
     var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
     previouslySaved.push(toSave)

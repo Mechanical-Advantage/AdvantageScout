@@ -61,7 +61,7 @@ def init_game():
     cur_game = conn_game.cursor()
 
     config = json.loads(quickread("games" + os.path.sep + game_result["name"] + os.path.sep + "prefs.json"))
-    create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Time INTEGER, UploadTime INTEGER, "
+    create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, "
     for i in range(len(config["fields"])):
         create_text += config["fields"][i] + ","
     create_text = create_text[:-1]
@@ -324,7 +324,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         result["count"] = len(data)
         for i in range(len(data)):
             to_save = {}
-            fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Time INTEGER", "UploadTime INTEGER"]
+            fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
             for f in range(len(fields)):
                 field_name = fields[f].split(" ")[0]
                 if field_name in data[i]:

@@ -396,6 +396,8 @@ function saveData() {
     toSave["Team"] = Number(team)
     toSave["Match"] = Number(match)
     toSave["DeviceName"] = window.localStorage.getItem("advantagescout_device")
+    toSave["Version"] = "web"
+    toSave["InterfaceType"] = scoutMode
     toSave["Time"] = Math.round(Date.now() / 1000)
     var previouslySaved = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
     previouslySaved.push(toSave)
