@@ -347,8 +347,8 @@
                 "label": "Climb Level",
                 "unit1": {
                     "type": "chooser",
-                    "field": "ClimbLevel",
-                    "label": "Achieved",
+                    "field": "ClimbLevelAttempted",
+                    "label": "Attempted",
                     "options": {
                         "Did not": 0,
                         "Level 1": 1,
@@ -358,8 +358,8 @@
                 },
                 "unit2": {
                     "type": "chooser",
-                    "field": "ClimbLevelAttempted",
-                    "label": "Attempted",
+                    "field": "ClimbLevel",
+                    "label": "Achieved",
                     "options": {
                         "Did not": 0,
                         "Level 1": 1,
@@ -373,8 +373,8 @@
                 "label": "Lifted Others",
                 "unit1": {
                     "type": "chooser",
-                    "field": "LiftedOthers",
-                    "label": "Achieved",
+                    "field": "LiftedOthersAttempted",
+                    "label": "Attempted",
                     "options": {
                         "Did not": 0,
                         "Level 1": 1,
@@ -384,8 +384,8 @@
                 },
                 "unit2": {
                     "type": "chooser",
-                    "field": "LiftedOthersAttempted",
-                    "label": "Attempted",
+                    "field": "LiftedOthers",
+                    "label": "Achieved",
                     "options": {
                         "Did not": 0,
                         "Level 1": 1,
@@ -413,11 +413,11 @@
                 "label": "Driver Rating",
                 "options": {
                     "NA": 0,
-                    "⭐": 1,
-                    "⭐⭐": 2,
-                    "⭐⭐⭐": 3,
-                    "⭐⭐⭐⭐": 4,
-                    "⭐⭐⭐⭐⭐": 5
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                 }
             },
             {
@@ -429,11 +429,11 @@
                     "label": "Collection",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 },
                 "unit2": {
@@ -442,11 +442,11 @@
                     "label": "Delivery",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 }
             },
@@ -459,11 +459,11 @@
                     "label": "Collection",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 },
                 "unit2": {
@@ -472,11 +472,11 @@
                     "label": "Delivery",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 }
             },
@@ -489,11 +489,11 @@
                     "label": "While Playing",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 },
                 "unit2": {
@@ -502,11 +502,11 @@
                     "label": "While Under",
                     "options": {
                         "NA": 0,
-                        "⭐": 1,
-                        "⭐⭐": 2,
-                        "⭐⭐⭐": 3,
-                        "⭐⭐⭐⭐": 4,
-                        "⭐⭐⭐⭐⭐": 5
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
                 }
             },
