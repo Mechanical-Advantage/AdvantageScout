@@ -37,7 +37,7 @@ var app = {
                                                                  state = 0
                                                                  idleStart(false)
                                                                  }
-                                                                 }, "Stop Scouting?", ["Stop", "Continue"])
+                                                                 }, "Stop Scouting?", ["Leave", "Stay"])
                                   } else {
                                   setMode(state - 1)
                                   }
