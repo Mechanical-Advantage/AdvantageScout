@@ -18,5 +18,6 @@ The server will run on port 8000 by default. The default port, host ip, and data
 ### Navigation guide
 * **(host)/** - Main scouting page. Navigate here on scouting devices.
 * **(host)/config** - Sets device name. Will be opened automatically on new devices.
+* **(host)/download** - App download. Links to the latest APK of the Android app, served locally.
 * **(host)/admin** - System overview. Configures current game, event, and alliance positions. Shows the status of all devices.
 * **(host)/export** - Manual data export. Produces raw JSON of any matches currently saved offline.
