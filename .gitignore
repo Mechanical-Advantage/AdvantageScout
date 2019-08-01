@@ -1,2 +1,3 @@
 cordova/platforms
 *.db
+__pycache__
