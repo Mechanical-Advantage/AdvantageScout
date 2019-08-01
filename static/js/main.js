@@ -469,7 +469,7 @@ if (window.localStorage.getItem("advantagescout_device") == null) {
     getConfig()
     heartbeat()
     resizeText()
-    setInterval(function() {heartbeat()}, 3000)
+    setInterval(function() {heartbeat()}, 20000)
     if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
         window.localStorage.setItem("advantagescout_scoutdata", "[]")
     }

@@ -43,7 +43,6 @@ var app = {
                                   }
                                   }
                                   }, false)
-        window.addEventListener("resize", function() {resizeText()})
         
         //Check for device name
         if (window.localStorage.getItem("advantagescout_device") == null) {
@@ -58,10 +57,13 @@ var app = {
                                                appVersion = version.toString()
                                                })
         
+        //Refresh device list
         refreshDeviceList()
         
-        //Initialize
+        //Misc. initialization
+        heartbeat()
         getConfig()
+        window.addEventListener("resize", function() {resizeText()})
         resizeText()
         if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
@@ -73,8 +75,11 @@ var app = {
         }
         updateLocalCount()
         
-        //Create upload event
-        setInterval(function() {upload()}, 20000)
+        //Create upload & heartbeat event
+        setInterval(function() {
+                    upload()
+                    heartbeat()
+                    }, 20000)
     },
 
     // Update DOM on a Received Event
@@ -182,6 +187,22 @@ function updateLocalCount() {
         document.getElementById("localcount").innerHTML = "1 match saved locally"
     } else {
         document.getElementById("localcount").innerHTML = count + " matches saved locally"
+    }
+}
+
+var heartbeatQueued = false
+function heartbeat() {
+    if (!heartbeatQueued) {
+        heartbeatQueued = true
+        addToSerialQueue("heartbeat", function() {
+                         if (state == 0) {
+                         return [state]
+                         } else {
+                         return [state, team, match]
+                         }
+                         }, function() {
+                         heartbeatQueued = false
+                         })
     }
 }
 
@@ -416,6 +437,7 @@ function scoutStart(mode) {
     var showClassic = gameData.prefs.forceClassic["auto"] || scoutMode == "classic"
     document.getElementById("visualCanvasDiv").hidden = showClassic
     document.getElementById("classicDiv1").hidden = !showClassic
+    heartbeat()
 }
 
 //Save data to local storage
@@ -432,6 +454,7 @@ document.addEventListener("uploadData", function() {
 
 //Transition to team match selection
 function idleStart(resetFields) {
+    state = 0
     document.getElementById("modeSwitcherDiv").hidden = true
     document.getElementById("classicDiv1").hidden = true
     document.getElementById("classicDiv2").hidden = true
@@ -442,6 +465,7 @@ function idleStart(resetFields) {
         document.getElementById("match").value = ""
     }
     document.getElementById("selectionDiv").hidden = false
+    heartbeat()
 }
 
 //Open & close settings
@@ -520,6 +544,7 @@ function setMode(mode) {
         canvasManager.setMode(state - 1)
     }
     window.scrollTo(0, 0)
+    heartbeat()
 }
 
 //Adjusts body size and text based on screen size

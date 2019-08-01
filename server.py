@@ -1,7 +1,6 @@
 import sqlite3 as sql
 import cherrypy
 import json
-import serial
 import time
 import threading
 from pathlib import Path
@@ -16,6 +15,10 @@ bt_ports = ["/dev/cu.Bluetooth-Incoming-Port"]
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 default_game = "2019"
+
+#Import serial library
+if bt_enable:
+    import serial
 
 #Initialize global db
 def init_global():
@@ -528,19 +531,26 @@ def bluetooth_server(port):
             result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "version": config[3]}
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
+        elif msg[1] == "heartbeat":
+            if len(msg[2]) > 1:
+                main_server().heartbeat(msg[0], msg[2][0], msg[2][1], msg[2][2])
+            else:
+                main_server().heartbeat(msg[0], msg[2][0])
+            result = "success"
         else:
             result = "error"
         response = [msg[0], result]
         ser.write((json.dumps(response) + "\n").encode('utf-8'))
-        log("\"" + msg[1] + "\" from \"" + msg[0] + "\"", "Bluetooth")
+        log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
 
 
 if __name__ == "__main__":
     #Start bluetooth servers
-    bt_servers = []
-    for i in range(len(bt_ports)):
-        bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports[i],), daemon=True))
-        bt_servers[i].start()
+    if bt_enable:
+        bt_servers = []
+        for i in range(len(bt_ports)):
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports[i],), daemon=True))
+            bt_servers[i].start()
     
     #Start web server
     port = default_port
