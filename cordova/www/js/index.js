@@ -30,7 +30,11 @@ var app = {
         this.receivedEvent('deviceready');
         StatusBar.backgroundColorByHexString("#000b3d");
         document.addEventListener('backbutton', function() {
-                                  if (state != 0) {
+                                  if (state == 0) {
+                                  if (!document.getElementById("configDiv").hidden) {
+                                  setConfig(false)
+                                  }
+                                  } else {
                                   if (state == 1) {
                                   navigator.notification.confirm("Your data will NOT be saved!", function(result) {
                                                                  if (result == 1) {
@@ -109,8 +113,15 @@ function getRandomDelay() {
     return Math.random() * 6000
 }
 
+function timeoutPushSerialQueue() {
+    bluetoothSerial.unsubscribe()
+    bluetoothSerial.disconnect()
+    setTimeout(function() {pushSerialQueue()}, getRandomDelay())
+}
+
 function pushSerialQueue() {
     var responses = []
+    var timeout
     bluetoothSerial.isEnabled(function(){
                               btEnabled()
                               }, function() {
@@ -122,6 +133,7 @@ function pushSerialQueue() {
         } else {
             bluetoothSerial.connect(window.localStorage.getItem("advantagescout_server"), function() {
                                     bluetoothSerial.subscribe("\n", function(data) {
+                                                              clearTimeout(timeout)
                                                               serialQueue.shift().response(data)
                                                               if (serialQueue.length == 0) {
                                                               bluetoothSerial.unsubscribe()
@@ -132,6 +144,7 @@ function pushSerialQueue() {
                                     data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[i].query, serialQueue[i].args()])
                                     bluetoothSerial.write(data + "\n", function() {}, function() {})
                                     }
+                                    timeout = setTimeout(function() {timeoutPushSerialQueue()}, 5000)
                                     }, function() {
                                     setTimeout(function() {pushSerialQueue()}, getRandomDelay())
                                     })
@@ -427,7 +440,6 @@ function scoutStart(mode) {
     setupClassic()
     if (gameData.CanvasManager) {
         canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, uploadEvent)
-        
     }
     document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
     document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
