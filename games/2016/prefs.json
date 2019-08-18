@@ -1,0 +1,560 @@
+{
+    "fields": [
+        "AllianceColor INTEGER DEFAULT 0",
+        "StartPos INTEGER DEFAULT 0",
+        "CrossedLine INTEGER DEFAULT 0",
+        "AutoBallHigh INTEGER DEFAULT 0",
+        "AutoBallHighFailures INTEGER DEFAULT 0",
+        "AutoBallLow INTEGER DEFAULT 0",
+        "AutoBallLowFailures INTEGER DEFAULT 0",
+        "AutoCrossPort INTEGER DEFAULT 0",
+        "AutoCrossCheval INTEGER DEFAULT 0",
+        "AutoCrossMoat INTEGER DEFAULT 0",
+        "AutoCrossRamp INTEGER DEFAULT 0",
+        "AutoCrossBridge INTEGER DEFAULT 0",
+        "AutoCrossSally INTEGER DEFAULT 0",
+        "AutoCrossWall INTEGER DEFAULT 0",
+        "AutoCrossTerrain INTEGER DEFAULT 0",
+        "AutoCrossLowBar INTEGER DEFAULT 0",
+        "BallHigh INTEGER DEFAULT 0",
+        "BallHighFailures INTEGER DEFAULT 0",
+        "BallLow INTEGER DEFAULT 0",
+        "BallLowFailures INTEGER DEFAULT 0",
+        "CrossPort INTEGER DEFAULT 0",
+        "CrossCheval INTEGER DEFAULT 0",
+        "CrossMoat INTEGER DEFAULT 0",
+        "CrossRamp INTEGER DEFAULT 0",
+        "CrossBridge INTEGER DEFAULT 0",
+        "CrossSally INTEGER DEFAULT 0",
+        "CrossWall INTEGER DEFAULT 0",
+        "CrossTerrain INTEGER DEFAULT 0",
+        "CrossLowBar INTEGER DEFAULT 0",
+        "WonMatch INTEGER DEFAULT 0",
+        "Disabled INTEGER DEFAULT 0",
+        "ClimbAchieved INTEGER DEFAULT 0",
+        "ClimbAttempted INTEGER DEFAULT 0",
+        "ParkAchieved INTEGER DEFAULT 0",
+        "ParkAttempted INTEGER DEFAULT 0",
+        "PortRating INTEGER DEFAULT 0",
+        "ChevalRating INTEGER DEFAULT 0",
+        "MoatRating INTEGER DEFAULT 0",
+        "RampRating INTEGER DEFAULT 0",
+        "BridgeRating INTEGER DEFAULT 0",
+        "SallyRating INTEGER DEFAULT 0",
+        "WallRating INTEGER DEFAULT 0",
+        "TerrainRating INTEGER DEFAULT 0",
+        "LowBarRating INTEGER DEFAULT 0",
+        "DriverRating INTEGER DEFAULT 0",
+        "IntakeRating INTEGER DEFAULT 0",
+        "DeliveryRating INTEGER DEFAULT 0",
+        "DefenseRating INTEGER DEFAULT 0",
+        "AvoidDefenseRating INTEGER DEFAULT 0",
+        "Comment TEXT DEFAULT ''"
+    ],
+    "forceClassic": {
+        "auto": false,
+        "teleop": false,
+        "endgame": true
+    },
+    "classic": {
+        "auto": [
+            {
+                "type": "chooser",
+                "field": "AllianceColor",
+                "label": "Alliance Color",
+                "options": {
+                    "Red": 0,
+                    "Blue": 1
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "StartPos",
+                "label": "Start Position",
+                "options": {
+                    "Left": 0,
+                    "Center": 1,
+                    "Right": 2
+                }
+            },
+            {
+                "type": "checkbox",
+                "field": "CrossedLine",
+                "label": "Crossed Line"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "group",
+                "label": "Ball High",
+                "unit1": {
+                    "type": "counter",
+                    "field": "AutoBallHigh",
+                    "label": "Successes",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "AutoBallHighFailures",
+                    "label": "Failures",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                }
+            },
+            {
+                "type": "group",
+                "label": "Ball Low",
+                "unit1": {
+                    "type": "counter",
+                    "field": "AutoBallLow",
+                    "label": "Successes",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "AutoBallLowFailures",
+                    "label": "Failures",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                }
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossPort",
+                "label": "Crossed Port",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossCheval",
+                "label": "Crossed Cheval",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossMoat",
+                "label": "Crossed Moat",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossRamp",
+                "label": "Crossed Ramp",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossBridge",
+                "label": "Crossed Bridge",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossSally",
+                "label": "Crossed Sally",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossWall",
+                "label": "Crossed Wall",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossTerrain",
+                "label": "Crossed Terrain",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoCrossLowBar",
+                "label": "Crossed Low Bar",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            }
+        ],
+        "teleop": [
+            {
+                "type": "group",
+                "label": "Ball High",
+                "unit1": {
+                    "type": "counter",
+                    "field": "BallHigh",
+                    "label": "Successes",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "BallHighFailures",
+                    "label": "Failures",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                }
+            },
+            {
+                "type": "group",
+                "label": "Ball Low",
+                "unit1": {
+                    "type": "counter",
+                    "field": "BallLow",
+                    "label": "Successes",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "BallLowFailures",
+                    "label": "Failures",
+                    "min": 0,
+                    "max": 9,
+                    "step": 1
+                }
+            },
+            {
+                "type": "counter",
+                "field": "CrossPort",
+                "label": "Crossed Port",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossCheval",
+                "label": "Crossed Cheval",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossMoat",
+                "label": "Crossed Moat",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossRamp",
+                "label": "Crossed Ramp",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossBridge",
+                "label": "Crossed Bridge",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossSally",
+                "label": "Crossed Sally",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossWall",
+                "label": "Crossed Wall",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossTerrain",
+                "label": "Crossed Terrain",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "CrossLowBar",
+                "label": "Crossed Low Bar",
+                "min": 0,
+                "max": 2,
+                "step": 1
+            }
+        ],
+        "endgame": [
+            {
+                "type": "checkbox",
+                "field": "WonMatch",
+                "label": "Won Match?"
+            },
+            {
+                "type": "checkbox",
+                "field": "Disabled",
+                "label": "Disabled/Fell?"
+            },
+            {
+                "type": "group",
+                "label": "Climb",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "ClimbAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "ClimbAchieved",
+                    "label": "Achieved"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Park",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "ParkAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "ParkAchieved",
+                    "label": "Achieved"
+                }
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "chooser",
+                "field": "PortRating",
+                "label": "Port Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "ChevalRating",
+                "label": "Cheval Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "MoatRating",
+                "label": "Moat Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "RampRating",
+                "label": "Ramp Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "BridgeRating",
+                "label": "Bridge Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "SallyRating",
+                "label": "Sally Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "WallRating",
+                "label": "Wall Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "TerrainRating",
+                "label": "Terrain Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "LowBarRating",
+                "label": "Low Bar Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "DriverRating",
+                "label": "Driver Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "group",
+                "label": "Manipulator Rating",
+                "unit1": {
+                    "type": "chooser",
+                    "field": "IntakeRating",
+                    "label": "Intake",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                },
+                "unit2": {
+                    "type": "chooser",
+                    "field": "DeliveryRating",
+                    "label": "Delivery",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                }
+            },
+            {
+                "type": "group",
+                "label": "Defense Rating",
+                "unit1": {
+                    "type": "chooser",
+                    "field": "DefenseRating",
+                    "label": "While Playing",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                },
+                "unit2": {
+                    "type": "chooser",
+                    "field": "AvoidDefenseRating",
+                    "label": "While Under",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                }
+            },
+            {
+                "type": "text",
+                "field": "Comment",
+                "label": "Comment"
+            },
+            {
+                "type": "uploadButton"
+            }
+        ]
+    }
+}
