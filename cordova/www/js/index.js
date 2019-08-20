@@ -424,15 +424,15 @@ function scoutStart(mode) {
     team = document.getElementById("team").value
     match = document.getElementById("match").value
     if (team == "" && match == "") {
-        navigator.notification.alert("Please enter a team and match number.", function() {}, "Error")
+        navigator.notification.alert("Please enter a team and match number.", function() {}, "Hold Your Horses!")
         return
     }
     if (team == "") {
-        navigator.notification.alert("Please enter a team number.", function() {}, "Error")
+        navigator.notification.alert("Please enter a team number.", function() {}, "Hold Your Horses!")
         return
     }
     if (match == "") {
-        navigator.notification.alert("Please enter a match number.", function() {}, "Error")
+        navigator.notification.alert("Please enter a match number.", function() {}, "Hold Your Horses!")
         return
     }
     state = 1

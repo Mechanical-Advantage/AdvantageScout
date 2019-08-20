@@ -5,6 +5,7 @@ This is an alternate version of the scouting interface, built as an Android app 
 ### 1.1.1
 * Added timeout for bluetooth serial requests
 * Added back button functionality on config screen
+* Changed text when missing team or match number
 
 ### 1.1.0
 * Added heartbeats
