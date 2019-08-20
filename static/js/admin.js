@@ -56,68 +56,85 @@ function getDevices() {
 
 //Recreate table based on local device data
 function updateDeviceTable() {
+    //Sort devices
+    var devicesSorted = {"red": [], "yellow": [], "green": []}
+    for (var i = 0; i < devices.length; i++) {
+        var diff = Math.round(Date.now() / 1000) - devices[i].last_heartbeat
+        var status
+        var color
+        if (diff > 30) {
+            status = "Inactive"
+            color = "red"
+        } else if (devices[i].last_status == 0) {
+            status = "Idle"
+            color = "yellow"
+        } else if (devices[i].last_status == 1) {
+            status = "Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match
+            color = "green"
+        } else if (devices[i].last_status == 2) {
+            status = "Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match
+            color = "green"
+        } else if (devices[i].last_status == 3) {
+            status = "Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match
+            color = "green"
+        } else if (devices[i].last_status == 4) {
+            status = "Offline Warning"
+            color = "yellow"
+        } else {
+            status = "Unknown"
+            color = "yellow"
+        }
+        devicesSorted[color].push(JSON.parse(JSON.stringify(devices[i])))
+        devicesSorted[color][devicesSorted[color].length - 1].status = status
+        devicesSorted[color][devicesSorted[color].length - 1].color = color
+    }
+    devicesSorted["red"].sort((a, b) => (a.last_heartbeat < b.last_heartbeat) ? 1 : -1)
+    devicesSorted["yellow"].sort((a, b) => (a.name > b.name) ? 1 : -1)
+    devicesSorted["green"].sort((a, b) => (a.name > b.name) ? 1 : -1)
+    
+    //Create table
     var table = document.getElementById("deviceTable")
     while (table.children[1]) {
         table.removeChild(table.children[1])
     }
-    for (var i = 0; i < devices.length; i++) {
-        var row = document.createElement("TR")
-        for (var f = 0; f < 4; f++) {
-            row.appendChild(document.createElement("TD"))
+    var colorLookup = ["green", "yellow", "red"]
+    for (var colorId = 0; colorId < 3; colorId++) {
+        for (var i = 0; i < devicesSorted[colorLookup[colorId]].length; i++) {
+            var row = document.createElement("TR")
+            for (var f = 0; f < 4; f++) {
+                row.appendChild(document.createElement("TD"))
+            }
+            row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name
+            row.classList.add(devicesSorted[colorLookup[colorId]][i].color)
+            row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].status
+            
+            var diff = Math.round(Date.now() / 1000) - devicesSorted[colorLookup[colorId]][i].last_heartbeat
+            hours = Math.floor(diff/3600)
+            diff -= hours*3600
+            minutes = Math.floor(diff/60)
+            seconds = diff - minutes*60
+            
+            formatted = ""
+            if (hours != 0) {
+                formatted = String(hours) + "h "
+            }
+            if (minutes != 0) {
+                formatted = formatted + String(minutes) + "m "
+            }
+            if (seconds != 0) {
+                formatted = formatted + String(seconds) + "s "
+            }
+            formatted = formatted.substring(0, formatted.length - 1);
+            if (formatted == "") {
+                formatted = "0s"
+            }
+            row.children[2].innerHTML = formatted + " ago"
+            
+            row.children[3].appendChild(document.createElement("BUTTON"))
+            row.children[3].firstChild.onclick = function() {removeDevice(this.parentElement.parentElement.children[0].innerHTML)}
+            row.children[3].firstChild.innerHTML = "Remove"
+            table.appendChild(row)
         }
-        row.children[0].innerHTML = devices[i].name
-        
-        var diff = Math.round(Date.now() / 1000) - devices[i].last_heartbeat
-        var status
-        if (diff > 30) {
-            status = "Inactive"
-            row.classList.add("red")
-        } else if (devices[i].last_status == 0) {
-            status = "Idle"
-            row.classList.add("yellow")
-        } else if (devices[i].last_status == 1) {
-            status = "Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match
-            row.classList.add("green")
-        } else if (devices[i].last_status == 2) {
-            status = "Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match
-            row.classList.add("green")
-        } else if (devices[i].last_status == 3) {
-            status = "Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match
-            row.classList.add("green")
-        } else if (devices[i].last_status == 4) {
-            status = "Offline Warning"
-            row.classList.add("yellow")
-        } else {
-            status = "Unknown"
-            row.classList.add("yellow")
-        }
-        row.children[1].innerHTML = status
-        
-        hours = Math.floor(diff/3600)
-        diff -= hours*3600
-        minutes = Math.floor(diff/60)
-        seconds = diff - minutes*60
-        
-        formatted = ""
-        if (hours != 0) {
-            formatted = String(hours) + "h "
-        }
-        if (minutes != 0) {
-            formatted = formatted + String(minutes) + "m "
-        }
-        if (seconds != 0) {
-            formatted = formatted + String(seconds) + "s "
-        }
-        formatted = formatted.substring(0, formatted.length - 1);
-        if (formatted == "") {
-            formatted = "0s"
-        }
-        row.children[2].innerHTML = formatted + " ago"
-        
-        row.children[3].appendChild(document.createElement("BUTTON"))
-        row.children[3].firstChild.onclick = function() {removeDevice(this.parentElement.parentElement.children[0].innerHTML)}
-        row.children[3].firstChild.innerHTML = "Remove"
-        table.appendChild(row)
     }
 }
 
