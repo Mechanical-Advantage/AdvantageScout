@@ -1,0 +1,2 @@
+cordova/plugins/* linguist-detectable=false
+cordova/node_modules/* linguist-detectable=false
