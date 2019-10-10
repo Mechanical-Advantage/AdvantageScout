@@ -1,6 +1,11 @@
 # Advantage Scout App
 This is an alternate version of the scouting interface, built as an Android app using Cordova. This allows devices to communicate over Bluetooth Serial rather than relying on PAN. The server can be configured to use Bluetooth Serial (in addition to standard functions) in the configuration at the start of the file.
 
+## Installation
+The app is not available on the Google Play Store, so it must be installed one of two ways:
+1. Go to the /download page on the web server
+2. Use the short link http://bit.ly/6328scout
+
 ## Changelog
 ### 1.1.1
 * Added timeout for bluetooth serial requests
