@@ -495,15 +495,13 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
                         Note: this app is for ANDROID ONLY
                         <br>
                         <br>
-                        <a href="releases/AdvantageScout $VERSION.apk" download class="scoutstart">
+                        <a href="releases/AdvantageScout.apk" download class="scoutstart">
                             Download
                         </a>
                     </div>
                 </body>
             </html>
             """
-        config = quickread("cordova/config.xml").split('"')
-        output = output.replace("$VERSION", config[3])
         return(output.replace("$FAVICON_CODE", favicon_code))
 
 def log(output, before_text=""):

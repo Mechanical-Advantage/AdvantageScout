@@ -11,4 +11,5 @@ cordova build android --release
 
 #Copy apk to releases folder
 cp "platforms/android/app/build/outputs/apk/release/app-release.apk" "releases/AdvantageScout ${version}.apk"
+cp "platforms/android/app/build/outputs/apk/release/app-release.apk" "releases/AdvantageScout.apk"
 echo "AdvantageScout ${version} copied to \"releases\" folder"
