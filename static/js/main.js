@@ -308,6 +308,10 @@ function scoutStart(mode) {
     state = 1
     scoutMode = mode
     setupClassic()
+    canvasManager = ""
+    var oldCanvas = document.getElementsByClassName("visualcanvas")[0]
+    var newCanvas = oldCanvas.cloneNode(true)
+    oldCanvas.parentElement.replaceChild(newCanvas, oldCanvas)
     if (gameData.CanvasManager) {
         canvasManager = new GameCanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, uploadEvent)
 
