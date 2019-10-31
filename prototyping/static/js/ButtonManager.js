@@ -1,3 +1,5 @@
+//NOTE: this file is modified for the prototype server (the event listener is attatched to outer canvas rather than the one specified)
+
 function Button(x, y, width, height, response) {
     this.x = x
     this.y = y
@@ -23,7 +25,7 @@ function ButtonManager(canvas) {
     this.setData = function(id, data) {
         buttons[id].data = data
     }
-    this.canvas.addEventListener("click", function(event) {
+    outerCanvas.addEventListener("click", function(event) {
                                  var rect = canvas.getBoundingClientRect();
                                  var x = (event.clientX - rect.left) / rect.width * canvas.width
                                  var y = (event.clientY - rect.top) / rect.height * canvas.height
