@@ -11,6 +11,7 @@ outerCanvas.addEventListener("mousemove", function(event) {
                              var innerY = (event.clientY - innerRect.top) / innerRect.height * innerCanvas.height
                              
                              outerContext.clearRect(0, 0, 3450, 1840)
+                             writeError()
                              if (innerX > 0 && innerX < 3000 && innerY > 0 && innerY < 1600) {
                                  outerContext.beginPath()
                                  outerContext.lineWidth = 5
@@ -32,9 +33,19 @@ outerCanvas.addEventListener("mousemove", function(event) {
                              }
                              })
 
+function writeError() {
+    if (errorMessage != "") {
+        outerContext.font = "70px sans-serif"
+        outerContext.textBaseline = "top"
+        outerContext.textAlign = "center"
+        outerContext.fillText("Error: " + errorMessage, 1725, 1730)
+    }
+}
+
 var canvasManagerSource = ""
 var CanvasManagerBase
 var canvasManager
+var errorMessage = ""
 function getUpdate() {
     clientHash = sha1(canvasManagerSource)
     const http = new XMLHttpRequest()
@@ -51,11 +62,14 @@ function getUpdate() {
                         innerCanvas.parentElement.replaceChild(newCanvas, innerCanvas)
                         innerCanvas = document.getElementsByClassName("inner-canvas")[0]
                         canvasManager = new CanvasManagerBase(innerCanvas)
+                        errorMessage = ""
                     }
                     catch(error) {
-                        console.log("Error when loading canvas manager (" + error.message + ")")
-                        alert("Failed to load canvas manager. (" + error.message + ")")
+                        errorMessage = error.message
+                        console.log("Error when loading canvas manager (" + errorMessage + ")")
                     }
+                    outerContext.clearRect(0, 0, 3450, 1840)
+                    writeError()
                 }
             } else {
                 alert("Failed to retrieve canvas manager (" + this.status + " " + this.statusText + ")")
