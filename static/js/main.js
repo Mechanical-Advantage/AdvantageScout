@@ -109,6 +109,7 @@ function loadGame() {
                 
                 document.getElementById("loadingtext").hidden = true
                 document.getElementById("startbuttons").hidden = false
+                devStart()
             } else {
                 alert("Failed to retrieve game data (" + this.status + " " + this.statusText + ")")
             }
@@ -286,6 +287,15 @@ function getConfig() {
     
     http.open("GET", "/get_config", true)
     http.send()
+}
+
+//Start scouting automatically in dev mode
+function devStart() {
+    if (config.dev_mode == 1) {
+        document.getElementById("team").value = 1
+        document.getElementById("match").value = 1
+        scoutStart("visual")
+    }
 }
 
 //Transition from team & match selection to scouting

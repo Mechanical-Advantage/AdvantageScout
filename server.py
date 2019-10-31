@@ -40,6 +40,7 @@ def init_global():
     cur_global.execute("INSERT INTO config (key, value) VALUES ('game', ?)", (default_game,))
     cur_global.execute("INSERT INTO config (key, value) VALUES ('event', '2017nhgrs')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('reverse_alliances', '0')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('dev_mode', '0')")
     conn_global.commit()
     conn_global.close()
 
@@ -361,17 +362,20 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         <h3>
             Config
         </h3>
+        
         Game: 
         <input type="text" id="game"></input>
         <button onclick="javascript:save(&quot;game&quot;)">
             Save
         </button>
+        
         <br>
         Event: 
         <input type="text" id="event"></input>
         <button onclick="javascript:save(&quot;event&quot;)">
             Save
         </button>
+        
         <br>
         Alliance Position:
         <select id="reverse_alliances">
@@ -386,8 +390,23 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
             </option>
         </select>
         <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
-        Save
+            Save
         </button>
+        
+        <br>
+        Dev Mode:
+        <select id="dev_mode">
+            <option value="0">
+                disabled
+            </option>
+            <option value="1">
+                enabled
+            </option>
+        </select>
+        <button onclick="javascript:save(&quot;dev_mode&quot;)">
+            Save
+        </button>
+        
         <h3>
             Devices
         </h3>
@@ -444,6 +463,8 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         data["event"] = cur_global.fetchall()[0][0]
         cur_global.execute("SELECT value FROM config WHERE key = 'reverse_alliances'")
         data["reverse_alliances"] = cur_global.fetchall()[0][0]
+        cur_global.execute("SELECT value FROM config WHERE key = 'dev_mode'")
+        data["dev_mode"] = cur_global.fetchall()[0][0]
         conn_global.close()
         return(json.dumps(data))
 
@@ -468,6 +489,11 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
             response = "Updated event to \"" + value + "\""
         elif key == "reverse_alliances":
             response = "Updated alliance position setting"
+        elif key == "dev_mode":
+            if value == "0":
+                response = "Developer mode disabled"
+            else:
+                response = "Developer mode enabled"
         else:
             response = "Error: unknown key \"" + key + "\""
         return(response)

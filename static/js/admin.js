@@ -8,6 +8,7 @@ http.onreadystatechange = function() {
             document.getElementById("game").value = result.game
             document.getElementById("event").value = result.event
             document.getElementById("reverse_alliances").selectedIndex = result.reverse_alliances
+            document.getElementById("dev_mode").selectedIndex = result.dev_mode
         }
     }
 }
