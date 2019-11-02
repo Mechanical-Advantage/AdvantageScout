@@ -1,6 +1,30 @@
 // Responsible for managing scouting screen
 function ScoutManager(appManager) {
     
+    // Load config and game data
+    this.loadData = function() {
+        if (appManager.config.reverse_alliances == 2) {
+            document.getElementById("reverseAlliancesDiv").hidden = false
+            document.getElementById("reverseAlliances").selectedIndex = 0
+        } else {
+            document.getElementById("reverseAlliancesDiv").hidden = true
+            document.getElementById("reverseAlliances").selectedIndex = appManager.config.reverse_alliances
+        }
+        
+        if (appManager.game.CanvasManager) {
+            document.getElementById("visualstart").innerHTML = "Scout! (visual)"
+            document.getElementById("classicstart").innerHTML = "Scout! (classic)"
+            document.getElementById("visualstart").hidden = false
+            document.getElementById("twobuttonbreak").hidden = false
+        } else {
+            document.getElementById("classicstart").innerHTML = "Scout!"
+            document.getElementById("visualstart").hidden = true
+            document.getElementById("twobuttonbreak").hidden = true
+        }
+        document.getElementById("loadingtext").hidden = true
+        document.getElementById("startbuttons").hidden = false
+    }
+    
     // Setup text resizing on app startup
     this.resizeTextInit = function() {
         window.addEventListener("resize", function() {appManager.scoutManager.resizeText()})

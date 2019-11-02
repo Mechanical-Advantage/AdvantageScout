@@ -29,15 +29,15 @@ function AppManager(web) {
     
     // Load config, game, and version from server managers
     this.loadData = function(config, game, version, cached) {
-        this.notificationManager.alert("Loaded", "The data was just loaded!")
         this.config = config
         this.game = game
         if (!web) {
-            //this.settingsManager.checkVersion(version)
+            this.settingsManager.checkVersion(version)
         }
         if (!cached) {
             this.settingsManager.saveDataCache(config, game, version)
         }
+        this.scoutManager.loadData()
     }
     
     // App setup

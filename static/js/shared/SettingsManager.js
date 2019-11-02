@@ -4,22 +4,27 @@ function SettingsManager(appManager) {
     
     // Retrieve app version number
     var appVersion = ""
+    var appVersionRemote = ""
+    var outdatedAlertSent = false
     this.getVersion = function() {
         if (!appManager.web) {
             cordova.getAppVersion.getVersionNumber(function(version) {
                                                    document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
                                                    appVersion = version.toString()
+                                                   if (appVersionRemote != "" && appVersionRemote != appVersion && !outdatedAlertSent) {
+                                                   outdatedAlertSent = true
+                                                   appManager.notificationManager.alert("Update Required", "This app version is outdated. Ask the scouting team for help updating.")
+                                                   }
                                                    })
         }
     }
     
     // Check version from server and alert if outdated
-    var outdatedAlertSent = false
     this.checkVersion = function(checkVersion) {
         if (!appManager.web) {
-            if (appVersion != checkVersion && !outdatedAlertSent) {
-                outdatedAlertSent = true
-                appManager.notificationManager.alert("Update Required", "This app version is outdated. Ask the scouting team for help updating.")
+            appVersionRemote = checkVersion
+            if (appVersion != "") {
+                this.getVersion()
             }
         }
     }
