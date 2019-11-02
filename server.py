@@ -107,7 +107,7 @@ class main_server(object):
             Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
-        <script src="/static/js/ButtonManager.js"></script>
+        <script src="/static/js/shared/ButtonManager.js"></script>
         <script src="/static/js/shared/AppManager.js"></script>
         <script src="/static/js/shared/SettingsManager.js"></script>
         <script src="/static/js/shared/ScoutManager.js"></script>
@@ -223,7 +223,9 @@ class main_server(object):
             </div>
         </noscript>
     
-        <script src="/static/js/index.js"></script>
+        <script>
+            var appManager = new AppManager(true)
+        </script>
     </body>
 </html>
             """

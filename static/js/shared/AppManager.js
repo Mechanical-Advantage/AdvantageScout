@@ -1,6 +1,11 @@
 // Responsible for overall commands and coordination between managers
 function AppManager(web) {
     this.web = web
+    this.state = 0
+    this.team
+    this.match
+    this.config
+    this.game
     
     // Instantiate managers
     this.settingsManager = new SettingsManager(this)
@@ -21,7 +26,10 @@ function AppManager(web) {
     this.settingsManager.getVersion()
     this.settingsManager.checkDeviceName()
     this.settingsManager.refreshDeviceList()
+    this.settingsManager.initLocalStorage()
+    this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
+    this.serverManager.initHeartbeatLoop()
     
     // Respond to back button on mobile app
     this.backButton = function() {

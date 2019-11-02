@@ -56,6 +56,28 @@ function SettingsManager(appManager) {
         }
     }
     
+    // Create list in local storage for saved matches
+    this.initLocalStorage = function() {
+        if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
+            window.localStorage.setItem("advantagescout_scoutdata", "[]")
+        }
+        if (window.localStorage.getItem("advantagescout_server") == null) {
+            window.localStorage.setItem("advantagescout_server", "")
+        }
+    }
+    
+    // Update local saved count on selection screen
+    this.updateLocalCount = function() {
+        var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
+        if (count == 0) {
+            document.getElementById("localcount").innerHTML = "All matches uploaded"
+        } else if (count == 1) {
+            document.getElementById("localcount").innerHTML = "1 match saved locally"
+        } else {
+            document.getElementById("localcount").innerHTML = count + " matches saved locally"
+        }
+    }
+    
     // Open settings screen
     this.open = function() {
         if (appManager.web) {

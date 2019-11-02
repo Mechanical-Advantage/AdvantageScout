@@ -5,7 +5,7 @@ function WebNotificationManager(appManager) {
     }
     
     this.confirm = function(title, text, buttons, callback) {
-        var success = window.confirm(text)
+        var success = confirm(text)
         if (success) {
             callback(1)
         } else {
