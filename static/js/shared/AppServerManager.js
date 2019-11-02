@@ -30,6 +30,14 @@ function AppServerManager(appManager) {
         //appManager.notificationManager.alert("Upload", "Trying to upload")
     }
     
+    // Get config and game data
+    this.getData = function() {
+        addToSerialQueue("load_data", function() {return []}, function(data) {
+                         data = JSON.parse(data)[1]
+                         appManager.loadData(data.config, data.game, data.version, false)
+                         })
+    }
+    
     // Init serial queue
     var serialQueue = []
     

@@ -22,6 +22,24 @@ function AppManager(web) {
         this.serverManager = new AppServerManager(this)
     }
     
+    // Respond to back button on mobile app
+    this.backButton = function() {
+        this.notificationManager.alert("What a surprise!", "The back button was pushed!")
+    }
+    
+    // Load config, game, and version from server managers
+    this.loadData = function(config, game, version, cached) {
+        this.notificationManager.alert("Loaded", "The data was just loaded!")
+        this.config = config
+        this.game = game
+        if (!web) {
+            //this.settingsManager.checkVersion(version)
+        }
+        if (!cached) {
+            this.settingsManager.saveDataCache(config, game, version)
+        }
+    }
+    
     // App setup
     this.settingsManager.getVersion()
     this.settingsManager.checkDeviceName()
@@ -30,9 +48,6 @@ function AppManager(web) {
     this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
     this.serverManager.initHeartbeatLoop()
-    
-    // Respond to back button on mobile app
-    this.backButton = function() {
-        this.notificationManager.alert("What a surprise!", "The back button was pushed!")
-    }
+    this.serverManager.getData()
+    this.settingsManager.loadDataCache()
 }

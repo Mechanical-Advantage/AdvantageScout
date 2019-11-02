@@ -43,4 +43,37 @@ function WebServerManager(appManager) {
     this.upload = function() {
         //appManager.notificationManager.alert("Upload", "Trying to upload")
     }
+    
+    // Get config and game data
+    this.getData = function() {
+        const configHttp = new XMLHttpRequest()
+        
+        configHttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    var configTemp = this.responseText
+                    const gameHttp = new XMLHttpRequest()
+                    
+                    gameHttp.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                appManager.loadData(JSON.parse(configTemp), JSON.parse(this.responseText), "", false)
+                            } else {
+                                appManager.notificationManager.alert("Error", "Failed to retrieve game data")
+                            }
+                        }
+                    }
+                    
+                    gameHttp.open("GET", "/load_game", true)
+                    gameHttp.send()
+                    
+                } else {
+                    appManager.notificationManager.alert("Error", "Failed to retrieve configuration data")
+                }
+            }
+        }
+        
+        configHttp.open("GET", "/get_config", true)
+        configHttp.send()
+    }
 }

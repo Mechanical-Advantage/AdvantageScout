@@ -1,5 +1,6 @@
 // Responsible for managing settings
 function SettingsManager(appManager) {
+    var cacheExpiration = 86400 //time to allow use of cached game data/config/version number (seconds)
     
     // Retrieve app version number
     var appVersion = ""
@@ -66,6 +67,22 @@ function SettingsManager(appManager) {
         }
     }
     
+    // Write config and game into local storage
+    this.saveDataCache = function(config, game, version) {
+        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({"config": config, "game": game, "version": version}))
+        window.localStorage.setItem("advantagescout_datacachetimestamp", Math.round(Date.now() / 1000))
+    }
+    
+    // Read config and game from local storage (if not expired)
+    this.loadDataCache = function() {
+        if (window.localStorage.getItem("advantagescout_datacache") != null) {
+            if (Math.round(Date.now() / 1000) - window.localStorage.getItem("advantagescout_datacachetimestamp") < cacheExpiration) {
+                var parsed = JSON.parse(window.localStorage.getItem("advantagescout_datacache"))
+                appManager.loadData(parsed.config, parsed.game, parsed.version, true)
+            }
+        }
+    }
+    
     // Update local saved count on selection screen
     this.updateLocalCount = function() {
         var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
@@ -95,6 +112,7 @@ function SettingsManager(appManager) {
             document.getElementById("configDiv").hidden = true
             window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
             window.localStorage.setItem("advantagescout_server", document.getElementById("server").value)
+            appManager.serverManager.getData()
         }
     }
 }
