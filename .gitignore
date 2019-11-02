@@ -1,3 +1,4 @@
 cordova/platforms
 *.db
 __pycache__
+cordova/www/js/shared

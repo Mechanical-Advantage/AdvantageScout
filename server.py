@@ -108,6 +108,13 @@ class main_server(object):
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
         <script src="/static/js/ButtonManager.js"></script>
+        <script src="/static/js/shared/AppManager.js"></script>
+        <script src="/static/js/shared/SettingsManager.js"></script>
+        <script src="/static/js/shared/ScoutManager.js"></script>
+        <script src="/static/js/shared/ClassicManager.js"></script>
+        <script src="/static/js/shared/VisualManager.js"></script>
+        <script src="/static/js/shared/WebNotificationManager.js"></script>
+        <script src="/static/js/shared/WebServerManager.js"></script>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         $FAVICON_CODE
         <noscript>
@@ -216,7 +223,7 @@ class main_server(object):
             </div>
         </noscript>
     
-        <script src="/static/js/main.js"></script>
+        <script src="/static/js/index.js"></script>
     </body>
 </html>
             """

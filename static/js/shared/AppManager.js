@@ -1,0 +1,30 @@
+// Responsible for overall commands and coordination between managers
+function AppManager(web) {
+    this.web = web
+    
+    // Instantiate managers
+    this.settingsManager = new SettingsManager(this)
+    this.scoutManager = new ScoutManager(this)
+    this.classicManager = new ClassicManager(this)
+    this.visualManager = new VisualManager(this)
+    this.notificationManager
+    this.serverManager
+    if (web) {
+        this.notificationManager = new WebNotificationManager(this)
+        this.serverManager = new WebServerManager(this)
+    } else {
+        this.notificationManager = new AppNotificationManager(this)
+        this.serverManager = new AppServerManager(this)
+    }
+    
+    // App setup
+    this.settingsManager.getVersion()
+    this.settingsManager.checkDeviceName()
+    this.settingsManager.refreshDeviceList()
+    this.scoutManager.resizeTextInit()
+    
+    // Respond to back button on mobile app
+    this.backButton = function() {
+        this.notificationManager.alert("What a surprise!", "The back button was pushed!")
+    }
+}
