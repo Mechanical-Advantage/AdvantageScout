@@ -106,4 +106,9 @@ function WebServerManager(appManager) {
         configHttp.open("GET", "/get_config", true)
         configHttp.send()
     }
+    
+    // Report if connected to server
+    this.connected = function() {
+        return connected
+    }
 }

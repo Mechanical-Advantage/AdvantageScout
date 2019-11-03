@@ -32,7 +32,7 @@ function AppManager(web) {
             if (this.state == 1) {
                 this.notificationManager.confirm("Stop Scouting?", "Your data will NOT be saved!", ["Leave", "Stay"], function(result) {
                                                 if (result == 1) {
-                                                appManager.scoutManager.close(false)
+                                                appManager.scoutManager.close(false, true)
                                                 }
                                                 })
             } else {

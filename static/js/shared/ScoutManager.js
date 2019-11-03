@@ -88,7 +88,7 @@ function ScoutManager(appManager) {
                                                if (result == 1) {
                                                appManager.scoutManager.saveData()
                                                appManager.serverManager.upload()
-                                               appManager.scoutManager.close()
+                                               appManager.scoutManager.close(true, false)
                                                }
                                                })
     }
@@ -114,18 +114,25 @@ function ScoutManager(appManager) {
     }
     
     //Transition to team match selection
-    this.close = function(resetFields) {
-        appManager.state = 0
+    this.close = function(resetFields, forceTitle) {
         document.getElementById("modeSwitcherDiv").hidden = true
         document.getElementById("classicDiv1").hidden = true
         document.getElementById("classicDiv2").hidden = true
         document.getElementById("classicDiv3").hidden = true
         document.getElementById("visualCanvasDiv").hidden = true
+        
+        if (!forceTitle && !appManager.serverManager.connected()) {
+            appManager.state = 4
+            document.getElementById("offlineWarningDiv").hidden = false
+        } else {
+            appManager.state = 0
+            document.getElementById("selectionDiv").hidden = false
+            document.getElementById("offlineWarningDiv").hidden = true
+        }
         if (resetFields) {
             document.getElementById("team").value = ""
             document.getElementById("match").value = ""
         }
-        document.getElementById("selectionDiv").hidden = false
         appManager.serverManager.heartbeat()
     }
     

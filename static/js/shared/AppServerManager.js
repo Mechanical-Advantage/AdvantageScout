@@ -57,6 +57,11 @@ function AppServerManager(appManager) {
                              })
         }
     }
+    
+    // Report if connected to server
+    this.connected = function() {
+        return true
+    }
 
     // Add item to queue and push if needed
     function addToSerialQueue(query, args, response) {

@@ -107,14 +107,7 @@ class main_server(object):
             Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
-        <script src="/static/js/shared/ButtonManager.js"></script>
-        <script src="/static/js/shared/AppManager.js"></script>
-        <script src="/static/js/shared/SettingsManager.js"></script>
-        <script src="/static/js/shared/ScoutManager.js"></script>
-        <script src="/static/js/shared/ClassicManager.js"></script>
-        <script src="/static/js/shared/VisualManager.js"></script>
-        <script src="/static/js/shared/WebNotificationManager.js"></script>
-        <script src="/static/js/shared/WebServerManager.js"></script>
+        <script type="text/javascript" src="/managers.js"></script>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         $FAVICON_CODE
         <noscript>
@@ -181,7 +174,7 @@ class main_server(object):
             Ask someone on the scouting systems team for help if needed.
             <br>
             <br>
-            <button class="scoutstart" onclick="javascript:idleStart(true)">
+            <button class="scoutstart" onclick="javascript:appManager.scoutManager.close(true, true)">
                 Continue
             </button>
         </div>
@@ -284,6 +277,14 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
 </body>
 </html>
             """)
+    
+    @cherrypy.expose(["managers.js"])
+    def managers(self):
+        names = ["ButtonManager", "AppManager", "SettingsManager", "ScoutManager", "ClassicManager", "VisualManager", "WebNotificationManager", "WebServerManager"]
+        output = ""
+        for name in names:
+            output += open("static/js/shared/" + name + ".js", "r").read() + "\n"
+        return(output)
     
     @cherrypy.expose
     def heartbeat(self, device_name, state, team=-1, match=-1):
@@ -590,4 +591,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     cherrypy.config.update({'server.socket_port': port, 'server.socket_host': host})
-    cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}, "/releases": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/cordova/releases"}})
+cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}, "/releases": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/cordova/releases"}})
