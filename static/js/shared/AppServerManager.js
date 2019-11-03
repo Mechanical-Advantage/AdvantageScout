@@ -1,5 +1,6 @@
 // Responsible for managing communication with the server on mobile app
 function AppServerManager(appManager) {
+    var serialQueue = []
     
     // Start sending heartbeats regularly
     this.initHeartbeatLoop = function() {
@@ -26,21 +27,37 @@ function AppServerManager(appManager) {
     }
     
     // Upload saved matches
+    var uploadQueued = false
     this.upload = function() {
-        //appManager.notificationManager.alert("Upload", "Trying to upload")
+        if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0 && !uploadQueued) {
+            uploadQueued = true
+            addToSerialQueue("upload", function() {return [window.localStorage.getItem("advantagescout_scoutdata")]}, function(data) {
+                             uploadQueued = false
+                             var response = JSON.parse(data)[1]
+                             if (response.success) {
+                             var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
+                             stored.splice(0, response.count)
+                             window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
+                             }
+                             appManager.settingsManager.updateLocalCount()
+                             })
+        }
+        appManager.settingsManager.updateLocalCount()
     }
     
     // Get config and game data
+    var loadDataQueued = false
     this.getData = function() {
-        addToSerialQueue("load_data", function() {return []}, function(data) {
-                         data = JSON.parse(data)[1]
-                         appManager.loadData(data.config, data.game, data.version, false)
-                         })
+        if (!loadDataQueued) {
+            loadDataQueued = true
+            addToSerialQueue("load_data", function() {return []}, function(data) {
+                             loadDataQueued = false
+                             data = JSON.parse(data)[1]
+                             appManager.loadData(data.config, data.game, data.version, false)
+                             })
+        }
     }
-    
-    // Init serial queue
-    var serialQueue = []
-    
+
     // Add item to queue and push if needed
     function addToSerialQueue(query, args, response) {
         serialQueue.push({"query": query, "args": args, "response": response})

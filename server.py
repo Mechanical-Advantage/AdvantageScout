@@ -158,11 +158,11 @@ class main_server(object):
                 Loading...
             </div>
             <div id="startbuttons" hidden>
-                <button id="visualstart" class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
                     Scout! (visual)
                 </button>
                 <br id="twobuttonbreak">
-                <button id="classicstart" class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
                     Scout! (classic)
                 </button>
             </div>
@@ -187,13 +187,13 @@ class main_server(object):
         </div>
         
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>
-            <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
+            <div class="switcherbutton1" onclick="javascript:appManager.scoutManager.setMode(1)" style="font-weight: bold;">
                 Autonomous
             </div>
-            <div class="switcherbutton2" onclick="javascript:setMode(2)">
+            <div class="switcherbutton2" onclick="javascript:appManager.scoutManager.setMode(2)">
                 Tele-operated
             </div>
-            <div class="switcherbutton3" onclick="javascript:setMode(3)">
+            <div class="switcherbutton3" onclick="javascript:appManager.scoutManager.setMode(3)">
                 End Game
             </div>
         </div>

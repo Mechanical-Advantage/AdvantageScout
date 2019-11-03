@@ -41,7 +41,37 @@ function WebServerManager(appManager) {
     
     // Upload saved matches
     this.upload = function() {
-        //appManager.notificationManager.alert("Upload", "Trying to upload")
+        if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0) {
+            const http = new XMLHttpRequest()
+            
+            http.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        var response = JSON.parse(this.responseText)
+                        if (response.success) {
+                            var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
+                            stored.splice(0, response.count)
+                            window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
+                        }
+                    }
+                    appManager.settingsManager.updateLocalCount()
+                }
+            }
+            
+            http.onabort = function() {
+                appManager.settingsManager.updateLocalCount()
+            }
+            http.onerror = function() {
+                appManager.settingsManager.updateLocalCount()
+            }
+            
+            http.timeout = 2000
+            http.open("POST", "/upload", true)
+            http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+            http.send("data=" + encodeURI(window.localStorage.getItem("advantagescout_scoutdata")))
+        } else {
+            appManager.settingsManager.updateLocalCount()
+        }
     }
     
     // Get config and game data

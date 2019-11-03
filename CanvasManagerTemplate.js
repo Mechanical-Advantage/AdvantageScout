@@ -10,7 +10,7 @@ this.getData = function() { // REQUIRED FUNCTION
     return data
 }
 function uploadData() { // Closes scouting interface and saves data (if using visual for end game, must have a call to this function)
-    document.dispatchEvent(uploadEvent)
+    appManager.scoutManager.upload()
 }
 
 var context = canvas.getContext("2d")

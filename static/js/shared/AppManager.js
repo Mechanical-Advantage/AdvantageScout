@@ -24,7 +24,21 @@ function AppManager(web) {
     
     // Respond to back button on mobile app
     this.backButton = function() {
-        this.notificationManager.alert("What a surprise!", "The back button was pushed!")
+        if (this.state == 0) {
+            if (!document.getElementById("configDiv").hidden) {
+                this.settingsManager.close()
+            }
+        } else {
+            if (this.state == 1) {
+                this.notificationManager.confirm("Stop Scouting?", "Your data will NOT be saved!", ["Leave", "Stay"], function(result) {
+                                                if (result == 1) {
+                                                appManager.scoutManager.close(false)
+                                                }
+                                                })
+            } else {
+                this.scoutManager.setMode(this.state - 1)
+            }
+        }
     }
     
     // Load config, game, and version from server managers
@@ -41,7 +55,7 @@ function AppManager(web) {
     }
     
     // App setup
-    this.settingsManager.getVersion()
+    this.settingsManager.loadVersion()
     this.settingsManager.checkDeviceName()
     this.settingsManager.refreshDeviceList()
     this.settingsManager.initLocalStorage()

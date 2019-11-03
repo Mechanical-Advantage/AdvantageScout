@@ -1,12 +1,12 @@
 // Responsible for managing settings
 function SettingsManager(appManager) {
-    var cacheExpiration = 86400 //time to allow use of cached game data/config/version number (seconds)
+    var cacheExpiration = 86400 //time to allow use of cached game data/config/version (seconds)
     
-    // Retrieve app version number
+    // Retrieve app version number from cordova
     var appVersion = ""
     var appVersionRemote = ""
     var outdatedAlertSent = false
-    this.getVersion = function() {
+    this.loadVersion = function() {
         if (!appManager.web) {
             cordova.getAppVersion.getVersionNumber(function(version) {
                                                    document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
@@ -19,12 +19,17 @@ function SettingsManager(appManager) {
         }
     }
     
+    // Return current app version
+    this.getVersion = function() {
+        return appVersion
+    }
+    
     // Check version from server and alert if outdated
     this.checkVersion = function(checkVersion) {
         if (!appManager.web) {
             appVersionRemote = checkVersion
             if (appVersion != "") {
-                this.getVersion()
+                this.loadVersion()
             }
         }
     }
