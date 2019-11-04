@@ -283,7 +283,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         names = ["ButtonManager", "AppManager", "SettingsManager", "ScoutManager", "ClassicManager", "VisualManager", "WebNotificationManager", "WebServerManager"]
         output = ""
         for name in names:
-            output += open("static/js/shared/" + name + ".js", "r").read() + "\n"
+            output += open("src/" + name + ".js", "r").read() + "\n"
         return(output)
     
     @cherrypy.expose
