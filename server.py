@@ -336,7 +336,15 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         except:
             return(json.dumps(result))
         result["count"] = len(data)
+        
         for i in range(len(data)):
+            if ("Event" not in data[i]) or ("Team" not in data[i]) or ("Match" not in data[i]) or ("DeviceName" not in data[i]) or ("Time" not in data[i]):
+                continue
+            else:
+                duplicate_count = cur_game.execute("SELECT COUNT(*) FROM scout WHERE Event=? AND Team=? AND Match=? AND DeviceName=? AND Time=?", (data[i]["Event"], data[i]["Team"], data[i]["Match"], data[i]["DeviceName"], data[i]["Time"])).fetchall()[0][0]
+                if duplicate_count > 0:
+                    continue
+            
             to_save = {}
             fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
             for f in range(len(fields)):
