@@ -107,7 +107,7 @@ class main_server(object):
             Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/main.css"></link>
-        <script src="/static/js/ButtonManager.js"></script>
+        <script type="text/javascript" src="/managers.js"></script>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         $FAVICON_CODE
         <noscript>
@@ -151,11 +151,11 @@ class main_server(object):
                 Loading...
             </div>
             <div id="startbuttons" hidden>
-                <button id="visualstart" class="scoutstart" onclick="javascript:scoutStart(&quot;visual&quot;)">
+                <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
                     Scout! (visual)
                 </button>
                 <br id="twobuttonbreak">
-                <button id="classicstart" class="scoutstart" onclick="javascript:scoutStart(&quot;classic&quot;)">
+                <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
                     Scout! (classic)
                 </button>
             </div>
@@ -174,19 +174,19 @@ class main_server(object):
             Ask someone on the scouting systems team for help if needed.
             <br>
             <br>
-            <button class="scoutstart" onclick="javascript:idleStart(true)">
+            <button class="scoutstart" onclick="javascript:appManager.scoutManager.close(true, true)">
                 Continue
             </button>
         </div>
         
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>
-            <div class="switcherbutton1" onclick="javascript:setMode(1)" style="font-weight: bold;">
+            <div class="switcherbutton1" onclick="javascript:appManager.scoutManager.setMode(1)" style="font-weight: bold;">
                 Autonomous
             </div>
-            <div class="switcherbutton2" onclick="javascript:setMode(2)">
+            <div class="switcherbutton2" onclick="javascript:appManager.scoutManager.setMode(2)">
                 Tele-operated
             </div>
-            <div class="switcherbutton3" onclick="javascript:setMode(3)">
+            <div class="switcherbutton3" onclick="javascript:appManager.scoutManager.setMode(3)">
                 End Game
             </div>
         </div>
@@ -216,7 +216,9 @@ class main_server(object):
             </div>
         </noscript>
     
-        <script src="/static/js/main.js"></script>
+        <script>
+            var appManager = new AppManager(true)
+        </script>
     </body>
 </html>
             """
@@ -276,6 +278,14 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
 </html>
             """)
     
+    @cherrypy.expose(["managers.js"])
+    def managers(self):
+        names = ["ButtonManager", "AppManager", "SettingsManager", "ScoutManager", "ClassicManager", "VisualManager", "WebNotificationManager", "WebServerManager"]
+        output = ""
+        for name in names:
+            output += open("src/" + name + ".js", "r").read() + "\n"
+        return(output)
+    
     @cherrypy.expose
     def heartbeat(self, device_name, state, team=-1, match=-1):
         conn_global = sql.connect(db_global)
@@ -326,7 +336,15 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         except:
             return(json.dumps(result))
         result["count"] = len(data)
+        
         for i in range(len(data)):
+            if ("Event" not in data[i]) or ("Team" not in data[i]) or ("Match" not in data[i]) or ("DeviceName" not in data[i]) or ("Time" not in data[i]):
+                continue
+            
+            duplicate_count = cur_game.execute("SELECT COUNT(*) FROM scout WHERE Event=? AND Team=? AND Match=? AND DeviceName=? AND Time=?", (data[i]["Event"], data[i]["Team"], data[i]["Match"], data[i]["DeviceName"], data[i]["Time"])).fetchall()[0][0]
+            if duplicate_count > 0:
+                continue
+            
             to_save = {}
             fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
             for f in range(len(fields)):

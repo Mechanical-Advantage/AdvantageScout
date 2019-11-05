@@ -1,3 +1,4 @@
 cordova/platforms
+cordova/www/src
 *.db
 __pycache__
