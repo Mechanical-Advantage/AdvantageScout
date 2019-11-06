@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.1.4
+* Fixed a bug where the refresh button was not functional
+
 ### 1.1.3
 * Switched to unified code base for web and app versions
 
