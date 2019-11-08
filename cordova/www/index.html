@@ -49,37 +49,55 @@
                 Settings
             </button>
             <br>
-            Team:
-            <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
-            <br>
-            Match:
-            <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
-            <br>
-            <span id="reverseAlliancesDiv" hidden>
-                Alliance Position:
-                <select id="reverseAlliances">
-                    <option value="0">
-                        red right, blue left
-                    </option>
-                    <option value="1">
-                        red left, blue right
-                    </option>
-                </select>
+            <div id="selectionDiv_match">
+                <button id="pitButton" onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)" hidden>
+                    Pit Scout
+                </button>
+                <br id="pitButtonBreak" hidden>
+                Team:
+                <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
                 <br>
-            </span>
-            <div id="loadingtext">
-                Loading...
+                Match:
+                <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
+                <br>
+                <span id="reverseAlliancesDiv" hidden>
+                    Alliance Position:
+                    <select id="reverseAlliances">
+                        <option value="0">
+                            red right, blue left
+                        </option>
+                        <option value="1">
+                            red left, blue right
+                        </option>
+                    </select>
+                    <br>
+                </span>
+                <div id="loadingtext">
+                    Loading...
+                </div>
+                <div id="startbuttons" hidden>
+                    <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
+                        Scout! (visual)
+                    </button>
+                    <br id="twobuttonbreak">
+                    <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
+                        Scout! (classic)
+                    </button>
+                </div>
             </div>
-            <div id="startbuttons" hidden>
-                <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
-                    Scout! (visual)
+            
+            <div id="selectionDiv_pit" hidden>
+                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
+                    Match Scout
                 </button>
-                <br id="twobuttonbreak">
-                <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
-                    Scout! (classic)
+                <br>
+                Team:
+                <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
+                <br>
+                <button class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;pit&quot;)">
+                    Pit Scout!
                 </button>
             </div>
-            <br>
         </div>
         
         <div id="configDiv" class="centered" hidden>
@@ -126,6 +144,10 @@
             </div>
         </div>
         
+        <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>
+            Pit Scout - <span id="pitNumber">????</span>
+        </div>
+        
         <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
             <canvas class="visualcanvas" width="3000" height="1600"></canvas>
         </div>
@@ -137,6 +159,9 @@
         </div>
         
         <div id="classicDiv3" class="classicdiv" hidden>
+        </div>
+        
+        <div id="pitClassicDiv" class="classicdiv" hidden>
         </div>
         
         <script type="text/javascript" src="cordova.js"></script>

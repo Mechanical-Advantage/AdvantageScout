@@ -5,6 +5,7 @@ function ScoutManager(appManager) {
     
     // Load config and game data
     this.loadData = function() {
+        // Reverse alliances
         if (appManager.config.reverse_alliances == 2) {
             document.getElementById("reverseAlliancesDiv").hidden = false
             document.getElementById("reverseAlliances").selectedIndex = 0
@@ -13,6 +14,7 @@ function ScoutManager(appManager) {
             document.getElementById("reverseAlliances").selectedIndex = appManager.config.reverse_alliances
         }
         
+        // Match scouting
         if (appManager.game.CanvasManager) {
             appManager.visualManager.loadData()
             document.getElementById("visualstart").innerHTML = "Scout! (visual)"
@@ -27,6 +29,11 @@ function ScoutManager(appManager) {
         document.getElementById("loadingtext").hidden = true
         document.getElementById("startbuttons").hidden = false
         
+        // Pit scouting
+        var hidePitButton = appManager.game.prefs.pitFields == undefined
+        document.getElementById("pitButton").hidden = hidePitButton
+        document.getElementById("pitButtonBreak").hidden = hidePitButton
+        
         // Start scouting automatically in dev mode
         if (appManager.config.dev_mode == 1 && appManager.web) {
             document.getElementById("team").value = 1
@@ -35,36 +42,60 @@ function ScoutManager(appManager) {
         }
     }
     
+    // Switch between match and pit scouting selections
+    this.setSelection = function(type) {
+        document.getElementById("selectionDiv_match").hidden = (type != "match")
+        document.getElementById("selectionDiv_pit").hidden = (type != "pit")
+    }
+    
     // Open scouting interface
     this.start = function(mode) {
-        appManager.team = document.getElementById("team").value
-        appManager.match = document.getElementById("match").value
-        if (appManager.team == "" && appManager.match == "") {
-            appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team and match number.")
-            return
-        }
-        if (appManager.team == "") {
-            appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team number.")
-            return
-        }
-        if (appManager.match == "") {
-            appManager.notificationManager.alert("Hold Your Horses!", "Please enter a match number.")
-            return
-        }
-        appManager.state = 1
         scoutMode = mode
         
-        appManager.classicManager.start()
-        appManager.visualManager.start()
+        if (mode == "pit") {
+            appManager.team = document.getElementById("pitTeam").value
+            if (appManager.team == "") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team number.")
+                return
+            }
+            appManager.state = 5
+            
+            appManager.classicManager.start()
+            
+            document.getElementById("pitNumber").innerHTML = appManager.team
+            document.getElementById("pitSwitcherDiv").hidden = false
+            document.getElementById("pitClassicDiv").hidden = false
+            
+        } else {
+            appManager.team = document.getElementById("team").value
+            appManager.match = document.getElementById("match").value
+            if (appManager.team == "" && appManager.match == "") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team and match number.")
+                return
+            }
+            if (appManager.team == "") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team number.")
+                return
+            }
+            if (appManager.match == "") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a match number.")
+                return
+            }
+            appManager.state = 1
+            
+            appManager.classicManager.start()
+            appManager.visualManager.start()
+            
+            document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
+            document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
+            document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
+            document.getElementById("modeSwitcherDiv").hidden = false
+            var showClassic = appManager.game.prefs.forceClassic["auto"] || scoutMode == "classic"
+            document.getElementById("visualCanvasDiv").hidden = showClassic
+            document.getElementById("classicDiv1").hidden = !showClassic
+        }
         
-        document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
-        document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
-        document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
         document.getElementById("selectionDiv").hidden = true
-        document.getElementById("modeSwitcherDiv").hidden = false
-        var showClassic = appManager.game.prefs.forceClassic["auto"] || scoutMode == "classic"
-        document.getElementById("visualCanvasDiv").hidden = showClassic
-        document.getElementById("classicDiv1").hidden = !showClassic
         appManager.serverManager.heartbeat()
     }
     
@@ -95,11 +126,16 @@ function ScoutManager(appManager) {
     
     // Write match to local storage
     this.saveData = function() {
-        var data = appManager.visualManager.getData()
+        var data = {}
+        if (scoutMode != "pit") {
+            data = appManager.visualManager.getData()
+        }
         Object.assign(data, appManager.classicManager.getData(scoutMode))
         data["Event"] = appManager.config.event
         data["Team"] = Number(appManager.team)
-        data["Match"] = Number(appManager.match)
+        if (scoutMode != "pit") {
+            data["Match"] = Number(appManager.match)
+        }
         data["DeviceName"] = window.localStorage.getItem("advantagescout_device")
         if (appManager.web) {
             data["Version"] = "web"
@@ -116,9 +152,11 @@ function ScoutManager(appManager) {
     //Transition to team match selection
     this.close = function(resetFields, forceTitle) {
         document.getElementById("modeSwitcherDiv").hidden = true
+        document.getElementById("pitSwitcherDiv").hidden = true
         document.getElementById("classicDiv1").hidden = true
         document.getElementById("classicDiv2").hidden = true
         document.getElementById("classicDiv3").hidden = true
+        document.getElementById("pitClassicDiv").hidden = true
         document.getElementById("visualCanvasDiv").hidden = true
         
         if (!forceTitle && !appManager.serverManager.connected()) {
@@ -127,9 +165,12 @@ function ScoutManager(appManager) {
         } else {
             appManager.state = 0
             document.getElementById("selectionDiv").hidden = false
-            document.getElementById("offlineWarningDiv").hidden = true
+            if (appManager.web) {
+                document.getElementById("offlineWarningDiv").hidden = true
+            }
         }
         if (resetFields) {
+            document.getElementById("pitTeam").value = ""
             document.getElementById("team").value = ""
             document.getElementById("match").value = ""
         }

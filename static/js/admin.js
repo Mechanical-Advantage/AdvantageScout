@@ -81,6 +81,9 @@ function updateDeviceTable() {
         } else if (devices[i].last_status == 4) {
             status = "Offline Warning"
             color = "yellow"
+        } else if (devices[i].last_status == 5) {
+            status = "Pit Scout<br>" + devices[i].last_team
+            color = "green"
         } else {
             status = "Unknown"
             color = "yellow"

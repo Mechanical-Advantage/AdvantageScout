@@ -1,16 +1,22 @@
 // Responsible for managing classic layout
 function ClassicManager(appManager) {
-    const modeLookup = ["auto", "teleop", "endgame"]
+    const modeLookup = ["auto", "teleop", "endgame", "pit"]
     var fieldPrefsLookup = {} // prefs for each field (min, max, step, etc.)
-    var fieldModeLists = [[], [], []] // lists of which fields are in which mode
+    var fieldModeLists = [[], [], [], []] // lists of which fields are in which mode
     var counterData = {} // keeps track of counter values
     
     // Set up classic interface
     this.start = function() {
         fieldPrefsLookup = {}
-        fieldModeLists = [[], [], []]
-        var mainDivs = [document.getElementById("classicDiv1"), document.getElementById("classicDiv2"), document.getElementById("classicDiv3")]
-        for (var mode = 0; mode < 3; mode++) {
+        fieldModeLists = [[], [], [], []]
+        var mainDivs = [document.getElementById("classicDiv1"), document.getElementById("classicDiv2"), document.getElementById("classicDiv3"), document.getElementById("pitClassicDiv")]
+        var modeCount
+        if (appManager.game.prefs.pitFields == undefined) {
+            modeCount = 3
+        } else {
+            modeCount = 4
+        }
+        for (var mode = 0; mode < modeCount; mode++) {
             while (mainDivs[mode].firstChild) {
                 mainDivs[mode].removeChild(mainDivs[mode].firstChild)
             }
@@ -143,6 +149,16 @@ function ClassicManager(appManager) {
             button.onclick = function() {
                 appManager.scoutManager.upload()
             }
+        } else if (inputData.type == "image") {
+            var button = document.createElement("BUTTON")
+            unit.children[1].appendChild(button)
+            button.classList.add("classicimagebutton")
+            button.style.backgroundColor = "#ff7575"
+            button.innerHTML = "Camera"
+            button.id = inputData.field
+            button.onclick = function() {
+                appManager.classicManager.takePhoto(this)
+            }
         }
         return unit
     }
@@ -152,11 +168,13 @@ function ClassicManager(appManager) {
         var result = {}
         var useResult
         if (scoutMode == "classic") {
-            useResult = [true, true, true]
-        } else {
-            useResult = [appManager.game.prefs.forceClassic.auto, appManager.game.prefs.forceClassic.teleop, appManager.game.prefs.forceClassic.endgame]
+            useResult = [true, true, true, false]
+        } else if (scoutMode == "pit") {
+            useResult = [false, false, false, true]
+        } else{
+            useResult = [appManager.game.prefs.forceClassic.auto, appManager.game.prefs.forceClassic.teleop, appManager.game.prefs.forceClassic.endgame, false]
         }
-        for (var mode = 0; mode < 3; mode++) {
+        for (var mode = 0; mode < 4; mode++) {
             if (useResult[mode]) {
                 for (var i = 0; i < fieldModeLists[mode].length; i++) {
                     var fieldName = fieldModeLists[mode][i]
@@ -174,15 +192,38 @@ function ClassicManager(appManager) {
                     } else if (input.type == "textarea") {
                         result[fieldName] = input.value
                     } else if (input.type == "submit") {
-                        if (input.style.backgroundColor == "rgb(255, 117, 117)") {
-                            result[fieldName] = 0
+                        if (input.innerHTML == "Camera") {
+                            result[fieldName] = input.image
                         } else {
-                            result[fieldName] = 1
+                            if (input.style.backgroundColor == "rgb(255, 117, 117)") {
+                                result[fieldName] = 0
+                            } else {
+                                result[fieldName] = 1
+                            }
                         }
                     }
                 }
             }
         }
         return result
+    }
+    
+    // Take photo and return file path
+    this.takePhoto = function(button) {
+        if (appManager.web) {
+            appManager.notificationManager.alert("Not supported", "Photos are not supported right now.")
+        }
+        var cameraOptions = {
+            quality: 30,
+            destinationType: Camera.DestinationType.FILE_URI,
+            correctOrientation: true,
+            saveToPhotoAlbum: false,
+            cameraDirection: Camera.Direction.BACK
+        }
+        function onSuccess(imageUrl) {
+            button.image = imageUrl
+            button.style.backgroundColor = "#75ff91"
+        }
+        navigator.camera.getPicture(onSuccess, function() {}, cameraOptions)
     }
 }
