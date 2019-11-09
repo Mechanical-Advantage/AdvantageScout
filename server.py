@@ -621,23 +621,46 @@ def log(output, before_text=""):
         print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
 
 def save_image(raw):
-    file_path = image_dir + os.path.sep + time.strftime("%m%d%Y-%H%M%S") + ".jpg"
+    previous_images = os.listdir(image_dir)
+    max_id = -1
+    for name in previous_images:
+        if len(name) > 3:
+            if name[:4] == "IMG_":
+                id = int(name[4:9])
+                if id > max_id:
+                    max_id = id
+    
+    file_path = image_dir + os.path.sep + "IMG_" + str(max_id + 1).zfill(5) + ".jpg"
     file = open(file_path, "wb")
     file.write(base64.decodebytes(raw[23:].encode("utf-8")))
     file.close()
     return(file_path)
 
-def serial_readline(ser):
+def serial_readline(ser, port):
+    def timeout():
+        nonlocal full_line
+        while True:
+            time.sleep(0.5)
+            if last_data == -2:
+                break
+            if full_line != "" and time.time() - last_data > 3:
+                log("Request timed out", port)
+                full_line = ""
+
     full_line = ""
+    last_data = -1
+    timeout = threading.Thread(target=timeout, daemon=True)
+    timeout.start()
     while True:
-        print(len(full_line), end="\r")
         line = ser.readline().decode("utf-8")
+        last_data = time.time()
         if line[-5:] == "CONT\n":
             full_line += line[:-5]
             ser.write("CONT\n".encode("utf-8"))
         else:
             full_line += line[:-1]
             break
+    last_data = -2
     return(full_line)
 
 def bluetooth_server(port):
@@ -648,11 +671,11 @@ def bluetooth_server(port):
         return()
     log("Started Bluetooth server on port \"" + port + "\"")
     while True:
-        raw = serial_readline(ser)
+        raw = serial_readline(ser, port)
         try:
             msg = json.loads(raw)
         except:
-            log("Unable to parse request")
+            log("Unable to parse request", port)
             ser.write("[]\n".encode('utf-8'))
             continue
 

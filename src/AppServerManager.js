@@ -30,9 +30,9 @@ function AppServerManager(appManager) {
     var uploadQueued = false
     this.imageCache = {}
     this.imageCacheTarget = 0
+    var lastLocalStorage = "[]"
     this.upload = function() {
-        if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0 && !uploadQueued) {
-            uploadQueued = true
+        if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0 && window.localStorage.getItem("advantagescout_scoutdata") != lastLocalStorage) {
             var imageQueue = getCacheQueue()
             this.imageCache = {}
             this.imageCacheTarget = imageQueue.length
@@ -42,26 +42,31 @@ function AppServerManager(appManager) {
                               appManager.serverManager.imageCache[fileName] = imageData
                               
                               if (Object.keys(appManager.serverManager.imageCache).length == appManager.serverManager.imageCacheTarget) {
+                              lastLocalStorage = window.localStorage.getItem("advantagescout_scoutdata")
                               send()
                               }
                               })
                 }
             } else {
+                lastLocalStorage = window.localStorage.getItem("advantagescout_scoutdata")
                 send()
             }
             
             function send() {
-                
-                addToSerialQueue("upload", appManager.serverManager.getUploadData, function(data) {
-                                 uploadQueued = false
-                                 var response = JSON.parse(data)[1]
-                                 if (response.success) {
-                                 var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
-                                 stored.splice(0, response.count)
-                                 window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
-                                 }
-                                 appManager.settingsManager.updateLocalCount()
-                                 })
+                if (!uploadQueued) {
+                    uploadQueued = true
+                    addToSerialQueue("upload", appManager.serverManager.getUploadData, function(data) {
+                                     uploadQueued = false
+                                     lastLocalStorage = "[]"
+                                     var response = JSON.parse(data)[1]
+                                     if (response.success) {
+                                     var stored = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
+                                     stored.splice(0, response.count)
+                                     window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(stored))
+                                     }
+                                     appManager.settingsManager.updateLocalCount()
+                                     })
+                }
             }
         }
         appManager.settingsManager.updateLocalCount()
@@ -101,7 +106,7 @@ function AppServerManager(appManager) {
         }
     }
     
-    // Process local storage data for upload
+    // Process local storage data for upload (insert images from cache)
     this.getUploadData = function() {
         var localData = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
         for (var i = 0; i < localData.length; i++) {
@@ -145,19 +150,26 @@ function AppServerManager(appManager) {
     
     // Get length of time to wait after failed communication
     function getRetryDelay() {
-        return Math.random() * 6000
+        return (Math.random() * 6000) + 5000
     }
     
     // Disconnect and try again
     function timeoutPushSerialQueue() {
-        bluetoothSerial.disconnect()
+        try {
+            bluetoothSerial.unsubscribe()
+            bluetoothSerial.disconnect()
+        }
+        catch(error) {
+            x = 0
+        }
+        appManager.settingsManager.hideUploadProgress()
         setTimeout(function() {pushSerialQueue()}, getRetryDelay())
     }
     
     // Send items in serial queue to server
+    var timeout
     function pushSerialQueue() {
         var responses = []
-        var timeout
         bluetoothSerial.isEnabled(function(){
                                   btEnabled()
                                   }, function() {
@@ -167,9 +179,10 @@ function AppServerManager(appManager) {
             if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_server") == null || window.localStorage.getItem("advantagescout_device") == "" || window.localStorage.getItem("advantagescout_server") == "") {
                 setTimeout(function() {pushSerialQueue()}, getRetryDelay())
             } else {
+                timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
                 bluetoothSerial.connect(window.localStorage.getItem("advantagescout_server"), function() {
+                                        clearTimeout(timeout)
                                         function loadData() {
-                                            //alert(serialQueue[0].query)
                                             data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[0].query, serialQueue[0].args()])
                                             appManager.serverManager.serialWrite(data, onReceived)
                                         }
@@ -177,6 +190,7 @@ function AppServerManager(appManager) {
                                         function onReceived(data) {
                                             serialQueue.shift().response(data)
                                             if (serialQueue.length == 0) {
+                                                bluetoothSerial.unsubscribe()
                                                 bluetoothSerial.disconnect()
                                             } else {
                                                 loadData()
@@ -184,9 +198,9 @@ function AppServerManager(appManager) {
                                         }
                                         
                                         loadData()
-                                        //timeout = setTimeout(function() {timeoutPushSerialQueue()}, 5000)
                                         }, function() {
-                                        setTimeout(function() {pushSerialQueue()}, getRetryDelay())
+                                        clearTimeout(timeout)
+                                        timeoutPushSerialQueue()
                                         })
             }
         }
@@ -194,8 +208,9 @@ function AppServerManager(appManager) {
     
     // Writes data in pieces to server
     this.continueQueue = []
+    this.continueQueueLength
     this.sendResponse
-    var breakFrequency = 5000 // how many bytes at a time?
+    var breakFrequency = 2000 // how many bytes at a time?
     this.serialWrite = function(data, callback) {
         this.sendResponse = callback
         
@@ -207,15 +222,26 @@ function AppServerManager(appManager) {
             dataLeft = dataLeft.slice(breakFrequency)
         }
         this.continueQueue.push(dataLeft)
+        this.continueQueueLength = this.continueQueue.length
         
         // Send data
+        bluetoothSerial.clear()
         bluetoothSerial.subscribe("\n", function(data) {
+                                  clearTimeout(timeout)
                                   if (data.slice(-5) == "CONT\n") {
+                                  var length = appManager.serverManager.continueQueueLength
+                                  appManager.settingsManager.setUploadProgress(length - appManager.serverManager.continueQueue.length, length)
                                   bluetoothSerial.write(appManager.serverManager.continueQueue.shift() + "\n", function() {}, function() {})
+                                  timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
                                   } else {
+                                  appManager.settingsManager.hideUploadProgress()
                                   appManager.serverManager.sendResponse(data)
                                   }
                                   })
+        if (this.continueQueueLength > 1) {
+            appManager.settingsManager.setUploadProgress(0, this.continueQueueLength)
+        }
         bluetoothSerial.write(this.continueQueue.shift() + "\n", function() {}, function() {})
+        timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
     }
 }

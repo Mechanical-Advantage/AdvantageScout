@@ -95,14 +95,30 @@ function SettingsManager(appManager) {
     
     // Update local saved count on selection screen
     this.updateLocalCount = function() {
-        var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
-        if (count == 0) {
-            document.getElementById("localcount").innerHTML = "All matches uploaded"
-        } else if (count == 1) {
-            document.getElementById("localcount").innerHTML = "1 match saved locally"
-        } else {
-            document.getElementById("localcount").innerHTML = count + " matches saved locally"
+        if (!uploadLock) {
+            var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
+            if (count == 0) {
+                document.getElementById("localcount").innerHTML = "All matches uploaded"
+            } else if (count == 1) {
+                document.getElementById("localcount").innerHTML = "1 match saved locally"
+            } else {
+                document.getElementById("localcount").innerHTML = count + " matches saved locally"
+            }
         }
+    }
+    
+    // Display uploading message and percent
+    var uploadLock = false
+    this.setUploadProgress = function(current, total) {
+        uploadLock = true
+        var percent = Math.round((current/total)*100).toString()
+        document.getElementById("localcount").innerHTML = "Uploading... (" + percent + "%)"
+    }
+    
+    // Switch from upload progress to matches saved display
+    this.hideUploadProgress = function() {
+        uploadLock = false
+        this.updateLocalCount()
     }
     
     // Open settings screen
