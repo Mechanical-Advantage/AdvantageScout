@@ -314,7 +314,7 @@ class main_server(object):
 <html>
 <body>
 <script>
-document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
+document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata")
 </script>
 </body>
 </html>

@@ -68,7 +68,7 @@ function WebServerManager(appManager) {
             http.timeout = 2000
             http.open("POST", "/upload", true)
             http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-            http.send("data=" + encodeURI(window.localStorage.getItem("advantagescout_scoutdata")))
+            http.send("data=" + encodeURIComponent(window.localStorage.getItem("advantagescout_scoutdata")))
         } else {
             appManager.settingsManager.updateLocalCount()
         }

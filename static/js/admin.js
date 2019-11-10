@@ -108,7 +108,7 @@ function updateDeviceTable() {
             for (var f = 0; f < 4; f++) {
                 row.appendChild(document.createElement("TD"))
             }
-            row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name
+            row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name.replace("<", "&lt;").replace(">", "&gt;")
             row.classList.add(devicesSorted[colorLookup[colorId]][i].color)
             row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].status
             
