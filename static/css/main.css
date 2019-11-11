@@ -60,6 +60,15 @@ div.modeswitcher {
     line-height: 75px;
 }
 
+div.pitswitcher {
+    top: 0px;
+    height: 75px;
+    left: 0%;
+    width: 100%;
+    background-color: #f4bfff;
+    font-weight: bold;
+}
+
 div.switcherbutton1 {
     position: fixed;
     top: 0px;
@@ -239,6 +248,19 @@ button.classicuploadbutton {
     height: 75%;
     width: 75%;
     background-color: #c2f7ff;
+    border: 1px solid black;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+button.classicimagebutton {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 75%;
+    width: 75%;
     border: 1px solid black;
     font-size: 25px;
     padding: 10px;

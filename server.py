@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import cherrypy
 import json
+import base64
 import time
 import threading
 from pathlib import Path
@@ -14,6 +15,7 @@ bt_enable = True
 bt_ports = ["/dev/cu.Bluetooth-Incoming-Port"]
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
+image_dir = "images" # folder for image data
 default_game = "2019"
 
 #Import serial library
@@ -48,6 +50,10 @@ if not Path(db_global).is_file():
     print("Creating new global database")
     init_global()
 
+if not os.path.exists(image_dir):
+    print("Creating image directory")
+    os.mkdir(image_dir)
+
 #Connect to appropriate game database
 def gamedb_connect():
     conn_global = sql.connect(db_global)
@@ -63,15 +69,25 @@ def init_game():
     game_result = gamedb_connect()
     conn_game = game_result["conn"]
     cur_game = conn_game.cursor()
-
     config = json.loads(quickread("games" + os.path.sep + game_result["name"] + os.path.sep + "prefs.json"))
+    
+    #Matches table
     create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, "
     for i in range(len(config["fields"])):
         create_text += config["fields"][i] + ","
     create_text = create_text[:-1]
-    
-    cur_game.execute("DROP TABLE IF EXISTS scout")
-    cur_game.execute("CREATE TABLE scout (" + create_text + ")")
+    cur_game.execute("DROP TABLE IF EXISTS match")
+    cur_game.execute("CREATE TABLE match (" + create_text + ")")
+
+    #Pit scouting table
+    if "pitFields" in config:
+        create_text = "Event TEXT, Team INTEGER, DeviceName TEXT, Version TEXT, Time INTEGER, UploadTime INTEGER, "
+        for i in range(len(config["pitFields"])):
+            create_text += config["pitFields"][i] + ","
+        create_text = create_text[:-1]
+        cur_game.execute("DROP TABLE IF EXISTS pit")
+        cur_game.execute("CREATE TABLE pit (" + create_text + ")")
+
     conn_game.commit()
     conn_game.close()
 
@@ -129,34 +145,53 @@ class main_server(object):
             <div id="localcount">
                 Loading...
             </div>
-            Team:
-            <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
-            <br>
-            Match:
-            <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
-            <br>
-            <span id="reverseAlliancesDiv" hidden>
-                Alliance Position:
-                <select id="reverseAlliances">
-                    <option value="0">
-                        red right, blue left
-                    </option>
-                    <option value="1">
-                        red left, blue right
-                    </option>
-                </select>
-                <br>
-            </span>
-            <div id="loadingtext">
-                Loading...
-            </div>
-            <div id="startbuttons" hidden>
-                <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
-                    Scout! (visual)
+            <div id="selectionDiv_match">
+                <button id="pitButton" onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)" hidden>
+                    Pit Scout
                 </button>
-                <br id="twobuttonbreak">
-                <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
-                    Scout! (classic)
+                <br id="pitButtonBreak" hidden>
+                Team:
+                <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
+                <br>
+                Match:
+                <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
+                <br>
+                <span id="reverseAlliancesDiv" hidden>
+                    Alliance Position:
+                    <select id="reverseAlliances">
+                        <option value="0">
+                            red right, blue left
+                        </option>
+                        <option value="1">
+                            red left, blue right
+                        </option>
+                    </select>
+                    <br>
+                </span>
+                <div id="loadingtext">
+                    Loading...
+                </div>
+                <div id="startbuttons" hidden>
+                    <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
+                        Scout! (visual)
+                    </button>
+                    <br id="twobuttonbreak">
+                    <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
+                        Scout! (classic)
+                    </button>
+                </div>
+            </div>
+            
+            <div id="selectionDiv_pit" hidden>
+                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
+                    Match Scout
+                </button>
+                <br>
+                Team:
+                <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
+                <br>
+                <button class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;pit&quot;)">
+                    Pit Scout!
                 </button>
             </div>
         </div>
@@ -191,6 +226,10 @@ class main_server(object):
             </div>
         </div>
         
+        <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>
+            Pit Scout - <span id="pitNumber">????</span>
+        </div>
+        
         <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
             <canvas class="visualcanvas" width="3000" height="1600"></canvas>
         </div>
@@ -202,6 +241,9 @@ class main_server(object):
         </div>
         
         <div id="classicDiv3" class="classicdiv" hidden>
+        </div>
+        
+        <div id="pitClassicDiv" class="classicdiv" hidden>
         </div>
         
         <noscript>
@@ -272,7 +314,7 @@ class main_server(object):
 <html>
 <body>
 <script>
-document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
+document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata")
 </script>
 </body>
 </html>
@@ -298,8 +340,10 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
             cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_status) VALUES (?, ?, ?)", (device_name, currentTime(), state))
         else:
             cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_status = ? WHERE name = ?", (currentTime(), state, device_name))
-        if team != -1 and match != -1:
-            cur_global.execute("UPDATE devices SET last_team = ?, last_match = ? WHERE name = ?", (team, match, device_name))
+        if team != -1:
+            cur_global.execute("UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
+        if match != -1:
+            cur_global.execute("UPDATE devices SET last_match = ? WHERE name = ?", (match, device_name))
         conn_global.commit()
         conn_global.close()
         return()
@@ -338,25 +382,47 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_data")
         result["count"] = len(data)
         
         for i in range(len(data)):
-            if ("Event" not in data[i]) or ("Team" not in data[i]) or ("Match" not in data[i]) or ("DeviceName" not in data[i]) or ("Time" not in data[i]):
+            if "InterfaceType" not in data[i]:
                 continue
+            pit_scout = data[i]["InterfaceType"] == "pit"
+            if pit_scout:
+                if ("Event" not in data[i]) or ("Team" not in data[i]) or ("DeviceName" not in data[i]) or ("Time" not in data[i]):
+                    continue
+                duplicate_count = cur_game.execute("SELECT COUNT(*) FROM pit WHERE Event=? AND Team=? AND DeviceName=? AND Time=?", (data[i]["Event"], data[i]["Team"], data[i]["DeviceName"], data[i]["Time"])).fetchall()[0][0]
+            else:
+                if ("Event" not in data[i]) or ("Team" not in data[i]) or ("Match" not in data[i]) or ("DeviceName" not in data[i]) or ("Time" not in data[i]):
+                    continue
+                duplicate_count = cur_game.execute("SELECT COUNT(*) FROM match WHERE Event=? AND Team=? AND Match=? AND DeviceName=? AND Time=?", (data[i]["Event"], data[i]["Team"], data[i]["Match"], data[i]["DeviceName"], data[i]["Time"])).fetchall()[0][0]
             
-            duplicate_count = cur_game.execute("SELECT COUNT(*) FROM scout WHERE Event=? AND Team=? AND Match=? AND DeviceName=? AND Time=?", (data[i]["Event"], data[i]["Team"], data[i]["Match"], data[i]["DeviceName"], data[i]["Time"])).fetchall()[0][0]
             if duplicate_count > 0:
                 continue
             
             to_save = {}
-            fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
+            if pit_scout:
+                fields = prefs["pitFields"] + ["Event TEXT", "Team INTEGER", "DeviceName TEXT", "Version TEXT", "Time INTEGER", "UploadTime INTEGER"]
+            else:
+                fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
             for f in range(len(fields)):
                 field_name = fields[f].split(" ")[0]
                 if field_name in data[i]:
-                    to_save[field_name] = data[i][field_name]
+                    if len(str(data[i][field_name])) > 23:
+                        if data[i][field_name][:23] == "data:image/jpeg;base64,":
+                            to_save[field_name] = save_image(data[i][field_name])
+                        else:
+                            to_save[field_name] = data[i][field_name]
+                    else:
+                        to_save[field_name] = data[i][field_name]
+
             fields = ["UploadTime"]
             values = [str(currentTime())]
             for field, value in to_save.items():
                 fields.append(field)
                 values.append(str(value))
-            cur_game.execute("INSERT INTO scout (" + ",".join(fields) + ") VALUES (" + ",".join(["?"] * len(fields)) + ")", tuple(values))
+            if pit_scout:
+                table = "pit"
+            else:
+                table = "match"
+            cur_game.execute("INSERT INTO " + table + " (" + ",".join(fields) + ") VALUES (" + ",".join(["?"] * len(fields)) + ")", tuple(values))
         conn_game.commit()
         conn_game.close()
         result["success"] = True
@@ -554,6 +620,49 @@ def log(output, before_text=""):
     else:
         print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
 
+def save_image(raw):
+    previous_images = os.listdir(image_dir)
+    max_id = -1
+    for name in previous_images:
+        if len(name) > 3:
+            if name[:4] == "IMG_":
+                id = int(name[4:9])
+                if id > max_id:
+                    max_id = id
+    
+    file_path = image_dir + os.path.sep + "IMG_" + str(max_id + 1).zfill(5) + ".jpg"
+    file = open(file_path, "wb")
+    file.write(base64.decodebytes(raw[23:].encode("utf-8")))
+    file.close()
+    return(file_path)
+
+def serial_readline(ser, port):
+    def timeout():
+        nonlocal full_line
+        while True:
+            time.sleep(0.5)
+            if last_data == -2:
+                break
+            if full_line != "" and time.time() - last_data > 3:
+                log("Request timed out", port)
+                full_line = ""
+
+    full_line = ""
+    last_data = -1
+    timeout = threading.Thread(target=timeout, daemon=True)
+    timeout.start()
+    while True:
+        line = ser.readline().decode("utf-8")
+        last_data = time.time()
+        if line[-5:] == "CONT\n":
+            full_line += line[:-5]
+            ser.write("CONT\n".encode("utf-8"))
+        else:
+            full_line += line[:-1]
+            break
+    last_data = -2
+    return(full_line)
+
 def bluetooth_server(port):
     try:
         ser = serial.Serial(port)
@@ -562,11 +671,13 @@ def bluetooth_server(port):
         return()
     log("Started Bluetooth server on port \"" + port + "\"")
     while True:
-        raw = ser.readline().decode("utf-8")[:-1]
+        raw = serial_readline(ser, port)
         try:
             msg = json.loads(raw)
         except:
-            log("Unable to parse request \"" + raw + "\"")
+            log("Unable to parse request", port)
+            ser.write("[]\n".encode('utf-8'))
+            continue
 
         if msg[1] == "load_data":
             config = quickread("cordova/config.xml").split('"')

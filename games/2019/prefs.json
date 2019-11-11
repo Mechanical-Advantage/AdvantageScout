@@ -43,12 +43,43 @@
         "AvoidDefenseRating INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
+    "pitFields": [
+        "DriveTrain TEXT DEFAULT ''",
+        "AutoMode TEXT DEFAULT ''",
+        "Comment TEXT DEFAULT ''",
+        "Image TEXT DEFAULT ''"
+    ],
     "forceClassic": {
         "auto": false,
         "teleop": false,
         "endgame": true
     },
     "classic": {
+        "pit": [
+            {
+                "type": "text",
+                "field": "DriveTrain",
+                "label": "Drive Train Type"
+            },
+            {
+                "type": "text",
+                "field": "AutoMode",
+                "label": "Full/Semi Auto?"
+            },
+            {
+                "type": "text",
+                "field": "Comment",
+                "label": "Comment"
+            },
+            {
+                "type": "image",
+                "field": "Image",
+                "label": "Robot Image"
+            },
+            {
+                "type": "uploadButton"
+            }
+        ],
         "auto": [
             {
                 "type": "chooser",

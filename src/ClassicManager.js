@@ -1,16 +1,22 @@
 // Responsible for managing classic layout
 function ClassicManager(appManager) {
-    const modeLookup = ["auto", "teleop", "endgame"]
+    const modeLookup = ["auto", "teleop", "endgame", "pit"]
     var fieldPrefsLookup = {} // prefs for each field (min, max, step, etc.)
-    var fieldModeLists = [[], [], []] // lists of which fields are in which mode
+    var fieldModeLists = [[], [], [], []] // lists of which fields are in which mode
     var counterData = {} // keeps track of counter values
     
     // Set up classic interface
     this.start = function() {
         fieldPrefsLookup = {}
-        fieldModeLists = [[], [], []]
-        var mainDivs = [document.getElementById("classicDiv1"), document.getElementById("classicDiv2"), document.getElementById("classicDiv3")]
-        for (var mode = 0; mode < 3; mode++) {
+        fieldModeLists = [[], [], [], []]
+        var mainDivs = [document.getElementById("classicDiv1"), document.getElementById("classicDiv2"), document.getElementById("classicDiv3"), document.getElementById("pitClassicDiv")]
+        var modeCount
+        if (appManager.game.prefs.pitFields == undefined) {
+            modeCount = 3
+        } else {
+            modeCount = 4
+        }
+        for (var mode = 0; mode < modeCount; mode++) {
             while (mainDivs[mode].firstChild) {
                 mainDivs[mode].removeChild(mainDivs[mode].firstChild)
             }
@@ -31,8 +37,8 @@ function ClassicManager(appManager) {
                     
                     unit.appendChild(document.createElement("DIV"))
                     unit.children[1].classList.add("classicgroup_units")
-                    unit.children[1].appendChild(unitFor(inputData.unit1, false))
-                    unit.children[1].appendChild(unitFor(inputData.unit2, false))
+                    unit.children[1].appendChild(unitFor(inputData.unit1, false, modeLookup[mode]))
+                    unit.children[1].appendChild(unitFor(inputData.unit2, false, modeLookup[mode]))
                     if (inputData.unit1.field) {
                         fieldModeLists[mode].push(inputData.unit1.field)
                     }
@@ -40,7 +46,7 @@ function ClassicManager(appManager) {
                         fieldModeLists[mode].push(inputData.unit2.field)
                     }
                 } else {
-                    unit = unitFor(inputData, true)
+                    unit = unitFor(inputData, true, modeLookup[mode])
                     if (inputData.field) {
                         fieldModeLists[mode].push(inputData.field)
                     }
@@ -51,7 +57,7 @@ function ClassicManager(appManager) {
     }
     
     // Get HTML for unit
-    function unitFor(inputData, wideAllowed) {
+    function unitFor(inputData, wideAllowed, modeName) {
         var unit = document.createElement("DIV")
         unit.classList.add("classicunit")
         if (inputData.type == "text" && wideAllowed) {
@@ -74,7 +80,7 @@ function ClassicManager(appManager) {
             var select = document.createElement("SELECT")
             unit.children[1].appendChild(select)
             select.classList.add("classicinput")
-            select.id = inputData.field
+            select.id = modeName + "_" + inputData.field
             for (var name in inputData.options) {
                 var option = document.createElement("OPTION")
                 option.innerHTML = name
@@ -85,7 +91,7 @@ function ClassicManager(appManager) {
             var textarea = document.createElement("TEXTAREA")
             unit.children[1].appendChild(textarea)
             textarea.classList.add("classicinput")
-            textarea.id = inputData.field
+            textarea.id = modeName + "_" + inputData.field
             textarea.placeholder = "Enter text here..."
         } else if (inputData.type == "counter") {
             var downButton = document.createElement("BUTTON")
@@ -104,9 +110,9 @@ function ClassicManager(appManager) {
             unit.children[1].appendChild(number)
             number.classList.add("classiccounter_number")
             number.innerHTML = inputData.min
-            counterData[inputData.field] = inputData.min
-            fieldPrefsLookup[inputData.field] = {"min": inputData.min, "max": inputData.max, "step": inputData.step}
-            number.id = inputData.field
+            counterData[modeName + "_" + inputData.field] = inputData.min
+            fieldPrefsLookup[modeName + "_" + inputData.field] = {"min": inputData.min, "max": inputData.max, "step": inputData.step}
+            number.id = modeName + "_" + inputData.field
             
             var upButton = document.createElement("BUTTON")
             unit.children[1].appendChild(upButton)
@@ -124,7 +130,7 @@ function ClassicManager(appManager) {
             unit.children[1].appendChild(checkbox)
             checkbox.classList.add("classicinput")
             checkbox.classList.add("classiccheck")
-            checkbox.id = inputData.field
+            checkbox.id = modeName + "_" + inputData.field
             checkbox.style.backgroundColor = "#ff7575"
             checkbox.onclick = function() {
                 if (this.style.backgroundColor == "rgb(255, 117, 117)") {
@@ -143,6 +149,16 @@ function ClassicManager(appManager) {
             button.onclick = function() {
                 appManager.scoutManager.upload()
             }
+        } else if (inputData.type == "image") {
+            var button = document.createElement("BUTTON")
+            unit.children[1].appendChild(button)
+            button.classList.add("classicimagebutton")
+            button.style.backgroundColor = "#ff7575"
+            button.innerHTML = "Camera"
+            button.id = modeName + "_" + inputData.field
+            button.onclick = function() {
+                appManager.classicManager.takePhoto(this)
+            }
         }
         return unit
     }
@@ -152,15 +168,17 @@ function ClassicManager(appManager) {
         var result = {}
         var useResult
         if (scoutMode == "classic") {
-            useResult = [true, true, true]
-        } else {
-            useResult = [appManager.game.prefs.forceClassic.auto, appManager.game.prefs.forceClassic.teleop, appManager.game.prefs.forceClassic.endgame]
+            useResult = [true, true, true, false]
+        } else if (scoutMode == "pit") {
+            useResult = [false, false, false, true]
+        } else{
+            useResult = [appManager.game.prefs.forceClassic.auto, appManager.game.prefs.forceClassic.teleop, appManager.game.prefs.forceClassic.endgame, false]
         }
-        for (var mode = 0; mode < 3; mode++) {
+        for (var mode = 0; mode < 4; mode++) {
             if (useResult[mode]) {
                 for (var i = 0; i < fieldModeLists[mode].length; i++) {
                     var fieldName = fieldModeLists[mode][i]
-                    var input = document.getElementById(fieldName)
+                    var input = document.getElementById(modeLookup[mode] + "_" + fieldName)
                     
                     if (input.type == undefined) {
                         result[fieldName] = Number(input.innerText)
@@ -174,15 +192,39 @@ function ClassicManager(appManager) {
                     } else if (input.type == "textarea") {
                         result[fieldName] = input.value
                     } else if (input.type == "submit") {
-                        if (input.style.backgroundColor == "rgb(255, 117, 117)") {
-                            result[fieldName] = 0
+                        if (input.innerHTML == "Camera") {
+                            result[fieldName] = input.image
                         } else {
-                            result[fieldName] = 1
+                            if (input.style.backgroundColor == "rgb(255, 117, 117)") {
+                                result[fieldName] = 0
+                            } else {
+                                result[fieldName] = 1
+                            }
                         }
                     }
                 }
             }
         }
         return result
+    }
+    
+    // Take photo and return file path
+    this.takePhoto = function(button) {
+        if (appManager.web) {
+            appManager.notificationManager.alert("Not supported", "Photos are not supported right now.")
+        } else {
+            var cameraOptions = {
+                quality: 30,
+                destinationType: Camera.DestinationType.FILE_URI,
+                correctOrientation: true,
+                saveToPhotoAlbum: false,
+                cameraDirection: Camera.Direction.BACK
+            }
+            function onSuccess(imageUrl) {
+                button.image = imageUrl
+                button.style.backgroundColor = "#75ff91"
+            }
+            navigator.camera.getPicture(onSuccess, function() {}, cameraOptions)
+        }
     }
 }
