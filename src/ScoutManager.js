@@ -113,24 +113,59 @@ function ScoutManager(appManager) {
         appManager.serverManager.heartbeat()
     }
     
+    // Logic operator lookup for upload check
+    const operators = {
+        "==": function(a, b) {return a == b},
+        "!=": function(a, b) {return a != b},
+        ">": function(a, b) {return a > b},
+        "<": function(a, b) {return a < b},
+        ">=": function(a, b) {return a >= b},
+        "=>": function(a, b) {return a >= b},
+        "<=": function(a, b) {return a <= b},
+        "=<": function(a, b) {return a <= b},
+        "includes": function(a, b) {return a.includes(b)}
+    }
+    
     // Confirm upload & leave scouting interface
+    this.dataTemp
     this.upload = function() {
+        this.dataTemp = getData()
+        var checks = []
+        if (scoutMode == "pit") {
+            checks = appManager.game.prefs.uploadChecks.pit
+        } else {
+            checks = appManager.game.prefs.uploadChecks.match
+        }
+        for (var i = 0; i < checks.length; i++) {
+            var check = checks[i]
+            if (this.dataTemp[check.field] != undefined) {
+                if (!operators[check.operator](this.dataTemp[check.field], check.value)) {
+                    appManager.notificationManager.alert("Check Failed", check.message)
+                    return
+                }
+            }
+        }
         appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function(result) {
                                                if (result == 1) {
-                                               appManager.scoutManager.saveData()
+                                               appManager.scoutManager.saveData(appManager.scoutManager.dataTemp)
                                                appManager.serverManager.upload()
                                                appManager.scoutManager.close(true, false)
                                                }
                                                })
     }
     
-    // Write match to local storage
-    this.saveData = function() {
+    // Retrieve & combine data from classic and visual managers
+    function getData() {
         var data = {}
         if (scoutMode != "pit") {
             data = appManager.visualManager.getData()
         }
         Object.assign(data, appManager.classicManager.getData(scoutMode))
+        return data
+    }
+    
+    // Write match to local storage
+    this.saveData = function(data) {
         data["Event"] = appManager.config.event
         data["Team"] = Number(appManager.team)
         if (scoutMode != "pit") {

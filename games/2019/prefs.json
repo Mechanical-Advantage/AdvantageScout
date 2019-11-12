@@ -54,6 +54,17 @@
         "teleop": false,
         "endgame": true
     },
+    "uploadChecks": {
+        "pit": [],
+        "match": [
+            {
+                "field": "WonMatch",
+                "operator": "!=",
+                "value": -1,
+                "message": "You must select whether the match was won."
+            }
+        ]
+    },
     "classic": {
         "pit": [
             {
@@ -426,9 +437,14 @@
                 }
             },
             {
-                "type": "checkbox",
+                "type": "chooser",
                 "field": "WonMatch",
-                "label": "Won Match?"
+                "label": "Won Match?",
+                "options": {
+                    "Please select": -1,
+                    "Win": 1,
+                    "Loss": 0
+                }
             },
             {
                 "type": "checkbox",

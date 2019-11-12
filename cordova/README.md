@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.2.1
+* Added support for upload checks
+
 ### 1.2.0
 * Added pit scouting and image support
 

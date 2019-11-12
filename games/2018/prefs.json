@@ -28,6 +28,10 @@
         "teleop": false,
         "endgame": true
     },
+    "uploadChecks": {
+        "pit": [],
+        "match": []
+    },
     "classic": {
         "auto": [
             {
