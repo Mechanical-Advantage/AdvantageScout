@@ -61,7 +61,35 @@
                 "field": "WonMatch",
                 "operator": "!=",
                 "value": -1,
-                "message": "You must select whether the match was won."
+                "message": "You must select whether the match was won.",
+                "binding": true
+            },
+            {
+                "script": "return !((data.StartPos == 1) && (data.StartLevel == 2))",
+                "message": "You have marked the starting position as level 2 in the center, but that isn't possible.",
+                "binding": true
+            },
+            {
+                "script": "return data.ClimbLevel <= data.ClimbLevelAttempted",
+                "message": "The attempted climb level is lower than the successful climb level. Are you sure that's correct?",
+                "binding": false
+            },
+            {
+                "script": "return data.LiftedOthers <= data.LiftedOthersAttempted",
+                "message": "The attempted lifted others level is lower than the successful lifted others level. Are you sure that's correct?",
+                "binding": false
+            },
+            {
+                "field": "Comment",
+                "operator": "!=",
+                "value": "",
+                "message": "You haven't entered a comment. Would you still like to continue?",
+                "binding": false
+            },
+            {
+                "script": "return (data.Comment.length > 15) || (data.Comment.length == 0)",
+                "message": "Your comment is very short. Would you still like to continue?",
+                "binding": false
             }
         ]
     },

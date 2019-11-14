@@ -122,36 +122,69 @@ function ScoutManager(appManager) {
         ">=": function(a, b) {return a >= b},
         "=>": function(a, b) {return a >= b},
         "<=": function(a, b) {return a <= b},
-        "=<": function(a, b) {return a <= b},
-        "includes": function(a, b) {return a.includes(b)}
+        "=<": function(a, b) {return a <= b}
     }
     
     // Confirm upload & leave scouting interface
-    this.dataTemp
+    var dataTemp
+    var checkStage = -1
     this.upload = function() {
-        this.dataTemp = getData()
+        dataTemp = getData()
         var checks = []
         if (scoutMode == "pit") {
             checks = appManager.game.prefs.uploadChecks.pit
         } else {
             checks = appManager.game.prefs.uploadChecks.match
         }
-        for (var i = 0; i < checks.length; i++) {
+        
+        var start = 0
+        if (checkStage != -1) {
+            start = checkStage + 1
+        }
+        for (var i = start; i < checks.length; i++) {
+            checkStage = i
             var check = checks[i]
-            if (this.dataTemp[check.field] != undefined) {
-                if (!operators[check.operator](this.dataTemp[check.field], check.value)) {
-                    appManager.notificationManager.alert("Check Failed", check.message)
+            if (check.script != undefined) {
+                var checkField = new Function("data", check.script)
+                if (!checkField(dataTemp)) {
+                    failAlert(check)
                     return
+                }
+            } else {
+                if (dataTemp[check.field] != undefined) {
+                    if (!operators[check.operator](dataTemp[check.field], check.value)) {
+                        failAlert(check)
+                        return
+                    }
                 }
             }
         }
-        appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function(result) {
-                                               if (result == 1) {
-                                               appManager.scoutManager.saveData(appManager.scoutManager.dataTemp)
-                                               appManager.serverManager.upload()
-                                               appManager.scoutManager.close(true, false)
-                                               }
-                                               })
+        
+        function failAlert(check) {
+            if (check.binding) {
+                appManager.notificationManager.alert("Check Failed", check.message)
+                checkStage = -1
+            } else {
+                appManager.notificationManager.confirm("Check Failed", check.message, ["Continue", "Cancel"], function(result) {
+                                                       if (result == 1) {
+                                                       appManager.scoutManager.upload()
+                                                       } else {
+                                                       checkStage = -1
+                                                       }
+                                                       })
+            }
+        }
+        
+        if (checkStage == checks.length - 1) {
+            checkStage = -1
+            appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function(result) {
+                                                   if (result == 1) {
+                                                   saveData(dataTemp)
+                                                   appManager.serverManager.upload()
+                                                   appManager.scoutManager.close(true, false)
+                                                   }
+                                                   })
+        }
     }
     
     // Retrieve & combine data from classic and visual managers
@@ -165,7 +198,7 @@ function ScoutManager(appManager) {
     }
     
     // Write match to local storage
-    this.saveData = function(data) {
+    function saveData(data) {
         data["Event"] = appManager.config.event
         data["Team"] = Number(appManager.team)
         if (scoutMode != "pit") {

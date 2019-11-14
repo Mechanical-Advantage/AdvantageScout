@@ -9,6 +9,7 @@ The app is not available on the Google Play Store, so it must be installed one o
 ## Changelog
 ### 1.2.1
 * Added support for upload checks
+* Internal cleanup
 
 ### 1.2.0
 * Added pit scouting and image support
