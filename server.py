@@ -372,7 +372,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         output = ""
         for name in names:
             output += open("src/" + name + ".js", "r").read() + "\n"
-        return(output)
+        return(jsmin(output))
     
     @cherrypy.expose
     def heartbeat(self, device_name, state, team=-1, match=-1):
