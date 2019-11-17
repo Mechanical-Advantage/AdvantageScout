@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import cherrypy
+from jsmin import jsmin
 import json
 import base64
 import time
@@ -15,12 +16,20 @@ bt_enable = True
 bt_ports = ["/dev/cu.Bluetooth-Incoming-Port"]
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
+db_schedule = "../2019 Scout Scheduler/ScoutAssignmentCode/scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
 image_dir = "images" # folder for image data
 default_game = "2019"
 
 #Import serial library
 if bt_enable:
     import serial
+
+#Log output in cherrypy format
+def log(output, before_text=""):
+    if before_text == "":
+        print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
+    else:
+        print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
 
 #Initialize global db
 def init_global():
@@ -47,11 +56,17 @@ def init_global():
     conn_global.close()
 
 if not Path(db_global).is_file():
-    print("Creating new global database")
+    log("Creating new global database")
     init_global()
 
+if (not Path(db_schedule).is_file()) and (not db_schedule == ""):
+    log("WARNING - Could not find schedule database")
+    db_schedule_found = False
+else:
+    db_schedule_found = True
+
 if not os.path.exists(image_dir):
-    print("Creating image directory")
+    log("Creating image directory")
     os.mkdir(image_dir)
 
 #Connect to appropriate game database
@@ -63,6 +78,23 @@ def gamedb_connect():
     conn_game = sql.connect(db_games.replace("$GAME", game))
     conn_global.close()
     return({"conn": conn_game, "name": game})
+
+#Check if schedule should be used based on event
+def use_schedule():
+    if not db_schedule_found:
+        return(False)
+    
+    conn_global = sql.connect(db_global)
+    cur_global = conn_global.cursor()
+    scout_event = cur_global.execute("SELECT value FROM config WHERE key = 'event'").fetchall()[0][0]
+    conn_global.close()
+
+    conn_schedule = sql.connect(db_schedule)
+    cur_schedule = conn_schedule.cursor()
+    schedule_event = cur_schedule.execute("SELECT key FROM event").fetchall()[-1][0]
+    conn_schedule.close()
+
+    return(scout_event == schedule_event)
 
 #Initialize game db
 def init_game():
@@ -150,6 +182,20 @@ class main_server(object):
                     Pit Scout
                 </button>
                 <br id="pitButtonBreak" hidden>
+                
+                <div id="scheduleSelect" hidden>
+                    Name:
+                    <select id="nameSelect" class="teammatch" onchange="javascript:appManager.scoutManager.updatePresetList()">
+                    </select>
+                    <br>
+                    Preset:
+                    <select id="presetSelect" class="teammatch" onchange="javascript:appManager.scoutManager.setPreset()">
+                        <option value="custom">
+                            custom
+                        </option>
+                    </select>
+                </div>
+
                 Team:
                 <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
                 <br>
@@ -360,12 +406,30 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         if Path(path + "CanvasManager.js").is_file():
             result = {
                 "prefs": json.loads(quickread(path + "prefs.json")),
-                "CanvasManager": quickread(path + "CanvasManager.js")
+                "CanvasManager": jsmin(quickread(path + "CanvasManager.js"))
             }
         else:
             result = {
                 "prefs": json.loads(quickread(path + "prefs.json"))
             }
+        return(json.dumps(result))
+
+    @cherrypy.expose
+    def get_schedule(self):
+        result = []
+        if use_schedule() and db_schedule_found:
+            conn_schedule = sql.connect(db_schedule)
+            cur_schedule = conn_schedule.cursor()
+            schedule_raw = cur_schedule.execute("SELECT * FROM schedule ORDER BY match ASC").fetchall()
+            conn_schedule.close()
+
+            for match_raw in schedule_raw:
+                match = {"teams": [], "scouts": []}
+                for i in range(1, 13, 2):
+                    match["teams"].append(match_raw[i])
+                    match["scouts"].append(match_raw[i + 1])
+                result.append(match)
+            
         return(json.dumps(result))
 
     @cherrypy.expose
@@ -549,6 +613,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         data["reverse_alliances"] = cur_global.fetchall()[0][0]
         cur_global.execute("SELECT value FROM config WHERE key = 'dev_mode'")
         data["dev_mode"] = cur_global.fetchall()[0][0]
+        data["use_schedule"] = use_schedule()
         conn_global.close()
         return(json.dumps(data))
 
@@ -614,12 +679,6 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             """
         return(output.replace("$FAVICON_CODE", favicon_code))
 
-def log(output, before_text=""):
-    if before_text == "":
-        print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
-    else:
-        print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
-
 def save_image(raw):
     previous_images = os.listdir(image_dir)
     max_id = -1
@@ -681,7 +740,7 @@ def bluetooth_server(port):
 
         if msg[1] == "load_data":
             config = quickread("cordova/config.xml").split('"')
-            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "version": config[3]}
+            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "schedule": json.loads(main_server().get_schedule()), "version": config[3]}
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":

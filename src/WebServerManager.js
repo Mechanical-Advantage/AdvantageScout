@@ -75,19 +75,47 @@ function WebServerManager(appManager) {
     }
     
     // Get config and game data
+    var configTemp
+    var gameTemp
+    var scheduleTemp
     this.getData = function() {
+        
+        // Get config
         const configHttp = new XMLHttpRequest()
         
         configHttp.onreadystatechange = function() {
             if (this.readyState == 4) {
                 if (this.status == 200) {
-                    var configTemp = this.responseText
+                    
+                    // Load game
+                    configTemp = JSON.parse(this.responseText)
                     const gameHttp = new XMLHttpRequest()
                     
                     gameHttp.onreadystatechange = function() {
                         if (this.readyState == 4) {
                             if (this.status == 200) {
-                                appManager.loadData(JSON.parse(configTemp), JSON.parse(this.responseText), "", false)
+                                gameTemp = JSON.parse(this.responseText)
+                                if (configTemp.use_schedule) {
+                                    
+                                    // Get schedule
+                                    const scheduleHttp = new XMLHttpRequest()
+                                    
+                                    scheduleHttp.onreadystatechange = function() {
+                                        if (this.readyState == 4) {
+                                            if (this.status == 200) {
+                                                scheduleTemp = JSON.parse(this.responseText)
+                                                finishLoad()
+                                            } else {
+                                                appManager.notificationManager.alert("Error", "Failed to retrieve scout schedule")
+                                            }
+                                        }
+                                    }
+                                    
+                                    scheduleHttp.open("GET", "/get_schedule", true)
+                                    scheduleHttp.send()
+                                } else {
+                                    finishLoad()
+                                }
                             } else {
                                 appManager.notificationManager.alert("Error", "Failed to retrieve game data")
                             }
@@ -96,7 +124,6 @@ function WebServerManager(appManager) {
                     
                     gameHttp.open("GET", "/load_game", true)
                     gameHttp.send()
-                    
                 } else {
                     appManager.notificationManager.alert("Error", "Failed to retrieve configuration data")
                 }
@@ -105,6 +132,14 @@ function WebServerManager(appManager) {
         
         configHttp.open("GET", "/get_config", true)
         configHttp.send()
+    }
+    
+    // Send retrieved data to AppManager
+    function finishLoad() {
+        if (!configTemp.use_schedule) {
+            scheduleTemp = []
+        }
+        appManager.loadData(configTemp, gameTemp, scheduleTemp, "", false)
     }
     
     // Report if connected to server

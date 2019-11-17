@@ -11,9 +11,16 @@ function SettingsManager(appManager) {
             cordova.getAppVersion.getVersionNumber(function(version) {
                                                    document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
                                                    appVersion = version.toString()
-                                                   if (appVersionRemote != "" && appVersionRemote != appVersion && !outdatedAlertSent) {
+                                                   if (appVersionRemote != "") {
+                                                   var compareResult = compareVersions(appVersion, appVersionRemote)
+                                                   if (compareResult != "same" && !outdatedAlertSent) {
                                                    outdatedAlertSent = true
-                                                   appManager.notificationManager.alert("Update Required", "This app version is outdated. Ask the scouting team for help updating.")
+                                                   if (compareResult == "older") {
+                                                   appManager.notificationManager.alert("Update Recommended", "This app version is outdated. Ask the scouting team for help updating.")
+                                                   } else {
+                                                   appManager.notificationManager.alert("Server Outdated", "This app version may not be compatable with the server. Please talk to the scouting team for more information.")
+                                                   }
+                                                   }
                                                    }
                                                    })
         }
@@ -32,6 +39,23 @@ function SettingsManager(appManager) {
                 this.loadVersion()
             }
         }
+    }
+    
+    // Check if older or newer
+    function compareVersions(local, remote) {
+        var local = local.split(".")
+        var remote = remote.split(".")
+        var result = "same"
+        for (var i = 0; i < 3; i++) {
+            if (Number(local[i]) < Number(remote[i])) {
+                result = "older"
+                break
+            } else if (Number(local[i]) > Number(remote[i])) {
+                result = "newer"
+                break
+            }
+        }
+        return result
     }
     
     // Check if device name exists and open settings or write to text box
@@ -75,11 +99,17 @@ function SettingsManager(appManager) {
         if (window.localStorage.getItem("advantagescout_server") == null) {
             window.localStorage.setItem("advantagescout_server", "")
         }
+        if (window.localStorage.getItem("advantagescout_selectedname") == null) {
+            window.localStorage.setItem("advantagescout_selectedname", "")
+        }
+        if (window.localStorage.getItem("advantagescout_selectedpreset") == null) {
+            window.localStorage.setItem("advantagescout_selectedpreset", "custom")
+        }
     }
     
     // Write config and game into local storage
-    this.saveDataCache = function(config, game, version) {
-        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({"config": config, "game": game, "version": version}))
+    this.saveDataCache = function(config, game, schedule, version) {
+        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({"config": config, "game": game, "schedule": schedule, "version": version}))
         window.localStorage.setItem("advantagescout_datacachetimestamp", Math.round(Date.now() / 1000))
     }
     
@@ -88,7 +118,11 @@ function SettingsManager(appManager) {
         if (window.localStorage.getItem("advantagescout_datacache") != null) {
             if (Math.round(Date.now() / 1000) - window.localStorage.getItem("advantagescout_datacachetimestamp") < cacheExpiration) {
                 var parsed = JSON.parse(window.localStorage.getItem("advantagescout_datacache"))
-                appManager.loadData(parsed.config, parsed.game, parsed.version, true)
+                if (parsed.schedule == undefined) {
+                    parsed.schedule = []
+                    parsed.config.use_schedule = false
+                }
+                appManager.loadData(parsed.config, parsed.game, parsed.schedule, parsed.version, true)
             }
         }
     }

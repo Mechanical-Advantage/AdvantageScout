@@ -130,7 +130,11 @@ function AppServerManager(appManager) {
             addToSerialQueue("load_data", function() {return []}, function(data) {
                              loadDataQueued = false
                              data = JSON.parse(data)[1]
-                             appManager.loadData(data.config, data.game, data.version, false)
+                             if (data.schedule == undefined) {
+                             data.schedule = []
+                             data.config.use_schedule = false
+                             }
+                             appManager.loadData(data.config, data.game, data.schedule, data.version, false)
                              })
         }
     }

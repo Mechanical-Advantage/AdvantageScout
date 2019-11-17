@@ -29,6 +29,45 @@ function ScoutManager(appManager) {
         document.getElementById("loadingtext").hidden = true
         document.getElementById("startbuttons").hidden = false
         
+        // Schedule options
+        if (appManager.config.use_schedule) {
+            var names = []
+            for (matchNumber in appManager.schedule) {
+                var match = appManager.schedule[matchNumber]
+                for (i in match.scouts) {
+                    var name = match.scouts[i]
+                    if (!names.includes(name)) {
+                        names.push(name)
+                    }
+                }
+            }
+            names.sort()
+            
+            var nameSelect = document.getElementById("nameSelect")
+            while (nameSelect.firstChild) {
+                nameSelect.removeChild(nameSelect.firstChild)
+            }
+            for (i in names) {
+                var name = names[i]
+                var option = document.createElement("OPTION")
+                option.value = name
+                option.innerHTML = name
+                nameSelect.appendChild(option)
+            }
+            
+            var selectedName = window.localStorage.getItem("advantagescout_selectedname")
+            if (valueExists(nameSelect, selectedName)) {
+                nameSelect.value = selectedName
+            }
+            this.updatePresetList()
+        } else {
+            document.getElementById("team").disabled = false
+            document.getElementById("match").disabled = false
+            document.getElementById("team").value = ""
+            document.getElementById("match").value = ""
+        }
+        document.getElementById("scheduleSelect").hidden = !appManager.config.use_schedule
+        
         // Pit scouting
         var hidePitButton = appManager.game.prefs.pitFields == undefined
         document.getElementById("pitButton").hidden = hidePitButton
@@ -39,6 +78,64 @@ function ScoutManager(appManager) {
             document.getElementById("team").value = 1
             document.getElementById("match").value = 1
             this.start("visual")
+        }
+    }
+    
+    // Check if value exists in select options
+    function valueExists(select, value) {
+        var options = select.options
+        var result = false
+        for (i in options) {
+            if (options[i].value == value) {
+                result = true
+                break
+            }
+        }
+        return result
+    }
+    
+    // Update list of schedule presets based on selected name
+    this.updatePresetList = function() {
+        var targetName = document.getElementById("nameSelect").value
+        window.localStorage.setItem("advantagescout_selectedname", targetName)
+        var presetSelect = document.getElementById("presetSelect")
+        while (presetSelect.children.length > 1) {
+            presetSelect.removeChild(presetSelect.children[1])
+        }
+        for (var matchNumber = 0; matchNumber < appManager.schedule.length; matchNumber++) {
+            var match = appManager.schedule[matchNumber]
+            for (i in match.scouts) {
+                var name = match.scouts[i]
+                if (name == targetName) {
+                    var team = match.teams[i]
+                    var option = document.createElement("OPTION")
+                    option.value = team.toString() + "," + (matchNumber+1).toString()
+                    option.innerHTML = "M" + (matchNumber+1).toString() + ", " + team.toString()
+                    presetSelect.appendChild(option)
+                }
+            }
+        }
+        var selectedPreset = window.localStorage.getItem("advantagescout_selectedpreset")
+        if (valueExists(presetSelect, selectedPreset)) {
+            presetSelect.value = selectedPreset
+        }
+        this.setPreset()
+    }
+    
+    // Update team and match based on preset
+    this.setPreset = function() {
+        var preset = document.getElementById("presetSelect").value
+        window.localStorage.setItem("advantagescout_selectedpreset", preset)
+        var teamField = document.getElementById("team")
+        var matchField = document.getElementById("match")
+        if (preset == "custom") {
+            teamField.disabled = false
+            matchField.disabled = false
+        } else {
+            teamField.value = preset.split(",")[0]
+            matchField.value = preset.split(",")[1]
+            teamField.disabled = true
+            matchField.disabled = true
         }
     }
     
@@ -131,10 +228,14 @@ function ScoutManager(appManager) {
     this.upload = function() {
         dataTemp = getData()
         var checks = []
-        if (scoutMode == "pit") {
-            checks = appManager.game.prefs.uploadChecks.pit
+        if (appManager.game.prefs.uploadChecks == undefined) {
+            checks = []
         } else {
-            checks = appManager.game.prefs.uploadChecks.match
+            if (scoutMode == "pit") {
+                checks = appManager.game.prefs.uploadChecks.pit
+            } else {
+                checks = appManager.game.prefs.uploadChecks.match
+            }
         }
         
         var start = 0
@@ -239,8 +340,16 @@ function ScoutManager(appManager) {
         }
         if (resetFields) {
             document.getElementById("pitTeam").value = ""
-            document.getElementById("team").value = ""
-            document.getElementById("match").value = ""
+            if (!document.getElementById("team").disabled) {
+                document.getElementById("team").value = ""
+                document.getElementById("match").value = ""
+            } else {
+                var presetSelect = document.getElementById("presetSelect")
+                if (presetSelect.selectedIndex < presetSelect.children.length - 1) {
+                    presetSelect.selectedIndex += 1
+                }
+                this.setPreset()
+            }
         }
         appManager.serverManager.heartbeat()
     }
