@@ -180,7 +180,7 @@ function ClassicManager(appManager) {
                     var fieldName = fieldModeLists[mode][i]
                     var input = document.getElementById(modeLookup[mode] + "_" + fieldName)
                     
-                    if (input.type == undefined) {
+                    if (input.tagName == "DIV") {
                         result[fieldName] = Number(input.innerText)
                     } else if (input.type == "select-one") {
                         if (isNaN(input.value)) {

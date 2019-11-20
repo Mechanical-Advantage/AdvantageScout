@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.3.1
+* Fix for upload button on old Android versions
+
 ### 1.3.0
 * Added support for scout schedules
 * Fixed bug when upload checks not provided

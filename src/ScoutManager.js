@@ -226,7 +226,12 @@ function ScoutManager(appManager) {
     var dataTemp
     var checkStage = -1
     this.upload = function() {
-        dataTemp = getData()
+        try {
+            dataTemp = getData()
+        } catch(error) {
+            appManager.notificationManager.alert("Error", "Could not upload: " + error.message)
+            return
+        }
         var checks = []
         if (appManager.game.prefs.uploadChecks == undefined) {
             checks = []
@@ -288,13 +293,22 @@ function ScoutManager(appManager) {
         }
     }
     
+    // Add new keys to source
+    function merge(source, appended) {
+        var keys = Object.keys(appended)
+        for (var i = 0; i < keys.length; i++) {
+            source[keys[i]] = appended[keys[i]]
+        }
+        return source
+    }
+    
     // Retrieve & combine data from classic and visual managers
     function getData() {
         var data = {}
         if (scoutMode != "pit") {
             data = appManager.visualManager.getData()
         }
-        Object.assign(data, appManager.classicManager.getData(scoutMode))
+        data = merge(data, appManager.classicManager.getData(scoutMode))
         return data
     }
     
