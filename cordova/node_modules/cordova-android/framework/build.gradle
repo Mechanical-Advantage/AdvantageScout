@@ -37,12 +37,19 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'org.apache.cordova'
-version = '8.0.0'
+version = '8.1.0'
 
 android {
     compileSdkVersion cdvCompileSdkVersion
@@ -51,6 +58,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // For the Android Cordova Lib, we will hardcode the minSdkVersion and not allow changes.
+    defaultConfig {
+        minSdkVersion 19
     }
 
     sourceSets {
@@ -128,9 +140,9 @@ bintray {
         licenses = ['Apache-2.0']
         labels = ['android', 'cordova', 'phonegap']
         version {
-            name = '8.0.0'
+            name = '8.1.0'
             released  = new Date()
-            vcsTag = '8.0.0'
+            vcsTag = '8.1.0'
         }
     }
 }
