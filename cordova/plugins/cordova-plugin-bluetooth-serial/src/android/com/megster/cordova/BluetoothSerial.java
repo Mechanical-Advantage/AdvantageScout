@@ -32,6 +32,7 @@ public class BluetoothSerial extends CordovaPlugin {
 
     // actions
     private static final String LIST = "list";
+    private static final String LISTEN = "listen";
     private static final String CONNECT = "connect";
     private static final String CONNECT_INSECURE = "connectInsecure";
     private static final String DISCONNECT = "disconnect";
@@ -107,7 +108,11 @@ public class BluetoothSerial extends CordovaPlugin {
         if (action.equals(LIST)) {
 
             listBondedDevices(callbackContext);
-
+            
+        } else if (action.equals(LISTEN)) {
+            
+            listen(args, callbackContext);
+            
         } else if (action.equals(CONNECT)) {
 
             boolean secure = true;
@@ -334,6 +339,16 @@ public class BluetoothSerial extends CordovaPlugin {
             json.put("class", device.getBluetoothClass().getDeviceClass());
         }
         return json;
+    }
+    
+    private void listen(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        connectCallback = callbackContext;
+        bluetoothSerialService.start();
+        buffer.setLength(0);
+        
+        PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+        result.setKeepCallback(true);
+        callbackContext.sendPluginResult(result);
     }
 
     private void connect(CordovaArgs args, boolean secure, CallbackContext callbackContext) throws JSONException {

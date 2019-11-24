@@ -42,6 +42,9 @@
             <div class="title">
                 Advantage Scout
             </div>
+            <div id="onlinetext" style="color: red;">
+                Offline
+            </div>
             <div id="localcount">
                 Loading...
             </div>
@@ -127,16 +130,12 @@
             <input type="text" id="name"></input>
             <br>
             <br>
-            Select server device:
-            <br>
-            <select id="server"></select>
-            <button onclick="javascript:appManager.settingsManager.refreshDeviceList()">
-                Refresh
-            </button>
+            Bluetooth settings:
             <br>
             <button onclick="javascript:bluetoothSerial.showBluetoothSettings()">
-                Bluetooth Settings
+                Open Settings
             </button>
+            <br>
             <br>
             <button onclick="javascript:appManager.settingsManager.close()" class="scoutstart">
                 Finish
@@ -144,6 +143,24 @@
             <script>
                 
             </script>
+        </div>
+        
+        <div id="offlineWarningDiv" class="centered" hidden>
+            <div class="title">
+                Advantage Scout
+            </div>
+            <div class="subtitle">
+                You're offline!
+            </div>
+            You can keep scouting for now, but please reconnect if possible.
+            <br>
+            <br>
+            Ask someone on the scouting systems team for help if needed.
+            <br>
+            <br>
+            <button class="scoutstart" onclick="javascript:appManager.scoutManager.close(true, true)">
+                Continue
+            </button>
         </div>
         
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>

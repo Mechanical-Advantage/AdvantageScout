@@ -59,11 +59,10 @@ function AppManager(web) {
     // App setup
     this.settingsManager.loadVersion()
     this.settingsManager.checkDeviceName()
-    this.settingsManager.refreshDeviceList()
     this.settingsManager.initLocalStorage()
     this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
-    this.serverManager.initHeartbeatLoop()
+    this.serverManager.init()
     this.serverManager.getData()
     this.settingsManager.loadDataCache()
 }

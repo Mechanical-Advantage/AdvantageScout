@@ -142,8 +142,8 @@ function writeProjectProperties (projectPath, target_api) {
 
 // This makes no sense, what if you're building with a different build system?
 function prepBuildFiles (projectPath) {
-    var buildModule = require(path.resolve(projectPath, 'cordova/lib/builders/builders'));
-    buildModule.getBuilder().prepBuildFiles();
+    var buildModule = require('../templates/cordova/lib/builders/builders');
+    buildModule.getBuilder(projectPath).prepBuildFiles();
 }
 
 function copyBuildRules (projectPath, isLegacy) {
@@ -272,7 +272,7 @@ exports.create = function (project_path, config, options, events) {
     // Make the package conform to Java package types
     return exports.validatePackageName(package_name)
         .then(function () {
-            exports.validateProjectName(project_name);
+            return exports.validateProjectName(project_name);
         }).then(function () {
         // Log the given values for the project
             events.emit('log', 'Creating Cordova project for the Android platform:');
@@ -321,7 +321,6 @@ exports.create = function (project_path, config, options, events) {
 
                 var manifest = new AndroidManifest(path.join(project_template_dir, 'AndroidManifest.xml'));
                 manifest.setPackageId(package_name)
-                    .setTargetSdkVersion(target_api.split('-')[1])
                     .getActivity().setName(safe_activity_name);
 
                 var manifest_path = path.join(app_path, 'AndroidManifest.xml');
