@@ -228,7 +228,6 @@ function AppServerManager(appManager) {
             if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_device") == "") {
                 retry = setTimeout(function() {pushSerialQueue()}, getRetryDelay())
             } else {
-                console.log("sending")
                 function loadData() {
                     data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[0].query, serialQueue[0].args()])
                     serialWrite(data, onReceived)
