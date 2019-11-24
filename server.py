@@ -13,7 +13,9 @@ import sys
 default_port = 8000 # can override w/ command line argument
 host = "0.0.0.0"
 bt_enable = True
-bt_ports = ["/dev/cu.Bluetooth-Incoming-Port"]
+bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
+bt_ports_outgoing = ["COM4"] # current implementation
+bt_showheartbeats = False
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 db_schedule = "../2019 Scout Scheduler/ScoutAssignmentCode/scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
@@ -696,6 +698,15 @@ def save_image(raw):
     return(file_path)
 
 def serial_readline(ser, port):
+    def connect(ser):
+        while True:
+            try:
+                ser.open()
+            except:
+                x = 0
+            else:
+                break
+
     def timeout():
         nonlocal full_line
         while True:
@@ -709,26 +720,48 @@ def serial_readline(ser, port):
     full_line = ""
     last_data = -1
     timeout = threading.Thread(target=timeout, daemon=True)
-    timeout.start()
+    timeout.start() 
     while True:
-        line = ser.readline().decode("utf-8")
+        if ser.is_open:
+            line = ser.readline().decode("utf-8")
+        else:
+            line = ""
+
         last_data = time.time()
         if line[-5:] == "CONT\n":
             full_line += line[:-5]
             ser.write("CONT\n".encode("utf-8"))
+        elif line == "":
+            if ser.is_open:
+                log("Disconnected, trying to reconnect...", port)
+            try:
+                ser.close()
+            except:
+                x = 0
+            connect(ser)
+            log("Connected successfully, ready for data", port)
         else:
             full_line += line[:-1]
             break
     last_data = -2
     return(full_line)
 
-def bluetooth_server(port):
+def bluetooth_server(port, incoming):
     try:
-        ser = serial.Serial(port)
+        ser = serial.Serial()
+        ser.port = port
+        if incoming:
+            ser.open()
+        else:
+            ser.timeout = 5
     except:
         log("WARNING - failed to connect to \"" + port + "\" Is the connection busy?")
         return()
-    log("Started Bluetooth server on port \"" + port + "\"")
+    if incoming:
+        type = "incoming"
+    else:
+        type = "outgoing"
+    log("Started Bluetooth server on " + type + " port \"" + port + "\"")
     while True:
         raw = serial_readline(ser, port)
         try:
@@ -753,16 +786,19 @@ def bluetooth_server(port):
             result = "error"
         response = [msg[0], result]
         ser.write((json.dumps(response) + "\n").encode('utf-8'))
-        log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
-
+        if bt_showheartbeats or msg[1] != "heartbeat":
+            log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
 
 if __name__ == "__main__":
     #Start bluetooth servers
     if bt_enable:
         bt_servers = []
-        for i in range(len(bt_ports)):
-            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports[i],), daemon=True))
+        for i in range(len(bt_ports_outgoing)):
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_outgoing[i],False), daemon=True))
             bt_servers[i].start()
+        for i in range(len(bt_ports_incoming)):
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_incoming[i],True), daemon=True))
+            bt_servers[i + len(bt_ports_outgoing)].start()
     
     #Start web server
     port = default_port
