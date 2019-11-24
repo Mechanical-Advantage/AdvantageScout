@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.4.1
+* Changes to improve reliability when initiating connection
+
 ### 1.4.0
 * New protocol for Bluetooth communication on multiple devices
 

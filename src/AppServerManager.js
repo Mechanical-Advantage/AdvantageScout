@@ -160,8 +160,13 @@ function AppServerManager(appManager) {
         function btEnabled() {
             bluetoothSerial.listen(function() {
                                    setConnected(true)
-                                   if (serialQueue.length > 0 && !pushing) {
-                                   pushSerialQueue()
+                                   if (serialQueue.length > 0) {
+                                   try {
+                                   clearTimeout(retry)
+                                   } catch(error) {
+                                   x = 0
+                                   }
+                                   setTimeout(function() {pushSerialQueue()}, 500) // wait until server ready for data
                                    }
                                    }, function() {
                                    setConnected(false)
@@ -207,24 +212,23 @@ function AppServerManager(appManager) {
     
     // Send items in serial queue to server
     var timeout
-    var pushing = false
+    var retry
     function pushSerialQueue() {
-        pushing = true
         var responses = []
-        bluetoothSerial.isEnabled(function(){
+        bluetoothSerial.isEnabled(function() {
                                   btEnabled()
                                   }, function() {
-                                  setTimeout(function() {pushSerialQueue()}, getRetryDelay())
+                                  retry = setTimeout(function() {pushSerialQueue()}, getRetryDelay())
                                   })
         function btEnabled() {
-            bluetoothSerial.isConnected(function() {btConnected()}, function() {pushing = false})
+            bluetoothSerial.isConnected(function() {btConnected()}, function() {})
         }
         
         function btConnected() {
             if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_device") == "") {
-                setTimeout(function() {pushSerialQueue()}, getRetryDelay())
+                retry = setTimeout(function() {pushSerialQueue()}, getRetryDelay())
             } else {
-                clearTimeout(timeout)
+                console.log("sending")
                 function loadData() {
                     data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[0].query, serialQueue[0].args()])
                     serialWrite(data, onReceived)
@@ -233,7 +237,6 @@ function AppServerManager(appManager) {
                 function onReceived(data) {
                     serialQueue.shift().response(data)
                     if (serialQueue.length == 0) {
-                        pushing = false
                         bluetoothSerial.unsubscribe()
                     } else {
                         loadData()
@@ -280,7 +283,6 @@ function AppServerManager(appManager) {
         if (continueQueueLength > 1) {
             appManager.settingsManager.setUploadProgress(0, continueQueueLength)
         }
-        console.log("Writing")
         bluetoothSerial.write(continueQueue.shift() + "\n", function() {}, function() {})
         timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
     }
