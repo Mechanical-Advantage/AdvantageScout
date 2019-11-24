@@ -348,9 +348,7 @@ function ScoutManager(appManager) {
         } else {
             appManager.state = 0
             document.getElementById("selectionDiv").hidden = false
-            if (appManager.web) {
-                document.getElementById("offlineWarningDiv").hidden = true
-            }
+            document.getElementById("offlineWarningDiv").hidden = true
         }
         if (resetFields) {
             document.getElementById("pitTeam").value = ""

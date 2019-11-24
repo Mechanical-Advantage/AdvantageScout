@@ -1,12 +1,15 @@
 // Responsible for managing communication with the server on mobile app
 function AppServerManager(appManager) {
     var serialQueue = []
+    var connected = false
+    var connectedText = document.getElementById("onlinetext")
     
     // Start sending heartbeats regularly
-    this.initHeartbeatLoop = function() {
+    this.init = function() {
+        startListen()
         this.heartbeat()
         this.upload()
-        setInterval(function() {appManager.serverManager.heartbeat(); appManager.serverManager.upload()}, 20000)
+        setInterval(function() {appManager.serverManager.heartbeat(); appManager.serverManager.upload()}, 1000)
     }
     
     // Send heartbeat if not already in queue
@@ -138,11 +141,6 @@ function AppServerManager(appManager) {
                              })
         }
     }
-    
-    // Report if connected to server
-    this.connected = function() {
-        return true
-    }
 
     // Add item to queue and push if needed
     function addToSerialQueue(query, args, response) {
@@ -150,6 +148,43 @@ function AppServerManager(appManager) {
         if (serialQueue.length == 1) {
             pushSerialQueue()
         }
+    }
+    
+    // Keep a listening server active
+    function startListen() {
+        bluetoothSerial.isEnabled(function(){
+                                  btEnabled()
+                                  }, function() {
+                                  setTimeout(function() {startListen()}, 1000)
+                                  })
+        function btEnabled() {
+            bluetoothSerial.listen(function() {
+                                   setConnected(true)
+                                   if (serialQueue.length > 0 && !pushing) {
+                                   pushSerialQueue()
+                                   }
+                                   }, function() {
+                                   setConnected(false)
+                                   startListen()
+                                   })
+        }
+    }
+    
+    // Update online status
+    function setConnected(newState) {
+        connected = newState
+        if (connected) {
+            connectedText.style.color = "green"
+            connectedText.innerHTML = "Online"
+        } else {
+            connectedText.style.color = "red"
+            connectedText.innerHTML = "Offline"
+        }
+    }
+    
+    // Report if connected to server
+    this.connected = function() {
+        return connected
     }
     
     // Get length of time to wait after failed communication
@@ -161,7 +196,6 @@ function AppServerManager(appManager) {
     function timeoutPushSerialQueue() {
         try {
             bluetoothSerial.unsubscribe()
-            bluetoothSerial.disconnect()
         }
         catch(error) {
             x = 0
@@ -170,9 +204,12 @@ function AppServerManager(appManager) {
         setTimeout(function() {pushSerialQueue()}, getRetryDelay())
     }
     
+    
     // Send items in serial queue to server
     var timeout
+    var pushing = false
     function pushSerialQueue() {
+        pushing = true
         var responses = []
         bluetoothSerial.isEnabled(function(){
                                   btEnabled()
@@ -180,32 +217,30 @@ function AppServerManager(appManager) {
                                   setTimeout(function() {pushSerialQueue()}, getRetryDelay())
                                   })
         function btEnabled() {
-            if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_server") == null || window.localStorage.getItem("advantagescout_device") == "" || window.localStorage.getItem("advantagescout_server") == "") {
+            bluetoothSerial.isConnected(function() {btConnected()}, function() {pushing = false})
+        }
+        
+        function btConnected() {
+            if (window.localStorage.getItem("advantagescout_device") == null || window.localStorage.getItem("advantagescout_device") == "") {
                 setTimeout(function() {pushSerialQueue()}, getRetryDelay())
             } else {
-                timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
-                bluetoothSerial.connect(window.localStorage.getItem("advantagescout_server"), function() {
-                                        clearTimeout(timeout)
-                                        function loadData() {
-                                            data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[0].query, serialQueue[0].args()])
-                                            serialWrite(data, onReceived)
-                                        }
-                                        
-                                        function onReceived(data) {
-                                            serialQueue.shift().response(data)
-                                            if (serialQueue.length == 0) {
-                                                bluetoothSerial.unsubscribe()
-                                                bluetoothSerial.disconnect()
-                                            } else {
-                                                loadData()
-                                            }
-                                        }
-                                        
-                                        loadData()
-                                        }, function() {
-                                        clearTimeout(timeout)
-                                        timeoutPushSerialQueue()
-                                        })
+                clearTimeout(timeout)
+                function loadData() {
+                    data = JSON.stringify([window.localStorage.getItem("advantagescout_device"), serialQueue[0].query, serialQueue[0].args()])
+                    serialWrite(data, onReceived)
+                }
+
+                function onReceived(data) {
+                    serialQueue.shift().response(data)
+                    if (serialQueue.length == 0) {
+                        pushing = false
+                        bluetoothSerial.unsubscribe()
+                    } else {
+                        loadData()
+                    }
+                }
+                
+                loadData()
             }
         }
     }
@@ -245,6 +280,7 @@ function AppServerManager(appManager) {
         if (continueQueueLength > 1) {
             appManager.settingsManager.setUploadProgress(0, continueQueueLength)
         }
+        console.log("Writing")
         bluetoothSerial.write(continueQueue.shift() + "\n", function() {}, function() {})
         timeout = setTimeout(function() {timeoutPushSerialQueue()}, 10000)
     }

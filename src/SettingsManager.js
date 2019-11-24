@@ -67,37 +67,10 @@ function SettingsManager(appManager) {
         }
     }
     
-    // Update list of paired bluetooth devices
-    this.refreshDeviceList = function() {
-        if (!appManager.web) {
-            bluetoothSerial.list(function(devices) {
-                                 var serverSelect = document.getElementById("server")
-                                 serverSelect.innerHTML = ""
-                                 for (var i = 0; i < devices.length; i++) {
-                                 var option = document.createElement("OPTION")
-                                 option.value = devices[i].address
-                                 option.innerHTML = devices[i].name
-                                 serverSelect.appendChild(option)
-                                 }
-                                 
-                                 if (window.localStorage.getItem("advantagescout_server") != null) {
-                                 for (var i = 0; i < devices.length; i++) {
-                                 if (devices[i].address == window.localStorage.getItem("advantagescout_server")) {
-                                 serverSelect.selectedIndex = i
-                                 }
-                                 }
-                                 }
-                                 })
-        }
-    }
-    
     // Create list in local storage for saved matches
     this.initLocalStorage = function() {
         if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
-        }
-        if (window.localStorage.getItem("advantagescout_server") == null) {
-            window.localStorage.setItem("advantagescout_server", "")
         }
         if (window.localStorage.getItem("advantagescout_selectedname") == null) {
             window.localStorage.setItem("advantagescout_selectedname", "")
@@ -171,7 +144,6 @@ function SettingsManager(appManager) {
             document.getElementById("selectionDiv").hidden = false
             document.getElementById("configDiv").hidden = true
             window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
-            window.localStorage.setItem("advantagescout_server", document.getElementById("server").value)
             appManager.serverManager.getData()
         }
     }
