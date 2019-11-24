@@ -4,7 +4,7 @@ function WebServerManager(appManager) {
     var connectedText = document.getElementById("onlinetext")
     
     // Start sending heartbeats regularly
-    this.initHeartbeatLoop = function() {
+    this.init = function() {
         this.heartbeat()
         setInterval(function() {appManager.serverManager.heartbeat()}, 20000)
     }
