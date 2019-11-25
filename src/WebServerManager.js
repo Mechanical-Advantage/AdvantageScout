@@ -6,7 +6,7 @@ function WebServerManager(appManager) {
     // Start sending heartbeats regularly
     this.init = function() {
         this.heartbeat()
-        setInterval(function() {appManager.serverManager.heartbeat()}, 20000)
+        setInterval(function() {appManager.serverManager.heartbeat()}, 5000)
     }
     
     // Send heartbeat
