@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import cherrypy
+from simple_websocket_server import WebSocketServer, WebSocket
 from jsmin import jsmin
 import json
 import base64
@@ -11,14 +12,15 @@ import sys
 
 #Config
 default_port = 8000 # can override w/ command line argument
+socket_port = 8001 # port for admin web socket
 host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4"] # current implementation
-bt_showheartbeats = False
+bt_showheartbeats = True
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
-db_schedule = "../2019 Scout Scheduler/ScoutAssignmentCode/scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
+db_schedule = "..\ScoutAssignmentCode\scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
 image_dir = "images" # folder for image data
 default_game = "2019"
 
@@ -394,6 +396,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             cur_global.execute("UPDATE devices SET last_match = ? WHERE name = ?", (match, device_name))
         conn_global.commit()
         conn_global.close()
+        update_admin()
         return()
 
     @cherrypy.expose
@@ -698,6 +701,7 @@ def save_image(raw):
     return(file_path)
 
 def serial_readline(ser, port):
+    #Attempt to connect repeatedly
     def connect(ser):
         while True:
             try:
@@ -707,6 +711,7 @@ def serial_readline(ser, port):
             else:
                 break
 
+    #Timeout thread, resets line if no data for 3 seconds
     def timeout():
         nonlocal full_line
         while True:
@@ -725,6 +730,7 @@ def serial_readline(ser, port):
         if ser.is_open:
             line = ser.readline().decode("utf-8")
         else:
+            #Skip if not yet connected
             line = ""
 
         last_data = time.time()
@@ -732,6 +738,7 @@ def serial_readline(ser, port):
             full_line += line[:-5]
             ser.write("CONT\n".encode("utf-8"))
         elif line == "":
+            #Reconnect because device appears to be disconnected (timeout reached)
             if ser.is_open:
                 log("Disconnected, trying to reconnect...", port)
             try:
@@ -750,6 +757,7 @@ def bluetooth_server(port, incoming):
     try:
         ser = serial.Serial()
         ser.port = port
+        #Open immediately if incoming
         if incoming:
             ser.open()
         else:
@@ -789,6 +797,33 @@ def bluetooth_server(port, incoming):
         if bt_showheartbeats or msg[1] != "heartbeat":
             log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
 
+#Web socket server code
+clients = []
+def update_admin():
+    data = main_server().get_devices()
+    for client in clients:
+        client.send_message(data)
+
+class admin_server(WebSocket):
+    global clients
+
+    def handle(self):
+        log("Received data \"" + self.data + "\"", self.address[0])
+
+    def connected(self):
+        log("Admin web socket opened", self.address[0])
+        clients.append(self)
+
+    def handle_close(self):
+        log("Admin web socket closed", self.address[0])
+        clients.remove(self)
+
+def admin_server_thread():
+    server = WebSocketServer(host, socket_port, admin_server)
+    log("Starting web socket server on ws://" + host + ":" + str(socket_port))
+    server.serve_forever()
+    log("Stopping web socket server on ws://" + host + ":" + str(socket_port))
+
 if __name__ == "__main__":
     #Start bluetooth servers
     if bt_enable:
@@ -800,7 +835,9 @@ if __name__ == "__main__":
             bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_incoming[i],True), daemon=True))
             bt_servers[i + len(bt_ports_outgoing)].start()
     
-    #Start web server
+    #Start web servers
+    server_thread = threading.Thread(target=admin_server_thread, daemon=True)
+    server_thread.start()
     port = default_port
     if len(sys.argv) > 1:
         port = int(sys.argv[1])

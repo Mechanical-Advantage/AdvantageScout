@@ -58,7 +58,7 @@ function getDevices() {
 //Recreate table based on local device data
 function updateDeviceTable() {
     //Sort devices
-    var devicesSorted = {"red": [], "yellow": [], "green": []}
+    var devicesSorted = {"red": [], "yellow": [], "green": [], "purple": []}
     for (var i = 0; i < devices.length; i++) {
         var diff = Math.round(Date.now() / 1000) - devices[i].last_heartbeat
         var status
@@ -83,7 +83,7 @@ function updateDeviceTable() {
             color = "yellow"
         } else if (devices[i].last_status == 5) {
             status = "Pit Scout<br>" + devices[i].last_team
-            color = "green"
+            color = "purple"
         } else {
             status = "Unknown"
             color = "yellow"
@@ -95,14 +95,15 @@ function updateDeviceTable() {
     devicesSorted["red"].sort((a, b) => (a.last_heartbeat < b.last_heartbeat) ? 1 : -1)
     devicesSorted["yellow"].sort((a, b) => (a.name > b.name) ? 1 : -1)
     devicesSorted["green"].sort((a, b) => (a.name > b.name) ? 1 : -1)
+    devicesSorted["purple"].sort((a, b) => (a.name > b.name) ? 1 : -1)
     
     //Create table
     var table = document.getElementById("deviceTable")
     while (table.children[1]) {
         table.removeChild(table.children[1])
     }
-    var colorLookup = ["green", "yellow", "red"]
-    for (var colorId = 0; colorId < 3; colorId++) {
+    var colorLookup = ["green", "purple", "yellow", "red"]
+    for (var colorId = 0; colorId < 4; colorId++) {
         for (var i = 0; i < devicesSorted[colorLookup[colorId]].length; i++) {
             var row = document.createElement("TR")
             for (var f = 0; f < 4; f++) {
@@ -157,7 +158,23 @@ function removeDevice(device) {
     http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     http.send("name=" + encodeURI(device))
 }
+
+//Web socket code
+function createSocket() {
+    console.log("Connecting to socket")
+    var socket = new WebSocket("ws://" + window.location.hostname + ":8001")
+    socket.onmessage = function(event) {
+        devices = JSON.parse(event.data)
+        updateDeviceTable()
+    }
+    socket.onclose = function() {
+        createSocket()
+    }
+}
+
+//Setup
 getDevices()
 updateDeviceTable()
-setInterval(function() {getDevices()}, 3000)
-setInterval(function() {updateDeviceTable()}, 1000)
+createSocket()
+setInterval(function() {updateDeviceTable()}, 100)
+
