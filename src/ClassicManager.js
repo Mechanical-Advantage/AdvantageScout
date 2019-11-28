@@ -214,7 +214,7 @@ function ClassicManager(appManager) {
             appManager.notificationManager.alert("Not supported", "Photos are not supported right now.")
         } else {
             var cameraOptions = {
-                quality: 30,
+                quality: window.localStorage.getItem("advantagescout_imagequality"),
                 destinationType: Camera.DestinationType.FILE_URI,
                 correctOrientation: true,
                 saveToPhotoAlbum: false,

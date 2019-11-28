@@ -58,8 +58,8 @@ function AppManager(web) {
     
     // App setup
     this.settingsManager.loadVersion()
-    this.settingsManager.checkDeviceName()
     this.settingsManager.initLocalStorage()
+    this.settingsManager.divSetup()
     this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
     this.serverManager.init()

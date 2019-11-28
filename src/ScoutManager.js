@@ -1,6 +1,7 @@
 // Responsible for managing scouting screen
 function ScoutManager(appManager) {
     const modeLookup = ["auto", "teleop", "endgame"]
+    const highlightLookup = ["#ff6363", "#59ff78", "#8f9aff"]
     var scoutMode
     
     // Load config and game data
@@ -186,6 +187,12 @@ function ScoutManager(appManager) {
             document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
             document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
             document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
+            document.getElementsByClassName("switcherbutton1")[0].style.backgroundColor = highlightLookup[0]
+            document.getElementsByClassName("switcherbutton2")[0].style.backgroundColor = ""
+            document.getElementsByClassName("switcherbutton3")[0].style.backgroundColor = ""
+            document.getElementsByClassName("switcherbutton1")[0].style.boxShadow = "0px 5px 10px grey"
+            document.getElementsByClassName("switcherbutton2")[0].style.boxShadow = ""
+            document.getElementsByClassName("switcherbutton3")[0].style.boxShadow = ""
             document.getElementById("modeSwitcherDiv").hidden = false
             var showClassic = appManager.game.prefs.forceClassic["auto"] || scoutMode == "classic"
             document.getElementById("visualCanvasDiv").hidden = showClassic
@@ -199,8 +206,12 @@ function ScoutManager(appManager) {
     // Switch b/t auto, teleop, and endgame
     this.setMode = function(mode) {
         document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.fontWeight = "normal"
+        document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.backgroundColor = ""
+        document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.boxShadow = ""
         appManager.state = mode
         document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.fontWeight = "bold"
+        document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.backgroundColor = highlightLookup[appManager.state - 1]
+        document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.boxShadow = "0px 5px 10px grey"
         document.getElementById("visualCanvasDiv").hidden = appManager.game.prefs.forceClassic[modeLookup[appManager.state - 1]] || scoutMode == "classic"
         document.getElementById("classicDiv1").hidden = !((appManager.game.prefs.forceClassic["auto"] || scoutMode == "classic") && appManager.state == 1)
         document.getElementById("classicDiv2").hidden = !((appManager.game.prefs.forceClassic["teleop"] || scoutMode == "classic") && appManager.state == 2)

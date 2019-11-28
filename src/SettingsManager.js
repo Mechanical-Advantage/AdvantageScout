@@ -59,11 +59,12 @@ function SettingsManager(appManager) {
     }
     
     // Check if device name exists and open settings or write to text box
-    this.checkDeviceName = function() {
+    this.divSetup = function() {
         if (window.localStorage.getItem("advantagescout_device") == null) {
             this.open()
         } else if (!appManager.web) {
             document.getElementById("name").value = window.localStorage.getItem("advantagescout_device")
+            document.getElementById("imageQuality").value = window.localStorage.getItem("advantagescout_imagequality")
         }
     }
     
@@ -71,6 +72,9 @@ function SettingsManager(appManager) {
     this.initLocalStorage = function() {
         if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
+        }
+        if (window.localStorage.getItem("advantagescout_imagequality") == null) {
+            window.localStorage.setItem("advantagescout_imagequality", "25")
         }
         if (window.localStorage.getItem("advantagescout_selectedname") == null) {
             window.localStorage.setItem("advantagescout_selectedname", "")
@@ -144,6 +148,7 @@ function SettingsManager(appManager) {
             document.getElementById("selectionDiv").hidden = false
             document.getElementById("configDiv").hidden = true
             window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
+            window.localStorage.setItem("advantagescout_imagequality", document.getElementById("imageQuality").value)
             appManager.serverManager.getData()
         }
     }
