@@ -1,3 +1,4 @@
+import shlex
 import subprocess
 import os
 
@@ -59,8 +60,9 @@ for device in to_connect:
         connected.append(device)
     else:
         failed_connections.append(device)
+connected.sort(key=lambda x: (x["name"],))
 
-#Print lists of devices and confirm installation
+#Print lists of devices
 if (len(to_connect)) != 0:
     print()
 print("Connected devices:")
@@ -71,21 +73,21 @@ if len(failed_connections) == 0:
     print("None")
 else:
     [print(x["name"] + " (" + x["ip"] + ")") for x in failed_connections]
-print()
-print("Current version: " + open("cordova/config.xml", "r").read().split('"')[3])
-if input("Continue installation? (y-n) ") != "y":
-    print("Installation cancelled")
-    exit()
 
-#Install apk
+#Run console
+print()
+print("ADB console started.")
+while True:
+    command = shlex.split(input("> "))
+    if command[0] == "exit":
+        break
+    else:
+        for device in connected:
+            print(device["name"])
+            print(run(["adb", "-s", device["ip"]] + command))
+
+#Disconnect from devices
+print("Disconnecting...", end="\r")
 for device in connected:
-    print("Installing on " + device["name"] + " (" + device["ip"] + ")...", end="\r")
-    run(["adb", "-s", device["ip"], "install", "-r", os.path.join("cordova", "releases", "AdvantageScout.apk")])
-    print("Installed on " + device["name"] + " (" + device["ip"] + ")    ")
-
-#Disconnect if needed
-print()
-if input("Disconnect from devices? (y-n) ") == "y":
-    for device in connected:
-        run(["adb", "disconnect", device["ip"]])
-    print("Disconnected successfully")
+    run(["adb", "disconnect", device["ip"]])
+print("Disconnected successfully")
