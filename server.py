@@ -16,7 +16,7 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10", "COM11", "COM12"] # current implementation
 bt_showheartbeats = False
@@ -734,8 +734,12 @@ def serial_readline(source, name, mode):
     timeout.start()
     while True:
         if mode == serial_mode.WEBSOCKET:
-            while len(forward_queues[source]) == 0:
-                pass
+            wait = True
+            while wait:
+                try:
+                    wait = len(forward_queues[source]) == 0
+                except:
+                    return(False)
             line = forward_queues[source].pop(0)
         else:
             if source.is_open:
@@ -776,8 +780,12 @@ class serial_mode(Enum):
 
 def bluetooth_server(name, mode, client=None):
     if mode == serial_mode.WEBSOCKET:
-        while len(forward_queues[client]) == 0:
-            pass
+        wait = True
+        while wait:
+            try:
+                wait = len(forward_queues[client]) == 0
+            except:
+                return
         name = forward_queues[client].pop(0)
         log("Started forwarding thread", name)
     else:
@@ -802,9 +810,12 @@ def bluetooth_server(name, mode, client=None):
     while True:
         if mode == serial_mode.WEBSOCKET:
             raw = serial_readline(client, name, mode)
-            print(raw)
         else:
             raw = serial_readline(ser, name, mode)
+
+        if raw == False:
+            # Shutdown thread
+            return
 
         try:
             msg = json.loads(raw)
@@ -832,7 +843,7 @@ def bluetooth_server(name, mode, client=None):
         else:
             ser.write((json.dumps(response) + "\n").encode('utf-8'))
         if bt_showheartbeats or msg[1] != "heartbeat":
-            log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
+            log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", name)
 
 #Admin web socket server
 admin_clients = []
