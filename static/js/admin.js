@@ -106,12 +106,13 @@ function updateDeviceTable() {
     for (var colorId = 0; colorId < 4; colorId++) {
         for (var i = 0; i < devicesSorted[colorLookup[colorId]].length; i++) {
             var row = document.createElement("TR")
-            for (var f = 0; f < 4; f++) {
+            for (var f = 0; f < 5; f++) {
                 row.appendChild(document.createElement("TD"))
             }
-            row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name.replace("<", "&lt;").replace(">", "&gt;")
             row.classList.add(devicesSorted[colorLookup[colorId]][i].color)
-            row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].status
+            row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name.replace("<", "&lt;").replace(">", "&gt;")
+            row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].last_route
+            row.children[2].innerHTML = devicesSorted[colorLookup[colorId]][i].status
             
             var diff = Math.round(Date.now() / 1000) - devicesSorted[colorLookup[colorId]][i].last_heartbeat
             hours = Math.floor(diff/3600)
@@ -133,11 +134,11 @@ function updateDeviceTable() {
             if (formatted == "") {
                 formatted = "0s"
             }
-            row.children[2].innerHTML = formatted + " ago"
+            row.children[3].innerHTML = formatted + " ago"
             
-            row.children[3].appendChild(document.createElement("BUTTON"))
-            row.children[3].firstChild.onclick = function() {removeDevice(this.parentElement.parentElement.children[0].innerHTML)}
-            row.children[3].firstChild.innerHTML = "Remove"
+            row.children[4].appendChild(document.createElement("BUTTON"))
+            row.children[4].firstChild.onclick = function() {removeDevice(this.parentElement.parentElement.children[0].innerHTML)}
+            row.children[4].firstChild.innerHTML = "Remove"
             table.appendChild(row)
         }
     }
@@ -161,7 +162,6 @@ function removeDevice(device) {
 
 //Web socket code
 function createSocket() {
-    console.log("Connecting to socket")
     var socket = new WebSocket("ws://" + window.location.hostname + ":8001")
     socket.onmessage = function(event) {
         devices = JSON.parse(event.data)

@@ -7,17 +7,19 @@ import base64
 import time
 import threading
 from pathlib import Path
+from enum import Enum
 import os
 import sys
 
 #Config
 default_port = 8000 # can override w/ command line argument
-socket_port = 8001 # port for admin web socket
+admin_socket_port = 8001 # port for admin web socket
+forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
 bt_enable = True
-bt_ports_incoming = ["/dev/cu.Bluetooth-Incoming-Port"] # not current, only for app versions < 1.4.0
-bt_ports_outgoing = [] # current implementation
-bt_showheartbeats = True
+bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
+bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10", "COM11", "COM12"] # current implementation
+bt_showheartbeats = False
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 db_schedule = "..\ScoutAssignmentCode\scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
@@ -43,6 +45,7 @@ def init_global():
     cur_global.execute("""CREATE TABLE devices (
         name TEXT,
         last_heartbeat INTEGER,
+        last_route TEXT,
         last_status INTEGER,
         last_team INTEGER,
         last_match INTEGER
@@ -379,7 +382,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(jsmin(output))
     
     @cherrypy.expose
-    def heartbeat(self, device_name, state, team=-1, match=-1):
+    def heartbeat(self, device_name, state, team=-1, match=-1, route=cherrypy.request.remote.ip):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
         cur_global.execute("SELECT name FROM devices")
@@ -387,9 +390,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         for i in range(len(names)):
             names[i] = names[i][0]
         if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_status) VALUES (?, ?, ?)", (device_name, currentTime(), state))
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_status) VALUES (?, ?, ?, ?)", (device_name, currentTime(), route, state))
         else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_status = ? WHERE name = ?", (currentTime(), state, device_name))
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_status = ? WHERE name = ?", (currentTime(), route, state, device_name))
         if team != -1:
             cur_global.execute("UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
         if match != -1:
@@ -570,6 +573,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                         Name
                     </th>
                     <th>
+                        Route
+                    </th>
+                    <th>
                         Status
                     </th>
                     <th>
@@ -593,7 +599,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         raw = cur_global.fetchall()
         data = []
         for i in range(len(raw)):
-            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_status": raw[i][2], "last_team": raw[i][3], "last_match": raw[i][4]})
+            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_status": raw[i][3], "last_team": raw[i][4], "last_match": raw[i][5]})
         conn_global.close()
         return(json.dumps(data))
 
@@ -700,7 +706,7 @@ def save_image(raw):
     file.close()
     return(file_path)
 
-def serial_readline(ser, port):
+def serial_readline(source, name, mode):
     #Attempt to connect repeatedly
     def connect(ser):
         while True:
@@ -719,63 +725,91 @@ def serial_readline(ser, port):
             if last_data == -2:
                 break
             if full_line != "" and time.time() - last_data > 3:
-                log("Request timed out", port)
+                log("Request timed out", name)
                 full_line = ""
 
     full_line = ""
     last_data = -1
     timeout = threading.Thread(target=timeout, daemon=True)
-    timeout.start() 
+    timeout.start()
     while True:
-        if ser.is_open:
-            line = ser.readline().decode("utf-8")
+        if mode == serial_mode.WEBSOCKET:
+            while len(forward_queues[source]) == 0:
+                pass
+            line = forward_queues[source].pop(0)
         else:
-            #Skip if not yet connected
-            line = ""
+            if source.is_open:
+                line = source.readline().decode("utf-8")    
+            else:
+                #Skip if not yet connected
+                line = ""
 
         last_data = time.time()
         if line[-5:] == "CONT\n":
             full_line += line[:-5]
-            ser.write("CONT\n".encode("utf-8"))
-        elif line == "":
+            if mode == serial_mode.WEBSOCKET:
+                source.send_message("CONT\n")
+            else:
+                source.write("CONT\n".encode("utf-8"))
+        elif line == "" and mode != serial_mode.WEBSOCKET:
             #Reconnect because device appears to be disconnected (timeout reached)
-            if ser.is_open:
-                log("Disconnected, trying to reconnect...", port)
+            if source.is_open:
+                log("Disconnected, waiting", name)
             try:
-                ser.close()
+                source.close()
             except:
                 x = 0
-            connect(ser)
-            log("Connected successfully, ready for data", port)
+            time.sleep(3)
+            log("Trying to connect...", name)
+            connect(source)
+            log("Connected successfully, ready for data", name)
         else:
             full_line += line[:-1]
             break
     last_data = -2
     return(full_line)
 
-def bluetooth_server(port, incoming):
-    try:
-        ser = serial.Serial()
-        ser.port = port
-        #Open immediately if incoming
-        if incoming:
-            ser.open()
-        else:
-            ser.timeout = 5
-    except:
-        log("WARNING - failed to connect to \"" + port + "\" Is the connection busy?")
-        return()
-    if incoming:
-        type = "incoming"
+class serial_mode(Enum):
+    INCOMING = 0
+    OUTGOING = 1
+    WEBSOCKET = 2
+
+def bluetooth_server(name, mode, client=None):
+    if mode == serial_mode.WEBSOCKET:
+        while len(forward_queues[client]) == 0:
+            pass
+        name = forward_queues[client].pop(0)
+        log("Started forwarding thread", name)
     else:
-        type = "outgoing"
-    log("Started Bluetooth server on " + type + " port \"" + port + "\"")
+        try:
+            ser = serial.Serial()
+            ser.port = name
+
+            #Open immediately if incoming
+            if mode == serial_mode.INCOMING:
+                ser.open()
+            else:
+                ser.timeout = 5
+        except:
+            log("WARNING - failed to connect to \"" + name + "\" Is the connection busy?")
+            return
+        if mode == serial_mode.INCOMING:
+            type = "incoming"
+        else:
+            type = "outgoing"
+        log("Started Bluetooth server on " + type + " port \"" + name + "\"")
+
     while True:
-        raw = serial_readline(ser, port)
+        if mode == serial_mode.WEBSOCKET:
+            raw = serial_readline(client, name, mode)
+            print(raw)
+        else:
+            raw = serial_readline(ser, name, mode)
+
         try:
             msg = json.loads(raw)
         except:
-            log("Unable to parse request", port)
+            log("Unable to parse request", name)
             ser.write("[]\n".encode('utf-8'))
             continue
 
@@ -786,58 +820,88 @@ def bluetooth_server(port, incoming):
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":
             if len(msg[2]) > 1:
-                main_server().heartbeat(msg[0], msg[2][0], msg[2][1], msg[2][2])
+                main_server().heartbeat(msg[0], msg[2][0], msg[2][1], msg[2][2], route=name)
             else:
-                main_server().heartbeat(msg[0], msg[2][0])
+                main_server().heartbeat(msg[0], msg[2][0], route=name)
             result = "success"
         else:
             result = "error"
         response = [msg[0], result]
-        ser.write((json.dumps(response) + "\n").encode('utf-8'))
+        if mode == serial_mode.WEBSOCKET:
+            client.send_message(json.dumps(response))
+        else:
+            ser.write((json.dumps(response) + "\n").encode('utf-8'))
         if bt_showheartbeats or msg[1] != "heartbeat":
             log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", port)
 
-#Web socket server code
-clients = []
+#Admin web socket server
+admin_clients = []
 def update_admin():
     data = main_server().get_devices()
-    for client in clients:
+    for client in admin_clients:
         client.send_message(data)
 
 class admin_server(WebSocket):
-    global clients
+    global admin_clients
 
     def handle(self):
         log("Received data \"" + self.data + "\"", self.address[0])
 
     def connected(self):
         log("Admin web socket opened", self.address[0])
-        clients.append(self)
+        admin_clients.append(self)
 
     def handle_close(self):
         log("Admin web socket closed", self.address[0])
-        clients.remove(self)
+        admin_clients.remove(self)
 
-def admin_server_thread():
-    server = WebSocketServer(host, socket_port, admin_server)
-    log("Starting web socket server on ws://" + host + ":" + str(socket_port))
+#Forward web socket server
+forward_queues = {}
+forward_threads = {}
+class forward_server(WebSocket):
+    global forward_clients
+
+    def handle(self):
+        forward_queues[self].append(self.data)
+
+    def connected(self):
+        log("Forwarding web socket opened", self.address[0])
+        forward_queues[self] = []
+        forward_threads[self] = threading.Thread(target=bluetooth_server, args=(None,serial_mode.WEBSOCKET,self))
+        forward_threads[self].start()
+
+    def handle_close(self):
+        log("Forwarding web socket closed", self.address[0])
+        del forward_queues[self]
+        del forward_threads[self]
+
+def run_websocket(host, port, server):
+    server = WebSocketServer(host, port, server)
+    log("Starting web socket server on ws://" + host + ":" + str(port))
     server.serve_forever()
-    log("Stopping web socket server on ws://" + host + ":" + str(socket_port))
+    log("Stopping web socket server on ws://" + host + ":" + str(port))
 
 if __name__ == "__main__":
     #Start bluetooth servers
     if bt_enable:
         bt_servers = []
         for i in range(len(bt_ports_outgoing)):
-            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_outgoing[i],False), daemon=True))
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_outgoing[i],serial_mode.OUTGOING), daemon=True))
             bt_servers[i].start()
         for i in range(len(bt_ports_incoming)):
-            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_incoming[i],True), daemon=True))
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(bt_ports_incoming[i],serial_mode.INCOMING), daemon=True))
             bt_servers[i + len(bt_ports_outgoing)].start()
     
-    #Start web servers
-    server_thread = threading.Thread(target=admin_server_thread, daemon=True)
-    server_thread.start()
+    #Start forwarding server
+    if forward_socket_port != None:
+        forward_server_thread = threading.Thread(target=run_websocket, args=(host, forward_socket_port, forward_server), daemon=True)
+        forward_server_thread.start()
+
+    #Start admin server
+    admin_server_thread = threading.Thread(target=run_websocket, args=(host, admin_socket_port, admin_server), daemon=True)
+    admin_server_thread.start()
+
+    #Start web server
     port = default_port
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
