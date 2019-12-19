@@ -382,7 +382,10 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(jsmin(output))
     
     @cherrypy.expose
-    def heartbeat(self, device_name, state, team=-1, match=-1, route=cherrypy.request.remote.ip):
+    def heartbeat(self, device_name, state, team=-1, match=-1, route=None):
+        if route == None:
+            route = cherrypy.request.remote.ip
+
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
         cur_global.execute("SELECT name FROM devices")
@@ -821,7 +824,10 @@ def bluetooth_server(name, mode, client=None):
             msg = json.loads(raw)
         except:
             log("Unable to parse request", name)
-            ser.write("[]\n".encode('utf-8'))
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message("[]\n")
+            else:
+                ser.write("[]\n".encode('utf-8'))
             continue
 
         if msg[1] == "load_data":
@@ -839,7 +845,7 @@ def bluetooth_server(name, mode, client=None):
             result = "error"
         response = [msg[0], result]
         if mode == serial_mode.WEBSOCKET:
-            client.send_message(json.dumps(response))
+            client.send_message(json.dumps(response) + "\n")
         else:
             ser.write((json.dumps(response) + "\n").encode('utf-8'))
         if bt_showheartbeats or msg[1] != "heartbeat":
