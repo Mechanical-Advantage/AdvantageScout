@@ -16,10 +16,10 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = False
-bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
-bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10", "COM11", "COM12"] # current implementation
-bt_showheartbeats = False
+bt_enable = True
+bt_ports_incoming = [] # not current, only for app versions < 1.4.0
+bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"] # current implementation
+bt_showheartbeats = True
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 db_schedule = "..\ScoutAssignmentCode\scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
@@ -739,6 +739,7 @@ def serial_readline(source, name, mode):
         if mode == serial_mode.WEBSOCKET:
             wait = True
             while wait:
+                time.sleep(0.2)
                 try:
                     wait = len(forward_queues[source]) == 0
                 except:
