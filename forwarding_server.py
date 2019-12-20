@@ -7,10 +7,10 @@ from enum import Enum
 import sys
 
 #Config
-server_address = "ws://172.16.42.10:8002"
+server_address = "ws://192.168.1.135:8002"
 device_name = "forwarder" # added before port name for "route"
 bt_ports_incoming = [] # not current, only for app versions < 1.4.0
-bt_ports_outgoing = ["COM3"] # current implementation
+bt_ports_outgoing = ["COM3", "COM4", "COM5", "COM6"] # current implementation
 debug_logs = False # log when data is sent
 
 #Log output in cherrypy format
@@ -59,7 +59,7 @@ def serial_readline(source, name):
             log("Trying to connect...", name)
             connect(source)
             sockets[name]["serial"] = source
-            log("Connected successfully, ready for data", name)
+            log("Connected successfully, forwarding", name)
         else:
             break
     return(line)
@@ -88,9 +88,9 @@ def bluetooth_server(name, mode):
     while True:
         raw = serial_readline(ser, name)
         if debug_logs:
-            log("Received data from serial (" + str(len(raw)) + ")")
+            log("Received data from serial (" + str(len(raw)) + ")", name)
         if sockets[name]["web"] == None:
-            log("Web socket not open, cannot forward from serial")
+            log("Web socket not open, cannot forward from serial", name)
             ser.write("[]\n".encode('utf-8'))
         else:
             sockets[name]["web"].send(raw)
@@ -111,9 +111,9 @@ def websocket_client(port, remote_name):
 
     def on_message(ws, message):
         if debug_logs:
-            log("Received data from web socket (" + str(len(message)) + ")")
+            log("Received data from web socket (" + str(len(message)) + ")", port)
         if sockets[port]["serial"] == None:
-            log("Serial port not open, cannot forward from web socket")
+            log("Serial port not open, cannot forward from web socket", port)
         else:
             sockets[port]["serial"].write(message.encode('utf-8'))
 
