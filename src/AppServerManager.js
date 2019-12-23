@@ -2,7 +2,9 @@
 function AppServerManager(appManager) {
     var serialQueue = []
     var connected = false
+    var serverReached = true
     var connectedText = document.getElementById("onlinetext")
+    var serverTroubleText = document.getElementById("servertroubletext")
     
     // Start sending heartbeats regularly
     this.init = function() {
@@ -159,6 +161,7 @@ function AppServerManager(appManager) {
                                   })
         function btEnabled() {
             bluetoothSerial.listen(function() {
+                                   serverReached = true
                                    setConnected(true)
                                    if (serialQueue.length > 0) {
                                    try {
@@ -176,8 +179,11 @@ function AppServerManager(appManager) {
     }
     
     // Update online status
-    function setConnected(newState) {
-        connected = newState
+    function setConnected(newConnected) {
+        if (newConnected != undefined) {
+            connected = newConnected
+        }
+        serverTroubleText.hidden = serverReached
         if (connected) {
             connectedText.style.color = "green"
             connectedText.innerHTML = "Online"
@@ -234,11 +240,19 @@ function AppServerManager(appManager) {
                 }
 
                 function onReceived(data) {
-                    serialQueue.shift().response(data)
-                    if (serialQueue.length == 0) {
-                        bluetoothSerial.unsubscribe()
+                    if (data == "[]\n") {
+                        serverReached = false
+                        setConnected()
+                        setTimeout(function() {pushSerialQueue()}, 1000) // send again quickly to keep connection alive
                     } else {
-                        loadData()
+                        serverReached = true
+                        setConnected()
+                        serialQueue.shift().response(data)
+                        if (serialQueue.length == 0) {
+                            bluetoothSerial.unsubscribe()
+                        } else {
+                            loadData()
+                        }
                     }
                 }
                 

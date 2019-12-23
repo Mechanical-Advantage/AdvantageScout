@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.4.3
+* Added alert when forwarding server cannot reach main server.
+
 ### 1.4.2
 * Add option to change image quality
 * New mode selector to increase clarity
