@@ -1,0 +1,357 @@
+{
+    "fields": [
+        "AllianceColor INTEGER DEFAULT 0",
+        "StartPos INTEGER DEFAULT 0",
+        "CrossedLine INTEGER DEFAULT 0",
+        "AutoLowerSuccess INTEGER DEFAULT 0",
+        "AutoOuterSuccess INTEGER DEFAULT 0",
+        "AutoInnerSuccess INTEGER DEFAULT 0",
+        "AutoLowerFailures INTEGER DEFAULT 0",
+        "AutoUpperFailures INTEGER DEFAULT 0",
+        "LowerSuccess INTEGER DEFAULT 0",
+        "OuterSuccess INTEGER DEFAULT 0",
+        "InnerSuccess INTEGER DEFAULT 0",
+        "LowerFailures INTEGER DEFAULT 0",
+        "UpperFailures INTEGER DEFAULT 0",
+        "UpperSecondsBetween TEXT DEFAULT ''",
+        "ClimbAttempted INTEGER DEFAULT 0",
+        "ClimbSuccess INTEGER DEFAULT 0",
+        "LiftedOthersAttempted INTEGER DEFAULT 0",
+        "LiftedOthersSuccess INTEGER DEFAULT 0",
+        "ParkedAttempted INTEGER DEFAULT 0",
+        "ParkedSuccess INTEGER DEFAULT 0",
+        "WheelRotationAttempted INTEGER DEFAULT 0",
+        "WheelRotationSuccess INTEGER DEFAULT 0",
+        "WheelPositionAttempted INTEGER DEFAULT 0",
+        "WheelPositionSuccess INTEGER DEFAULT 0",
+        "Points INTEGER DEFAULT 0",
+        "Disabled INTEGER DEFAULT 0",
+        "DriverRating INTEGER DEFAULT 0",
+        "IntakeRating INTEGER DEFAULT 0",
+        "DefenseRating INTEGER DEFAULT 0",
+        "AvoidDefenseRating INTEGER DEFAULT 0",
+        "Comment TEXT DEFAULT ''"
+    ],
+    "pitFields": [
+        "DriveTrain TEXT DEFAULT ''",
+        "Weight INTEGER DEFAULT 0",
+        "CanMove INTEGER DEFAULT 0",
+        "CanDeliverUpperAuto DEFAULT 0",
+        "CanDeliverLowerAuto DEFAULT 0",
+        "CanDeliverUpper DEFAULT 0",
+        "CanDeliverLower DEFAULT 0",
+        "CanRotate INTEGER DEFAULT 0",
+        "CanPosition INTEGER DEFAULT 0",
+        "ClimbHeight INTEGER DEFAULT 0",
+        "CanLiftOthers INTEGER DEFAULT 0",
+        "Comment TEXT DEFAULT ''",
+        "Image TEXT DEFAULT ''"
+    ],
+    "forceClassic": {
+        "auto": false,
+        "teleop": false,
+        "endgame": true
+    },
+    "uploadChecks": {
+        "pit": [
+            {
+                "field": "DriveTrain",
+                "operator": "!=",
+                "value": "",
+                "message": "Please enter a drive train.",
+                "binding": true
+            },
+            {
+                "field": "Weight",
+                "operator": ">",
+                "value": 50,
+                "message": "Are you sure this weight is correct?",
+                "binding": false
+            },
+            {
+                "field": "Weight",
+                "operator": "<=",
+                "value": 125,
+                "message": "Weight must be measured without bumpers or batteries",
+                "binding": true
+            },
+            {
+                "field": "ClimbHeight",
+                "operator": "!=",
+                "value": 0,
+                "message": "Are you sure they can't climb?",
+                "binding": false
+            },
+            {
+                "script": "return (data.ClimbHeight > 12) || (data.ClimbHeight == 0)",
+                "message": "Please enter climb height in inches.",
+                "binding": true
+            }
+        ],
+        "match": [
+            {
+                "script": "return !((data.WheelRotationAttempted == 0) && (data.WheelRotationSuccess == 1))",
+                "message": "They can't rotate the wheel without attempting it.",
+                "binding": true
+            },
+            {
+                "script": "return !((data.WheelPositionAttempted == 0) && (data.WheelPositionSuccess == 1))",
+                "message": "They can't position the wheel without attempting it.",
+                "binding": true
+            },
+            {
+                "script": "return data.ClimbSuccess + data.ParkedSuccess < 2",
+                "message": "They can't be both parked and climbed!",
+                "binding": true
+            },
+            {
+                "script": "return !((data.ClimbAttempted == 0) && (data.ClimbSuccess == 1))",
+                "message": "They can't climb successfully without attempting it.",
+                "binding": true
+            },
+            {
+                "script": "return !((data.LiftedOthersAttempted == 0) && (data.LiftedOthersSuccess == 1))",
+                "message": "They can't lift others successfully without attempting it.",
+                "binding": true
+            },
+            {
+                "script": "return !((data.ParkedAttempted == 0) && (data.ParkedSuccess == 1))",
+                "message": "You have marked park as successful but not attempted. Are you sure?",
+                "binding": false
+            },
+            {
+                "field": "DriverRating",
+                "operator": "!=",
+                "value": 0,
+                "message": "You have not entered a driver rating. Are you sure?",
+                "binding": false
+            },
+            {
+                "field": "Comment",
+                "operator": "!=",
+                "value": "",
+                "message": "You must enter a comment.",
+                "binding": true
+            },
+            {
+                "script": "return (data.Comment.length > 15) || (data.Comment.length == 0)",
+                "message": "Your comment is very short. Would you still like to continue?",
+                "binding": false
+            },
+            {
+                "field": "Points",
+                "operator": ">",
+                "value": 0,
+                "message": "Are you sure the final score is correct?",
+                "binding": false
+            }
+        ]
+    },
+    "classic": {
+        "pit": [
+            {
+                "type": "text",
+                "field": "DriveTrain",
+                "label": "Drive Train Type"
+            },
+            {
+                "type": "number",
+                "field": "Weight",
+                "label": "Weight (lbs)"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanMove",
+                "label": "Can Move?"
+            },
+            {
+                "type": "group",
+                "label": "Can Deliver Auto?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "CanDeliverUpperAuto",
+                    "label": "Upper"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "CanDeliverLowerAuto",
+                    "label": "Lower"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Can Deliver Teleop?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "CanDeliverUpper",
+                    "label": "Upper"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "CanDeliverLower",
+                    "label": "Lower"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Can Do Wheel?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "CanRotate",
+                    "label": "Rotation"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "CanPosition",
+                    "label": "Position"
+                }
+            },
+            {
+                "type": "number",
+                "field": "ClimbHeight",
+                "label": "Max Climb Reach (in)"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanLiftOthers",
+                "label": "Can Lift Others?"
+            },
+            {
+                "type": "text",
+                "field": "Comment",
+                "label": "Comment"
+            },
+            {
+                "type": "image",
+                "field": "Image",
+                "label": "Robot Image"
+            },
+            {
+                "type": "uploadButton"
+            }
+        ],
+        "auto": [],
+        "teleop": [],
+        "endgame": [
+            {
+                "type": "group",
+                "label": "Climbed?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "ClimbAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "ClimbSuccess",
+                    "label": "Success"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Lifted Others?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "LiftedOthersAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "LiftedOthersSuccess",
+                    "label": "Success"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Parked?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "ParkedAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "ParkedSuccess",
+                    "label": "Success"
+                }
+            },
+            {
+                "type": "checkbox",
+                "field": "Disabled",
+                "label": "Disabled/Fell?"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "chooser",
+                "field": "DriverRating",
+                "label": "Driver Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "IntakeRating",
+                "label": "Intake Rating",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "group",
+                "label": "Defense Rating",
+                "unit1": {
+                    "type": "chooser",
+                    "field": "DefenseRating",
+                    "label": "While Playing",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                },
+                "unit2": {
+                    "type": "chooser",
+                    "field": "AvoidDefenseRating",
+                    "label": "While Under",
+                    "options": {
+                        "NA": 0,
+                        "\u2B50": 1,
+                        "\u2B50\u2B50": 2,
+                        "\u2B50\u2B50\u2B50": 3,
+                        "\u2B50\u2B50\u2B50\u2B50": 4,
+                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                    }
+                }
+            },
+            {
+                "type": "text",
+                "field": "Comment",
+                "label": "Comment"
+            },
+            {
+                "type": "number",
+                "field": "Points",
+                "label": "Final Score"
+            },
+            {
+                "type": "uploadButton"
+            }
+        ]
+    }
+}
