@@ -24,6 +24,9 @@
         "WheelRotationSuccess INTEGER DEFAULT 0",
         "WheelPositionAttempted INTEGER DEFAULT 0",
         "WheelPositionSuccess INTEGER DEFAULT 0",
+        "ShootFromWall INTEGER DEFAULT 0",
+        "ShootFromOpponentSide INTEGER DEFAULT 0",
+        "ShootFromOwnSide INTEGER DEFAULT 0",
         "Points INTEGER DEFAULT 0",
         "Disabled INTEGER DEFAULT 0",
         "DriverRating INTEGER DEFAULT 0",
@@ -44,6 +47,9 @@
         "CanPosition INTEGER DEFAULT 0",
         "ClimbHeight INTEGER DEFAULT 0",
         "CanLiftOthers INTEGER DEFAULT 0",
+        "ShootFromWall INTEGER DEFAULT 0",
+        "ShootFromOpponentSide INTEGER DEFAULT 0",
+        "ShootFromOwnSide INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''",
         "Image TEXT DEFAULT ''"
     ],
@@ -217,6 +223,27 @@
                 "label": "Can Lift Others?"
             },
             {
+                "type": "break"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromWall",
+                "label": "Shoot: Wall"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromOpponentSide",
+                "label": "Shoot: Opponent Side"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromOwnSide",
+                "label": "Shoot: Own Side"
+            },
+            {
+                "type": "break"
+            },
+            {
                 "type": "text",
                 "field": "Comment",
                 "label": "Comment"
@@ -279,6 +306,24 @@
                 "type": "checkbox",
                 "field": "Disabled",
                 "label": "Disabled/Fell?"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromWall",
+                "label": "Shoot: Wall"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromOpponentSide",
+                "label": "Shoot: Opponent Side"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromOwnSide",
+                "label": "Shoot: Own Side"
             },
             {
                 "type": "break"

@@ -7,18 +7,24 @@ this.setMode = function (newMode) { // REQUIRED FUNCTION
     render()
 }
 this.getData = function () { // REQUIRED FUNCTION
-    return data
+    toSend = jsonCopy(data)
+    if (reverseAlliances) {
+        toSend["AllianceColor"] = 1 - toSend["AllianceColor"]
+    }
+    return toSend
 }
 function uploadData() { // Closes scouting interface and saves data (if using visual for end game, must have a call to this function)
     appManager.scoutManager.upload()
 }
 
+function jsonCopy(original) {
+    return JSON.parse(JSON.stringify(original))
+}
+
 var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
 var data = {
-    "AllianceColor": 0,
-    "StartPos": 0,
-    "CrossedLine": 1,
+    "CrossedLine": 0,
     "AutoInnerSuccess": 0,
     "AutoOuterSuccess": 0,
     "AutoLowerSuccess": 0,
@@ -28,7 +34,11 @@ var data = {
     "OuterSuccess": 0,
     "LowerSuccess": 0,
     "UpperFailures": 0,
-    "LowerFailures": 0
+    "LowerFailures": 0,
+    "WheelRotationSuccess": 0,
+    "WheelRotationAttempted": 0,
+    "WheelPositionSuccess": 0,
+    "WheelPositionAttempted": 0
 }
 var controlRotationSelected = true
 
@@ -40,6 +50,7 @@ var rightHighlightColor = (reverseAlliances) ? "#6666ff" : "#ff7575"
 var outline = "#000000"
 var fieldBackground = "#d1d1d1"
 var text = "#000000"
+var textWhite = "#ffffff"
 var success = "#00d936"
 var failure = "#b30000"
 var controlHighlight = "#fff533"
@@ -78,34 +89,55 @@ function render() {
     context.lineTo(750, 1400)
     context.stroke()
 
-    // Draw upper control panel
+    // Draw control panel backgrounds
     context.fillStyle = rightColor
     context.fillRect(1400, 200, 600, 300)
+    context.fillStyle = leftColor
+    context.fillRect(1000, 1100, 600, 300)
+
+    // Draw control panel text
+    if ("AllianceColor" in data && mode == 1) {
+        context.textAlign = "center"
+        context.textBaseline = "middle"
+        context.fillStyle = text
+        context.font = "130px sans-serif"
+        centerX = (data["AllianceColor"] == 0) ? 1700 : 1300
+        centerY = (data["AllianceColor"] == 0) ? 350 : 1250
+
+        context.fillStyle = (data["AllianceColor"] == 0) ? rightHighlightColor : leftHighlightColor
+        if ((controlRotationSelected) ? data["WheelRotationAttempted"] : data["WheelPositionAttempted"] == 1) {
+            context.fillRect(centerX - 300, centerY - 150, 300, 300)
+            context.font = "bold 130px sans-serif"
+        } else {
+            context.font = "130px sans-serif"
+        }
+        context.fillStyle = text
+        context.fillText("Att", centerX - 150, centerY + 10)
+
+        context.fillStyle = (data["AllianceColor"] == 0) ? rightHighlightColor : leftHighlightColor
+        if ((controlRotationSelected) ? data["WheelRotationSuccess"] : data["WheelPositionSuccess"] == 1) {
+            context.fillRect(centerX, centerY - 150, 300, 300)
+            context.font = "bold 130px sans-serif"
+        } else {
+            context.font = "130px sans-serif"
+        }
+        context.fillStyle = text
+        context.fillText("Suc", centerX + 150, centerY + 10)
+    }
+
+    // Draw upper control panel outline
     context.strokeRect(1400, 200, 600, 300)
     context.beginPath()
     context.moveTo(1700, 200)
     context.lineTo(1700, 500)
     context.stroke()
 
-    // Draw lower control panel
-    context.fillStyle = leftColor
-    context.fillRect(1000, 1100, 600, 300)
+    // Draw lower control panel outline
     context.strokeRect(1000, 1100, 600, 300)
     context.beginPath()
     context.moveTo(1300, 1100)
     context.lineTo(1300, 1400)
     context.stroke()
-
-    // Draw control panel text
-    if ("AllianceColor" in data) {
-        centerX = (data["AllianceColor"] == 0) ? 1700 : 1300
-        centerY = (data["AllianceColor"] == 0) ? 350 : 1250
-
-        context.textAlign = "center"
-        context.textBaseline = "middle"
-        context.fillStyle = text
-        context.font = "130px sans-serif"
-    }
 
     // Draw shield generator
     context.beginPath()
@@ -245,8 +277,9 @@ function render() {
         context.fillText((mode == 0) ? data["AutoLowerFailures"] : data["LowerFailures"], leftX + 300, 1010)
     }
 
-    // Write control panel text
-    if ("AllianceColor" in data) {
+    // Render control panel
+    if ("AllianceColor" in data && mode == 1) {
+        // Switcher buttons
         centerX = (data["AllianceColor"] == 0) ? 1700 : 1300
         centerY = (data["AllianceColor"] == 0) ? 100 : 1500
 
@@ -305,6 +338,293 @@ function render() {
         context.globalAlpha = 0.6
         context.fill()
         context.globalAlpha = 1
+
     }
 }
 render()
+
+buttonManager.addButton("StartLeft0", new Button(675, 1000, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 0
+        data["StartPos"] = 0
+        render()
+    }
+}))
+
+buttonManager.addButton("StartLeft1", new Button(675, 600, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 0
+        data["StartPos"] = 1
+        render()
+    }
+}))
+
+buttonManager.addButton("StartLeft2", new Button(675, 200, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 0
+        data["StartPos"] = 2
+        render()
+    }
+}))
+
+buttonManager.addButton("StartRight0", new Button(2175, 200, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 1
+        data["StartPos"] = 0
+        render()
+    }
+}))
+
+buttonManager.addButton("StartRight1", new Button(2175, 600, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 1
+        data["StartPos"] = 1
+        render()
+    }
+}))
+
+buttonManager.addButton("StartRight2", new Button(2175, 1000, 150, 400, function () {
+    if (mode == 0) {
+        data["AllianceColor"] = 1
+        data["StartPos"] = 2
+        render()
+    }
+}))
+
+buttonManager.addButton("CrossedLineLeft", new Button(600, 0, 300, 200, function () {
+    if (mode == 0 && "AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            data["CrossedLine"] = 1 - data["CrossedLine"]
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("CrossedLineRight", new Button(2100, 0, 300, 200, function () {
+    if (mode == 0 && "AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            data["CrossedLine"] = 1 - data["CrossedLine"]
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("LeftInnerSuccess", new Button(25, 500, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if (mode == 0) {
+                data["AutoInnerSuccess"]++
+
+            } else {
+                data["InnerSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("LefttOuterSuccess", new Button(25, 700, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if (mode == 0) {
+                data["AutoOuterSuccess"]++
+
+            } else {
+                data["OuterSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("LefttLowerSuccess", new Button(25, 900, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if (mode == 0) {
+                data["AutoLowerSuccess"]++
+
+            } else {
+                data["LowerSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("LefttUpperFailures", new Button(225, 500, 200, 400, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if (mode == 0) {
+                data["AutoUpperFailures"]++
+
+            } else {
+                data["UpperFailures"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("LefttLowerFailures", new Button(225, 900, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if (mode == 0) {
+                data["AutoLowerFailures"]++
+
+            } else {
+                data["LowerFailures"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("RightInnerSuccess", new Button(2575, 500, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if (mode == 0) {
+                data["AutoInnerSuccess"]++
+
+            } else {
+                data["InnerSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("RighgtOuterSuccess", new Button(2575, 700, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if (mode == 0) {
+                data["AutoOuterSuccess"]++
+
+            } else {
+                data["OuterSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("RightLowerSuccess", new Button(2575, 900, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if (mode == 0) {
+                data["AutoLowerSuccess"]++
+
+            } else {
+                data["LowerSuccess"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("RightUpperFailures", new Button(2775, 500, 200, 400, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if (mode == 0) {
+                data["AutoUpperFailures"]++
+
+            } else {
+                data["UpperFailures"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("RightLowerFailures", new Button(2775, 900, 200, 200, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if (mode == 0) {
+                data["AutoLowerFailures"]++
+
+            } else {
+                data["LowerFailures"]++
+            }
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("TopRotationSelect", new Button(1500, 0, 200, 200, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 0) {
+            controlRotationSelected = true
+            render()
+        }
+
+    }
+}))
+
+buttonManager.addButton("TopPositionSelect", new Button(1700, 0, 200, 200, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 0) {
+            controlRotationSelected = false
+            render()
+        }
+
+    }
+}))
+
+buttonManager.addButton("BottomRotationSelect", new Button(1100, 1400, 200, 200, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 1) {
+            controlRotationSelected = true
+            render()
+        }
+
+    }
+}))
+
+buttonManager.addButton("BottomPositionSelect", new Button(1300, 1400, 200, 200, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 1) {
+            controlRotationSelected = false
+            render()
+        }
+
+    }
+}))
+
+buttonManager.addButton("TopControlAttempted", new Button(1400, 200, 300, 300, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 0) {
+            field = (controlRotationSelected) ? "WheelRotationAttempted" : "WheelPositionAttempted"
+            data[field] = 1 - data[field]
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("TopControlSuccess", new Button(1700, 200, 300, 300, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 0) {
+            field = (controlRotationSelected) ? "WheelRotationSuccess" : "WheelPositionSuccess"
+            data[field] = 1 - data[field]
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("BottomControlAttempted", new Button(1000, 1100, 300, 300, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 1) {
+            field = (controlRotationSelected) ? "WheelRotationAttempted" : "WheelPositionAttempted"
+            data[field] = 1 - data[field]
+            render()
+        }
+    }
+}))
+
+buttonManager.addButton("BottomControlSuccess", new Button(1300, 1100, 300, 300, function () {
+    if ("AllianceColor" in data && mode == 1) {
+        if (data["AllianceColor"] == 1) {
+            field = (controlRotationSelected) ? "WheelRotationSuccess" : "WheelPositionSuccess"
+            data[field] = 1 - data[field]
+            render()
+        }
+    }
+}))
