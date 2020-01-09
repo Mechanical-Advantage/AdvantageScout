@@ -3,14 +3,20 @@
 // width = 3000px, height = 1600px
 var mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
 this.setMode = function (newMode) { // REQUIRED FUNCTION
+    if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
+        dataLog = []
+    }
     mode = newMode
     render()
 }
+
 this.getData = function () { // REQUIRED FUNCTION
     toSend = jsonCopy(data)
     if (reverseAlliances) {
         toSend["AllianceColor"] = 1 - toSend["AllianceColor"]
     }
+    toSend["UpperSecondsBetween"] = toSend["UpperSecondsBetween"].join()
+    delete toSend["LastUpperButton"]
     return toSend
 }
 function uploadData() { // Closes scouting interface and saves data (if using visual for end game, must have a call to this function)
@@ -23,6 +29,7 @@ function jsonCopy(original) {
 
 var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
+const secondsBetweenThreshold = 15 // # of secs needed to reset scoring timer
 var data = {
     "CrossedLine": 0,
     "AutoInnerSuccess": 0,
@@ -35,12 +42,28 @@ var data = {
     "LowerSuccess": 0,
     "UpperFailures": 0,
     "LowerFailures": 0,
+    "UpperSecondsBetween": [],
+    "LastUpperButton": 0,
     "WheelRotationSuccess": 0,
     "WheelRotationAttempted": 0,
     "WheelPositionSuccess": 0,
     "WheelPositionAttempted": 0
 }
 var controlRotationSelected = true
+var dataLog = []
+
+function addToDataLog() {
+    dataLog.push(jsonCopy(data))
+}
+
+function recordTime() {
+    var time = new Date().getTime() / 1000
+    var diff = time - data["LastUpperButton"]
+    if (diff < secondsBetweenThreshold) {
+        data["UpperSecondsBetween"].push(diff.toFixed(3))
+    }
+    data["LastUpperButton"] = time
+}
 
 // Color definitions
 var leftColor = (reverseAlliances) ? "#ff0000" : "#0000de"
@@ -58,6 +81,10 @@ var controlBlue = "#00ffff"
 var controlGreen = "#00ff00"
 var controlRed = "#ff0000"
 var controlYellow = "#ffff00"
+
+function drawFigure(x, y) {
+
+}
 
 function render() {
     context.clearRect(0, 0, 3000, 1600)
@@ -338,7 +365,17 @@ function render() {
         context.globalAlpha = 0.6
         context.fill()
         context.globalAlpha = 1
+    }
+    // Undo button
+    if (dataLog.length > 0) {
+        context.fillStyle = "#e3e3e3"
+        context.fillRect(1750, 1450, 250, 150)
 
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+        context.font = "70px sans-serif"
+        context.fillStyle = "#000000"
+        context.fillText("Undo", 1875, 1525)
     }
 }
 render()
@@ -412,9 +449,10 @@ buttonManager.addButton("CrossedLineRight", new Button(2100, 0, 300, 200, functi
 buttonManager.addButton("LeftInnerSuccess", new Button(25, 500, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoInnerSuccess"]++
-
             } else {
                 data["InnerSuccess"]++
             }
@@ -423,12 +461,13 @@ buttonManager.addButton("LeftInnerSuccess", new Button(25, 500, 200, 200, functi
     }
 }))
 
-buttonManager.addButton("LefttOuterSuccess", new Button(25, 700, 200, 200, function () {
+buttonManager.addButton("LeftOuterSuccess", new Button(25, 700, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoOuterSuccess"]++
-
             } else {
                 data["OuterSuccess"]++
             }
@@ -437,12 +476,12 @@ buttonManager.addButton("LefttOuterSuccess", new Button(25, 700, 200, 200, funct
     }
 }))
 
-buttonManager.addButton("LefttLowerSuccess", new Button(25, 900, 200, 200, function () {
+buttonManager.addButton("LeftLowerSuccess", new Button(25, 900, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
+            addToDataLog()
             if (mode == 0) {
                 data["AutoLowerSuccess"]++
-
             } else {
                 data["LowerSuccess"]++
             }
@@ -451,12 +490,13 @@ buttonManager.addButton("LefttLowerSuccess", new Button(25, 900, 200, 200, funct
     }
 }))
 
-buttonManager.addButton("LefttUpperFailures", new Button(225, 500, 200, 400, function () {
+buttonManager.addButton("LeftUpperFailures", new Button(225, 500, 200, 400, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoUpperFailures"]++
-
             } else {
                 data["UpperFailures"]++
             }
@@ -465,12 +505,12 @@ buttonManager.addButton("LefttUpperFailures", new Button(225, 500, 200, 400, fun
     }
 }))
 
-buttonManager.addButton("LefttLowerFailures", new Button(225, 900, 200, 200, function () {
+buttonManager.addButton("LeftLowerFailures", new Button(225, 900, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
+            addToDataLog()
             if (mode == 0) {
                 data["AutoLowerFailures"]++
-
             } else {
                 data["LowerFailures"]++
             }
@@ -482,9 +522,10 @@ buttonManager.addButton("LefttLowerFailures", new Button(225, 900, 200, 200, fun
 buttonManager.addButton("RightInnerSuccess", new Button(2575, 500, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoInnerSuccess"]++
-
             } else {
                 data["InnerSuccess"]++
             }
@@ -493,12 +534,13 @@ buttonManager.addButton("RightInnerSuccess", new Button(2575, 500, 200, 200, fun
     }
 }))
 
-buttonManager.addButton("RighgtOuterSuccess", new Button(2575, 700, 200, 200, function () {
+buttonManager.addButton("RightOuterSuccess", new Button(2575, 700, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoOuterSuccess"]++
-
             } else {
                 data["OuterSuccess"]++
             }
@@ -510,9 +552,9 @@ buttonManager.addButton("RighgtOuterSuccess", new Button(2575, 700, 200, 200, fu
 buttonManager.addButton("RightLowerSuccess", new Button(2575, 900, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
+            addToDataLog()
             if (mode == 0) {
                 data["AutoLowerSuccess"]++
-
             } else {
                 data["LowerSuccess"]++
             }
@@ -524,9 +566,10 @@ buttonManager.addButton("RightLowerSuccess", new Button(2575, 900, 200, 200, fun
 buttonManager.addButton("RightUpperFailures", new Button(2775, 500, 200, 400, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
+            addToDataLog()
+            recordTime()
             if (mode == 0) {
                 data["AutoUpperFailures"]++
-
             } else {
                 data["UpperFailures"]++
             }
@@ -538,9 +581,9 @@ buttonManager.addButton("RightUpperFailures", new Button(2775, 500, 200, 400, fu
 buttonManager.addButton("RightLowerFailures", new Button(2775, 900, 200, 200, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
+            addToDataLog()
             if (mode == 0) {
                 data["AutoLowerFailures"]++
-
             } else {
                 data["LowerFailures"]++
             }
@@ -626,5 +669,12 @@ buttonManager.addButton("BottomControlSuccess", new Button(1300, 1100, 300, 300,
             data[field] = 1 - data[field]
             render()
         }
+    }
+}))
+
+buttonManager.addButton("UndoButton", new Button(1750, 1450, 250, 150, function () {
+    if (dataLog.length > 0) {
+        data = dataLog.pop()
+        render()
     }
 }))
