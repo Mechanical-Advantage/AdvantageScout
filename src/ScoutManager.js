@@ -3,9 +3,9 @@ function ScoutManager(appManager) {
     const modeLookup = ["auto", "teleop", "endgame"]
     const highlightLookup = ["#ff6363", "#59ff78", "#8f9aff"]
     var scoutMode
-    
+
     // Load config and game data
-    this.loadData = function() {
+    this.loadData = function () {
         // Reverse alliances
         if (appManager.config.reverse_alliances == 2) {
             document.getElementById("reverseAlliancesDiv").hidden = false
@@ -14,7 +14,7 @@ function ScoutManager(appManager) {
             document.getElementById("reverseAlliancesDiv").hidden = true
             document.getElementById("reverseAlliances").selectedIndex = appManager.config.reverse_alliances
         }
-        
+
         // Match scouting
         if (appManager.game.CanvasManager) {
             appManager.visualManager.loadData()
@@ -29,7 +29,7 @@ function ScoutManager(appManager) {
         }
         document.getElementById("loadingtext").hidden = true
         document.getElementById("startbuttons").hidden = false
-        
+
         // Schedule options
         if (appManager.config.use_schedule) {
             var names = []
@@ -43,7 +43,7 @@ function ScoutManager(appManager) {
                 }
             }
             names.sort()
-            
+
             var nameSelect = document.getElementById("nameSelect")
             while (nameSelect.firstChild) {
                 nameSelect.removeChild(nameSelect.firstChild)
@@ -55,7 +55,7 @@ function ScoutManager(appManager) {
                 option.innerHTML = name
                 nameSelect.appendChild(option)
             }
-            
+
             var selectedName = window.localStorage.getItem("advantagescout_selectedname")
             if (valueExists(nameSelect, selectedName)) {
                 nameSelect.value = selectedName
@@ -68,12 +68,12 @@ function ScoutManager(appManager) {
             document.getElementById("match").value = ""
         }
         document.getElementById("scheduleSelect").hidden = !appManager.config.use_schedule
-        
+
         // Pit scouting
         var hidePitButton = appManager.game.prefs.pitFields == undefined
         document.getElementById("pitButton").hidden = hidePitButton
         document.getElementById("pitButtonBreak").hidden = hidePitButton
-        
+
         // Start scouting automatically in dev mode
         if (appManager.config.dev_mode == 1 && appManager.web) {
             document.getElementById("team").value = 1
@@ -81,7 +81,7 @@ function ScoutManager(appManager) {
             this.start("visual")
         }
     }
-    
+
     // Check if value exists in select options
     function valueExists(select, value) {
         var options = select.options
@@ -94,9 +94,9 @@ function ScoutManager(appManager) {
         }
         return result
     }
-    
+
     // Update list of schedule presets based on selected name
-    this.updatePresetList = function() {
+    this.updatePresetList = function () {
         var targetName = document.getElementById("nameSelect").value
         window.localStorage.setItem("advantagescout_selectedname", targetName)
         var presetSelect = document.getElementById("presetSelect")
@@ -110,8 +110,8 @@ function ScoutManager(appManager) {
                 if (name == targetName) {
                     var team = match.teams[i]
                     var option = document.createElement("OPTION")
-                    option.value = team.toString() + "," + (matchNumber+1).toString()
-                    option.innerHTML = "M" + (matchNumber+1).toString() + ", " + team.toString()
+                    option.value = team.toString() + "," + (matchNumber + 1).toString()
+                    option.innerHTML = "M" + (matchNumber + 1).toString() + ", " + team.toString()
                     presetSelect.appendChild(option)
                 }
             }
@@ -122,9 +122,9 @@ function ScoutManager(appManager) {
         }
         this.setPreset()
     }
-    
+
     // Update team and match based on preset
-    this.setPreset = function() {
+    this.setPreset = function () {
         var preset = document.getElementById("presetSelect").value
         window.localStorage.setItem("advantagescout_selectedpreset", preset)
         var teamField = document.getElementById("team")
@@ -139,17 +139,17 @@ function ScoutManager(appManager) {
             matchField.disabled = true
         }
     }
-    
+
     // Switch between match and pit scouting selections
-    this.setSelection = function(type) {
+    this.setSelection = function (type) {
         document.getElementById("selectionDiv_match").hidden = (type != "match")
         document.getElementById("selectionDiv_pit").hidden = (type != "pit")
     }
-    
+
     // Open scouting interface
-    this.start = function(mode) {
+    this.start = function (mode) {
         scoutMode = mode
-        
+
         if (mode == "pit") {
             appManager.team = document.getElementById("pitTeam").value
             if (appManager.team == "") {
@@ -157,13 +157,13 @@ function ScoutManager(appManager) {
                 return
             }
             appManager.state = 5
-            
+
             appManager.classicManager.start()
-            
+
             document.getElementById("pitNumber").innerHTML = appManager.team
             document.getElementById("pitSwitcherDiv").hidden = false
             document.getElementById("pitClassicDiv").hidden = false
-            
+
         } else {
             appManager.team = document.getElementById("team").value
             appManager.match = document.getElementById("match").value
@@ -180,10 +180,10 @@ function ScoutManager(appManager) {
                 return
             }
             appManager.state = 1
-            
+
             appManager.classicManager.start()
             appManager.visualManager.start()
-            
+
             document.getElementsByClassName("switcherbutton1")[0].style.fontWeight = "bold"
             document.getElementsByClassName("switcherbutton2")[0].style.fontWeight = "normal"
             document.getElementsByClassName("switcherbutton3")[0].style.fontWeight = "normal"
@@ -201,13 +201,13 @@ function ScoutManager(appManager) {
             document.getElementById("visualCanvasDiv").hidden = showClassic
             document.getElementById("classicDiv1").hidden = !showClassic
         }
-        
+
         document.getElementById("selectionDiv").hidden = true
         appManager.serverManager.heartbeat()
     }
-    
+
     // Switch b/t auto, teleop, and endgame
-    this.setMode = function(mode) {
+    this.setMode = function (mode) {
         document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.fontWeight = "normal"
         document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.backgroundColor = ""
         document.getElementsByClassName("switcherbutton" + appManager.state)[0].style.boxShadow = ""
@@ -225,26 +225,26 @@ function ScoutManager(appManager) {
         window.scrollTo(0, 0)
         appManager.serverManager.heartbeat()
     }
-    
+
     // Logic operator lookup for upload check
     const operators = {
-        "==": function(a, b) {return a == b},
-        "!=": function(a, b) {return a != b},
-        ">": function(a, b) {return a > b},
-        "<": function(a, b) {return a < b},
-        ">=": function(a, b) {return a >= b},
-        "=>": function(a, b) {return a >= b},
-        "<=": function(a, b) {return a <= b},
-        "=<": function(a, b) {return a <= b}
+        "==": function (a, b) { return a == b },
+        "!=": function (a, b) { return a != b },
+        ">": function (a, b) { return a > b },
+        "<": function (a, b) { return a < b },
+        ">=": function (a, b) { return a >= b },
+        "=>": function (a, b) { return a >= b },
+        "<=": function (a, b) { return a <= b },
+        "=<": function (a, b) { return a <= b }
     }
-    
+
     // Confirm upload & leave scouting interface
     var dataTemp
     var checkStage = -1
-    this.upload = function() {
+    this.upload = function () {
         try {
             dataTemp = getData()
-        } catch(error) {
+        } catch (error) {
             appManager.notificationManager.alert("Error", "Could not upload: " + error.message)
             return
         }
@@ -258,7 +258,7 @@ function ScoutManager(appManager) {
                 checks = appManager.game.prefs.uploadChecks.match
             }
         }
-        
+
         var start = 0
         if (checkStage != -1) {
             start = checkStage + 1
@@ -281,34 +281,34 @@ function ScoutManager(appManager) {
                 }
             }
         }
-        
+
         function failAlert(check) {
             if (check.binding) {
                 appManager.notificationManager.alert("Check Failed", check.message)
                 checkStage = -1
             } else {
-                appManager.notificationManager.confirm("Check Failed", check.message, ["Continue", "Cancel"], function(result) {
-                                                       if (result == 1) {
-                                                       appManager.scoutManager.upload()
-                                                       } else {
-                                                       checkStage = -1
-                                                       }
-                                                       })
+                appManager.notificationManager.confirm("Check Failed", check.message, ["Continue", "Cancel"], function (result) {
+                    if (result == 1) {
+                        appManager.scoutManager.upload()
+                    } else {
+                        checkStage = -1
+                    }
+                })
             }
         }
-        
+
         if (checkStage == checks.length - 1) {
             checkStage = -1
-            appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function(result) {
-                                                   if (result == 1) {
-                                                   saveData(dataTemp)
-                                                   appManager.serverManager.upload()
-                                                   appManager.scoutManager.close(true, false)
-                                                   }
-                                                   })
+            appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function (result) {
+                if (result == 1) {
+                    saveData(dataTemp)
+                    appManager.serverManager.upload()
+                    appManager.scoutManager.close(true, false)
+                }
+            })
         }
     }
-    
+
     // Add new keys to source
     function merge(source, appended) {
         var keys = Object.keys(appended)
@@ -317,7 +317,7 @@ function ScoutManager(appManager) {
         }
         return source
     }
-    
+
     // Retrieve & combine data from classic and visual managers
     function getData() {
         var data = {}
@@ -327,7 +327,7 @@ function ScoutManager(appManager) {
         data = merge(data, appManager.classicManager.getData(scoutMode))
         return data
     }
-    
+
     // Write match to local storage
     function saveData(data) {
         data["Event"] = appManager.config.event
@@ -347,9 +347,9 @@ function ScoutManager(appManager) {
         saved.push(data)
         window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(saved))
     }
-    
+
     //Transition to team match selection
-    this.close = function(resetFields, forceTitle) {
+    this.close = function (resetFields, forceTitle) {
         document.getElementById("modeSwitcherDiv").hidden = true
         document.getElementById("pitSwitcherDiv").hidden = true
         document.getElementById("classicDiv1").hidden = true
@@ -357,7 +357,7 @@ function ScoutManager(appManager) {
         document.getElementById("classicDiv3").hidden = true
         document.getElementById("pitClassicDiv").hidden = true
         document.getElementById("visualCanvasDiv").hidden = true
-        
+
         if (!forceTitle && !appManager.serverManager.connected()) {
             appManager.state = 4
             document.getElementById("offlineWarningDiv").hidden = false
@@ -381,18 +381,18 @@ function ScoutManager(appManager) {
         }
         appManager.serverManager.heartbeat()
     }
-    
+
     // Setup text resizing on app startup
-    this.resizeTextInit = function() {
-        window.addEventListener("resize", function() {appManager.scoutManager.resizeText()})
+    this.resizeTextInit = function () {
+        window.addEventListener("resize", function () { appManager.scoutManager.resizeText() })
         this.resizeText()
     }
-    
+
     // Update auto, teleop, endgame text based on screen width
     var lastAutoText = "Autonomous"
     var lastTeleopText = "Tele-operated"
     var lastEndgameText = "End Game"
-    this.resizeText = function() {
+    this.resizeText = function () {
         document.body.style.height = window.innerHeight + "px"
         var width = document.body.clientWidth
         var autoText = "Autonomous"

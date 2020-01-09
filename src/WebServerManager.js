@@ -2,18 +2,18 @@
 function WebServerManager(appManager) {
     var connected = true
     var connectedText = document.getElementById("onlinetext")
-    
+
     // Start sending heartbeats regularly
-    this.init = function() {
+    this.init = function () {
         this.heartbeat()
-        setInterval(function() {appManager.serverManager.heartbeat()}, 5000)
+        setInterval(function () { appManager.serverManager.heartbeat() }, 5000)
     }
-    
+
     // Send heartbeat
-    this.heartbeat = function() {
+    this.heartbeat = function () {
         const http = new XMLHttpRequest()
-        
-        http.onreadystatechange = function() {
+
+        http.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     connected = true
@@ -28,7 +28,7 @@ function WebServerManager(appManager) {
                 }
             }
         }
-        
+
         http.timeout = 2000
         http.open("PUT", "/heartbeat", true)
         http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
@@ -38,13 +38,13 @@ function WebServerManager(appManager) {
         }
         http.send("device_name=" + encodeURI(window.localStorage.getItem("advantagescout_device")) + "&state=" + appManager.state.toString() + teammatch)
     }
-    
+
     // Upload saved matches
-    this.upload = function() {
+    this.upload = function () {
         if (JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length > 0) {
             const http = new XMLHttpRequest()
-            
-            http.onreadystatechange = function() {
+
+            http.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
                         var response = JSON.parse(this.responseText)
@@ -57,14 +57,14 @@ function WebServerManager(appManager) {
                     appManager.settingsManager.updateLocalCount()
                 }
             }
-            
-            http.onabort = function() {
+
+            http.onabort = function () {
                 appManager.settingsManager.updateLocalCount()
             }
-            http.onerror = function() {
+            http.onerror = function () {
                 appManager.settingsManager.updateLocalCount()
             }
-            
+
             http.timeout = 2000
             http.open("POST", "/upload", true)
             http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
@@ -73,34 +73,34 @@ function WebServerManager(appManager) {
             appManager.settingsManager.updateLocalCount()
         }
     }
-    
+
     // Get config and game data
     var configTemp
     var gameTemp
     var scheduleTemp
-    this.getData = function() {
-        
+    this.getData = function () {
+
         // Get config
         const configHttp = new XMLHttpRequest()
-        
-        configHttp.onreadystatechange = function() {
+
+        configHttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
-                    
+
                     // Load game
                     configTemp = JSON.parse(this.responseText)
                     const gameHttp = new XMLHttpRequest()
-                    
-                    gameHttp.onreadystatechange = function() {
+
+                    gameHttp.onreadystatechange = function () {
                         if (this.readyState == 4) {
                             if (this.status == 200) {
                                 gameTemp = JSON.parse(this.responseText)
                                 if (configTemp.use_schedule) {
-                                    
+
                                     // Get schedule
                                     const scheduleHttp = new XMLHttpRequest()
-                                    
-                                    scheduleHttp.onreadystatechange = function() {
+
+                                    scheduleHttp.onreadystatechange = function () {
                                         if (this.readyState == 4) {
                                             if (this.status == 200) {
                                                 scheduleTemp = JSON.parse(this.responseText)
@@ -110,7 +110,7 @@ function WebServerManager(appManager) {
                                             }
                                         }
                                     }
-                                    
+
                                     scheduleHttp.open("GET", "/get_schedule", true)
                                     scheduleHttp.send()
                                 } else {
@@ -121,7 +121,7 @@ function WebServerManager(appManager) {
                             }
                         }
                     }
-                    
+
                     gameHttp.open("GET", "/load_game", true)
                     gameHttp.send()
                 } else {
@@ -129,11 +129,11 @@ function WebServerManager(appManager) {
                 }
             }
         }
-        
+
         configHttp.open("GET", "/get_config", true)
         configHttp.send()
     }
-    
+
     // Send retrieved data to AppManager
     function finishLoad() {
         if (!configTemp.use_schedule) {
@@ -141,9 +141,9 @@ function WebServerManager(appManager) {
         }
         appManager.loadData(configTemp, gameTemp, scheduleTemp, "", false)
     }
-    
+
     // Report if connected to server
-    this.connected = function() {
+    this.connected = function () {
         return connected
     }
 }
