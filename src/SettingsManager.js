@@ -1,38 +1,38 @@
 // Responsible for managing settings
 function SettingsManager(appManager) {
     var cacheExpiration = 86400 //time to allow use of cached game data/config/version (seconds)
-    
+
     // Retrieve app version number from cordova
     var appVersion = ""
     var appVersionRemote = ""
     var outdatedAlertSent = false
-    this.loadVersion = function() {
+    this.loadVersion = function () {
         if (!appManager.web) {
-            cordova.getAppVersion.getVersionNumber(function(version) {
-                                                   document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
-                                                   appVersion = version.toString()
-                                                   if (appVersionRemote != "") {
-                                                   var compareResult = compareVersions(appVersion, appVersionRemote)
-                                                   if (compareResult != "same" && !outdatedAlertSent) {
-                                                   outdatedAlertSent = true
-                                                   if (compareResult == "older") {
-                                                   appManager.notificationManager.alert("Update Recommended", "This app version is outdated. Ask the scouting team for help updating.")
-                                                   } else {
-                                                   appManager.notificationManager.alert("Server Outdated", "This app version may not be compatable with the server. Please talk to the scouting team for more information.")
-                                                   }
-                                                   }
-                                                   }
-                                                   })
+            cordova.getAppVersion.getVersionNumber(function (version) {
+                document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
+                appVersion = version.toString()
+                if (appVersionRemote != "") {
+                    var compareResult = compareVersions(appVersion, appVersionRemote)
+                    if (compareResult != "same" && !outdatedAlertSent) {
+                        outdatedAlertSent = true
+                        if (compareResult == "older") {
+                            appManager.notificationManager.alert("Update Recommended", "This app version is outdated. Ask the scouting team for help updating.")
+                        } else {
+                            appManager.notificationManager.alert("Server Outdated", "This app version may not be compatable with the server. Please talk to the scouting team for more information.")
+                        }
+                    }
+                }
+            })
         }
     }
-    
+
     // Return current app version
-    this.getVersion = function() {
+    this.getVersion = function () {
         return appVersion
     }
-    
+
     // Check version from server and alert if outdated
-    this.checkVersion = function(checkVersion) {
+    this.checkVersion = function (checkVersion) {
         if (!appManager.web) {
             appVersionRemote = checkVersion
             if (appVersion != "") {
@@ -40,7 +40,7 @@ function SettingsManager(appManager) {
             }
         }
     }
-    
+
     // Check if older or newer
     function compareVersions(local, remote) {
         var local = local.split(".")
@@ -57,9 +57,9 @@ function SettingsManager(appManager) {
         }
         return result
     }
-    
+
     // Check if device name exists and open settings or write to text box
-    this.divSetup = function() {
+    this.divSetup = function () {
         if (window.localStorage.getItem("advantagescout_device") == null) {
             this.open()
         } else if (!appManager.web) {
@@ -67,9 +67,9 @@ function SettingsManager(appManager) {
             document.getElementById("imageQuality").value = window.localStorage.getItem("advantagescout_imagequality")
         }
     }
-    
+
     // Create list in local storage for saved matches
-    this.initLocalStorage = function() {
+    this.initLocalStorage = function () {
         if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
         }
@@ -83,15 +83,15 @@ function SettingsManager(appManager) {
             window.localStorage.setItem("advantagescout_selectedpreset", "custom")
         }
     }
-    
+
     // Write config and game into local storage
-    this.saveDataCache = function(config, game, schedule, version) {
-        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({"config": config, "game": game, "schedule": schedule, "version": version}))
+    this.saveDataCache = function (config, game, schedule, version) {
+        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({ "config": config, "game": game, "schedule": schedule, "version": version }))
         window.localStorage.setItem("advantagescout_datacachetimestamp", Math.round(Date.now() / 1000))
     }
-    
+
     // Read config and game from local storage (if not expired)
-    this.loadDataCache = function() {
+    this.loadDataCache = function () {
         if (window.localStorage.getItem("advantagescout_datacache") != null) {
             if (Math.round(Date.now() / 1000) - window.localStorage.getItem("advantagescout_datacachetimestamp") < cacheExpiration) {
                 var parsed = JSON.parse(window.localStorage.getItem("advantagescout_datacache"))
@@ -103,9 +103,9 @@ function SettingsManager(appManager) {
             }
         }
     }
-    
+
     // Update local saved count on selection screen
-    this.updateLocalCount = function() {
+    this.updateLocalCount = function () {
         if (!uploadLock) {
             var count = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata")).length
             if (count == 0) {
@@ -117,23 +117,23 @@ function SettingsManager(appManager) {
             }
         }
     }
-    
+
     // Display uploading message and percent
     var uploadLock = false
-    this.setUploadProgress = function(current, total) {
+    this.setUploadProgress = function (current, total) {
         uploadLock = true
-        var percent = Math.round((current/total)*100).toString()
+        var percent = Math.round((current / total) * 100).toString()
         document.getElementById("localcount").innerHTML = "Uploading... (" + percent + "%)"
     }
-    
+
     // Switch from upload progress to matches saved display
-    this.hideUploadProgress = function() {
+    this.hideUploadProgress = function () {
         uploadLock = false
         this.updateLocalCount()
     }
-    
+
     // Open settings screen
-    this.open = function() {
+    this.open = function () {
         if (appManager.web) {
             window.location = "/config"
         } else {
@@ -141,9 +141,9 @@ function SettingsManager(appManager) {
             document.getElementById("configDiv").hidden = false
         }
     }
-    
+
     // Close settings screen
-    this.close = function() {
+    this.close = function () {
         if (!appManager.web) {
             document.getElementById("selectionDiv").hidden = false
             document.getElementById("configDiv").hidden = true

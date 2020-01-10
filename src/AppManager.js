@@ -7,7 +7,7 @@ function AppManager(web) {
     this.config
     this.game
     this.schedule
-    
+
     // Instantiate managers
     this.settingsManager = new SettingsManager(this)
     this.scoutManager = new ScoutManager(this)
@@ -22,28 +22,28 @@ function AppManager(web) {
         this.notificationManager = new AppNotificationManager(this)
         this.serverManager = new AppServerManager(this)
     }
-    
+
     // Respond to back button on mobile app
-    this.backButton = function() {
+    this.backButton = function () {
         if (this.state == 0) {
             if (!document.getElementById("configDiv").hidden) {
                 this.settingsManager.close()
             }
         } else {
             if (this.state == 1 || this.state == 5) {
-                this.notificationManager.confirm("Stop Scouting?", "Your data will NOT be saved!", ["Leave", "Stay"], function(result) {
-                                                if (result == 1) {
-                                                appManager.scoutManager.close(false, true)
-                                                }
-                                                })
+                this.notificationManager.confirm("Stop Scouting?", "Your data will NOT be saved!", ["Leave", "Stay"], function (result) {
+                    if (result == 1) {
+                        appManager.scoutManager.close(false, true)
+                    }
+                })
             } else {
                 this.scoutManager.setMode(this.state - 1)
             }
         }
     }
-    
+
     // Load config, game, and version from server managers
-    this.loadData = function(config, game, schedule, version, cached) {
+    this.loadData = function (config, game, schedule, version, cached) {
         this.config = config
         this.game = game
         this.schedule = schedule
@@ -55,7 +55,7 @@ function AppManager(web) {
         }
         this.scoutManager.loadData()
     }
-    
+
     // App setup
     this.settingsManager.loadVersion()
     this.settingsManager.initLocalStorage()
