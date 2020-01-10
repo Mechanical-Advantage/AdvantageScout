@@ -82,14 +82,54 @@ var controlGreen = "#00ff00"
 var controlRed = "#ff0000"
 var controlYellow = "#ffff00"
 
-function drawFigure(x, y) {
+// Set ponytails
+const ponytails = [Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5]
 
+function drawFigure(x, y, color, ponytails, armDirection) {
+    context.lineWidth = 8
+    context.strokeStyle = color
+    context.beginPath()
+    context.arc(x, y - 75, 25, 0, 2 * Math.PI)
+
+    // Arms
+    if (armDirection == 1) {
+        context.moveTo(x + 25, y + 25)
+        context.lineTo(x, y - 25)
+        context.lineTo(x - 25, y + 25)
+    } else if (armDirection == 0) {
+        context.moveTo(x - 55, y - 25)
+        context.lineTo(x, y - 25)
+        context.moveTo(x, y - 25)
+        context.lineTo(x - 50, y - 5)
+    } else if (armDirection == 2) {
+        context.moveTo(x + 55, y - 25)
+        context.lineTo(x, y - 25)
+        context.moveTo(x, y - 25)
+        context.lineTo(x + 50, y - 5)
+    }
+
+    // Legs
+    context.moveTo(x + 25, y + 100)
+    context.lineTo(x, y + 50)
+    context.lineTo(x - 25, y + 100)
+
+    // Body
+    context.moveTo(x, y + 50)
+    context.lineTo(x, y - 50)
+
+    // Ponytails
+    if (ponytails) {
+        context.moveTo(x + 25, y - 75)
+        context.arc(x + 50, y - 75, 25, Math.PI, 0.6 * Math.PI, true)
+        context.moveTo(x - 25, y - 75)
+        context.arc(x - 50, y - 75, 25, 0, 0.4 * Math.PI)
+    }
+    context.stroke()
 }
 
 function render() {
     context.clearRect(0, 0, 3000, 1600)
 
-    // Draw field background
     function setFieldPath() {
         context.beginPath()
         context.moveTo(450, 450)
@@ -376,6 +416,19 @@ function render() {
         context.font = "70px sans-serif"
         context.fillStyle = "#000000"
         context.fillText("Undo", 1875, 1525)
+    }
+
+    // Stick figures
+
+    if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
+        drawFigure((mode == 0) ? 100 : 350, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
+        drawFigure((mode == 0) ? 100 : 350, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)
+        drawFigure((mode == 0) ? 100 : 350, 1275, leftColor, ponytails[2], (mode == 0) ? 1 : 2)
+    }
+    if (("AllianceColor" in data) ? data["AllianceColor"] == 0 : true) {
+        drawFigure((mode == 0) ? 2900 : 2650, 325, rightColor, ponytails[3], (mode == 0) ? 1 : 0)
+        drawFigure((mode == 0) ? 2900 : 2650, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
+        drawFigure((mode == 0) ? 2900 : 2650, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
     }
 }
 render()
