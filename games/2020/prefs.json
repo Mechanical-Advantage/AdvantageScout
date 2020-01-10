@@ -58,6 +58,7 @@
         "teleop": false,
         "endgame": true
     },
+    "hideClassic": true,
     "uploadChecks": {
         "pit": [
             {
