@@ -6,7 +6,7 @@ function VisualManager(appManager) {
     // Create CanvasManager class from game data
     this.loadData = function () {
         try {
-            CanvasManager = new Function("canvas", "reverseAlliances", "uploadEvent", appManager.game.CanvasManager)
+            CanvasManager = new Function("canvas", "reverseAlliances", "uploadData", appManager.game.CanvasManager)
         }
         catch (error) {
             appManager.notificationManager.alert("Error", "Failed to load game data. (" + error.message + ")")
@@ -19,7 +19,7 @@ function VisualManager(appManager) {
         var newCanvas = oldCanvas.cloneNode(true)
         oldCanvas.parentElement.replaceChild(newCanvas, oldCanvas)
         if (appManager.game.CanvasManager) {
-            canvasManager = new CanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, appManager.scoutManager.uploadEvent)
+            canvasManager = new CanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, appManager.scoutManager.upload)
         }
     }
 

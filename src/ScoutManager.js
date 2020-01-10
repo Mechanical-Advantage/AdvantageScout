@@ -16,15 +16,29 @@ function ScoutManager(appManager) {
         }
 
         // Match scouting
-        if (appManager.game.CanvasManager) {
+        var showClassic = true
+        if ("hideClassic" in appManager.game.prefs) {
+            showClassic = !appManager.game.prefs.hideClassic
+        }
+        var showVisual = appManager.game.CanvasManager != undefined
+        if (showVisual) {
             appManager.visualManager.loadData()
+        }
+        if (showVisual && showClassic) {
             document.getElementById("visualstart").innerHTML = "Scout! (visual)"
             document.getElementById("classicstart").innerHTML = "Scout! (classic)"
             document.getElementById("visualstart").hidden = false
+            document.getElementById("classicstart").hidden = false
             document.getElementById("twobuttonbreak").hidden = false
-        } else {
+        } else if (!showVisual) {
             document.getElementById("classicstart").innerHTML = "Scout!"
             document.getElementById("visualstart").hidden = true
+            document.getElementById("classicstart").hidden = false
+            document.getElementById("twobuttonbreak").hidden = true
+        } else if (showVisual && !showClassic) {
+            document.getElementById("visualstart").innerHTML = "Scout!"
+            document.getElementById("visualstart").hidden = false
+            document.getElementById("classicstart").hidden = true
             document.getElementById("twobuttonbreak").hidden = true
         }
         document.getElementById("loadingtext").hidden = true
