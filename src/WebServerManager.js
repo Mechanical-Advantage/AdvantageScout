@@ -6,7 +6,8 @@ function WebServerManager(appManager) {
     // Start sending heartbeats regularly
     this.init = function () {
         this.heartbeat()
-        setInterval(function () { appManager.serverManager.heartbeat() }, 5000)
+        this.getSchedule()
+        setInterval(function () { appManager.serverManager.heartbeat(); appManager.serverManager.getSchedule()}, 5000)
     }
 
     // Send heartbeat
@@ -77,7 +78,6 @@ function WebServerManager(appManager) {
     // Get config and game data
     var configTemp
     var gameTemp
-    var scheduleTemp
     this.getData = function () {
 
         // Get config
@@ -95,27 +95,7 @@ function WebServerManager(appManager) {
                         if (this.readyState == 4) {
                             if (this.status == 200) {
                                 gameTemp = JSON.parse(this.responseText)
-                                if (configTemp.use_schedule) {
-
-                                    // Get schedule
-                                    const scheduleHttp = new XMLHttpRequest()
-
-                                    scheduleHttp.onreadystatechange = function () {
-                                        if (this.readyState == 4) {
-                                            if (this.status == 200) {
-                                                scheduleTemp = JSON.parse(this.responseText)
-                                                finishLoad()
-                                            } else {
-                                                appManager.notificationManager.alert("Error", "Failed to retrieve scout schedule")
-                                            }
-                                        }
-                                    }
-
-                                    scheduleHttp.open("GET", "/get_schedule", true)
-                                    scheduleHttp.send()
-                                } else {
-                                    finishLoad()
-                                }
+                                finishLoad()
                             } else {
                                 appManager.notificationManager.alert("Error", "Failed to retrieve game data")
                             }
@@ -134,12 +114,28 @@ function WebServerManager(appManager) {
         configHttp.send()
     }
 
+    //Retrieve schedule from server
+    this.getSchedule = function() {
+        const http = new XMLHttpRequest()
+
+        http.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    appManager.schedule = JSON.parse(this.responseText)
+                    appManager.scoutManager.loadSchedule()
+                } else {
+                    appManager.notificationManager.alert("Error", "Failed to retrieve schedule")
+                }
+            }
+        }
+
+        http.open("GET", "/get_schedule", true)
+        http.send()
+    }
+
     // Send retrieved data to AppManager
     function finishLoad() {
-        if (!configTemp.use_schedule) {
-            scheduleTemp = []
-        }
-        appManager.loadData(configTemp, gameTemp, scheduleTemp, "", false)
+        appManager.loadData(configTemp, gameTemp, "", false)
     }
 
     // Report if connected to server

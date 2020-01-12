@@ -1,5 +1,7 @@
+import scheduler
 import sqlite3 as sql
 import cherrypy
+import tbapy
 from simple_websocket_server import WebSocketServer, WebSocket
 from jsmin import jsmin
 import json
@@ -20,9 +22,9 @@ bt_enable = True
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"] # current implementation
 bt_showheartbeats = True
+tba = tbapy.TBA("KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
-db_schedule = "..\ScoutAssignmentCode\scheduleDatabase.db" # database from ScoutAssignmentCode (optional) - http://www.github.com/Mechanical-Advantage/ScoutAssignmentCode
 image_dir = "images" # folder for image data
 default_game = "2019"
 
@@ -50,6 +52,26 @@ def init_global():
         last_team INTEGER,
         last_match INTEGER
         ); """)
+    cur_global.execute("DROP TABLE IF EXISTS scouts")
+    cur_global.execute("""CREATE TABLE scouts (
+        name TEXT,
+        enabled INTEGER
+        ); """)
+    cur_global.execute("DROP TABLE IF EXISTS schedule_next")
+    cur_global.execute("""CREATE TABLE schedule_next (
+        team INTEGER,
+        scout TEXT
+        ); """)
+    cur_global.execute("DROP TABLE IF EXISTS schedule")
+    cur_global.execute("""CREATE TABLE schedule (
+        match INTEGER,
+        b1 INTEGER,
+        b2 INTEGER,
+        b3 INTEGER,
+        r1 INTEGER,
+        r2 INTEGER,
+        r3 INTEGER
+        ); """)
     cur_global.execute("DROP TABLE IF EXISTS config")
     cur_global.execute("""CREATE TABLE config (
         key TEXT,
@@ -59,18 +81,15 @@ def init_global():
     cur_global.execute("INSERT INTO config (key, value) VALUES ('event', '2017nhgrs')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('reverse_alliances', '0')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('dev_mode', '0')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('schedule_match', '-1')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('event_cached', '2017nhgrs')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('auto_schedule', '1')")
     conn_global.commit()
     conn_global.close()
 
 if not Path(db_global).is_file():
     log("Creating new global database")
     init_global()
-
-if (not Path(db_schedule).is_file()) and (not db_schedule == ""):
-    log("WARNING - Could not find schedule database")
-    db_schedule_found = False
-else:
-    db_schedule_found = True
 
 if not os.path.exists(image_dir):
     log("Creating image directory")
@@ -86,23 +105,6 @@ def gamedb_connect():
     conn_global.close()
     return({"conn": conn_game, "name": game})
 
-#Check if schedule should be used based on event
-def use_schedule():
-    if not db_schedule_found:
-        return(False)
-    
-    conn_global = sql.connect(db_global)
-    cur_global = conn_global.cursor()
-    scout_event = cur_global.execute("SELECT value FROM config WHERE key = 'event'").fetchall()[0][0]
-    conn_global.close()
-
-    conn_schedule = sql.connect(db_schedule)
-    cur_schedule = conn_schedule.cursor()
-    schedule_event = cur_schedule.execute("SELECT key FROM event").fetchall()[-1][0]
-    conn_schedule.close()
-
-    return(scout_event == schedule_event)
-
 #Initialize game db
 def init_game():
     game_result = gamedb_connect()
@@ -111,7 +113,7 @@ def init_game():
     config = json.loads(quickread("games" + os.path.sep + game_result["name"] + os.path.sep + "prefs.json"))
     
     #Matches table
-    create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, "
+    create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, ScoutName TEXT, "
     for i in range(len(config["fields"])):
         create_text += config["fields"][i] + ","
     create_text = create_text[:-1]
@@ -120,7 +122,7 @@ def init_game():
 
     #Pit scouting table
     if "pitFields" in config:
-        create_text = "Event TEXT, Team INTEGER, DeviceName TEXT, Version TEXT, Time INTEGER, UploadTime INTEGER, "
+        create_text = "Event TEXT, Team INTEGER, DeviceName TEXT, Version TEXT, Time INTEGER, UploadTime INTEGER, ScoutName TEXT, "
         for i in range(len(config["pitFields"])):
             create_text += config["pitFields"][i] + ","
         create_text = create_text[:-1]
@@ -184,25 +186,25 @@ class main_server(object):
             <div id="localcount">
                 Loading...
             </div>
-            <div id="selectionDiv_match">
-                <button id="pitButton" onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)" hidden>
+
+            <div id="selectionDiv_matchswitch">
+                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)">
                     Pit Scout
                 </button>
-                <br id="pitButtonBreak" hidden>
-                
-                <div id="scheduleSelect" hidden>
-                    Name:
-                    <select id="nameSelect" class="teammatch" onchange="javascript:appManager.scoutManager.updatePresetList()">
-                    </select>
-                    <br>
-                    Preset:
-                    <select id="presetSelect" class="teammatch" onchange="javascript:appManager.scoutManager.setPreset()">
-                        <option value="custom">
-                            custom
-                        </option>
-                    </select>
-                </div>
+            </div>
 
+            <div id="selectionDiv_pitswitch">
+                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
+                    Match Scout
+                </button>
+            </div>
+
+            <div id="scoutselectdiv">
+                Scout:
+                <select id="scoutselect"></select>
+            </div>
+
+            <div id="selectionDiv_match">
                 Team:
                 <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
                 <br>
@@ -233,13 +235,14 @@ class main_server(object):
                         Scout! (classic)
                     </button>
                 </div>
+
+                <div id="scheduleDiv" style="margin-top: 25px;" hidden>
+                    Match <span id="schedulematch"></span> Schedule:
+                    <table id="schedule"></table>
+                </div>
             </div>
             
             <div id="selectionDiv_pit" hidden>
-                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
-                    Match Scout
-                </button>
-                <br>
                 Team:
                 <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
                 <br>
@@ -426,24 +429,6 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(json.dumps(result))
 
     @cherrypy.expose
-    def get_schedule(self):
-        result = []
-        if use_schedule() and db_schedule_found:
-            conn_schedule = sql.connect(db_schedule)
-            cur_schedule = conn_schedule.cursor()
-            schedule_raw = cur_schedule.execute("SELECT * FROM schedule ORDER BY match ASC").fetchall()
-            conn_schedule.close()
-
-            for match_raw in schedule_raw:
-                match = {"teams": [], "scouts": []}
-                for i in range(1, 13, 2):
-                    match["teams"].append(match_raw[i])
-                    match["scouts"].append(match_raw[i + 1])
-                result.append(match)
-            
-        return(json.dumps(result))
-
-    @cherrypy.expose
     def upload(self, data):
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
@@ -474,9 +459,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             
             to_save = {}
             if pit_scout:
-                fields = prefs["pitFields"] + ["Event TEXT", "Team INTEGER", "DeviceName TEXT", "Version TEXT", "Time INTEGER", "UploadTime INTEGER"]
+                fields = prefs["pitFields"] + ["Event TEXT", "Team INTEGER", "DeviceName TEXT", "Version TEXT", "Time INTEGER", "UploadTime INTEGER", "ScoutName TEXT"]
             else:
-                fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER"]
+                fields = prefs["fields"] + ["Event TEXT", "Team INTEGER", "Match INTEGER", "DeviceName TEXT", "Version TEXT", "InterfaceType TEXT", "Time INTEGER", "UploadTime INTEGER", "ScoutName TEXT"]
             for f in range(len(fields)):
                 field_name = fields[f].split(" ")[0]
                 if field_name in data[i]:
@@ -502,6 +487,28 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         conn_game.close()
         result["success"] = True
         return(json.dumps(result))
+
+    @cherrypy.expose
+    def get_schedule(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        event = cur_global.execute("SELECT value FROM config WHERE key='event'").fetchall()[0][0]
+        event_cached = cur_global.execute("SELECT value FROM config WHERE key='event_cached'").fetchall()[0][0]
+        if event != event_cached:
+            output = {}
+        else:
+            match = cur_global.execute("SELECT value FROM config WHERE key='schedule_match'").fetchall()[0][0]
+            schedule = cur_global.execute("SELECT * FROM schedule_next").fetchall()
+            teams = []
+            scouts = []
+            for row in schedule:
+                teams.append(row[0])
+                scouts.append(row[1])
+            output = {"match": match, "teams": teams, "scouts": scouts}
+
+        conn_global.close()
+        return json.dumps(output)
 
     @cherrypy.expose
     def admin(self):
@@ -565,23 +572,59 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         <button onclick="javascript:save(&quot;dev_mode&quot;)">
             Save
         </button>
+
+        <br>
+        Scheduling Method:
+        <select id="auto_schedule">
+            <option value="0">
+                manual
+            </option>
+            <option value="1">
+                auto
+            </option>
+        </select>
+        <button onclick="javascript:save(&quot;auto_schedule&quot;)">
+            Save
+        </button>
+
+        <h3>
+            Scheduling
+        </h3>
+        Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
+        <button onclick="javascript:refreshCache()">
+            Refresh
+        </button>
+        <br>
+        <button onclick="javascript:reschedule()">
+            Reschedule next match
+        </button>
+        <div id="scheduleDiv" hidden>
+            <br>
+            Schedule for match <span id="matchnumber">0</span>:
+            <table id="schedule"></table>
+        </div>
+
+        <h3>
+            Scout List
+        </h3>
+        <table id="scoutlist"></table>
         
         <h3>
             Devices
         </h3>
-        <table>
+        <table class="devices">
             <tbody id="deviceTable">
                 <tr>
-                    <th>
+                    <th class="devices">
                         Name
                     </th>
-                    <th>
+                    <th class="devices">
                         Route
                     </th>
-                    <th>
+                    <th class="devices">
                         Status
                     </th>
-                    <th>
+                    <th class="devices">
                         Heartbeat
                     </th>
                 </tr>
@@ -593,6 +636,16 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
 </html>
             """
         return(output.replace("$FAVICON_CODE", favicon_code))
+
+    @cherrypy.expose
+    def toggle_scout(self, scout):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        new = 1 - cur_global.execute("SELECT enabled FROM scouts WHERE name=?", (scout,)).fetchall()[0][0]
+        cur_global.execute("UPDATE scouts SET enabled=? WHERE name=?", (new,scout))
+        conn_global.commit()
+        conn_global.close()
+        return
 
     @cherrypy.expose
     def get_devices(self):
@@ -627,7 +680,12 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         data["reverse_alliances"] = cur_global.fetchall()[0][0]
         cur_global.execute("SELECT value FROM config WHERE key = 'dev_mode'")
         data["dev_mode"] = cur_global.fetchall()[0][0]
-        data["use_schedule"] = use_schedule()
+        cur_global.execute("SELECT * FROM scouts ORDER BY name")
+        data["scouts"] = [{"name": x[0], "enabled": x[1] == 1} for x in cur_global.fetchall()]
+        cur_global.execute("SELECT value FROM config WHERE key = 'event_cached'")
+        data["event_cache"] = cur_global.fetchall()[0][0]
+        cur_global.execute("SELECT value FROM config WHERE key = 'auto_schedule'")
+        data["auto_schedule"] = cur_global.fetchall()[0][0]
         conn_global.close()
         return(json.dumps(data))
 
@@ -657,9 +715,59 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                 response = "Developer mode disabled"
             else:
                 response = "Developer mode enabled"
+        elif key == "auto_schedule":
+            if value == "0":
+                response = "Auto scheduling disabled"
+            else:
+                response = "Auto scheduling enabled"
         else:
             response = "Error: unknown key \"" + key + "\""
         return(response)
+
+    @cherrypy.expose
+    def get_cache(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        event = cur_global.execute("SELECT value FROM config WHERE key = 'event'").fetchall()[0][0]
+        try:
+            matchlist_raw = tba.event_matches(event)
+            matchlist_raw.sort(key=lambda x: x.match_number)
+        except:
+            return "Error - could not retrieve schedule"
+
+        if len(matchlist_raw) == 0:
+            return "Error - no schedule available"
+
+        cur_global.execute("DELETE FROM schedule")
+        cur_global.execute("UPDATE config SET value=? WHERE key='event_cached'", (event,))
+        for match_raw in matchlist_raw:
+            if match_raw.comp_level == "qm":
+                b1 = match_raw.alliances["blue"]["team_keys"][0][3:]
+                b2 = match_raw.alliances["blue"]["team_keys"][1][3:]
+                b3 = match_raw.alliances["blue"]["team_keys"][2][3:]
+                r1 = match_raw.alliances["red"]["team_keys"][0][3:]
+                r2 = match_raw.alliances["red"]["team_keys"][1][3:]
+                r3 = match_raw.alliances["red"]["team_keys"][2][3:]
+                cur_global.execute("INSERT INTO schedule(match,b1,b2,b3,r1,r2,r3) VALUES (?,?,?,?,?,?,?)", (match_raw.match_number,b1,b2,b3,r1,r2,r3))
+
+        conn_global.commit()
+        conn_global.close()
+        return("Downloaded schedule for " + event + ".")
+
+    @cherrypy.expose
+    def reschedule(self):
+        game_result = gamedb_connect()
+        conn_game = game_result["conn"]
+        cur_game = conn_game.cursor()
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        result = schedule_match(cur_game, cur_global, conn_global)
+
+        conn_game.close()
+        conn_global.close()
+        return(result)
+
 
     @cherrypy.expose
     def download(self):
@@ -833,7 +941,7 @@ def bluetooth_server(name, mode, client=None):
 
         if msg[1] == "load_data":
             config = quickread("cordova/config.xml").split('"')
-            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "schedule": json.loads(main_server().get_schedule()), "version": config[3]}
+            result = {"game": json.loads(main_server().load_game()), "config": json.loads(main_server().get_config()), "version": config[3]}
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":
@@ -842,6 +950,8 @@ def bluetooth_server(name, mode, client=None):
             else:
                 main_server().heartbeat(msg[0], msg[2][0], route=name)
             result = "success"
+        elif msg[1] == "get_schedule":
+            result = json.loads(main_server().get_schedule())
         else:
             result = "error"
         response = [msg[0], result]
@@ -899,6 +1009,77 @@ def run_websocket(host, port, server):
     server.serve_forever()
     log("Stopping web socket server on ws://" + host + ":" + str(port))
 
+#Automatic scheduling thread
+def scheduler_thread():
+    game_result = gamedb_connect()
+    conn_game = game_result["conn"]
+    cur_game = conn_game.cursor()
+    conn_global = sql.connect(db_global)
+    cur_global = conn_global.cursor()
+
+    last_event = ""
+    last_match = -1
+    while True:
+        time.sleep(2)
+        event = cur_global.execute("SELECT value FROM config WHERE key = 'event_cached'").fetchall()[0][0]
+        enabled = cur_global.execute("SELECT value FROM config WHERE key = 'auto_schedule'").fetchall()[0][0] == "1"
+        to_schedule = get_next_schedule_match(cur_game, cur_global)
+
+        if (to_schedule != last_match or event != last_event) and enabled:
+            if schedule_match(cur_game, cur_global, conn_global)[:3] == "Suc":
+                last_event = event
+                last_match = to_schedule
+
+def get_next_schedule_match(cur_game, cur_global):
+    event = cur_global.execute("SELECT value FROM config WHERE key = 'event_cached'").fetchall()[0][0]
+    data = cur_game.execute("SELECT match, COUNT(match) FROM match WHERE Event=? GROUP BY match ORDER BY match DESC", (event,)).fetchall()
+    to_schedule = -1
+    for i in data:
+        if i[1] > 1:
+            to_schedule = i[0] + 1
+            break
+    if to_schedule == -1:
+        to_schedule = 1
+    return(to_schedule)
+
+def schedule_match(cur_game, cur_global, conn_global):
+    to_schedule = get_next_schedule_match(cur_game, cur_global)
+    event = cur_global.execute("SELECT value FROM config WHERE key = 'event_cached'").fetchall()[0][0]
+    log("Creating new schedule for match " + str(to_schedule))
+
+    #Find teams in match
+    teams = cur_global.execute("SELECT b1,b2,b3,r1,r2,r3 FROM schedule WHERE match=?", (to_schedule,)).fetchall()
+    if len(teams) == 0:
+        log("Could not create schedule for match " + str(to_schedule))
+        return("Could not create schedule for match " + str(to_schedule))
+    teams = teams[0]
+
+    #Get scout records
+    scouts = [x[0] for x in cur_global.execute("SELECT name FROM scouts WHERE enabled='1'").fetchall()]
+    if len(scouts) < 6:
+        log("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
+        return("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
+
+    scout_records = []
+    for scout in scouts:
+        scoutdata = {"name": scout}
+        records = cur_game.execute("SELECT Team, COUNT(Match) FROM match WHERE Event=? AND ScoutName=? GROUP BY Team", (event,scout)).fetchall()
+        for row in records:
+            scoutdata[row[0]] = row[1]
+        scoutdata["total"] = cur_game.execute("SELECT COUNT(Match) FROM match WHERE Event=? AND ScoutName=?", (event,scout)).fetchall()[0][0]
+        scout_records.append(scoutdata)
+    
+    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0, prefs={})
+
+    #Write to db
+    cur_global.execute("DELETE FROM schedule_next")
+    cur_global.execute("UPDATE config SET value=? WHERE key='schedule_match'", (to_schedule,))
+    for team in teams:
+        cur_global.execute("INSERT INTO schedule_next(team,scout) VALUES (?,?)", (team,schedule[team]))
+    conn_global.commit()
+    return("Successfully created schedule for match " + str(to_schedule))
+
+
 if __name__ == "__main__":
     #Start bluetooth servers
     if bt_enable:
@@ -918,6 +1099,10 @@ if __name__ == "__main__":
     #Start admin server
     admin_server_thread = threading.Thread(target=run_websocket, args=(host, admin_socket_port, admin_server), daemon=True)
     admin_server_thread.start()
+
+    #Start auto scheduling thread
+    schedule_thread = threading.Thread(target=scheduler_thread, daemon=True)
+    schedule_thread.start()
 
     #Start web server
     port = default_port

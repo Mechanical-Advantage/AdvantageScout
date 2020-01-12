@@ -62,26 +62,24 @@
             Settings
         </button>
         <br>
-        <div id="selectionDiv_match">
-            <button id="pitButton" onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)" hidden>
+        <div id="selectionDiv_matchswitch">
+            <button onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)">
                 Pit Scout
             </button>
-            <br id="pitButtonBreak" hidden>
+        </div>
 
-            <div id="scheduleSelect" hidden>
-                Name:
-                <select id="nameSelect" class="teammatch"
-                    onchange="javascript:appManager.scoutManager.updatePresetList()">
-                </select>
-                <br>
-                Preset:
-                <select id="presetSelect" class="teammatch" onchange="javascript:appManager.scoutManager.setPreset()">
-                    <option value="custom">
-                        custom
-                    </option>
-                </select>
-            </div>
+        <div id="selectionDiv_pitswitch">
+            <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
+                Match Scout
+            </button>
+        </div>
 
+        <div id="scoutselectdiv">
+            Scout:
+            <select id="scoutselect"></select>
+        </div>
+
+        <div id="selectionDiv_match">
             Team:
             <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
             <br>
@@ -104,23 +102,22 @@
                 Loading...
             </div>
             <div id="startbuttons" hidden>
-                <button id="visualstart" class="scoutstart"
-                    onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
+                <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
                     Scout! (visual)
                 </button>
                 <br id="twobuttonbreak">
-                <button id="classicstart" class="scoutstart"
-                    onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
+                <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
                     Scout! (classic)
                 </button>
             </div>
-        </div>
 
+            <div id="scheduleDiv" style="margin-top: 25px;" hidden>
+                Match <span id="schedulematch"></span> Schedule:
+                <table id="schedule"></table>
+            </div>
+        </div>
+        
         <div id="selectionDiv_pit" hidden>
-            <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
-                Match Scout
-            </button>
-            <br>
             Team:
             <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
             <br>

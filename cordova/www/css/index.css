@@ -60,6 +60,11 @@ body {
     margin-bottom: 15px;
 }
 
+td.schedule {
+    text-align: center;
+    padding: 5px;
+}
+
 .versiontext {
     font-style: italic;
 }

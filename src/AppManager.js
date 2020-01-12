@@ -43,15 +43,14 @@ function AppManager(web) {
     }
 
     // Load config, game, and version from server managers
-    this.loadData = function (config, game, schedule, version, cached) {
+    this.loadData = function (config, game, version, cached) {
         this.config = config
         this.game = game
-        this.schedule = schedule
         if (!web) {
             this.settingsManager.checkVersion(version)
         }
         if (!cached) {
-            this.settingsManager.saveDataCache(config, game, schedule, version)
+            this.settingsManager.saveDataCache(config, game, version)
         }
         this.scoutManager.loadData()
     }

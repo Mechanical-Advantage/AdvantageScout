@@ -11,7 +11,9 @@ function AppServerManager(appManager) {
         startListen()
         this.heartbeat()
         this.upload()
+        this.getSchedule()
         setInterval(function () { appManager.serverManager.heartbeat(); appManager.serverManager.upload() }, 1000)
+        setInterval(function () { appManager.serverManager.getSchedule() }, 5000)
     }
 
     // Send heartbeat if not already in queue
@@ -27,6 +29,19 @@ function AppServerManager(appManager) {
                 }
             }, function () {
                 heartbeatQueued = false
+            })
+        }
+    }
+
+    // Get schedule from server
+    var getScheduleQueued = false
+    this.getSchedule = function () {
+        if (!getScheduleQueued) {
+            getScheduleQueued = true
+            addToSerialQueue("get_schedule", function () { return [] }, function (data) {
+                getScheduleQueued = false
+                appManager.schedule = JSON.parse(data)
+                appManager.scoutManager.loadData()
             })
         }
     }
@@ -135,11 +150,7 @@ function AppServerManager(appManager) {
             addToSerialQueue("load_data", function () { return [] }, function (data) {
                 loadDataQueued = false
                 data = JSON.parse(data)[1]
-                if (data.schedule == undefined) {
-                    data.schedule = []
-                    data.config.use_schedule = false
-                }
-                appManager.loadData(data.config, data.game, data.schedule, data.version, false)
+                appManager.loadData(data.config, data.game, data.version, false)
             })
         }
     }

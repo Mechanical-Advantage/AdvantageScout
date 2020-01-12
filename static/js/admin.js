@@ -1,3 +1,5 @@
+var event = "2017nhgrs"
+
 //Get config values
 const http = new XMLHttpRequest()
 
@@ -7,8 +9,31 @@ http.onreadystatechange = function() {
             var result = JSON.parse(this.responseText)
             document.getElementById("game").value = result.game
             document.getElementById("event").value = result.event
+            event = result.event
             document.getElementById("reverse_alliances").selectedIndex = result.reverse_alliances
             document.getElementById("dev_mode").selectedIndex = result.dev_mode
+            document.getElementById("auto_schedule").selectedIndex = result.auto_schedule
+            document.getElementById("eventcache").innerHTML = result.event_cache
+
+            //Write scout list
+            var scoutList = document.getElementById("scoutlist")
+            var rows = [document.createElement("TR")]
+            for (var scoutid in result.scouts) {
+                var name = document.createElement("TD")
+                name.innerHTML = result.scouts[scoutid].name
+                name.style.backgroundColor = result.scouts[scoutid].enabled ? "#91ff9a" : "#ff9191"
+                name.onclick = function() {
+                    toggleScout(this)
+                }
+                name.classList.add("smallpad")
+                rows.slice(-1)[0].appendChild(name)
+
+                if ((Number(scoutid) + 1) % 5 == 0) {
+                    scoutList.appendChild(rows.slice(-1)[0])
+                    rows.push(document.createElement("TR"))
+                }
+            }
+            scoutList.appendChild(rows.slice(-1)[0])
         }
     }
 }
@@ -16,9 +41,132 @@ http.onreadystatechange = function() {
 http.open("GET", "/get_config", true)
 http.send()
 
+//Toggle whether scout is enabled
+function toggleScout(span) {
+    const http = new XMLHttpRequest()
+
+    http.onerror = function() {
+        alert("Error toggling scout")
+    }
+
+    http.ontimeout = function() {
+        alert("Error toggling scout")
+    }
+
+    http.open("PUT", "/toggle_scout?scout=" + encodeURIComponent(span.innerHTML), true)
+    http.send()
+
+    //Change background
+    console.log(span.style.backgroundColor)
+    span.style.backgroundColor = (span.style.backgroundColor == "rgb(145, 255, 154)") ? "#ff9191" : "#91ff9a"
+}
+
+//Update match cache on server
+function refreshCache() {
+    const http = new XMLHttpRequest()
+
+    http.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                if (this.responseText.slice(0, 10) == "Downloaded") {
+                    document.getElementById("eventcache").innerHTML = event
+                }
+                alert(this.responseText)
+            }
+        }
+    }
+
+    http.onerror = function() {
+        alert("Error reaching server")
+    }
+
+    http.ontimeout = function() {
+        alert("Error reaching server")
+    }
+
+    http.open("PUT", "/get_cache", true)
+    http.send()
+}
+
+//Update match cache on server
+function reschedule() {
+    const http = new XMLHttpRequest()
+
+    http.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                alert(this.responseText)
+            }
+        }
+    }
+
+    http.onerror = function() {
+        alert("Error reaching server")
+    }
+
+    http.ontimeout = function() {
+        alert("Error reaching server")
+    }
+
+    http.open("PUT", "/reschedule", true)
+    http.send()
+}
+
+//Update schedule view
+function getSchedule() {
+    const http = new XMLHttpRequest()
+
+    http.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                schedule = JSON.parse(this.responseText)
+                var scheduleTable = document.getElementById("schedule")
+                while (scheduleTable.firstChild) {
+                    scheduleTable.removeChild(scheduleTable.firstChild)
+                }
+                document.getElementById("scheduleDiv").hidden = schedule.match == undefined
+                if (schedule.match) {
+                    document.getElementById("matchnumber").innerHTML = schedule.match
+                    var teamRow = document.createElement("TR")
+                    var scoutRow = document.createElement("TR")
+                    for (var i in schedule.teams) {
+                        var teamCell = document.createElement("TD")
+                        var scoutCell = document.createElement("TD")
+                        teamCell.classList.add("smallpad")
+                        scoutCell.classList.add("smallpad")
+                        teamCell.innerHTML = schedule.teams[i]
+                        scoutCell.innerHTML = schedule.scouts[i]
+                        if (i < 3) {
+                            teamCell.style.backgroundColor = "#87c3ff"
+                            scoutCell.style.backgroundColor = "#87c3ff"
+                        } else {
+                            teamCell.style.backgroundColor = "#ff6e6e"
+                            scoutCell.style.backgroundColor = "#ff6e6e"
+                        }
+                        teamRow.appendChild(teamCell)
+                        scoutRow.appendChild(scoutCell)
+                    }
+                    scheduleTable.appendChild(teamRow)
+                    scheduleTable.appendChild(scoutRow)
+                }
+            }
+        }
+    }
+
+    http.open("GET", "/get_schedule", true)
+    http.send()
+}
+setInterval(function() {getSchedule()}, 2000)
+getSchedule()
+
 //Save config values
 function save(key) {
     var value = document.getElementById(key).value
+
+    if (key == "event") {
+        event = value
+    }
+
     const http = new XMLHttpRequest()
     
     http.onreadystatechange = function() {
@@ -108,6 +256,7 @@ function updateDeviceTable() {
             var row = document.createElement("TR")
             for (var f = 0; f < 5; f++) {
                 row.appendChild(document.createElement("TD"))
+                row.lastChild.classList.add("devices")
             }
             row.classList.add(devicesSorted[colorLookup[colorId]][i].color)
             row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name.replace("<", "&lt;").replace(">", "&gt;")
