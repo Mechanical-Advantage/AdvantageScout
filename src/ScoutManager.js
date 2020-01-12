@@ -65,7 +65,7 @@ function ScoutManager(appManager) {
     }
 
     // Update schedule table based on data
-    this.loadSchedule = function() {
+    this.loadSchedule = function () {
         var scheduleTable = document.getElementById("schedule")
         while (scheduleTable.firstChild) {
             scheduleTable.removeChild(scheduleTable.firstChild)

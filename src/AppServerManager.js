@@ -40,8 +40,8 @@ function AppServerManager(appManager) {
             getScheduleQueued = true
             addToSerialQueue("get_schedule", function () { return [] }, function (data) {
                 getScheduleQueued = false
-                appManager.schedule = JSON.parse(data)
-                appManager.scoutManager.loadData()
+                appManager.schedule = JSON.parse(data)[1]
+                appManager.scoutManager.loadSchedule()
             })
         }
     }
