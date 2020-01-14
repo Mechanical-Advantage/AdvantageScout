@@ -18,7 +18,7 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"] # current implementation
 bt_showheartbeats = True
@@ -82,8 +82,8 @@ def init_global():
     cur_global.execute("INSERT INTO config (key, value) VALUES ('reverse_alliances', '0')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('dev_mode', '0')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('schedule_match', '-1')")
-    cur_global.execute("INSERT INTO config (key, value) VALUES ('event_cached', '2017nhgrs')")
-    cur_global.execute("INSERT INTO config (key, value) VALUES ('auto_schedule', '1')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('event_cached', 'none')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('auto_schedule', '0')")
     conn_global.commit()
     conn_global.close()
 
@@ -595,8 +595,13 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             Refresh
         </button>
         <br>
-        <button onclick="javascript:reschedule()">
+        <button onclick="javascript:reschedule(false)">
             Reschedule next match
+        </button>
+        <br>
+        <input id="manualSchedule" type="number"></input>
+        <button onclick="javascript:reschedule(true)">
+            Force Schedule
         </button>
         <div id="scheduleDiv" hidden>
             <br>
@@ -755,14 +760,14 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return("Downloaded schedule for " + event + ".")
 
     @cherrypy.expose
-    def reschedule(self):
+    def reschedule(self, force_match=None):
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
         cur_game = conn_game.cursor()
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
 
-        result = schedule_match(cur_game, cur_global, conn_global)
+        result = schedule_match(cur_game, cur_global, conn_global, force_match)
 
         conn_game.close()
         conn_global.close()
@@ -1042,8 +1047,11 @@ def get_next_schedule_match(cur_game, cur_global):
         to_schedule = 1
     return(to_schedule)
 
-def schedule_match(cur_game, cur_global, conn_global):
-    to_schedule = get_next_schedule_match(cur_game, cur_global)
+def schedule_match(cur_game, cur_global, conn_global, force_match=None):
+    if force_match == None:
+        to_schedule = get_next_schedule_match(cur_game, cur_global)
+    else:
+        to_schedule = force_match
     event = cur_global.execute("SELECT value FROM config WHERE key = 'event_cached'").fetchall()[0][0]
     log("Creating new schedule for match " + str(to_schedule))
 
@@ -1055,7 +1063,7 @@ def schedule_match(cur_game, cur_global, conn_global):
     teams = teams[0]
 
     #Get scout records
-    scouts = [x[0] for x in cur_global.execute("SELECT name FROM scouts WHERE enabled='1'").fetchall()]
+    scouts = [x[0] for x in cur_global.execute("SELECT name FROM scouts WHERE enabled='1' ORDER BY name").fetchall()]
     if len(scouts) < 6:
         log("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
         return("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
@@ -1063,13 +1071,19 @@ def schedule_match(cur_game, cur_global, conn_global):
     scout_records = []
     for scout in scouts:
         scoutdata = {"name": scout}
-        records = cur_game.execute("SELECT Team, COUNT(Match) FROM match WHERE Event=? AND ScoutName=? GROUP BY Team", (event,scout)).fetchall()
+        records = cur_game.execute("SELECT Team, COUNT(*) FROM match WHERE ScoutName=? GROUP BY Team", (scout,)).fetchall()
         for row in records:
             scoutdata[row[0]] = row[1]
-        scoutdata["total"] = cur_game.execute("SELECT COUNT(Match) FROM match WHERE Event=? AND ScoutName=?", (event,scout)).fetchall()[0][0]
+        pit_records = cur_game.execute("SELECT Team, COUNT(*) FROM pit WHERE ScoutName=? GROUP BY Team", (scout,)).fetchall()
+        for row in pit_records:
+            if row[0] in scoutdata:
+                scoutdata[row[0]] += row[1] * 5
+            else:
+                scoutdata[row[0]] = row[1] * 5
+        scoutdata["total"] = cur_game.execute("SELECT COUNT(*) FROM match WHERE Event=? AND ScoutName=?", (event,scout)).fetchall()[0][0]
         scout_records.append(scoutdata)
     
-    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0, prefs={})
+    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0.15, prefs={})
 
     #Write to db
     cur_global.execute("DELETE FROM schedule_next")

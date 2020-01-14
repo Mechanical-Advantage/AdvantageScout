@@ -76,12 +76,6 @@ function SettingsManager(appManager) {
         if (window.localStorage.getItem("advantagescout_imagequality") == null) {
             window.localStorage.setItem("advantagescout_imagequality", "25")
         }
-        if (window.localStorage.getItem("advantagescout_selectedname") == null) {
-            window.localStorage.setItem("advantagescout_selectedname", "")
-        }
-        if (window.localStorage.getItem("advantagescout_selectedpreset") == null) {
-            window.localStorage.setItem("advantagescout_selectedpreset", "custom")
-        }
     }
 
     // Write config and game into local storage
