@@ -50,9 +50,11 @@ function ScoutManager(appManager) {
         while (scoutSelect.firstChild) {
             scoutSelect.removeChild(scoutSelect.firstChild)
         }
-        for (var scout in appManager.config.scouts) {
+        console.log(appManager.config.scouts)
+        var fullScoutList = [{ name: "Please select", enabled: false }].concat(appManager.config.scouts)
+        for (var scout in fullScoutList) {
             var option = document.createElement("OPTION")
-            option.innerHTML = appManager.config.scouts[scout].name
+            option.innerHTML = fullScoutList[scout].name
             scoutSelect.appendChild(option)
         }
 
@@ -111,8 +113,8 @@ function ScoutManager(appManager) {
 
         if (mode == "pit") {
             appManager.team = document.getElementById("pitTeam").value
-            if (appManager.team == "") {
-                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team number.")
+            if (appManager.team == "" || document.getElementById("scoutselect").value == "Please select") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a scout name and team number.")
                 return
             }
             appManager.state = 5
@@ -126,16 +128,8 @@ function ScoutManager(appManager) {
         } else {
             appManager.team = document.getElementById("team").value
             appManager.match = document.getElementById("match").value
-            if (appManager.team == "" && appManager.match == "") {
-                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team and match number.")
-                return
-            }
-            if (appManager.team == "") {
-                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a team number.")
-                return
-            }
-            if (appManager.match == "") {
-                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a match number.")
+            if (appManager.team == "" || appManager.match == "" || document.getElementById("scoutselect").value == "Please select") {
+                appManager.notificationManager.alert("Hold Your Horses!", "Please enter a scout name, team number, and match number.")
                 return
             }
             appManager.state = 1
@@ -328,16 +322,9 @@ function ScoutManager(appManager) {
         }
         if (resetFields) {
             document.getElementById("pitTeam").value = ""
-            if (!document.getElementById("team").disabled) {
-                document.getElementById("team").value = ""
-                document.getElementById("match").value = ""
-            } else {
-                var presetSelect = document.getElementById("presetSelect")
-                if (presetSelect.selectedIndex < presetSelect.children.length - 1) {
-                    presetSelect.selectedIndex += 1
-                }
-                this.setPreset()
-            }
+            document.getElementById("team").value = ""
+            document.getElementById("match").value = ""
+            document.getElementById("scoutselect").value = "Please select"
         }
         appManager.serverManager.heartbeat()
     }

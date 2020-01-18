@@ -602,7 +602,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         <br>
         <input id="manualSchedule" type="number"></input>
         <button onclick="javascript:reschedule(true)">
-            Force Schedule
+            Force schedule
         </button>
         <div id="scheduleDiv" hidden>
             <br>

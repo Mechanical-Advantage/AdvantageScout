@@ -37,6 +37,7 @@
     ],
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
+        "TopSpeed INTEGER DEFAULT 0",
         "Weight INTEGER DEFAULT 0",
         "Height INTEGER DEFAULT 0",
         "CanMove INTEGER DEFAULT 0",
@@ -176,6 +177,11 @@
                 "type": "text",
                 "field": "DriveTrain",
                 "label": "Drive Train Type"
+            },
+            {
+                "type": "number",
+                "field": "TopSpeed",
+                "label": "Top Speed (f/s)"
             },
             {
                 "type": "number",

@@ -431,6 +431,15 @@ function render() {
         drawFigure((mode == 0) ? 2900 : 2650, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
         drawFigure((mode == 0) ? 2900 : 2650, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
     }
+
+    // Write team number
+    if (mode == 0) {
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+        context.font = "70px sans-serif"
+        context.fillStyle = "#000000"
+        context.fillText("You are scouting team " + appManager.team.toString(), 1500, 100)
+    }
 }
 render()
 
