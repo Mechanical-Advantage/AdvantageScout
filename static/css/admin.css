@@ -2,11 +2,15 @@ body {
     font-family: sans-serif;
 }
 
-th, td {
+th.devices, td.devices {
     padding: 8px;
 }
 
-table {
+td.smallpad {
+    padding: 5px;
+}
+
+table.devices {
     border: 1px solid black;
     background-color: white;
 }

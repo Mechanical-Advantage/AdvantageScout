@@ -76,17 +76,11 @@ function SettingsManager(appManager) {
         if (window.localStorage.getItem("advantagescout_imagequality") == null) {
             window.localStorage.setItem("advantagescout_imagequality", "25")
         }
-        if (window.localStorage.getItem("advantagescout_selectedname") == null) {
-            window.localStorage.setItem("advantagescout_selectedname", "")
-        }
-        if (window.localStorage.getItem("advantagescout_selectedpreset") == null) {
-            window.localStorage.setItem("advantagescout_selectedpreset", "custom")
-        }
     }
 
     // Write config and game into local storage
-    this.saveDataCache = function (config, game, schedule, version) {
-        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({ "config": config, "game": game, "schedule": schedule, "version": version }))
+    this.saveDataCache = function (config, game, version) {
+        window.localStorage.setItem("advantagescout_datacache", JSON.stringify({ "config": config, "game": game, "version": version }))
         window.localStorage.setItem("advantagescout_datacachetimestamp", Math.round(Date.now() / 1000))
     }
 
@@ -95,11 +89,7 @@ function SettingsManager(appManager) {
         if (window.localStorage.getItem("advantagescout_datacache") != null) {
             if (Math.round(Date.now() / 1000) - window.localStorage.getItem("advantagescout_datacachetimestamp") < cacheExpiration) {
                 var parsed = JSON.parse(window.localStorage.getItem("advantagescout_datacache"))
-                if (parsed.schedule == undefined) {
-                    parsed.schedule = []
-                    parsed.config.use_schedule = false
-                }
-                appManager.loadData(parsed.config, parsed.game, parsed.schedule, parsed.version, true)
+                appManager.loadData(parsed.config, parsed.game, parsed.version, true)
             }
         }
     }

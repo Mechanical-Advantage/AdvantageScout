@@ -43,50 +43,18 @@ function ScoutManager(appManager) {
         }
         document.getElementById("loadingtext").hidden = true
         document.getElementById("startbuttons").hidden = false
+        this.setSelection("match")
 
-        // Schedule options
-        if (appManager.config.use_schedule) {
-            var names = []
-            for (matchNumber in appManager.schedule) {
-                var match = appManager.schedule[matchNumber]
-                for (i in match.scouts) {
-                    var name = match.scouts[i]
-                    if (!names.includes(name)) {
-                        names.push(name)
-                    }
-                }
-            }
-            names.sort()
-
-            var nameSelect = document.getElementById("nameSelect")
-            while (nameSelect.firstChild) {
-                nameSelect.removeChild(nameSelect.firstChild)
-            }
-            for (i in names) {
-                var name = names[i]
-                var option = document.createElement("OPTION")
-                option.value = name
-                option.innerHTML = name
-                nameSelect.appendChild(option)
-            }
-
-            var selectedName = window.localStorage.getItem("advantagescout_selectedname")
-            if (valueExists(nameSelect, selectedName)) {
-                nameSelect.value = selectedName
-            }
-            this.updatePresetList()
-        } else {
-            document.getElementById("team").disabled = false
-            document.getElementById("match").disabled = false
-            document.getElementById("team").value = ""
-            document.getElementById("match").value = ""
+        // Add list of scouts
+        var scoutSelect = document.getElementById("scoutselect")
+        while (scoutSelect.firstChild) {
+            scoutSelect.removeChild(scoutSelect.firstChild)
         }
-        document.getElementById("scheduleSelect").hidden = !appManager.config.use_schedule
-
-        // Pit scouting
-        var hidePitButton = appManager.game.prefs.pitFields == undefined
-        document.getElementById("pitButton").hidden = hidePitButton
-        document.getElementById("pitButtonBreak").hidden = hidePitButton
+        for (var scout in appManager.config.scouts) {
+            var option = document.createElement("OPTION")
+            option.innerHTML = appManager.config.scouts[scout].name
+            scoutSelect.appendChild(option)
+        }
 
         // Start scouting automatically in dev mode
         if (appManager.config.dev_mode == 1 && appManager.web) {
@@ -96,66 +64,43 @@ function ScoutManager(appManager) {
         }
     }
 
-    // Check if value exists in select options
-    function valueExists(select, value) {
-        var options = select.options
-        var result = false
-        for (i in options) {
-            if (options[i].value == value) {
-                result = true
-                break
-            }
+    // Update schedule table based on data
+    this.loadSchedule = function () {
+        var scheduleTable = document.getElementById("schedule")
+        while (scheduleTable.firstChild) {
+            scheduleTable.removeChild(scheduleTable.firstChild)
         }
-        return result
-    }
-
-    // Update list of schedule presets based on selected name
-    this.updatePresetList = function () {
-        var targetName = document.getElementById("nameSelect").value
-        window.localStorage.setItem("advantagescout_selectedname", targetName)
-        var presetSelect = document.getElementById("presetSelect")
-        while (presetSelect.children.length > 1) {
-            presetSelect.removeChild(presetSelect.children[1])
-        }
-        for (var matchNumber = 0; matchNumber < appManager.schedule.length; matchNumber++) {
-            var match = appManager.schedule[matchNumber]
-            for (i in match.scouts) {
-                var name = match.scouts[i]
-                if (name == targetName) {
-                    var team = match.teams[i]
-                    var option = document.createElement("OPTION")
-                    option.value = team.toString() + "," + (matchNumber + 1).toString()
-                    option.innerHTML = "M" + (matchNumber + 1).toString() + ", " + team.toString()
-                    presetSelect.appendChild(option)
+        document.getElementById("scheduleDiv").hidden = appManager.schedule.match == undefined
+        if (appManager.schedule.match) {
+            document.getElementById("schedulematch").innerHTML = appManager.schedule.match
+            var teamRow = document.createElement("TR")
+            var scoutRow = document.createElement("TR")
+            for (var i in appManager.schedule.teams) {
+                var teamCell = document.createElement("TD")
+                var scoutCell = document.createElement("TD")
+                teamCell.classList.add("schedule")
+                scoutCell.classList.add("schedule")
+                teamCell.innerHTML = appManager.schedule.teams[i]
+                scoutCell.innerHTML = appManager.schedule.scouts[i]
+                if (i < 3) {
+                    teamCell.style.backgroundColor = "#87c3ff"
+                    scoutCell.style.backgroundColor = "#87c3ff"
+                } else {
+                    teamCell.style.backgroundColor = "#ff6e6e"
+                    scoutCell.style.backgroundColor = "#ff6e6e"
                 }
+                teamRow.appendChild(teamCell)
+                scoutRow.appendChild(scoutCell)
             }
-        }
-        var selectedPreset = window.localStorage.getItem("advantagescout_selectedpreset")
-        if (valueExists(presetSelect, selectedPreset)) {
-            presetSelect.value = selectedPreset
-        }
-        this.setPreset()
-    }
-
-    // Update team and match based on preset
-    this.setPreset = function () {
-        var preset = document.getElementById("presetSelect").value
-        window.localStorage.setItem("advantagescout_selectedpreset", preset)
-        var teamField = document.getElementById("team")
-        var matchField = document.getElementById("match")
-        if (preset == "custom") {
-            teamField.disabled = false
-            matchField.disabled = false
-        } else {
-            teamField.value = preset.split(",")[0]
-            matchField.value = preset.split(",")[1]
-            teamField.disabled = true
-            matchField.disabled = true
+            scheduleTable.appendChild(teamRow)
+            scheduleTable.appendChild(scoutRow)
         }
     }
 
     // Switch between match and pit scouting selections
     this.setSelection = function (type) {
+        document.getElementById("selectionDiv_matchswitch").hidden = (type != "match") || appManager.game.prefs.pitFields == undefined
+        document.getElementById("selectionDiv_pitswitch").hidden = (type != "pit")
         document.getElementById("selectionDiv_match").hidden = (type != "match")
         document.getElementById("selectionDiv_pit").hidden = (type != "pit")
     }
@@ -357,6 +302,7 @@ function ScoutManager(appManager) {
         }
         data["InterfaceType"] = scoutMode
         data["Time"] = Math.round(Date.now() / 1000)
+        data["ScoutName"] = document.getElementById("scoutselect").value
         var saved = JSON.parse(window.localStorage.getItem("advantagescout_scoutdata"))
         saved.push(data)
         window.localStorage.setItem("advantagescout_scoutdata", JSON.stringify(saved))
