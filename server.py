@@ -18,9 +18,9 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = False
+bt_enable = True
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
-bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"] # current implementation
+bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA("KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
 db_global = "global.db" # database for data not tied to specific games
@@ -39,7 +39,7 @@ def log(output, before_text=""):
     else:
         print(before_text + time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
 
-#Initialize global db
+#Initialize global
 def init_global():
     conn_global = sql.connect(db_global)
     cur_global = conn_global.cursor()
@@ -48,6 +48,7 @@ def init_global():
         name TEXT,
         last_heartbeat INTEGER,
         last_route TEXT,
+        last_battery INTEGER,
         last_status INTEGER,
         last_team INTEGER,
         last_match INTEGER
@@ -385,7 +386,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(jsmin(output))
     
     @cherrypy.expose
-    def heartbeat(self, device_name, state, team=-1, match=-1, route=None):
+    def heartbeat(self, device_name, state, battery=-1, team=-1, match=-1, route=None):
         if route == None:
             route = cherrypy.request.remote.ip
 
@@ -396,9 +397,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         for i in range(len(names)):
             names[i] = names[i][0]
         if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_status) VALUES (?, ?, ?, ?)", (device_name, currentTime(), route, state))
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_status) VALUES (?, ?, ?, ?, ?)", (device_name, currentTime(), route, battery, state))
         else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_status = ? WHERE name = ?", (currentTime(), route, state, device_name))
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_status = ? WHERE name = ?", (currentTime(), route, battery, state, device_name))
         if team != -1:
             cur_global.execute("UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
         if match != -1:
@@ -627,6 +628,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                         Route
                     </th>
                     <th class="devices">
+                        Battery %
+                    </th>
+                    <th class="devices">
                         Status
                     </th>
                     <th class="devices">
@@ -660,7 +664,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         raw = cur_global.fetchall()
         data = []
         for i in range(len(raw)):
-            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_status": raw[i][3], "last_team": raw[i][4], "last_match": raw[i][5]})
+            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i][3], "last_status": raw[i][4], "last_team": raw[i][5], "last_match": raw[i][6]})
         conn_global.close()
         return(json.dumps(data))
 
@@ -950,10 +954,10 @@ def bluetooth_server(name, mode, client=None):
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":
-            if len(msg[2]) > 1:
-                main_server().heartbeat(msg[0], msg[2][0], msg[2][1], msg[2][2], route=name)
+            if len(msg[2]) > 2:
+                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], team=msg[2][2], match=msg[2][3], route=name)
             else:
-                main_server().heartbeat(msg[0], msg[2][0], route=name)
+                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], route=name)
             result = "success"
         elif msg[1] == "get_schedule":
             result = json.loads(main_server().get_schedule())
@@ -1083,7 +1087,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
         scoutdata["total"] = cur_game.execute("SELECT COUNT(*) FROM match WHERE Event=? AND ScoutName=?", (event,scout)).fetchall()[0][0]
         scout_records.append(scoutdata)
     
-    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0.15, prefs={})
+    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0.5, prefs={})
 
     #Write to db
     cur_global.execute("DELETE FROM schedule_next")

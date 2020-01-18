@@ -255,14 +255,16 @@ function updateDeviceTable() {
     for (var colorId = 0; colorId < 4; colorId++) {
         for (var i = 0; i < devicesSorted[colorLookup[colorId]].length; i++) {
             var row = document.createElement("TR")
-            for (var f = 0; f < 5; f++) {
+            for (var f = 0; f < 6; f++) {
                 row.appendChild(document.createElement("TD"))
                 row.lastChild.classList.add("devices")
             }
             row.classList.add(devicesSorted[colorLookup[colorId]][i].color)
             row.children[0].innerHTML = devicesSorted[colorLookup[colorId]][i].name.replace("<", "&lt;").replace(">", "&gt;")
             row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].last_route
-            row.children[2].innerHTML = devicesSorted[colorLookup[colorId]][i].status
+            var battery = Math.round(devicesSorted[colorLookup[colorId]][i].last_battery).toString() + "%"
+            row.children[2].innerHTML = battery == "-1%" ? "NA" : battery
+            row.children[3].innerHTML = devicesSorted[colorLookup[colorId]][i].status
 
             var diff = Math.round(Date.now() / 1000) - devicesSorted[colorLookup[colorId]][i].last_heartbeat
             hours = Math.floor(diff / 3600)
@@ -284,11 +286,11 @@ function updateDeviceTable() {
             if (formatted == "") {
                 formatted = "0s"
             }
-            row.children[3].innerHTML = formatted + " ago"
+            row.children[4].innerHTML = formatted + " ago"
 
-            row.children[4].appendChild(document.createElement("BUTTON"))
-            row.children[4].firstChild.onclick = function () { removeDevice(this.parentElement.parentElement.children[0].innerHTML) }
-            row.children[4].firstChild.innerHTML = "Remove"
+            row.children[5].appendChild(document.createElement("BUTTON"))
+            row.children[5].firstChild.onclick = function () { removeDevice(this.parentElement.parentElement.children[0].innerHTML) }
+            row.children[5].firstChild.innerHTML = "Remove"
             table.appendChild(row)
         }
     }

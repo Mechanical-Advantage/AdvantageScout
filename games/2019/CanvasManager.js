@@ -21,6 +21,9 @@ this.setMode = function (newMode) { // REQUIRED FUNCTION
     render()
 }
 this.getData = function () { // REQUIRED FUNCTION
+    if (!("AllianceColor" in data)) {
+        data["AllianceColor"] = 0
+    }
     if (reverseAlliances) {
         data["AllianceColor"] = 1 - data["AllianceColor"]
     }

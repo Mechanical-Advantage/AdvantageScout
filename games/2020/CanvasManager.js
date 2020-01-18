@@ -12,7 +12,9 @@ this.setMode = function (newMode) { // REQUIRED FUNCTION
 
 this.getData = function () { // REQUIRED FUNCTION
     toSend = jsonCopy(data)
-    if (reverseAlliances) {
+    if (!("AllianceColor" in data)) {
+        toSend["AllianceColor"] = 0
+    } else if (reverseAlliances) {
         toSend["AllianceColor"] = 1 - toSend["AllianceColor"]
     }
     toSend["UpperSecondsBetween"] = toSend["UpperSecondsBetween"].join()
@@ -419,7 +421,6 @@ function render() {
     }
 
     // Stick figures
-
     if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
         drawFigure((mode == 0) ? 100 : 350, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
         drawFigure((mode == 0) ? 100 : 350, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)

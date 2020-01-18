@@ -38,7 +38,9 @@
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
         "Weight INTEGER DEFAULT 0",
+        "Height INTEGER DEFAULT 0",
         "CanMove INTEGER DEFAULT 0",
+        "CanAutoDelay TEXT DEFAULT ''",
         "CanDeliverUpperAuto INTEGER DEFAULT 0",
         "CanDeliverLowerAuto INTERGER DEFAULT 0",
         "CanDeliverUpper INTEGER DEFAULT 0",
@@ -80,6 +82,20 @@
                 "operator": "<=",
                 "value": 125,
                 "message": "Weight must be measured without bumpers or batteries",
+                "binding": true
+            },
+            {
+                "field": "Height",
+                "operator": ">",
+                "value": 0,
+                "message": "Are you sure this height is correct?",
+                "binding": false
+            },
+            {
+                "field": "Height",
+                "operator": "<=",
+                "value": 45,
+                "message": "Height must be measured while not extended.",
                 "binding": true
             },
             {
@@ -167,9 +183,19 @@
                 "label": "Weight (lbs)"
             },
             {
+                "type": "number",
+                "field": "Height",
+                "label": "Height (in)"
+            },
+            {
                 "type": "checkbox",
                 "field": "CanMove",
                 "label": "Can Move?"
+            },
+            {
+                "type": "text",
+                "field": "CanAutoDelay",
+                "label": "Can delay shooting? How?"
             },
             {
                 "type": "group",
