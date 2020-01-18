@@ -23,9 +23,9 @@ function AppServerManager(appManager) {
             heartbeatQueued = true
             addToSerialQueue("heartbeat", function () {
                 if (appManager.state == 0) {
-                    return [appManager.state]
+                    return [appManager.state, appManager.battery]
                 } else {
-                    return [appManager.state, appManager.team, appManager.match]
+                    return [appManager.state, appManager.battery, appManager.team, appManager.match]
                 }
             }, function () {
                 heartbeatQueued = false

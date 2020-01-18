@@ -7,6 +7,7 @@ function AppManager(web) {
     this.config
     this.game
     this.schedule
+    this.battery = -1
 
     // Instantiate managers
     this.settingsManager = new SettingsManager(this)
@@ -55,6 +56,13 @@ function AppManager(web) {
         this.scoutManager.loadData()
     }
 
+    // Get current battery level
+    function getBattery() {
+        navigator.getBattery().then(function (battery) {
+            appManager.battery = battery.level * 100
+        })
+    }
+
     // App setup
     this.settingsManager.loadVersion()
     this.settingsManager.initLocalStorage()
@@ -64,4 +72,8 @@ function AppManager(web) {
     this.serverManager.init()
     this.serverManager.getData()
     this.settingsManager.loadDataCache()
+    if (!web) {
+        getBattery()
+        setInterval(getBattery, 10000)
+    }
 }
