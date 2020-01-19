@@ -18,7 +18,7 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = False
+bt_enable = True
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
@@ -1021,7 +1021,7 @@ def bluetooth_server(name, mode, client=None):
         elif msg[1] == "upload":
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":
-            if len(msg[2]) > 2:
+            if len(msg[2]) > 3:
                 main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], team=msg[2][3], match=msg[2][4], route=name)
             else:
                 main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], route=name)
