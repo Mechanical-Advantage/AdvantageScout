@@ -7,7 +7,7 @@ function WebServerManager(appManager) {
     this.init = function () {
         this.heartbeat()
         this.getSchedule()
-        setInterval(function () { appManager.serverManager.heartbeat(); appManager.serverManager.getSchedule()}, 5000)
+        setInterval(function () { appManager.serverManager.heartbeat(); appManager.serverManager.getSchedule() }, 5000)
     }
 
     // Send heartbeat
@@ -37,7 +37,7 @@ function WebServerManager(appManager) {
         if (appManager.state >= 1 && appManager.state <= 3) {
             teammatch = "&team=" + appManager.team + "&match=" + appManager.match
         }
-        http.send("device_name=" + encodeURI(window.localStorage.getItem("advantagescout_device")) + "&state=" + appManager.state.toString() + teammatch)
+        http.send("device_name=" + encodeURI(window.localStorage.getItem("advantagescout_device")) + "&battery=" + appManager.battery.toString() + "&charging=" + appManager.charging.toString() + "&state=" + appManager.state.toString() + teammatch)
     }
 
     // Upload saved matches
@@ -115,7 +115,7 @@ function WebServerManager(appManager) {
     }
 
     //Retrieve schedule from server
-    this.getSchedule = function() {
+    this.getSchedule = function () {
         const http = new XMLHttpRequest()
 
         http.onreadystatechange = function () {

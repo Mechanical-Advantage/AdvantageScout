@@ -2,12 +2,32 @@ body {
     font-family: sans-serif;
 }
 
+div.section {
+    display: inline-block;
+    margin: 3px;
+}
+
 th.devices, td.devices {
     padding: 8px;
 }
 
 td.smallpad {
     padding: 5px;
+}
+
+td.uploadedheader {
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+td.uploadedcell {
+    padding: 6px;
+    border: 1px solid black;
+}
+
+table.uploadedtable {
+    border-collapse: collapse;
 }
 
 table.devices {

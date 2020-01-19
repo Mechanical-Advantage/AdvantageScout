@@ -8,6 +8,7 @@ function AppManager(web) {
     this.game
     this.schedule
     this.battery = -1
+    this.charging = 0
 
     // Instantiate managers
     this.settingsManager = new SettingsManager(this)
@@ -60,6 +61,7 @@ function AppManager(web) {
     function getBattery() {
         navigator.getBattery().then(function (battery) {
             appManager.battery = battery.level * 100
+            appManager.charging = battery.charging ? 1 : 0
         })
     }
 
@@ -72,7 +74,7 @@ function AppManager(web) {
     this.serverManager.init()
     this.serverManager.getData()
     this.settingsManager.loadDataCache()
-    if (!web) {
+    if (navigator.getBattery != undefined) {
         getBattery()
         setInterval(getBattery, 10000)
     }

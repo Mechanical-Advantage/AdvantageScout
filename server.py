@@ -18,7 +18,7 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
@@ -49,6 +49,7 @@ def init_global():
         last_heartbeat INTEGER,
         last_route TEXT,
         last_battery INTEGER,
+        last_charging INTEGER,
         last_status INTEGER,
         last_team INTEGER,
         last_match INTEGER
@@ -386,7 +387,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(jsmin(output))
     
     @cherrypy.expose
-    def heartbeat(self, device_name, state, battery=-1, team=-1, match=-1, route=None):
+    def heartbeat(self, device_name, state, battery=-1, charging=0, team=-1, match=-1, route=None):
         if route == None:
             route = cherrypy.request.remote.ip
 
@@ -397,9 +398,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         for i in range(len(names)):
             names[i] = names[i][0]
         if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_status) VALUES (?, ?, ?, ?, ?)", (device_name, currentTime(), route, battery, state))
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_charging, last_status) VALUES (?, ?, ?, ?, ?, ?)", (device_name, currentTime(), route, battery, charging, state))
         else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_status = ? WHERE name = ?", (currentTime(), route, battery, state, device_name))
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_charging = ?, last_status = ? WHERE name = ?", (currentTime(), route, battery, charging, state, device_name))
         if team != -1:
             cur_global.execute("UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
         if match != -1:
@@ -526,119 +527,158 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         <h1>
             Admin - Advantage Scout
         </h1>
-        <h3>
-            Config
-        </h3>
-        
-        Game: 
-        <input type="text" id="game"></input>
-        <button onclick="javascript:save(&quot;game&quot;)">
-            Save
-        </button>
-        
-        <br>
-        Event: 
-        <input type="text" id="event"></input>
-        <button onclick="javascript:save(&quot;event&quot;)">
-            Save
-        </button>
-        
-        <br>
-        Alliance Position:
-        <select id="reverse_alliances">
-            <option value="0">
-                red right, blue left
-            </option>
-            <option value="1">
-                red left, blue right
-            </option>
-            <option value="2">
-                select on device
-            </option>
-        </select>
-        <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
-            Save
-        </button>
-        
-        <br>
-        Dev Mode:
-        <select id="dev_mode">
-            <option value="0">
-                disabled
-            </option>
-            <option value="1">
-                enabled
-            </option>
-        </select>
-        <button onclick="javascript:save(&quot;dev_mode&quot;)">
-            Save
-        </button>
-
-        <br>
-        Scheduling Method:
-        <select id="auto_schedule">
-            <option value="0">
-                manual
-            </option>
-            <option value="1">
-                auto
-            </option>
-        </select>
-        <button onclick="javascript:save(&quot;auto_schedule&quot;)">
-            Save
-        </button>
-
-        <h3>
-            Scheduling
-        </h3>
-        Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
-        <button onclick="javascript:refreshCache()">
-            Refresh
-        </button>
-        <br>
-        <button onclick="javascript:reschedule(false)">
-            Reschedule next match
-        </button>
-        <br>
-        <input id="manualSchedule" type="number"></input>
-        <button onclick="javascript:reschedule(true)">
-            Force schedule
-        </button>
-        <div id="scheduleDiv" hidden>
+        <div class="section">
+            <h3>
+                Config
+            </h3>
+            
+            Game: 
+            <input type="text" id="game"></input>
+            <button onclick="javascript:save(&quot;game&quot;)">
+                Save
+            </button>
+            
             <br>
-            Schedule for match <span id="matchnumber">0</span>:
-            <table id="schedule"></table>
+            Event: 
+            <input type="text" id="event"></input>
+            <button onclick="javascript:save(&quot;event&quot;)">
+                Save
+            </button>
+            
+            <br>
+            Alliance Position:
+            <select id="reverse_alliances">
+                <option value="0">
+                    red right, blue left
+                </option>
+                <option value="1">
+                    red left, blue right
+                </option>
+                <option value="2">
+                    select on device
+                </option>
+            </select>
+            <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
+                Save
+            </button>
+            
+            <br>
+            Dev Mode:
+            <select id="dev_mode">
+                <option value="0">
+                    disabled
+                </option>
+                <option value="1">
+                    enabled
+                </option>
+            </select>
+            <button onclick="javascript:save(&quot;dev_mode&quot;)">
+                Save
+            </button>
+
+            <br>
+            Scheduling Method:
+            <select id="auto_schedule">
+                <option value="0">
+                    manual
+                </option>
+                <option value="1">
+                    auto
+                </option>
+            </select>
+            <button onclick="javascript:save(&quot;auto_schedule&quot;)">
+                Save
+            </button>
         </div>
 
-        <h3>
-            Scout List
-        </h3>
-        <table id="scoutlist"></table>
+        <div class="section">
+            <h3>
+                Scheduling
+            </h3>
+            Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
+            <button onclick="javascript:refreshCache()">
+                Refresh
+            </button>
+            <br>
+            <button onclick="javascript:reschedule(false)">
+                Reschedule next match
+            </button>
+            <br>
+            <input id="manualSchedule" type="number"></input>
+            <button onclick="javascript:reschedule(true)">
+                Force schedule
+            </button>
+            <div id="scheduleDiv" hidden>
+                <br>
+                Schedule for match <span id="matchnumber">0</span>:
+                <table id="schedule"></table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>
+                Scout List
+            </h3>
+            <table id="scoutlist"></table>
+        </div>
         
-        <h3>
-            Devices
-        </h3>
-        <table class="devices">
-            <tbody id="deviceTable">
+        <div class="section">
+            <h3>
+                Devices
+            </h3>
+            <table class="devices">
+                <tbody id="deviceTable">
+                    <tr>
+                        <th class="devices">
+                            Name
+                        </th>
+                        <th class="devices">
+                            Route
+                        </th>
+                        <th class="devices">
+                            Battery %
+                        </th>
+                        <th class="devices">
+                            Status
+                        </th>
+                        <th class="devices">
+                            Heartbeat
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="uploadedDiv" class="section" hidden>
+            <h3>
+                Uploaded Matches
+            </h3>
+            <table id="uploadedTable" class="uploadedtable">
                 <tr>
-                    <th class="devices">
-                        Name
-                    </th>
-                    <th class="devices">
-                        Route
-                    </th>
-                    <th class="devices">
-                        Battery %
-                    </th>
-                    <th class="devices">
-                        Status
-                    </th>
-                    <th class="devices">
-                        Heartbeat
-                    </th>
+                    <td class="uploadedheader">
+                        Match
+                    </td>
+                    <td class="uploadedheader">
+                        B1
+                    </td>
+                    <td class="uploadedheader">
+                        B2
+                    </td>
+                    <td class="uploadedheader">
+                        B3
+                    </td>
+                    <td class="uploadedheader">
+                        R1
+                    </td>
+                    <td class="uploadedheader">
+                        R2
+                    </td>
+                    <td class="uploadedheader">
+                        R3
+                    </td>
                 </tr>
-            </tbody>
-        </table>
+            </table>
+        </div>
         
         <script src="/static/js/admin.js"></script>
     </body>
@@ -664,7 +704,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         raw = cur_global.fetchall()
         data = []
         for i in range(len(raw)):
-            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i][3], "last_status": raw[i][4], "last_team": raw[i][5], "last_match": raw[i][6]})
+            data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i][3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7]})
         conn_global.close()
         return(json.dumps(data))
 
@@ -776,6 +816,33 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         conn_game.close()
         conn_global.close()
         return(result)
+
+
+    @cherrypy.expose
+    def get_uploaded(self):
+        game_result = gamedb_connect()
+        conn_game = game_result["conn"]
+        cur_game = conn_game.cursor()
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        event = cur_global.execute(
+            "SELECT value FROM config WHERE key='event'").fetchall()[0][0]
+        event_cached = cur_global.execute(
+            "SELECT value FROM config WHERE key='event_cached'").fetchall()[0][0]
+        output = []
+        if event == event_cached:
+            matches = cur_global.execute("SELECT match,b1,b2,b3,r1,r2,r3 FROM schedule ORDER BY match").fetchall()
+            for teams in matches:
+                match_output = {"teams": teams[1:7], "uploaded": []}
+                for team in teams[1:7]:
+                    count = cur_game.execute("SELECT COUNT(*) FROM match WHERE Event=? AND Team=? AND Match=?", (event,team,teams[0])).fetchall()[0][0]
+                    match_output["uploaded"].append(count > 0)
+                output.append(match_output)
+
+        conn_game.close()
+        conn_global.close()
+        return(json.dumps(output))
 
 
     @cherrypy.expose
@@ -955,9 +1022,9 @@ def bluetooth_server(name, mode, client=None):
             result = json.loads(main_server().upload(msg[2][0]))
         elif msg[1] == "heartbeat":
             if len(msg[2]) > 2:
-                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], team=msg[2][2], match=msg[2][3], route=name)
+                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], team=msg[2][3], match=msg[2][4], route=name)
             else:
-                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], route=name)
+                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], route=name)
             result = "success"
         elif msg[1] == "get_schedule":
             result = json.loads(main_server().get_schedule())
@@ -1044,7 +1111,7 @@ def get_next_schedule_match(cur_game, cur_global):
     data = cur_game.execute("SELECT match, COUNT(match) FROM match WHERE Event=? GROUP BY match ORDER BY match DESC", (event,)).fetchall()
     to_schedule = -1
     for i in data:
-        if i[1] > 1:
+        if i[1] > 3:
             to_schedule = i[0] + 1
             break
     if to_schedule == -1:

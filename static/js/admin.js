@@ -157,8 +157,50 @@ function getSchedule() {
     http.open("GET", "/get_schedule", true)
     http.send()
 }
-setInterval(function () { getSchedule() }, 2000)
+setInterval(getSchedule, 2000)
 getSchedule()
+
+//Update uploaded match view
+function getUploaded() {
+    const http = new XMLHttpRequest()
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                uploaded = JSON.parse(this.responseText)
+                var uploadedTable = document.getElementById("uploadedTable")
+                while (uploadedTable.children[1]) {
+                    uploadedTable.removeChild(uploadedTable.children[1])
+                }
+                document.getElementById("uploadedDiv").hidden = uploaded.length == 0
+                if (uploaded.length > 0) {
+                    for (var matchNumber = 0; matchNumber < uploaded.length; matchNumber++) {
+                        var row = document.createElement("TR")
+                        var cell = document.createElement("TD")
+                        cell.classList.add("uploadedcell")
+                        cell.innerHTML = matchNumber + 1
+                        row.appendChild(cell)
+                        for (var i = 0; i < uploaded[matchNumber].teams.length; i++) {
+                            var cell = document.createElement("TD")
+                            cell.classList.add("uploadedcell")
+                            cell.innerHTML = uploaded[matchNumber].teams[i]
+                            if (uploaded[matchNumber].uploaded[i]) {
+                                cell.style.backgroundColor = "#ffff00"
+                            }
+                            row.appendChild(cell)
+                        }
+                        uploadedTable.appendChild(row)
+                    }
+                }
+            }
+        }
+    }
+
+    http.open("GET", "/get_uploaded", true)
+    http.send()
+}
+setInterval(getUploaded, 4000)
+getUploaded()
 
 //Save config values
 function save(key) {
@@ -264,6 +306,9 @@ function updateDeviceTable() {
             row.children[1].innerHTML = devicesSorted[colorLookup[colorId]][i].last_route
             var battery = Math.round(devicesSorted[colorLookup[colorId]][i].last_battery).toString() + "%"
             row.children[2].innerHTML = battery == "-1%" ? "NA" : battery
+            if (devicesSorted[colorLookup[colorId]][i].last_charging == 1) {
+                row.children[2].style.textDecoration = "underline"
+            }
             row.children[3].innerHTML = devicesSorted[colorLookup[colorId]][i].status
 
             var diff = Math.round(Date.now() / 1000) - devicesSorted[colorLookup[colorId]][i].last_heartbeat
