@@ -199,7 +199,7 @@ function getUploaded() {
     http.open("GET", "/get_uploaded", true)
     http.send()
 }
-setInterval(getUploaded, 4000)
+setInterval(getUploaded, 2000)
 getUploaded()
 
 //Save config values
