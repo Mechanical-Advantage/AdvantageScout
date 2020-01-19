@@ -76,6 +76,6 @@ function AppManager(web) {
     this.settingsManager.loadDataCache()
     if (navigator.getBattery != undefined) {
         getBattery()
-        setInterval(getBattery, 10000)
+        setInterval(getBattery, 2000)
     }
 }
