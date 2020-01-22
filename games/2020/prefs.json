@@ -43,7 +43,7 @@
         "CanMove INTEGER DEFAULT 0",
         "CanAutoDelay TEXT DEFAULT ''",
         "CanDeliverUpperAuto INTEGER DEFAULT 0",
-        "CanDeliverLowerAuto INTERGER DEFAULT 0",
+        "CanDeliverLowerAuto INTEGER DEFAULT 0",
         "CanDeliverUpper INTEGER DEFAULT 0",
         "CanDeliverLower INTEGER DEFAULT 0",
         "CanRotate INTEGER DEFAULT 0",
