@@ -4,24 +4,30 @@ function SettingsManager(appManager) {
 
     // Retrieve app version number from cordova
     var appVersion = ""
+    var appMode = "Unknown"
     var appVersionRemote = ""
     var outdatedAlertSent = false
     this.loadVersion = function () {
         if (!appManager.web) {
             cordova.getAppVersion.getVersionNumber(function (version) {
-                document.getElementsByClassName("versiontext")[0].innerHTML = "Version " + version.toString()
-                appVersion = version.toString()
-                if (appVersionRemote != "") {
-                    var compareResult = compareVersions(appVersion, appVersionRemote)
-                    if (compareResult != "same" && !outdatedAlertSent) {
-                        outdatedAlertSent = true
-                        if (compareResult == "older") {
-                            appManager.notificationManager.alert("Update Recommended", "This app version is outdated. Ask the scouting team for help updating.")
-                        } else {
-                            appManager.notificationManager.alert("Server Outdated", "This app version may not be compatable with the server. Please talk to the scouting team for more information.")
+                cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
+                    appMode = isDebug ? "Debug" : "Release"
+                    document.getElementsByClassName("versiontext")[0].innerHTML = appMode + " " + version.toString()
+                    appVersion = version.toString()
+                    if (appVersionRemote != "") {
+                        var compareResult = compareVersions(appVersion, appVersionRemote)
+                        if (compareResult != "same" && !outdatedAlertSent) {
+                            outdatedAlertSent = true
+                            if (compareResult == "older") {
+                                appManager.notificationManager.alert("Update Recommended", "This app version is outdated. Ask the scouting team for help updating.")
+                            } else {
+                                appManager.notificationManager.alert("Server Outdated", "This app version may not be compatable with the server. Please talk to the scouting team for more information.")
+                            }
                         }
                     }
-                }
+                }, function () {
+                    appManager.notificationManager.alert("Error", "Could not determine if running in debug mode")
+                })
             })
         }
     }

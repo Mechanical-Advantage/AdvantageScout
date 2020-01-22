@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.5.4
+* Added indicator of whether a debug or release build
+
 ### 1.5.3
 * Added tracking of "plugged in" status
 
