@@ -3,6 +3,7 @@ function ScoutManager(appManager) {
     const modeLookup = ["auto", "teleop", "endgame"]
     const highlightLookup = ["#ff6363", "#59ff78", "#8f9aff"]
     var scoutMode
+    var hiddenScheduleKey = ""
 
     // Load config and game data
     this.loadData = function () {
@@ -50,7 +51,6 @@ function ScoutManager(appManager) {
         while (scoutSelect.firstChild) {
             scoutSelect.removeChild(scoutSelect.firstChild)
         }
-        console.log(appManager.config.scouts)
         var fullScoutList = [{ name: "Please select", enabled: false }].concat(appManager.config.scouts)
         for (var scout in fullScoutList) {
             var option = document.createElement("OPTION")
@@ -68,11 +68,13 @@ function ScoutManager(appManager) {
 
     // Update schedule table based on data
     this.loadSchedule = function () {
+        // Hide div if needed
+        document.getElementById("scheduleDiv").hidden = (appManager.schedule.match == undefined) || (appManager.schedule.key == hiddenScheduleKey)
+
         var scheduleTable = document.getElementById("schedule")
         while (scheduleTable.firstChild) {
             scheduleTable.removeChild(scheduleTable.firstChild)
         }
-        document.getElementById("scheduleDiv").hidden = appManager.schedule.match == undefined
         if (appManager.schedule.match) {
             document.getElementById("schedulematch").innerHTML = appManager.schedule.match
             var teamRow = document.createElement("TR")
@@ -255,6 +257,10 @@ function ScoutManager(appManager) {
             appManager.notificationManager.confirm("Upload?", "Are you sure you're ready to upload data?", ["Upload", "Cancel"], function (result) {
                 if (result == 1) {
                     saveData(dataTemp)
+                    if (appManager.schedule) {
+                        hiddenScheduleKey = appManager.schedule.key
+                        appManager.scoutManager.loadSchedule()
+                    }
                     appManager.serverManager.upload()
                     appManager.scoutManager.close(true, false)
                 }

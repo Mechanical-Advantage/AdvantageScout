@@ -6,7 +6,9 @@ from simple_websocket_server import WebSocketServer, WebSocket
 from jsmin import jsmin
 import json
 import base64
+import random
 import time
+import string
 import threading
 from pathlib import Path
 from enum import Enum
@@ -90,6 +92,7 @@ def init_global():
     cur_global.execute("INSERT INTO config (key, value) VALUES ('reverse_alliances', '0')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('dev_mode', '0')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('schedule_match', '-1')")
+    cur_global.execute("INSERT INTO config (key, value) VALUES ('schedule_key', '')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('event_cached', 'none')")
     cur_global.execute("INSERT INTO config (key, value) VALUES ('auto_schedule', '0')")
     conn_global.commit()
@@ -507,13 +510,14 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             output = {}
         else:
             match = cur_global.execute("SELECT value FROM config WHERE key='schedule_match'").fetchall()[0][0]
+            key = cur_global.execute("SELECT value FROM config WHERE key='schedule_key'").fetchall()[0][0]
             schedule = cur_global.execute("SELECT * FROM schedule_next").fetchall()
             teams = []
             scouts = []
             for row in schedule:
                 teams.append(row[0])
                 scouts.append(row[1])
-            output = {"match": match, "teams": teams, "scouts": scouts}
+            output = {"match": match, "key": key, "teams": teams, "scouts": scouts}
 
         conn_global.close()
         return json.dumps(output)
@@ -1226,6 +1230,8 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
     #Write to db
     cur_global.execute("DELETE FROM schedule_next")
     cur_global.execute("UPDATE config SET value=? WHERE key='schedule_match'", (to_schedule,))
+    key = ''.join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k=15))
+    cur_global.execute("UPDATE config SET value=? WHERE key='schedule_key'", (key,))
     for team in teams:
         cur_global.execute("INSERT INTO schedule_next(team,scout) VALUES (?,?)", (team,schedule[team]))
     conn_global.commit()
