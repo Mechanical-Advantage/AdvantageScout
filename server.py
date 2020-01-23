@@ -18,11 +18,12 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA("KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
+schedule_total_priority = 0.5 # weight to apply to total when scheduling
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 image_dir = "images" # folder for image data
@@ -58,6 +59,11 @@ def init_global():
     cur_global.execute("""CREATE TABLE scouts (
         name TEXT,
         enabled INTEGER
+        ); """)
+    cur_global.execute("""CREATE TABLE scout_prefs (
+        priority INTEGER UNIQUE,
+        team INTEGER,
+        scout TEXT
         ); """)
     cur_global.execute("DROP TABLE IF EXISTS schedule_next")
     cur_global.execute("""CREATE TABLE schedule_next (
@@ -617,6 +623,27 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
 
         <div class="section">
             <h3>
+                Scout Preferences
+            </h3>
+            <input id="prefsTeam" type="number" style="width: 75px;"></input>
+            <input id="prefsScout" type="text"></input>
+            <button onclick="javascript:addPref()">
+                Add Preference
+            </button>
+            <table class="prefstable" id="prefsTable">
+                <tr>
+                    <td class="prefsheader">
+                        Team
+                    </td>
+                    <td class="prefsheader">
+                        Scout
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>
                 Scout List
             </h3>
             <table id="scoutlist"></table>
@@ -843,6 +870,37 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         conn_game.close()
         conn_global.close()
         return(json.dumps(output))
+
+
+    @cherrypy.expose
+    def get_scoutprefs(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        scout_prefs = []
+        pref_data = cur_global.execute("SELECT team, scout FROM scout_prefs ORDER BY priority").fetchall()
+        for record in pref_data:
+            scout_prefs.append({
+                "team": record[0],
+                "scout": record[1]
+            })
+
+        conn_global.close()
+        return (json.dumps(scout_prefs))
+        
+
+    @cherrypy.expose
+    def set_scoutprefs(self, data="[]"):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        cur_global.execute("DELETE FROM scout_prefs")
+        scout_prefs = json.loads(data)
+        for i in range(len(scout_prefs)):
+            cur_global.execute("INSERT INTO scout_prefs(priority,team,scout) VALUES (?,?,?)", (i,scout_prefs[i]["team"],scout_prefs[i]["scout"]))
+
+        conn_global.commit()
+        conn_global.close()
 
 
     @cherrypy.expose
@@ -1153,8 +1211,17 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
                 scoutdata[row[0]] = row[1] * 5
         scoutdata["total"] = cur_game.execute("SELECT COUNT(*) FROM match WHERE Event=? AND ScoutName=?", (event,scout)).fetchall()[0][0]
         scout_records.append(scoutdata)
+
+    #Get scout preferences
+    scout_prefs = []
+    pref_data = cur_global.execute("SELECT team, scout FROM scout_prefs ORDER BY priority").fetchall()
+    for record in pref_data:
+        scout_prefs.append({
+            "team": record[0],
+            "scout": record[1]
+        })
     
-    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=0.5, prefs={})
+    schedule = scheduler.get_schedule(teams=teams, scout_records=scout_records, total_priority=schedule_total_priority, prefs=scout_prefs)
 
     #Write to db
     cur_global.execute("DELETE FROM schedule_next")

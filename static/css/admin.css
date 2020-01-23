@@ -15,6 +15,21 @@ td.smallpad {
     padding: 5px;
 }
 
+td.prefsheader {
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+td.prefscell {
+    padding: 6px;
+    border: 1px solid black;
+}
+
+table.prefstable {
+    border-collapse: collapse;
+}
+
 td.uploadedheader {
     padding: 6px;
     text-align: center;

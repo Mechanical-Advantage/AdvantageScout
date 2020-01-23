@@ -41,6 +41,125 @@ http.onreadystatechange = function () {
 http.open("GET", "/get_config", true)
 http.send()
 
+//Get scout prefs
+const prefsHttp = new XMLHttpRequest()
+
+prefsHttp.onreadystatechange = function () {
+    if (this.readyState == 4) {
+        if (this.status == 200) {
+            scoutPrefs = JSON.parse(this.responseText)
+            renderPrefs()
+        }
+    }
+}
+
+prefsHttp.open("GET", "/get_scoutprefs", true)
+prefsHttp.send()
+
+//Render prefs table based on current values
+var scoutPrefs = []
+function renderPrefs() {
+    var prefsTable = document.getElementById("prefsTable")
+    while (prefsTable.children[1]) {
+        prefsTable.removeChild(prefsTable.children[1])
+    }
+    if (scoutPrefs.length == 0) {
+        var row = document.createElement("TR")
+        row.appendChild(document.createElement("TD"))
+        row.children[0].style.fontStyle = "italic"
+        row.children[0].innerHTML = "No preferences"
+        prefsTable.appendChild(row)
+    }
+    for (var index = 0; index < scoutPrefs.length; index++) {
+        var row = document.createElement("TR")
+        row.appendChild(document.createElement("TD"))
+        row.children[0].classList.add("prefscell")
+        row.children[0].innerHTML = scoutPrefs[index]["team"]
+
+        row.appendChild(document.createElement("TD"))
+        row.children[1].classList.add("prefscell")
+        row.children[1].innerHTML = scoutPrefs[index]["scout"]
+
+        row.appendChild(document.createElement("TD"))
+        row.children[2].classList.add("prefscell")
+
+        row.children[2].appendChild(document.createElement("BUTTON"))
+        row.children[2].children[0].innerHTML = "\u2b06"
+        row.children[2].children[0].disabled = index == 0
+        row.children[2].children[0].onclick = function () {
+            var row = this.parentElement.parentElement
+            var tableChildren = Array.from(row.parentElement.children)
+            updatePrefs(tableChildren.indexOf(row) - 1, 0)
+        }
+
+        row.children[2].appendChild(document.createElement("BUTTON"))
+        row.children[2].children[1].innerHTML = "\u2b07"
+        row.children[2].children[1].disabled = index == scoutPrefs.length - 1
+        row.children[2].children[1].onclick = function () {
+            var row = this.parentElement.parentElement
+            var tableChildren = Array.from(row.parentElement.children)
+            updatePrefs(tableChildren.indexOf(row) - 1, 1)
+        }
+
+        row.children[2].appendChild(document.createElement("BUTTON"))
+        row.children[2].children[2].innerHTML = "\u{1F5D1}"
+        row.children[2].children[2].onclick = function () {
+            var row = this.parentElement.parentElement
+            var tableChildren = Array.from(row.parentElement.children)
+            updatePrefs(tableChildren.indexOf(row) - 1, 2)
+        }
+
+        prefsTable.appendChild(row)
+    }
+}
+
+//Run action on scout preference row
+// {
+//     0: "up",
+//     1: "down",
+//     2: "delete"
+// }
+function updatePrefs(index, action) {
+    if (action == 0 || action == 1) {
+        record = scoutPrefs.splice(index, 1)[0]
+        scoutPrefs.splice(index + ((action == 0) ? -1 : 1), 0, record)
+    } else if (action == 2) {
+        scoutPrefs.splice(index, 1)
+    }
+    renderPrefs()
+    sendPrefs()
+}
+
+//Add scout preference
+function addPref() {
+    var team = document.getElementById("prefsTeam").value
+    var scout = document.getElementById("prefsScout").value
+    document.getElementById("prefsTeam").value = ""
+    document.getElementById("prefsScout").value = ""
+    scoutPrefs.push({
+        "team": team,
+        "scout": scout,
+    })
+    renderPrefs()
+    sendPrefs()
+}
+
+//Update prefs on server based on local data
+function sendPrefs() {
+    const http = new XMLHttpRequest()
+
+    http.onerror = function () {
+        alert("Error updating scout preferences")
+    }
+
+    http.ontimeout = function () {
+        alert("Error updating scout preferences")
+    }
+
+    http.open("POST", "/set_scoutprefs?data=" + encodeURIComponent(JSON.stringify(scoutPrefs)), true)
+    http.send()
+}
+
 //Toggle whether scout is enabled
 function toggleScout(span) {
     const http = new XMLHttpRequest()
@@ -108,7 +227,6 @@ function reschedule(forceMatch) {
         alert("Error reaching server")
     }
 
-    console.log("/reschedule" + ((forceMatch) ? "?force_match=" + encodeURIComponent(document.getElementById("manualSchedule").value) : ""))
     http.open("PUT", "/reschedule" + ((forceMatch) ? "?force_match=" + encodeURIComponent(document.getElementById("manualSchedule").value) : ""), true)
     http.send()
 }
