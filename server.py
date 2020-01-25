@@ -1094,27 +1094,6 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     5 + i, 1, "Match " + str(schedule_scouts[scout][i]["end"]), formats["center"])
 
         workbook.close()
-
-        # [
-        #     {
-        #         "start": 1,
-        #         "end": 12
-        #         "scouts": [
-        #             "John Doe"
-        #         ]
-        #     }
-        # ]
-
-        # {
-        #     "John Doe": [
-        #         {
-        #             "start": 1,
-        #             "end": 12
-        #         }
-        #     ]
-        # }
-
-        print(schedule_global)
         return ("Successfully created block schedule")
 
 def save_image(raw):
