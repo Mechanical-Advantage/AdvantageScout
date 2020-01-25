@@ -3,7 +3,7 @@ function AdminManager() {
     // Instantiate managers
     this.configManager = new ConfigManager(this)
     this.matchScheduleManager = new MatchScheduleManager(this)
-    // this.blockScheduleManager = new BlockScheduleManager(this)
+    this.blockScheduleManager = new BlockScheduleManager(this)
     this.scoutPrefManager = new ScoutPrefManager(this)
     this.scoutListManager = new ScoutListManager(this)
     this.devicesManager = new DevicesManager(this)
@@ -26,6 +26,11 @@ function AdminManager() {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
                         response(this.responseText)
+                    } else {
+                        if (error != undefined) {
+                            console.error(error)
+                            alert(error)
+                        }
                     }
                 }
             }
@@ -33,12 +38,12 @@ function AdminManager() {
 
         if (error != undefined) {
             http.onerror = function () {
-                console.log(error)
+                console.error(error)
                 alert(error)
             }
 
             http.ontimeout = function () {
-                console.log(error)
+                console.error(error)
                 alert(error)
             }
         }

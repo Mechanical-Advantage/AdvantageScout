@@ -3,3 +3,4 @@ cordova/www/src
 *.db
 __pycache__
 images
+block_schedule.xlsx

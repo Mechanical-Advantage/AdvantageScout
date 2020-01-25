@@ -53,6 +53,7 @@
         "ShootFromWall INTEGER DEFAULT 0",
         "ShootFromOpponentSide INTEGER DEFAULT 0",
         "ShootFromOwnSide INTEGER DEFAULT 0",
+        "MultipleDriveTeams INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''",
         "Image TEXT DEFAULT ''"
     ],
@@ -254,6 +255,11 @@
                 "type": "checkbox",
                 "field": "CanLiftOthers",
                 "label": "Can Lift Others?"
+            },
+            {
+                "type": "checkbox",
+                "field": "MultipleDriveTrains",
+                "label": "Multiple Drive Teams?"
             },
             {
                 "type": "break"

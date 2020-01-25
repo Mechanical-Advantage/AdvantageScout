@@ -3,6 +3,7 @@ import sqlite3 as sql
 import cherrypy
 import tbapy
 from simple_websocket_server import WebSocketServer, WebSocket
+import xlsxwriter
 from jsmin import jsmin
 import json
 import base64
@@ -28,7 +29,8 @@ tba = tbapy.TBA("KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIr
 schedule_total_priority = 0.35 # weight to apply to total when scheduling
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
-image_dir = "images" # folder for image data
+image_dir = "images"  # folder for image data
+schedule_workbook = "block_schedule.xlsx" # file for block schedule
 default_game = "2019"
 
 #Import serial library
@@ -630,7 +632,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
 
         <div class="section">
             <h3>
-                Scheduling
+                Match Scheduling
             </h3>
             Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
             <button onclick="javascript:adminManager.matchScheduleManager.refreshCache()">
@@ -642,7 +644,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             </button>
             <br>
             <input id="manualSchedule" type="number"></input>
-            <button onclick="javascript:adminManager.matchScheduleManager.reschedule()">
+            <button onclick="javascript:adminManager.matchScheduleManager.reschedule(true)">
                 Force schedule
             </button>
             <div id="scheduleDiv" hidden>
@@ -736,6 +738,33 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     </td>
                 </tr>
             </table>
+        </div>
+
+        <div class="section">
+            <h3>
+                Block Scheduling
+            </h3>
+            Training length:
+            <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." style="width: 150px;"></input>
+            <br>
+            Group size:
+            <input id="blockGroupSize" type="number" style="width: 150px;"></input>
+            <br>
+            Break length:
+            <input id="blockBreakLength" type="number" placeholder="Enter # of matches..." style="width: 150px;"></input>
+            <br>
+            Start:
+            <input id="blockStart" type="number" placeholder="Enter match number..." style="width: 150px;"></input>
+            <br>
+            End:
+            <input id="blockEnd" type="number" placeholder="Enter match number..." style="width: 150px;"></input>
+            <br>
+            <button style="margin-top: 8px; margin-bottom: 8px;" onclick="javascript:adminManager.blockScheduleManager.create()">
+                Create schedule
+            </button>
+            <span style="font-style: italic;">
+                Schedule will be created based on active scouts
+            </span>
         </div>
 
         <script>
@@ -864,7 +893,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return("Downloaded schedule for " + event + ".")
 
     @cherrypy.expose
-    def reschedule(self, force_match=0):
+    def reschedule(self, force_match=None):
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
         cur_game = conn_game.cursor()
@@ -966,7 +995,106 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                 </body>
             </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return (output.replace("$FAVICON_CODE", favicon_code))
+    
+    @cherrypy.expose
+    def block_schedule(self, training_length="0", group_size="0", break_length="0", start="0", end="0"):
+        if training_length == "0" or group_size == "0" or break_length == "0" or start == "0" or end == "0":
+            return ("Please specify all fields")
+        training_length = int(training_length)
+        group_size = int(group_size)
+        break_length = int(break_length)
+        start = int(start)
+        end = int(end)
+
+        #Get list of scouts
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        scouts = [x[0] for x in cur_global.execute("SELECT name FROM scouts WHERE enabled='1' ORDER BY RANDOM()").fetchall()]
+        conn_global.close()
+
+        #Generate global schedule
+        schedule_global = []
+        for block_start in range(start + training_length, end, break_length):
+            block_end = block_start + break_length - 1
+            if block_end > end:
+                block_end = end
+            scoutlist = scouts[:group_size]
+            scouts = scouts[group_size:] + scoutlist
+            schedule_global.append({
+                "start": block_start,
+                "end": block_end,
+                "scouts": scoutlist
+            })
+        
+        #Generate scout schedules
+        schedule_scouts = {}
+        scouts.sort()
+        for scout in scouts:
+            schedule_scouts[scout] = []
+        
+        for block in schedule_global:
+            for scout in block["scouts"]:
+                schedule_scouts[scout].append({
+                    "start": block["start"],
+                    "end": block["end"]
+                })
+
+        #Create excel workbook
+        workbook = xlsxwriter.Workbook(schedule_workbook)
+        formats = {
+            "title": workbook.add_format({"bold": True, "font_size": 18}),
+            "subtitle": workbook.add_format({"italic": True, "font_size": 14}),
+            "header": workbook.add_format({"bottom": True}),
+            "header_center": workbook.add_format({"bottom": True, "align": "center"}),
+            "center": workbook.add_format({"align": "center"}),
+            "data": workbook.add_format({}),
+            "center_border": workbook.add_format({"align": "center", "top": True}),
+            "data_border": workbook.add_format({"top": True})
+        }
+
+        #Create overview sheet
+        global_sheet = workbook.add_worksheet("Overview")
+        global_sheet.set_column(0, 1, 6)
+        global_sheet.set_column(2, 2, 70)
+        global_sheet.merge_range(0, 0, 0, 2, "6328 Scout Schedule", formats["title"])
+        global_sheet.merge_range(1, 0, 1, 2, "Overview", formats["subtitle"])
+        global_sheet.write(2, 0, "Start", formats["header_center"])
+        global_sheet.write(2, 1, "End", formats["header_center"])
+        global_sheet.write(2, 2, "Scouts", formats["header"])
+
+        row = 3
+        for i in range(len(schedule_global)):
+            global_sheet.write(row, 0, schedule_global[i]["start"], formats["center_border"])
+            global_sheet.write(row, 1, schedule_global[i]["end"], formats["center_border"])
+            first = True
+            for scout in schedule_global[i]["scouts"]:
+                if first:
+                    format = formats["data_border"]
+                else:
+                    format = formats["data"]
+                global_sheet.write(row, 2, scout, format)
+                first = False
+                row += 1
+        
+        #Create sheets for each scout
+        for scout in scouts:
+            scout_sheet = workbook.add_worksheet(scout)
+            scout_sheet.set_column(0, 1, 40)
+            scout_sheet.merge_range(0, 0, 0, 1, "6328 Scout Schedule", formats["title"])
+            scout_sheet.merge_range(1, 0, 1, 1, scout, formats["subtitle"])
+            scout_sheet.merge_range(2, 0, 2, 1, "You must be available to scout during any times not listed.")
+            scout_sheet.merge_range(3, 0, 3, 1, "Check in with the scouting systems team when you arrive or leave the stands.")
+            scout_sheet.write(4, 0, "Break Start", formats["header_center"])
+            scout_sheet.write(4, 1, "Break End", formats["header_center"])
+
+            for i in range(len(schedule_scouts[scout])):
+                scout_sheet.write(5 + i, 0, "Match " + str(schedule_scouts[scout][i]["start"]), formats["center"])
+                scout_sheet.write(
+                    5 + i, 1, "Match " + str(schedule_scouts[scout][i]["end"]), formats["center"])
+
+        workbook.close()
+        return ("Successfully created block schedule")
 
 def save_image(raw):
     previous_images = os.listdir(image_dir)
@@ -1210,7 +1338,7 @@ def get_next_schedule_match(cur_game, cur_global):
     return(to_schedule)
 
 def schedule_match(cur_game, cur_global, conn_global, force_match=None):
-    if force_match == None or force_match == 0:
+    if force_match == None or force_match == "0":
         to_schedule = get_next_schedule_match(cur_game, cur_global)
     else:
         to_schedule = force_match

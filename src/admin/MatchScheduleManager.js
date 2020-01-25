@@ -15,7 +15,7 @@ function MatchScheduleManager(adminManager) {
         adminManager.request("PUT", "/reschedule", function (data) {
             alert(data)
         }, {
-            force_match: document.getElementById("manualSchedule").value
+            force_match: (forceMatch) ? document.getElementById("manualSchedule").value : 0
         }, "Failed to reach server.")
     }
 
