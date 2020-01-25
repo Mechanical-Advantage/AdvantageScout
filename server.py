@@ -1096,6 +1096,65 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         workbook.close()
         return ("Successfully created block schedule")
 
+    @cherrypy.expose
+    def scout_table(self):
+        game_result = gamedb_connect()
+        conn_game = game_result["conn"]
+        cur_game = conn_game.cursor()
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+
+        event = cur_global.execute("SELECT value FROM config WHERE key = 'event'").fetchall()[0][0]
+        data = cur_game.execute("SELECT Team,ScoutName,Count() FROM match WHERE Event = ? GROUP BY Team, ScoutName ORDER BY Team, COUNT() DESC, ScoutName", (event,)).fetchall()
+        max_length = cur_game.execute("SELECT COUNT(DISTINCT ScoutName) FROM match WHERE Event = ? GROUP BY Team ORDER BY COUNT(DISTINCT ScoutName) DESC LIMIT 1", (event,)).fetchall()[0][0]
+        
+        result = """
+<html>
+    <head>
+        <title>
+            Scouting Table - Advantage Scout
+        </title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            td, th {
+                border: 1px solid black;
+                padding: 6px;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>
+                    Team
+                </th>
+                <th colspan="$MAX_LENGTH">
+                    Scouts
+                </th>
+            </tr>
+            $TABLE_HTML
+        </table>
+    </body>
+</html>
+        """
+
+        table_html = ""
+        previous_team = -1
+        for row in data:
+            if previous_team != row[0]:
+                if previous_team == -1:
+                    table_html += "</tr>"
+                table_html += "<tr><td>" + str(row[0]) + "</td>"
+            table_html += "<td>" + row[1] + " (" + str(row[2]) + ")</td>"
+            previous_team = row[0]
+        table_html += "</td>"
+            
+        conn_game.close()
+        conn_global.close()
+        return (result.replace("$TABLE_HTML", table_html).replace("$MAX_LENGTH", str(max_length)))
+
 def save_image(raw):
     previous_images = os.listdir(image_dir)
     max_id = -1
