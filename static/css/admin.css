@@ -3,7 +3,7 @@ body {
 }
 
 div.section {
-    display: inline-block;
+    display: inline-table;
     margin: 3px;
 }
 
