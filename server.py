@@ -20,12 +20,12 @@ default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
 host = "0.0.0.0"
-bt_enable = False
+bt_enable = True
 bt_ports_incoming = ["COM3"] # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA("KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
-schedule_total_priority = 0.5 # weight to apply to total when scheduling
+schedule_total_priority = 0.35 # weight to apply to total when scheduling
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 image_dir = "images" # folder for image data
@@ -389,10 +389,36 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
     
     @cherrypy.expose(["managers.js"])
     def managers(self):
-        names = ["ButtonManager", "AppManager", "SettingsManager", "ScoutManager", "ClassicManager", "VisualManager", "WebNotificationManager", "WebServerManager"]
+        names = [
+            "ButtonManager",
+            "AppManager",
+            "SettingsManager",
+            "ScoutManager",
+            "ClassicManager",
+            "VisualManager",
+            "WebNotificationManager",
+            "WebServerManager"
+        ]
         output = ""
         for name in names:
-            output += open("src/" + name + ".js", "r").read() + "\n"
+            output += open("src/app/" + name + ".js", "r").read() + "\n"
+        return (jsmin(output))
+        
+    @cherrypy.expose(["adminManagers.js"])
+    def admin_managers(self):
+        names = [
+            "AdminManager",
+            "ConfigManager",
+            "MatchScheduleManager",
+            "BlockScheduleManager",
+            "ScoutPrefManager",
+            "ScoutListManager",
+            "DevicesManager",
+            "UploadedManager"
+        ]
+        output = ""
+        for name in names:
+            output += open("src/admin/" + name + ".js", "r").read() + "\n"
         return(jsmin(output))
     
     @cherrypy.expose
@@ -531,6 +557,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             Admin - Advantage Scout
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/admin.css"></link>
+        <script src="/adminManagers.js"></script>
         $FAVICON_CODE
     </head>
     <body>
@@ -544,14 +571,14 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             
             Game: 
             <input type="text" id="game"></input>
-            <button onclick="javascript:save(&quot;game&quot;)">
+            <button onclick="javascript:adminManager.configManager.save(&quot;game&quot;)">
                 Save
             </button>
             
             <br>
             Event: 
             <input type="text" id="event"></input>
-            <button onclick="javascript:save(&quot;event&quot;)">
+            <button onclick="javascript:adminManager.configManager.save(&quot;event&quot;)">
                 Save
             </button>
             
@@ -568,7 +595,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     select on device
                 </option>
             </select>
-            <button onclick="javascript:save(&quot;reverse_alliances&quot;)">
+            <button onclick="javascript:adminManager.configManager.save(&quot;reverse_alliances&quot;)">
                 Save
             </button>
             
@@ -582,7 +609,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     enabled
                 </option>
             </select>
-            <button onclick="javascript:save(&quot;dev_mode&quot;)">
+            <button onclick="javascript:adminManager.configManager.save(&quot;dev_mode&quot;)">
                 Save
             </button>
 
@@ -596,7 +623,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     auto
                 </option>
             </select>
-            <button onclick="javascript:save(&quot;auto_schedule&quot;)">
+            <button onclick="javascript:adminManager.configManager.save(&quot;auto_schedule&quot;)">
                 Save
             </button>
         </div>
@@ -606,16 +633,16 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                 Scheduling
             </h3>
             Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
-            <button onclick="javascript:refreshCache()">
+            <button onclick="javascript:adminManager.matchScheduleManager.refreshCache()">
                 Refresh
             </button>
             <br>
-            <button onclick="javascript:reschedule(false)">
+            <button onclick="javascript:adminManager.matchScheduleManager.reschedule(false)">
                 Reschedule next match
             </button>
             <br>
             <input id="manualSchedule" type="number"></input>
-            <button onclick="javascript:reschedule(true)">
+            <button onclick="javascript:adminManager.matchScheduleManager.reschedule()">
                 Force schedule
             </button>
             <div id="scheduleDiv" hidden>
@@ -631,7 +658,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             </h3>
             <input id="prefsTeam" type="number" style="width: 75px;"></input>
             <input id="prefsScout" type="text"></input>
-            <button onclick="javascript:addPref()">
+            <button onclick="javascript:adminManager.scoutPrefManager.addPref()">
                 Add Preference
             </button>
             <table class="prefstable" id="prefsTable">
@@ -710,8 +737,10 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                 </tr>
             </table>
         </div>
-        
-        <script src="/static/js/admin.js"></script>
+
+        <script>
+            var adminManager = new AdminManager()
+        </script>
     </body>
 </html>
             """
@@ -835,7 +864,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return("Downloaded schedule for " + event + ".")
 
     @cherrypy.expose
-    def reschedule(self, force_match=None):
+    def reschedule(self, force_match=0):
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
         cur_game = conn_game.cursor()
@@ -1181,7 +1210,7 @@ def get_next_schedule_match(cur_game, cur_global):
     return(to_schedule)
 
 def schedule_match(cur_game, cur_global, conn_global, force_match=None):
-    if force_match == None:
+    if force_match == None or force_match == 0:
         to_schedule = get_next_schedule_match(cur_game, cur_global)
     else:
         to_schedule = force_match

@@ -17,7 +17,10 @@ def get_schedule(teams, scout_records, total_priority, prefs):
     prefs = prefs[::-1]
     for i in range(len(prefs)):
         index = [index for index, value in enumerate(
-            scout_records) if value["name"] == prefs[i]["scout"]][0]
+            scout_records) if value["name"] == prefs[i]["scout"]]
+        if len(index) < 1:
+            continue
+        index = index[0]
         scout_records[index][prefs[i]["team"]] = 100000 * (i + 1)
 
     # Create priority lists
