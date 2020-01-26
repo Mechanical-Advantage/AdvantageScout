@@ -60,8 +60,9 @@ function ScoutManager(appManager) {
 
         // Start scouting automatically in dev mode
         if (appManager.config.dev_mode == 1 && appManager.web) {
-            document.getElementById("team").value = 1
-            document.getElementById("match").value = 1
+            document.getElementById("scoutselect").selectedIndex = 1
+            document.getElementById("team").value = Math.floor(Math.random() * 9999)
+            document.getElementById("match").value = Math.floor(Math.random() * 99)
             this.start("visual")
         }
     }
