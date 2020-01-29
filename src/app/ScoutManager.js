@@ -47,15 +47,10 @@ function ScoutManager(appManager) {
         this.setSelection("match")
 
         // Add list of scouts
-        var scoutSelect = document.getElementById("scoutselect")
-        while (scoutSelect.firstChild) {
-            scoutSelect.removeChild(scoutSelect.firstChild)
-        }
-        var fullScoutList = [{ name: "Please select", enabled: false }].concat(appManager.config.scouts)
-        for (var scout in fullScoutList) {
-            var option = document.createElement("OPTION")
-            option.innerHTML = fullScoutList[scout].name
-            scoutSelect.appendChild(option)
+        if (appManager.schedule != undefined) {
+            this.updateScoutList(appManager.schedule.scouts)
+        } else {
+            this.updateScoutList()
         }
 
         // Start scouting automatically in dev mode
@@ -67,16 +62,71 @@ function ScoutManager(appManager) {
         }
     }
 
+    // Create list of scouts based on config data
+    this.updateScoutList = function (topScouts) {
+        if (topScouts == undefined) {
+            topScouts = []
+        }
+
+        var scoutSelect = document.getElementById("scoutselect")
+        var selected = scoutSelect.value
+        while (scoutSelect.firstChild) {
+            scoutSelect.removeChild(scoutSelect.firstChild)
+        }
+        var extraScouts = JSON.parse(JSON.stringify(appManager.config.scouts))
+        extraScouts = extraScouts.filter(function (scout) {
+            return !topScouts.includes(scout.name)
+        })
+
+        // Add 'Please select' option
+        var option = document.createElement("OPTION")
+        option.innerHTML = "Please select"
+        scoutSelect.appendChild(option)
+
+        // Create list of top scouts
+        if (topScouts.length > 0) {
+            var optgroup = document.createElement("OPTGROUP")
+            optgroup.label = "Upcoming Match"
+            for (var scout in topScouts) {
+                var option = document.createElement("OPTION")
+                option.innerHTML = topScouts[scout]
+                optgroup.appendChild(option)
+            }
+            scoutSelect.appendChild(optgroup)
+        }
+
+        // Create list of all other scouts
+        var optgroup = document.createElement("OPTGROUP")
+        optgroup.label = "All Scouts"
+        for (var scout in extraScouts) {
+            var option = document.createElement("OPTION")
+            option.innerHTML = extraScouts[scout].name
+            optgroup.appendChild(option)
+        }
+        scoutSelect.appendChild(optgroup)
+
+        if (selected != "") {
+            scoutSelect.value = selected
+        }
+    }
+
     // Update schedule table based on data
     this.loadSchedule = function () {
+        // Update scout list if needed
+        if (appManager.schedule.key != hiddenScheduleKey) {
+            this.updateScoutList(appManager.schedule.scouts)
+        } else {
+            this.updateScoutList()
+        }
+
         // Hide div if needed
-        document.getElementById("scheduleDiv").hidden = (appManager.schedule.match == undefined) || (appManager.schedule.key == hiddenScheduleKey)
+        document.getElementById("scheduleDiv").hidden = (!appManager.scheduleAvailable()) || (appManager.schedule.key == hiddenScheduleKey)
 
         var scheduleTable = document.getElementById("schedule")
         while (scheduleTable.firstChild) {
             scheduleTable.removeChild(scheduleTable.firstChild)
         }
-        if (appManager.schedule.match) {
+        if (appManager.scheduleAvailable()) {
             document.getElementById("schedulematch").innerHTML = appManager.schedule.match
             var teamRow = document.createElement("TR")
             var scoutRow = document.createElement("TR")

@@ -65,6 +65,15 @@ function AppManager(web) {
         })
     }
 
+    // Check if schedule present
+    this.scheduleAvailable = function () {
+        if (this.schedule == undefined) {
+            return false
+        } else {
+            return this.schedule.match != undefined
+        }
+    }
+
     // App setup
     this.settingsManager.loadVersion()
     this.settingsManager.initLocalStorage()

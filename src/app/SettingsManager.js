@@ -72,6 +72,7 @@ function SettingsManager(appManager) {
             document.getElementById("name").value = window.localStorage.getItem("advantagescout_device")
             document.getElementById("imageQuality").value = window.localStorage.getItem("advantagescout_imagequality")
         }
+        this.updateCacheTime()
     }
 
     // Create list in local storage for saved matches
@@ -88,6 +89,30 @@ function SettingsManager(appManager) {
     this.saveDataCache = function (config, game, version) {
         window.localStorage.setItem("advantagescout_datacache", JSON.stringify({ "config": config, "game": game, "version": version }))
         window.localStorage.setItem("advantagescout_datacachetimestamp", Math.round(Date.now() / 1000))
+        this.updateCacheTime()
+    }
+
+    // Update time of last dat cache
+    this.updateCacheTime = function () {
+        if (!web) {
+            function formatDate(time) {
+                var date = new Date(time * 1000)
+                var month = date.getMonth() + 1
+                var day = date.getDate()
+                var hours = date.getHours()
+                var minutes = date.getMinutes()
+                var ampm = hours >= 12 ? "pm" : "am"
+                hours = hours % 12
+                hours = hours ? hours : 12 // the hour '0' should be '12'
+                minutes = minutes < 10 ? "0" + minutes : minutes
+                var strTime = month + "/" + day + " " + hours + ':' + minutes + ' ' + ampm
+                return strTime
+            }
+
+            if (window.localStorage.getItem("advantagescout_datacachetimestamp") != null) {
+                document.getElementById("cacheTime").innerHTML = formatDate(window.localStorage.getItem("advantagescout_datacachetimestamp"))
+            }
+        }
     }
 
     // Read config and game from local storage (if not expired)

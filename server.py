@@ -17,6 +17,7 @@ import os
 import sys
 
 #Config
+our_team = 6328
 default_port = 8000 # can override w/ command line argument
 admin_socket_port = 8001 # port for admin web socket
 forward_socket_port = 8002 # port for forwarding server (set "None" to disable)
@@ -560,6 +561,9 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         </title>
         <link rel="stylesheet" type="text/css" href="/static/css/admin.css"></link>
         <script src="/adminManagers.js"></script>
+        <script>
+            const ourTeam = $OUR_TEAM
+        </script>
         $FAVICON_CODE
     </head>
     <body>
@@ -773,7 +777,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return(output.replace("$FAVICON_CODE", favicon_code).replace("$OUR_TEAM", str(our_team)))
 
     @cherrypy.expose
     def toggle_scout(self, scout):

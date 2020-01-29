@@ -34,7 +34,7 @@ function WebServerManager(appManager) {
         http.open("PUT", "/heartbeat", true)
         http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
         var teammatch = ""
-        if (appManager.state >= 1 && appManager.state <= 3) {
+        if ((appManager.state >= 1 && appManager.state <= 3) || appManager.state == 5) {
             teammatch = "&team=" + appManager.team + "&match=" + appManager.match
         }
         http.send("device_name=" + encodeURI(window.localStorage.getItem("advantagescout_device")) + "&battery=" + appManager.battery.toString() + "&charging=" + appManager.charging.toString() + "&state=" + appManager.state.toString() + teammatch)
