@@ -94,7 +94,7 @@ function SettingsManager(appManager) {
 
     // Update time of last dat cache
     this.updateCacheTime = function () {
-        if (!web) {
+        if (!appManager.web) {
             function formatDate(time) {
                 var date = new Date(time * 1000)
                 var month = date.getMonth() + 1
