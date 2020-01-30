@@ -145,13 +145,6 @@
                 "binding": false
             },
             {
-                "field": "DriverRating",
-                "operator": "!=",
-                "value": 0,
-                "message": "You have not entered a driver rating. Are you sure?",
-                "binding": false
-            },
-            {
                 "field": "Comment",
                 "operator": "!=",
                 "value": "",
