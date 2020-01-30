@@ -289,8 +289,162 @@
                 "type": "uploadButton"
             }
         ],
-        "auto": [],
-        "teleop": [],
+        "auto": [
+            {
+                "type": "chooser",
+                "field": "AllianceColor",
+                "label": "Alliance Color",
+                "options": {
+                    "Red": 0,
+                    "Blue": 1
+                }
+            },
+            {
+                "type": "chooser",
+                "field": "StartPos",
+                "label": "Start Position",
+                "options": {
+                    "Left": 0,
+                    "Center": 1,
+                    "Right": 2
+                }
+            },
+            {
+                "type": "checkbox",
+                "field": "CrossedLine",
+                "label": "Moved From Line"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "counter",
+                "field": "AutoInnerSuccess",
+                "label": "Inner Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoOuterSuccess",
+                "label": "Outer Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "AutoLowerSuccess",
+                "label": "Lower Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "group",
+                "label": "Failures",
+                "unit1": {
+                    "type": "counter",
+                    "field": "AutoUpperFailures",
+                    "label": "Upper",
+                    "min": 0,
+                    "max": 99,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "AutoLowerFailures",
+                    "label": "Lower",
+                    "min": 0,
+                    "max": 99,
+                    "step": 1
+                }
+            }
+        ],
+        "teleop": [
+            {
+                "type": "counter",
+                "field": "InnerSuccess",
+                "label": "Inner Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "OuterSuccess",
+                "label": "Outer Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "counter",
+                "field": "LowerSuccess",
+                "label": "Lower Success",
+                "min": 0,
+                "max": 99,
+                "step": 1
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "group",
+                "label": "Failures",
+                "unit1": {
+                    "type": "counter",
+                    "field": "UpperFailures",
+                    "label": "Upper",
+                    "min": 0,
+                    "max": 99,
+                    "step": 1
+                },
+                "unit2": {
+                    "type": "counter",
+                    "field": "LowerFailures",
+                    "label": "Lower",
+                    "min": 0,
+                    "max": 99,
+                    "step": 1
+                }
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "group",
+                "label": "Wheel Rotation",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "WheelRotationAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "WheelRotationSuccess",
+                    "label": "Succesful"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Wheel Position",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "WheelPositionAttempted",
+                    "label": "Attempted"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "WheelPositionSuccess",
+                    "label": "Succesful"
+                }
+            }
+        ],
         "endgame": [
             {
                 "type": "group",
