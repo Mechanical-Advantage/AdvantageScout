@@ -17,7 +17,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <icon src="www/img/logo256.png" width="256" height="256" density="mdpi" />
-    <hook type="before_prepare" src="build_copy.sh" />
+    <hook type="before_prepare" src="build_copy.py" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>

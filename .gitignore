@@ -1,5 +1,6 @@
 cordova/platforms
 cordova/www/src
+cordova/.idea
 *.db
 __pycache__
 images
