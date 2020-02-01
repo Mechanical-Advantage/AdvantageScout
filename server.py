@@ -111,18 +111,21 @@ if not os.path.exists(image_dir):
     os.mkdir(image_dir)
 
 #Connect to appropriate game database
-def gamedb_connect():
+def gamedb_connect(force_connect = False):
     conn_global = sql.connect(db_global)
     cur_global = conn_global.cursor()
     cur_global.execute("SELECT value FROM config WHERE key = 'game'")
     game = str(cur_global.fetchall()[0][0])
-    conn_game = sql.connect(db_games.replace("$GAME", game))
     conn_global.close()
+    if os.path.exists(db_games.replace("$GAME", game)) or force_connect:
+        conn_game = sql.connect(db_games.replace("$GAME", game))
+    else:
+        conn_game = None
     return({"conn": conn_game, "name": game})
 
 #Initialize game db
 def init_game():
-    game_result = gamedb_connect()
+    game_result = gamedb_connect(force_connect=True)
     conn_game = game_result["conn"]
     cur_game = conn_game.cursor()
     config = json.loads(quickread("games" + os.path.sep + game_result["name"] + os.path.sep + "prefs.json"))
