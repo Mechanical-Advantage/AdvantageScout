@@ -180,7 +180,13 @@ function AppServerManager(appManager) {
                     } catch (error) {
                         x = 0
                     }
-                    setTimeout(function () { pushSerialQueue() }, 500) // wait until server ready for data
+                    try {
+                        clearTimeout(timeout)
+                    } catch (error) {
+                        x = 0
+                    }
+                    bluetoothSerial.unsubscribe()
+                    setTimeout(function () { pushSerialQueue() }, 1500) // wait until server ready for data
                 }
             }, function () {
                 setConnected(false)
@@ -214,19 +220,6 @@ function AppServerManager(appManager) {
         return (Math.random() * 6000) + 5000
     }
 
-    // Disconnect and try again
-    function timeoutPushSerialQueue() {
-        try {
-            bluetoothSerial.unsubscribe()
-        }
-        catch (error) {
-            x = 0
-        }
-        appManager.settingsManager.hideUploadProgress()
-        setTimeout(function () { pushSerialQueue() }, getRetryDelay())
-    }
-
-
     // Send items in serial queue to server
     var timeout
     var retry
@@ -254,14 +247,12 @@ function AppServerManager(appManager) {
                     if (data == "[]\n") {
                         serverReached = false
                         setConnected()
-                        setTimeout(function () { pushSerialQueue() }, 1000) // send again quickly to keep connection alive
+                        retry = setTimeout(function () { pushSerialQueue() }, 1000) // send again quickly to keep connection alive
                     } else {
                         serverReached = true
                         setConnected()
                         serialQueue.shift().response(data)
-                        if (serialQueue.length == 0) {
-                            bluetoothSerial.unsubscribe()
-                        } else {
+                        if (serialQueue.length != 0) {
                             loadData()
                         }
                     }
@@ -270,6 +261,18 @@ function AppServerManager(appManager) {
                 loadData()
             }
         }
+    }
+
+    // Disconnect and try again
+    function timeoutPushSerialQueue() {
+        try {
+            bluetoothSerial.unsubscribe()
+        }
+        catch (error) {
+            x = 0
+        }
+        appManager.settingsManager.hideUploadProgress()
+        retry = setTimeout(function () { pushSerialQueue() }, getRetryDelay())
     }
 
     // Writes data in pieces to server
@@ -301,6 +304,7 @@ function AppServerManager(appManager) {
                 timeout = setTimeout(function () { timeoutPushSerialQueue() }, 10000)
             } else {
                 appManager.settingsManager.hideUploadProgress()
+                bluetoothSerial.unsubscribe()
                 sendResponse(data)
             }
         })

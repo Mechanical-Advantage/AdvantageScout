@@ -70,7 +70,7 @@ function ScoutManager(appManager) {
             topScouts = []
         }
 
-        if (key != noReloadScheduleKey) {
+        if (key != noReloadScheduleKey || key == "") {
             var scoutSelect = document.getElementById("scoutselect")
             var selected = scoutSelect.value
             while (scoutSelect.firstChild) {
