@@ -1,13 +1,15 @@
 // Responsible for the match scheduling section
 function MatchScheduleManager(adminManager) {
     //Update match cache on server
-    this.refreshCache = function () {
+    this.refreshCache = function (fromTBA) {
         adminManager.request("PUT", "/get_cache", function (data) {
             if (data.slice(0, 10) == "Downloaded") {
                 document.getElementById("eventcache").innerHTML = adminManager.configManager.getEvent()
             }
             alert(data)
-        }, {}, "Failed to reach server.")
+        }, {
+            source: fromTBA ? "tba" : "csv"
+        }, "Failed to reach server.")
     }
 
     //Update match cache on server

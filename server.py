@@ -31,7 +31,8 @@ schedule_total_priority = 0.35 # weight to apply to total when scheduling
 db_global = "global.db" # database for data not tied to specific games
 db_games = "data_$GAME.db" # database for collected scouting data
 image_dir = "images"  # folder for image data
-schedule_workbook = "block_schedule.xlsx" # file for block schedule
+schedule_workbook = "block_schedule.xlsx"  # file for block schedule
+schedule_csv = "schedule.csv" # csv for offline scheduling
 default_game = "2019"
 
 #Import serial library
@@ -639,8 +640,11 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                 Match Scheduling
             </h3>
             Matches cached for event <span style="font-style: italic;" id="eventcache">none</span>.
-            <button onclick="javascript:adminManager.matchScheduleManager.refreshCache()">
-                Refresh
+            <button onclick="javascript:adminManager.matchScheduleManager.refreshCache(true)">
+                Refresh from TBA
+            </button>
+            <button onclick="javascript:adminManager.matchScheduleManager.refreshCache(false)">
+                Refresh from CSV
             </button>
             <br>
             <button onclick="javascript:adminManager.matchScheduleManager.reschedule(false)">
@@ -867,34 +871,59 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
         return(response)
 
     @cherrypy.expose
-    def get_cache(self):
+    def get_cache(self, source="tba"):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
         event = cur_global.execute("SELECT value FROM config WHERE key = 'event'").fetchall()[0][0]
-        try:
-            matchlist_raw = tba.event_matches(event)
-            matchlist_raw.sort(key=lambda x: x.match_number)
-        except:
-            return "Error - could not retrieve schedule"
 
-        if len(matchlist_raw) == 0:
-            return "Error - no schedule available"
+        if source == "tba":
+            # Get from the blue alliace
+            try:
+                matchlist_raw = tba.event_matches(event)
+                matchlist_raw.sort(key=lambda x: x.match_number)
+            except:
+                return "Error - could not retrieve schedule"
+
+            if len(matchlist_raw) == 0:
+                return "Error - no schedule available"
+
+            matches = []
+            for match_raw in matchlist_raw:
+                if match_raw.comp_level == "qm":
+                    b1 = match_raw.alliances["blue"]["team_keys"][0][3:]
+                    b2 = match_raw.alliances["blue"]["team_keys"][1][3:]
+                    b3 = match_raw.alliances["blue"]["team_keys"][2][3:]
+                    r1 = match_raw.alliances["red"]["team_keys"][0][3:]
+                    r2 = match_raw.alliances["red"]["team_keys"][1][3:]
+                    r3 = match_raw.alliances["red"]["team_keys"][2][3:]
+                    matches.append([match_raw.match_number, b1, b2, b3, r1, r2, r3])
+        else:
+            # Get from csv
+            try:
+                csv = open(schedule_csv, "r")
+            except:
+                conn_global.close()
+                return ("Failed to open csv file.")
+            matches = [row.split(",") for row in csv.read().split("\n")]
+            try:
+                x = 0
+            except:
+                conn_global.close()
+                return ("Failed to parse csv file.")
+            csv.close()
 
         cur_global.execute("DELETE FROM schedule")
         cur_global.execute("UPDATE config SET value=? WHERE key='event_cached'", (event,))
-        for match_raw in matchlist_raw:
-            if match_raw.comp_level == "qm":
-                b1 = match_raw.alliances["blue"]["team_keys"][0][3:]
-                b2 = match_raw.alliances["blue"]["team_keys"][1][3:]
-                b3 = match_raw.alliances["blue"]["team_keys"][2][3:]
-                r1 = match_raw.alliances["red"]["team_keys"][0][3:]
-                r2 = match_raw.alliances["red"]["team_keys"][1][3:]
-                r3 = match_raw.alliances["red"]["team_keys"][2][3:]
-                cur_global.execute("INSERT INTO schedule(match,b1,b2,b3,r1,r2,r3) VALUES (?,?,?,?,?,?,?)", (match_raw.match_number,b1,b2,b3,r1,r2,r3))
+        for match in matches:
+            try:
+                cur_global.execute("INSERT INTO schedule(match,b1,b2,b3,r1,r2,r3) VALUES (?,?,?,?,?,?,?)", tuple(match))
+            except:
+                conn_global.close()
+                return ("Failed to save schedule data.")
 
         conn_global.commit()
         conn_global.close()
-        return("Downloaded schedule for " + event + ".")
+        return("Saved schedule for " + event + ".")
 
     @cherrypy.expose
     def reschedule(self, force_match=None):
