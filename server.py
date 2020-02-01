@@ -1488,9 +1488,6 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
 
 
 if __name__ == "__main__":
-    #Create game database
-    init_game()
-
     #Start bluetooth servers
     if bt_enable:
         bt_servers = []
