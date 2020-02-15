@@ -207,13 +207,13 @@ class main_server(object):
 
             <div id="selectionDiv_matchswitch">
                 <button onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)">
-                    Pit Scout
+                    Switch to pit
                 </button>
             </div>
 
             <div id="selectionDiv_pitswitch">
                 <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
-                    Match Scout
+                    Switch to match
                 </button>
             </div>
 
