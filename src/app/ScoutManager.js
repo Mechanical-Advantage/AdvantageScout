@@ -214,6 +214,7 @@ function ScoutManager(appManager) {
             document.getElementById("classicDiv1").hidden = !showClassic
         }
 
+        this.updateHelpButton()
         document.getElementById("selectionDiv").hidden = true
         appManager.serverManager.heartbeat()
     }
@@ -233,9 +234,35 @@ function ScoutManager(appManager) {
         document.getElementById("classicDiv1").hidden = !((appManager.game.prefs.forceClassic["auto"] || scoutMode == "classic") && appManager.state == 1)
         document.getElementById("classicDiv2").hidden = !((appManager.game.prefs.forceClassic["teleop"] || scoutMode == "classic") && appManager.state == 2)
         document.getElementById("classicDiv3").hidden = !((appManager.game.prefs.forceClassic["endgame"] || scoutMode == "classic") && appManager.state == 3)
+        this.updateHelpButton()
         appManager.visualManager.setMode(mode)
         window.scrollTo(0, 0)
         appManager.serverManager.heartbeat()
+    }
+
+    // Hide or show help button based on mode
+    this.updateHelpButton = function () {
+        var showButton = false
+        if (appManager.state >= 1 && appManager.state <= 3) {
+            if (appManager.game.prefs.helpText != undefined) {
+                if (appManager.game.prefs.helpText[modeLookup[appManager.state - 1]] != undefined) {
+                    showButton = true
+                }
+            }
+        }
+        document.getElementById("helpButton").hidden = !showButton
+    }
+
+    // Set help text based on mode and show
+    this.showHelp = function () {
+        var helpText = document.getElementById("helpTextDiv")
+        helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[modeLookup[appManager.state - 1]]
+        helpText.hidden = false
+    }
+
+    // Hide help text
+    this.hideHelp = function () {
+        document.getElementById("helpTextDiv").hidden = true
     }
 
     // Logic operator lookup for upload check

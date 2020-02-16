@@ -165,6 +165,10 @@
             }
         ]
     },
+    "helpText": {
+        "auto": "This is the <b>autonomous</b> help text.",
+        "endgame": "This is the <b>end game</b> help text."
+    },
     "classic": {
         "pit": [
             {

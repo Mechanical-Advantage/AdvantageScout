@@ -298,6 +298,19 @@ class main_server(object):
             <div class="switcherbutton3" onclick="javascript:appManager.scoutManager.setMode(3)">
                 End Game
             </div>
+            <div class="helpbutton" id="helpButton" onclick="javascript:appManager.scoutManager.showHelp()">
+                ?
+            </div>
+        </div>
+
+        <div id="helpTextDiv" hidden>
+            <div class="screenblocker" onclick="javascript:appManager.scoutManager.hideHelp()"></div>
+            <div class="helptext" id="helpText">
+                <div class="helptextbottom">
+                    Click anywhere outside this box to exit
+                </div>
+                <div></div>
+            </div>
         </div>
         
         <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>

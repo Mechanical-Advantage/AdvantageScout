@@ -7,6 +7,10 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.8.0
+* Change button text for switching between match and pit scouting
+* Add help text
+
 ### 1.7.1
 * Bug fixes and cleanup when writing to serial
 * Fixed loading of scout list from cache
