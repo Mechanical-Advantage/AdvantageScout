@@ -3,7 +3,7 @@ function MatchScheduleManager(adminManager) {
     //Update match cache on server
     this.refreshCache = function (fromTBA) {
         adminManager.request("PUT", "/get_cache", function (data) {
-            if (data.slice(0, 10) == "Downloaded") {
+            if (data.slice(0, 5) == "Saved") {
                 document.getElementById("eventcache").innerHTML = adminManager.configManager.getEvent()
             }
             alert(data)
