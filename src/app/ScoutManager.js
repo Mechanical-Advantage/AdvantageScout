@@ -241,22 +241,28 @@ function ScoutManager(appManager) {
     }
 
     // Hide or show help button based on mode
+    const helpModeLookup = {
+        1: "auto",
+        2: "teleop",
+        3: "endgame",
+        5: "pit"
+    }
     this.updateHelpButton = function () {
         var showButton = false
-        if (appManager.state >= 1 && appManager.state <= 3) {
+        if ((appManager.state >= 1 && appManager.state <= 3) || appManager.state == 5) {
             if (appManager.game.prefs.helpText != undefined) {
-                if (appManager.game.prefs.helpText[modeLookup[appManager.state - 1]] != undefined) {
+                if (appManager.game.prefs.helpText[helpModeLookup[appManager.state]] != undefined) {
                     showButton = true
                 }
             }
         }
-        document.getElementById("helpButton").hidden = !showButton
+        document.getElementById("helpButtonDiv").hidden = !showButton
     }
 
     // Set help text based on mode and show
     this.showHelp = function () {
         var helpText = document.getElementById("helpTextDiv")
-        helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[modeLookup[appManager.state - 1]]
+        helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[helpModeLookup[appManager.state]]
         helpText.hidden = false
     }
 
@@ -416,6 +422,7 @@ function ScoutManager(appManager) {
             document.getElementById("match").value = ""
             document.getElementById("scoutselect").value = "Please select"
         }
+        this.updateHelpButton()
         appManager.serverManager.heartbeat()
     }
 

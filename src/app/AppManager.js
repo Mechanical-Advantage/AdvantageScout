@@ -80,6 +80,7 @@ function AppManager(web) {
     this.settingsManager.divSetup()
     this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
+    this.scoutManager.updateHelpButton()
     this.serverManager.init()
     this.serverManager.getData()
     this.settingsManager.loadDataCache()

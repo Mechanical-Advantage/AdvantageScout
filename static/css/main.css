@@ -110,6 +110,7 @@ div.helpbutton {
     text-align: center;
     line-height: 50px;
     font-size: 40px;
+    z-index: 1;
     background-color: rgb(189, 189, 189);
 }
 
@@ -131,8 +132,8 @@ div.helptext {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
-    height: 60%;
+    width: 75%;
+    height: 75%;
     box-shadow: black 0px 0px 30px 5px;
     padding: 10px;
     overflow: auto;
