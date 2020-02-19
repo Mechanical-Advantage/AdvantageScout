@@ -53,7 +53,7 @@ function AdminManager() {
     }
 
     // Page setup
-    this.configManager.get()
+    this.configManager.get(false)
     this.matchScheduleManager.get()
     setInterval(this.matchScheduleManager.get, 2000)
     this.scoutPrefManager.get()

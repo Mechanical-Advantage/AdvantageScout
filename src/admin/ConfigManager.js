@@ -8,16 +8,18 @@ function ConfigManager(adminManager) {
     }
 
     // Update config from server
-    this.get = function () {
+    this.get = function (onlyScoutList) {
         adminManager.request("GET", "/get_config", function (data) {
             var result = JSON.parse(data)
-            document.getElementById("game").value = result.game
-            document.getElementById("event").value = result.event
-            event = result.event
-            document.getElementById("reverse_alliances").selectedIndex = result.reverse_alliances
-            document.getElementById("dev_mode").selectedIndex = result.dev_mode
-            document.getElementById("auto_schedule").selectedIndex = result.auto_schedule
-            document.getElementById("eventcache").innerHTML = result.event_cache
+            if (!onlyScoutList) {
+                document.getElementById("game").value = result.game
+                document.getElementById("event").value = result.event
+                event = result.event
+                document.getElementById("reverse_alliances").selectedIndex = result.reverse_alliances
+                document.getElementById("dev_mode").selectedIndex = result.dev_mode
+                document.getElementById("auto_schedule").selectedIndex = result.auto_schedule
+                document.getElementById("eventcache").innerHTML = result.event_cache
+            }
 
             adminManager.scoutListManager.create(result.scouts)
         }, {}, "Failed to get configuration.")
