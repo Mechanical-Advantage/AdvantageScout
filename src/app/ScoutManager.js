@@ -264,6 +264,7 @@ function ScoutManager(appManager) {
         var helpText = document.getElementById("helpTextDiv")
         helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[helpModeLookup[appManager.state]]
         helpText.hidden = false
+        helpText.children[1].scrollTop = 0
     }
 
     // Hide help text
