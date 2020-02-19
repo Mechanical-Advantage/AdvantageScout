@@ -68,17 +68,32 @@ function SettingsManager(appManager) {
     this.divSetup = function () {
         if (window.localStorage.getItem("advantagescout_device") == null) {
             this.open()
-        } else if (!appManager.web) {
+        }
+        if (!appManager.web) {
             document.getElementById("name").value = window.localStorage.getItem("advantagescout_device")
             document.getElementById("imageQuality").value = window.localStorage.getItem("advantagescout_imagequality")
         }
+        document.getElementById("pitNotes").value = window.localStorage.getItem("advantagescout_pitnotes")
         this.updateCacheTime()
+    }
+
+    // Begin saving pit notes regularly
+    this.initSavePitNotes = function () {
+        setInterval(this.savePitNotes, 1000)
+    }
+
+    // Save current pit notes to local storage
+    this.savePitNotes = function () {
+        window.localStorage.setItem("advantagescout_pitnotes", document.getElementById("pitNotes").value)
     }
 
     // Create list in local storage for saved matches
     this.initLocalStorage = function () {
         if (window.localStorage.getItem("advantagescout_scoutdata") == null) {
             window.localStorage.setItem("advantagescout_scoutdata", "[]")
+        }
+        if (window.localStorage.getItem("advantagescout_pitnotes") == null) {
+            window.localStorage.setItem("advantagescout_pitnotes", "")
         }
         if (window.localStorage.getItem("advantagescout_imagequality") == null) {
             window.localStorage.setItem("advantagescout_imagequality", "25")
@@ -92,7 +107,7 @@ function SettingsManager(appManager) {
         this.updateCacheTime()
     }
 
-    // Update time of last dat cache
+    // Update time of last data cache
     this.updateCacheTime = function () {
         if (!appManager.web) {
             function formatDate(time) {

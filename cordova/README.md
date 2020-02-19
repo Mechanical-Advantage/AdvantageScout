@@ -7,6 +7,10 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.10.0
+* Added notes area for pit scouting
+* Cleaned up startup process when unconfigured
+
 ### 1.9.0
 * Added support for help text when pit scouting
 * Increased size of help text box

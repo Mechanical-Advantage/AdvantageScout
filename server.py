@@ -288,6 +288,13 @@ class main_server(object):
                 <button class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;pit&quot;)">
                     Pit Scout!
                 </button>
+                <div style="margin-top: 18px;">
+                    <u>
+                        Take notes / list teams here:
+                    </u>
+                    <br>
+                    <textarea style="height: 300px; width: 275px; resize: none; margin-top: 5px;" placeholder="Enter notes here..." id="pitNotes"></textarea>
+                </div>
             </div>
         </div>
         

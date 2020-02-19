@@ -19,17 +19,19 @@ function AppServerManager(appManager) {
     // Send heartbeat if not already in queue
     var heartbeatQueued = false
     this.heartbeat = function () {
-        if (!heartbeatQueued) {
-            heartbeatQueued = true
-            addToSerialQueue("heartbeat", function () {
-                if (appManager.state == 0) {
-                    return [appManager.state, appManager.battery, appManager.charging]
-                } else {
-                    return [appManager.state, appManager.battery, appManager.charging, appManager.team, appManager.match]
-                }
-            }, function () {
-                heartbeatQueued = false
-            })
+        if (window.localStorage.getItem("advantagescout_device") != null) {
+            if (!heartbeatQueued) {
+                heartbeatQueued = true
+                addToSerialQueue("heartbeat", function () {
+                    if (appManager.state == 0) {
+                        return [appManager.state, appManager.battery, appManager.charging]
+                    } else {
+                        return [appManager.state, appManager.battery, appManager.charging, appManager.team, appManager.match]
+                    }
+                }, function () {
+                    heartbeatQueued = false
+                })
+            }
         }
     }
 

@@ -78,6 +78,7 @@ function AppManager(web) {
     this.settingsManager.loadVersion()
     this.settingsManager.initLocalStorage()
     this.settingsManager.divSetup()
+    this.settingsManager.initSavePitNotes()
     this.settingsManager.updateLocalCount()
     this.scoutManager.resizeTextInit()
     this.scoutManager.updateHelpButton()
