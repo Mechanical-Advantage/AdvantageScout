@@ -4,3 +4,4 @@ cordova/www/src
 __pycache__
 images
 block_schedule.xlsx
+schedule.csv

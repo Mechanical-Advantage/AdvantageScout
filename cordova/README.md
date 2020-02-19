@@ -7,9 +7,14 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.9.0
+* Added support for help text when pit scouting
+* Increased size of help text box
+* Added reset of scroll position in help text box
+
 ### 1.8.0
-* Change button text for switching between match and pit scouting
-* Add help text
+* Changed button text for switching between match and pit scouting
+* Added help text
 
 ### 1.7.1
 * Bug fixes and cleanup when writing to serial

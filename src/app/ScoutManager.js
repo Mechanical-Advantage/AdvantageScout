@@ -260,11 +260,15 @@ function ScoutManager(appManager) {
     }
 
     // Set help text based on mode and show
+    var lastHelpOpened = 0
     this.showHelp = function () {
         var helpText = document.getElementById("helpTextDiv")
         helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[helpModeLookup[appManager.state]]
         helpText.hidden = false
-        helpText.children[1].scrollTop = 0
+        if (lastHelpOpened != appManager.state) {
+            helpText.children[1].scrollTop = 0
+            lastHelpOpened = appManager.state
+        }
     }
 
     // Hide help text
