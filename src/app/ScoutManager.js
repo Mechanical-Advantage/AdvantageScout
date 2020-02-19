@@ -266,7 +266,7 @@ function ScoutManager(appManager) {
         helpText.children[1].children[1].innerHTML = appManager.game.prefs.helpText[helpModeLookup[appManager.state]]
         helpText.hidden = false
         if (lastHelpOpened != appManager.state) {
-            helpText.children[1].scrollTop = 0
+            helpText.children[1].children[1].scrollTop = 0
             lastHelpOpened = appManager.state
         }
     }

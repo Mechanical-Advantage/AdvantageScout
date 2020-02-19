@@ -164,13 +164,21 @@ div.helptext {
     height: 75%;
     box-shadow: black 0px 0px 30px 5px;
     padding: 10px;
-    overflow: auto;
+}
+
+div.helptexttop {
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    font-style: italic;
+    text-align: center;
 }
 
 div.helptextbottom {
-    margin-bottom: 20px;
-    font-style: italic;
-    text-align: center;
+    position: fixed;
+    top: 40px;
+    bottom: 0px;
+    overflow: auto;
 }
 
 div.visualcanvasdiv {

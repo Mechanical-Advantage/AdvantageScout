@@ -335,10 +335,10 @@ class main_server(object):
         <div id="helpTextDiv" hidden>
             <div class="screenblocker" onclick="javascript:appManager.scoutManager.hideHelp()"></div>
             <div class="helptext" id="helpText">
-                <div class="helptextbottom">
+                <div class="helptexttop">
                     Click anywhere outside this box to exit
                 </div>
-                <div></div>
+                <div class="helptextbottom"></div>
             </div>
         </div>
         
