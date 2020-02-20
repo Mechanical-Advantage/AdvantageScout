@@ -319,29 +319,28 @@ function render() {
     if ("AllianceColor" in data) {
         leftX = (data["AllianceColor"] == 0) ? 25 : 2575
         context.fillStyle = success
-        context.fillRect(leftX, 500, 200, 600)
+        context.fillRect(leftX, 200, 175, 350)
+        context.fillRect(leftX, 625, 175, 350)
+        context.fillRect(leftX, 1050, 175, 350)
+        context.strokeRect(leftX, 200, 175, 350)
+        context.strokeRect(leftX, 625, 175, 350)
+        context.strokeRect(leftX, 1050, 175, 350)
         context.fillStyle = failure
-        context.fillRect(leftX + 200, 500, 200, 600)
-        context.strokeRect(leftX, 500, 400, 600)
-        context.beginPath()
-        context.moveTo(leftX + 200, 500)
-        context.lineTo(leftX + 200, 1100)
-        context.moveTo(leftX + 0, 700)
-        context.lineTo(leftX + 200, 700)
-        context.moveTo(leftX + 0, 900)
-        context.lineTo(leftX + 400, 900)
-        context.stroke()
+        context.fillRect(leftX + 225, 200, 175, 775)
+        context.fillRect(leftX + 225, 1050, 175, 350)
+        context.strokeRect(leftX + 225, 200, 175, 775)
+        context.strokeRect(leftX + 225, 1050, 175, 350)
 
         // Write numbers
         context.textAlign = "center"
         context.textBaseline = "middle"
         context.font = "130px sans-serif"
         context.fillStyle = text
-        context.fillText((mode == 0) ? data["AutoInnerSuccess"] : data["InnerSuccess"], leftX + 100, 610)
-        context.fillText((mode == 0) ? data["AutoOuterSuccess"] : data["OuterSuccess"], leftX + 100, 810)
-        context.fillText((mode == 0) ? data["AutoLowerSuccess"] : data["LowerSuccess"], leftX + 100, 1010)
-        context.fillText((mode == 0) ? data["AutoUpperFailures"] : data["UpperFailures"], leftX + 300, 710)
-        context.fillText((mode == 0) ? data["AutoLowerFailures"] : data["LowerFailures"], leftX + 300, 1010)
+        context.fillText((mode == 0) ? data["AutoInnerSuccess"] : data["InnerSuccess"], leftX + 88, 375)
+        context.fillText((mode == 0) ? data["AutoOuterSuccess"] : data["OuterSuccess"], leftX + 88, 810)
+        context.fillText((mode == 0) ? data["AutoLowerSuccess"] : data["LowerSuccess"], leftX + 88, 1225)
+        context.fillText((mode == 0) ? data["AutoUpperFailures"] : data["UpperFailures"], leftX + 312, 592)
+        context.fillText((mode == 0) ? data["AutoLowerFailures"] : data["LowerFailures"], leftX + 312, 1225)
     }
 
     // Render control panel
@@ -507,7 +506,7 @@ buttonManager.addButton("CrossedLineRight", new Button(2100, 0, 300, 200, functi
     }
 }))
 
-buttonManager.addButton("LeftInnerSuccess", new Button(25, 500, 200, 200, function () {
+buttonManager.addButton("LeftInnerSuccess", new Button(25, 200, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
             addToDataLog()
@@ -522,7 +521,7 @@ buttonManager.addButton("LeftInnerSuccess", new Button(25, 500, 200, 200, functi
     }
 }))
 
-buttonManager.addButton("LeftOuterSuccess", new Button(25, 700, 200, 200, function () {
+buttonManager.addButton("LeftOuterSuccess", new Button(25, 625, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
             addToDataLog()
@@ -537,7 +536,7 @@ buttonManager.addButton("LeftOuterSuccess", new Button(25, 700, 200, 200, functi
     }
 }))
 
-buttonManager.addButton("LeftLowerSuccess", new Button(25, 900, 200, 200, function () {
+buttonManager.addButton("LeftLowerSuccess", new Button(25, 1050, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
             addToDataLog()
@@ -551,7 +550,7 @@ buttonManager.addButton("LeftLowerSuccess", new Button(25, 900, 200, 200, functi
     }
 }))
 
-buttonManager.addButton("LeftUpperFailures", new Button(225, 500, 200, 400, function () {
+buttonManager.addButton("LeftUpperFailures", new Button(250, 200, 175, 775, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
             addToDataLog()
@@ -566,7 +565,7 @@ buttonManager.addButton("LeftUpperFailures", new Button(225, 500, 200, 400, func
     }
 }))
 
-buttonManager.addButton("LeftLowerFailures", new Button(225, 900, 200, 200, function () {
+buttonManager.addButton("LeftLowerFailures", new Button(250, 1050, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
             addToDataLog()
@@ -580,7 +579,7 @@ buttonManager.addButton("LeftLowerFailures", new Button(225, 900, 200, 200, func
     }
 }))
 
-buttonManager.addButton("RightInnerSuccess", new Button(2575, 500, 200, 200, function () {
+buttonManager.addButton("RightInnerSuccess", new Button(2575, 200, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
             addToDataLog()
@@ -595,7 +594,7 @@ buttonManager.addButton("RightInnerSuccess", new Button(2575, 500, 200, 200, fun
     }
 }))
 
-buttonManager.addButton("RightOuterSuccess", new Button(2575, 700, 200, 200, function () {
+buttonManager.addButton("RightOuterSuccess", new Button(2575, 625, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
             addToDataLog()
@@ -610,7 +609,7 @@ buttonManager.addButton("RightOuterSuccess", new Button(2575, 700, 200, 200, fun
     }
 }))
 
-buttonManager.addButton("RightLowerSuccess", new Button(2575, 900, 200, 200, function () {
+buttonManager.addButton("RightLowerSuccess", new Button(2575, 1050, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
             addToDataLog()
@@ -624,7 +623,7 @@ buttonManager.addButton("RightLowerSuccess", new Button(2575, 900, 200, 200, fun
     }
 }))
 
-buttonManager.addButton("RightUpperFailures", new Button(2775, 500, 200, 400, function () {
+buttonManager.addButton("RightUpperFailures", new Button(2800, 200, 175, 775, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
             addToDataLog()
@@ -639,7 +638,7 @@ buttonManager.addButton("RightUpperFailures", new Button(2775, 500, 200, 400, fu
     }
 }))
 
-buttonManager.addButton("RightLowerFailures", new Button(2775, 900, 200, 200, function () {
+buttonManager.addButton("RightLowerFailures", new Button(2800, 1050, 175, 350, function () {
     if ("AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
             addToDataLog()
