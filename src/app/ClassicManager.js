@@ -196,7 +196,7 @@ function ClassicManager(appManager) {
                         }
 
                     } else if (input.type == "textarea") {
-                        result[fieldName] = input.value
+                        result[fieldName] = input.value.replace(/[^\x20-\x7E]+/g, "")
                     } else if (input.type == "number") {
                         result[fieldName] = Number(input.value)
                     } else if (input.type == "submit") {
