@@ -152,6 +152,16 @@
                 "binding": true
             },
             {
+                "script": "return (data.Comment.length < 50) || (data.Comment.length >= 75)",
+                "message": "Your comment is pretty long. Please try to shorten it. Continue?",
+                "binding": false
+            },
+            {
+                "script": "return (data.Comment.length < 75)",
+                "message": "Your comment is very long. Please shorten it.",
+                "binding": true
+            },
+            {
                 "script": "return (data.Comment.length > 15) || (data.Comment.length == 0)",
                 "message": "Your comment is very short. Would you still like to continue?",
                 "binding": false
