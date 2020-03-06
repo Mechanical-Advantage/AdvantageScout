@@ -24,17 +24,18 @@ forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
-bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]]  # current implementation
+bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
+                     "COM8", "COM10"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
-schedule_total_priority=0.5  # weight to apply to total when scheduling
-db_global="global.db"  # database for data not tied to specific games
-db_games="data_$GAME.db"  # database for collected scouting data
-image_dir="images"  # folder for image data
-schedule_workbook="block_schedule.xlsx"  # file for block schedule
-schedule_csv="schedule.csv"  # csv for offline scheduling
-default_game="2019"
+schedule_total_priority = 0.5  # weight to apply to total when scheduling
+db_global = "global.db"  # database for data not tied to specific games
+db_games = "data_$GAME.db"  # database for collected scouting data
+image_dir = "images"  # folder for image data
+schedule_workbook = "block_schedule.xlsx"  # file for block schedule
+schedule_csv = "schedule.csv"  # csv for offline scheduling
+default_game = "2019"
 
 # Import serial library
 if bt_enable:
@@ -42,7 +43,7 @@ if bt_enable:
 
 
 # Log output in cherrypy format
-def log(output, before_text = ""):
+def log(output, before_text=""):
     if before_text == "":
         print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
     else:
@@ -52,8 +53,8 @@ def log(output, before_text = ""):
 
 # Initialize global
 def init_global():
-    conn_global=sql.connect(db_global)
-    cur_global=conn_global.cursor()
+    conn_global = sql.connect(db_global)
+    cur_global = conn_global.cursor()
     cur_global.execute("DROP TABLE IF EXISTS devices")
     cur_global.execute("""CREATE TABLE devices (
         name TEXT,
