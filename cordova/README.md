@@ -7,8 +7,11 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.10.3
+* Fixed hiding of schedule after submitting
+
 ### 1.10.2
-* Added removal of non utf-8 characters in text boxes 
+* Added removal of non utf-8 characters in text boxes
 
 ### 1.10.1
 * Fixed instruction text in place in help box

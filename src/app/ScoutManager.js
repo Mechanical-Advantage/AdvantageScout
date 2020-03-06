@@ -4,6 +4,7 @@ function ScoutManager(appManager) {
     const highlightLookup = ["#ff6363", "#59ff78", "#8f9aff"]
     var scoutMode
     var hiddenScheduleKey = ""
+    var tempHiddenScheduleKey = ""
     var noReloadScheduleKey = ""
 
     // Load config and game data
@@ -193,6 +194,10 @@ function ScoutManager(appManager) {
             }
             appManager.state = 1
 
+            if (appManager.schedule) {
+                tempHiddenScheduleKey = appManager.schedule.key
+            }
+
             appManager.classicManager.start()
             appManager.visualManager.start()
 
@@ -353,7 +358,7 @@ function ScoutManager(appManager) {
                 if (result == 1) {
                     saveData(dataTemp)
                     if (appManager.schedule) {
-                        hiddenScheduleKey = appManager.schedule.key
+                        hiddenScheduleKey = tempHiddenScheduleKey
                         appManager.scoutManager.loadSchedule()
                     }
                     appManager.serverManager.upload()
