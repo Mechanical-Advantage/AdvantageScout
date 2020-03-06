@@ -29,7 +29,7 @@ bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
-schedule_total_priority = 0.35  # weight to apply to total when scheduling
+schedule_total_priority = 0.5  # weight to apply to total when scheduling
 db_global = "global.db"  # database for data not tied to specific games
 db_games = "data_$GAME.db"  # database for collected scouting data
 image_dir = "images"  # folder for image data
@@ -240,7 +240,7 @@ class main_server(object):
 
             <div id="scoutselectdiv">
                 Scout:
-                <select id="scoutselect"></select>
+                <select id="scoutselect" onchange="javascript:appManager.scoutManager.autoFillTeamMatch()"></select>
             </div>
 
             <div id="selectionDiv_match">
@@ -280,7 +280,7 @@ class main_server(object):
                     <table id="schedule"></table>
                 </div>
             </div>
-            
+
             <div id="selectionDiv_pit" hidden>
                 Team:
                 <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
@@ -297,7 +297,7 @@ class main_server(object):
                 </div>
             </div>
         </div>
-        
+
         <div id="offlineWarningDiv" class="centered" hidden>
             <div class="title">
                 Advantage Scout
@@ -315,7 +315,7 @@ class main_server(object):
                 Continue
             </button>
         </div>
-        
+
         <div id="modeSwitcherDiv" class="modeswitcher" hidden>
             <div class="switcherbutton1" onclick="javascript:appManager.scoutManager.setMode(1)" style="font-weight: bold;">
                 Autonomous
@@ -341,27 +341,27 @@ class main_server(object):
                 <div class="helptextbottom"></div>
             </div>
         </div>
-        
+
         <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>
             Pit Scout - <span id="pitNumber">????</span>
         </div>
-        
+
         <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
             <canvas class="visualcanvas" width="3000" height="1600"></canvas>
         </div>
-        
+
         <div id="classicDiv1" class="classicdiv" hidden>
         </div>
-        
+
         <div id="classicDiv2" class="classicdiv" hidden>
         </div>
-        
+
         <div id="classicDiv3" class="classicdiv" hidden>
         </div>
-        
+
         <div id="pitClassicDiv" class="classicdiv" hidden>
         </div>
-        
+
         <noscript>
             <div class="centered">
                 <div class="title">
@@ -373,7 +373,7 @@ class main_server(object):
                 You can't scout without JavaScript!
             </div>
         </noscript>
-    
+
         <script>
             var appManager = new AppManager(true)
         </script>
@@ -395,7 +395,8 @@ class main_server(object):
         $FAVICON_CODE
         <script>
             function finish() {
-                window.localStorage.setItem("advantagescout_device", document.getElementById("name").value)
+                window.localStorage.setItem(
+                    "advantagescout_device", document.getElementById("name").value)
                 window.location = "/"
             }
         </script>
@@ -430,7 +431,8 @@ class main_server(object):
 <html>
 <body>
 <script>
-document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata")
+document.body.innerHTML = window.localStorage.getItem(
+    "advantagescout_scoutdata")
 </script>
 </body>
 </html>
@@ -637,20 +639,20 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             <h3>
                 Config
             </h3>
-            
-            Game: 
+
+            Game:
             <input type="text" id="game"></input>
             <button onclick="javascript:adminManager.configManager.save(&quot;game&quot;)">
                 Save
             </button>
-            
+
             <br>
-            Event: 
+            Event:
             <input type="text" id="event"></input>
             <button onclick="javascript:adminManager.configManager.save(&quot;event&quot;)">
                 Save
             </button>
-            
+
             <br>
             Alliance Position:
             <select id="reverse_alliances">
@@ -667,7 +669,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             <button onclick="javascript:adminManager.configManager.save(&quot;reverse_alliances&quot;)">
                 Save
             </button>
-            
+
             <br>
             Dev Mode:
             <select id="dev_mode">
@@ -726,27 +728,6 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
 
         <div class="section">
             <h3>
-                Scout Preferences
-            </h3>
-            <input id="prefsTeam" type="number" style="width: 75px;"></input>
-            <input id="prefsScout" type="text"></input>
-            <button onclick="javascript:adminManager.scoutPrefManager.addPref()">
-                Add Preference
-            </button>
-            <table class="prefstable" id="prefsTable">
-                <tr>
-                    <td class="prefsheader">
-                        Team
-                    </td>
-                    <td class="prefsheader">
-                        Scout
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h3>
                 Scout List
             </h3>
             <input type="text" id="addScoutName"></input>
@@ -755,7 +736,7 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
             </button>
             <table id="scoutlist" style="margin-top: 7px;"></table>
         </div>
-        
+
         <div class="section">
             <h3>
                 Devices
@@ -809,6 +790,27 @@ document.body.innerHTML = window.localStorage.getItem("advantagescout_scoutdata"
                     </td>
                     <td class="uploadedheader">
                         R3
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>
+                Scout Preferences
+            </h3>
+            <input id="prefsTeam" type="number" style="width: 75px;"></input>
+            <input id="prefsScout" type="text"></input>
+            <button onclick="javascript:adminManager.scoutPrefManager.addPref()">
+                Add Preference
+            </button>
+            <table class="prefstable" id="prefsTable">
+                <tr>
+                    <td class="prefsheader">
+                        Team
+                    </td>
+                    <td class="prefsheader">
+                        Scout
                     </td>
                 </tr>
             </table>
@@ -1434,31 +1436,39 @@ def bluetooth_server(name, mode, client=None):
                 ser.write("[]\n".encode('utf-8'))
             continue
 
-        if msg[1] == "load_data":
-            config = quickread("cordova/config.xml").split('"')
-            result = {"game": json.loads(main_server().load_game()), "config": json.loads(
-                main_server().get_config()), "version": config[3]}
-        elif msg[1] == "upload":
-            result = json.loads(main_server().upload(msg[2][0]))
-        elif msg[1] == "heartbeat":
-            if len(msg[2]) > 3:
-                main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2]
-                                        [1], charging=msg[2][2], team=msg[2][3], match=msg[2][4], route=name)
+        try:
+            if msg[1] == "load_data":
+                config = quickread("cordova/config.xml").split('"')
+                result = {"game": json.loads(main_server().load_game()), "config": json.loads(
+                    main_server().get_config()), "version": config[3]}
+            elif msg[1] == "upload":
+                result = json.loads(main_server().upload(msg[2][0]))
+            elif msg[1] == "heartbeat":
+                if len(msg[2]) > 3:
+                    main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2]
+                                            [1], charging=msg[2][2], team=msg[2][3], match=msg[2][4], route=name)
+                else:
+                    main_server().heartbeat(
+                        device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], route=name)
+                result = "success"
+            elif msg[1] == "get_schedule":
+                result = json.loads(main_server().get_schedule())
             else:
-                main_server().heartbeat(
-                    device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], route=name)
-            result = "success"
-        elif msg[1] == "get_schedule":
-            result = json.loads(main_server().get_schedule())
+                result = "error"
+        except:
+            log("Unable to process request", name)
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message("[]\n")
+            else:
+                ser.write("[]\n".encode('utf-8'))
         else:
-            result = "error"
-        response = [msg[0], result]
-        if mode == serial_mode.WEBSOCKET:
-            client.send_message(json.dumps(response) + "\n")
-        else:
-            ser.write((json.dumps(response) + "\n").encode('utf-8'))
-        if bt_showheartbeats or msg[1] != "heartbeat":
-            log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", name)
+            response = [msg[0], result]
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message(json.dumps(response) + "\n")
+            else:
+                ser.write((json.dumps(response) + "\n").encode('utf-8'))
+            if bt_showheartbeats or msg[1] != "heartbeat":
+                log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", name)
 
 
 # Init list of admin clients
@@ -1594,9 +1604,9 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
             "SELECT Team, COUNT(*) FROM pit WHERE ScoutName=? GROUP BY Team", (scout,)).fetchall()
         for row in pit_records:
             if row[0] in scoutdata:
-                scoutdata[row[0]] += row[1] * 5
+                scoutdata[row[0]] += row[1] * 2
             else:
-                scoutdata[row[0]] = row[1] * 5
+                scoutdata[row[0]] = row[1] * 2
         scoutdata["total"] = cur_game.execute(
             "SELECT COUNT(*) FROM match WHERE Event=? AND ScoutName=?", (event, scout)).fetchall()[0][0]
         scout_records.append(scoutdata)
