@@ -167,6 +167,26 @@ function ScoutManager(appManager) {
         document.getElementById("selectionDiv_pit").hidden = (type != "pit")
     }
 
+    // Set team and match from schedule
+    this.autoFillTeamMatch = function () {
+        if (appManager.schedule) {
+            var scout = document.getElementById("scoutselect").value
+            if (appManager.schedule.scouts.includes(scout)) {
+                document.getElementById("team").value = appManager.schedule.teams[appManager.schedule.scouts.indexOf(scout)]
+                document.getElementById("match").value = appManager.schedule.match
+            } else {
+                clearTeamMatch()
+            }
+        } else {
+            clearTeamMatch()
+        }
+
+        function clearTeamMatch() {
+            document.getElementById("team").value = ""
+            document.getElementById("match").value = ""
+        }
+    }
+
     // Open scouting interface
     this.start = function (mode) {
         scoutMode = mode

@@ -7,6 +7,9 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.11.0
+* Added auto fill of team and match from schedule
+
 ### 1.10.3
 * Fixed hiding of schedule after submitting
 
