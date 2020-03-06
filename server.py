@@ -24,18 +24,17 @@ forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
-bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
-                     "COM8", "COM10"]  # current implementation
+bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7", "COM8", "COM10"]]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
-schedule_total_priority = 0.5  # weight to apply to total when scheduling
-db_global = "global.db"  # database for data not tied to specific games
-db_games = "data_$GAME.db"  # database for collected scouting data
-image_dir = "images"  # folder for image data
-schedule_workbook = "block_schedule.xlsx"  # file for block schedule
-schedule_csv = "schedule.csv"  # csv for offline scheduling
-default_game = "2019"
+schedule_total_priority=0.5  # weight to apply to total when scheduling
+db_global="global.db"  # database for data not tied to specific games
+db_games="data_$GAME.db"  # database for collected scouting data
+image_dir="images"  # folder for image data
+schedule_workbook="block_schedule.xlsx"  # file for block schedule
+schedule_csv="schedule.csv"  # csv for offline scheduling
+default_game="2019"
 
 # Import serial library
 if bt_enable:
@@ -43,7 +42,7 @@ if bt_enable:
 
 
 # Log output in cherrypy format
-def log(output, before_text=""):
+def log(output, before_text = ""):
     if before_text == "":
         print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
     else:
@@ -53,8 +52,8 @@ def log(output, before_text=""):
 
 # Initialize global
 def init_global():
-    conn_global = sql.connect(db_global)
-    cur_global = conn_global.cursor()
+    conn_global=sql.connect(db_global)
+    cur_global=conn_global.cursor()
     cur_global.execute("DROP TABLE IF EXISTS devices")
     cur_global.execute("""CREATE TABLE devices (
         name TEXT,
@@ -64,7 +63,8 @@ def init_global():
         last_charging INTEGER,
         last_status INTEGER,
         last_team INTEGER,
-        last_match INTEGER
+        last_match INTEGER,
+        last_scoutname TEXT
         ); """)
     cur_global.execute("DROP TABLE IF EXISTS scouts")
     cur_global.execute("""CREATE TABLE scouts (
@@ -473,7 +473,7 @@ document.body.innerHTML = window.localStorage.getItem(
         return(jsmin(output))
 
     @cherrypy.expose
-    def heartbeat(self, device_name, state, battery=-1, charging=0, team=-1, match=-1, route=None):
+    def heartbeat(self, device_name, state, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
         if route == None:
             route = cherrypy.request.remote.ip
 
@@ -484,11 +484,11 @@ document.body.innerHTML = window.localStorage.getItem(
         for i in range(len(names)):
             names[i] = names[i][0]
         if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_charging, last_status) VALUES (?, ?, ?, ?, ?, ?)",
-                               (device_name, currentTime(), route, battery, charging, state))
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_charging, last_status, last_scoutname) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                               (device_name, currentTime(), route, battery, charging, state, scoutname))
         else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_charging = ?, last_status = ? WHERE name = ?",
-                               (currentTime(), route, battery, charging, state, device_name))
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_charging = ?, last_status = ?, last_scoutname = ? WHERE name = ?",
+                               (currentTime(), route, battery, charging, state, scoutname, device_name))
         if team != -1:
             cur_global.execute(
                 "UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
@@ -884,7 +884,7 @@ document.body.innerHTML = window.localStorage.getItem(
         data = []
         for i in range(len(raw)):
             data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i]
-                         [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7]})
+                         [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8]})
         conn_global.close()
         return(json.dumps(data))
 
@@ -1444,12 +1444,10 @@ def bluetooth_server(name, mode, client=None):
             elif msg[1] == "upload":
                 result = json.loads(main_server().upload(msg[2][0]))
             elif msg[1] == "heartbeat":
-                if len(msg[2]) > 3:
-                    main_server().heartbeat(device_name=msg[0], state=msg[2][0], battery=msg[2]
-                                            [1], charging=msg[2][2], team=msg[2][3], match=msg[2][4], route=name)
-                else:
-                    main_server().heartbeat(
-                        device_name=msg[0], state=msg[2][0], battery=msg[2][1], charging=msg[2][2], route=name)
+                data = msg[2]
+                data["device_name"] = msg[0]
+                data["route"] = name
+                main_server().heartbeat(**data)
                 result = "success"
             elif msg[1] == "get_schedule":
                 result = json.loads(main_server().get_schedule())

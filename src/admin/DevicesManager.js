@@ -24,19 +24,19 @@ function DevicesManager(adminManager) {
                 status = "Idle"
                 color = "yellow"
             } else if (devices[i].last_status == 1) {
-                status = "Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match
                 color = "green"
             } else if (devices[i].last_status == 2) {
-                status = "Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match
                 color = "green"
             } else if (devices[i].last_status == 3) {
-                status = "Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match
                 color = "green"
             } else if (devices[i].last_status == 4) {
                 status = "Offline Warning"
                 color = "yellow"
             } else if (devices[i].last_status == 5) {
-                status = "Pit Scout<br>" + devices[i].last_team
+                status = devices[i].last_scoutname + "<br>Pit Scout<br>" + devices[i].last_team
                 color = "purple"
             } else {
                 status = "Unknown"

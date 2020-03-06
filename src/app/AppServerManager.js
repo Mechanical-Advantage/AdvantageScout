@@ -23,11 +23,17 @@ function AppServerManager(appManager) {
             if (!heartbeatQueued) {
                 heartbeatQueued = true
                 addToSerialQueue("heartbeat", function () {
-                    if (appManager.state == 0) {
-                        return [appManager.state, appManager.battery, appManager.charging]
-                    } else {
-                        return [appManager.state, appManager.battery, appManager.charging, appManager.team, appManager.match]
+                    var data = {
+                        "state": appManager.state,
+                        "battery": appManager.battery,
+                        "charging": appManager.charging
                     }
+                    if (appManager.state != 0) {
+                        data["team"] = appManager.team
+                        data["match"] = appManager.match
+                        data["scoutname"] = document.getElementById("scoutselect").value
+                    }
+                    return data
                 }, function () {
                     heartbeatQueued = false
                 })
