@@ -143,7 +143,9 @@ function ScoutManager(appManager) {
                 teamCell.classList.add("schedule")
                 scoutCell.classList.add("schedule")
                 teamCell.innerHTML = appManager.schedule.teams[i]
+                teamCell.style.textDecoration = appManager.schedule.ready[i] ? "line-through" : "none"
                 scoutCell.innerHTML = appManager.schedule.scouts[i]
+                scoutCell.style.textDecoration = appManager.schedule.ready[i] ? "line-through" : "none"
                 if (i < 3) {
                     teamCell.style.backgroundColor = "#87c3ff"
                     scoutCell.style.backgroundColor = "#87c3ff"

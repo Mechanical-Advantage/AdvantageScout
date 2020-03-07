@@ -7,6 +7,12 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.13.0
+* Added indication of which scouts are ready on schedule
+
+### 1.12.0
+* Added tracking of current scout name
+
 ### 1.11.0
 * Added auto fill of team and match from schedule
 

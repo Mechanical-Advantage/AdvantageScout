@@ -17,7 +17,7 @@ function ScoutListManager(adminManager) {
             name.classList.add("smallpad")
             rows.slice(-1)[0].appendChild(name)
 
-            if ((Number(scoutid) + 1) % 5 == 0) {
+            if ((Number(scoutid) + 1) % 4 == 0) {
                 scoutList.appendChild(rows.slice(-1)[0])
                 rows.push(document.createElement("TR"))
             }

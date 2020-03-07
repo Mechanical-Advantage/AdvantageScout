@@ -608,11 +608,14 @@ document.body.innerHTML = window.localStorage.getItem(
                 "SELECT * FROM schedule_next").fetchall()
             teams = []
             scouts = []
+            ready = []
             for row in schedule:
                 teams.append(row[0])
                 scouts.append(row[1])
+                ready.append(cur_global.execute(
+                    "SELECT COUNT() FROM devices WHERE last_team=? AND last_status>0 AND last_status<4 AND (?-last_heartbeat) <= 30", (int(row[0]), round(time.time()))).fetchall()[0][0] > 0)
             output = {"match": match, "key": key,
-                      "teams": teams, "scouts": scouts}
+                      "teams": teams, "scouts": scouts, "ready": ready}
 
         conn_global.close()
         return json.dumps(output)
