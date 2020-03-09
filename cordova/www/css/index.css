@@ -354,3 +354,25 @@ button.classicimagebutton {
     padding: 10px;
     border-radius: 8px;
 }
+
+button.classicstopwatchbutton {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 75%;
+    width: 40%;
+    border: 1px solid black;
+    font-size: 35px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+div.classicstopwatchtime {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+}

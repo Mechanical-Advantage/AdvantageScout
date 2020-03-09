@@ -4,11 +4,14 @@ function ClassicManager(appManager) {
     var fieldPrefsLookup = {} // prefs for each field (min, max, step, etc.)
     var fieldModeLists = [[], [], [], []] // lists of which fields are in which mode
     var counterData = {} // keeps track of counter values
+    var activeStopwatches = [] // keeps track of which stopwatches are running
 
     // Set up classic interface
     this.start = function () {
         fieldPrefsLookup = {}
         fieldModeLists = [[], [], [], []]
+        counterData = {}
+        activeStopwatches = []
         var mainDivs = [document.getElementById("classicDiv1"), document.getElementById("classicDiv2"), document.getElementById("classicDiv3"), document.getElementById("pitClassicDiv")]
         var modeCount
         if (appManager.game.prefs.pitFields == undefined) {
@@ -81,6 +84,7 @@ function ClassicManager(appManager) {
             unit.children[1].appendChild(select)
             select.classList.add("classicinput")
             select.id = modeName + "_" + inputData.field
+            select.classictype = "chooser"
             for (var name in inputData.options) {
                 var option = document.createElement("OPTION")
                 option.innerHTML = name
@@ -92,12 +96,14 @@ function ClassicManager(appManager) {
             unit.children[1].appendChild(textarea)
             textarea.classList.add("classicinput")
             textarea.id = modeName + "_" + inputData.field
+            textarea.classictype = "text"
             textarea.placeholder = "Enter text here..."
         } else if (inputData.type == "number") {
             var input = document.createElement("INPUT")
             unit.children[1].appendChild(input)
             input.classList.add("classicinput")
             input.id = modeName + "_" + inputData.field
+            input.classictype = "number"
             input.type = "number"
         } else if (inputData.type == "counter") {
             var downButton = document.createElement("BUTTON")
@@ -119,6 +125,7 @@ function ClassicManager(appManager) {
             counterData[modeName + "_" + inputData.field] = inputData.min
             fieldPrefsLookup[modeName + "_" + inputData.field] = { "min": inputData.min, "max": inputData.max, "step": inputData.step }
             number.id = modeName + "_" + inputData.field
+            number.classictype = "counter"
 
             var upButton = document.createElement("BUTTON")
             unit.children[1].appendChild(upButton)
@@ -137,6 +144,7 @@ function ClassicManager(appManager) {
             checkbox.classList.add("classicinput")
             checkbox.classList.add("classiccheck")
             checkbox.id = modeName + "_" + inputData.field
+            checkbox.classictype = "checkbox"
             checkbox.style.backgroundColor = "#ff7575"
             checkbox.onclick = function () {
                 if (this.style.backgroundColor == "rgb(255, 117, 117)") {
@@ -162,9 +170,36 @@ function ClassicManager(appManager) {
             button.style.backgroundColor = "#ff7575"
             button.innerHTML = "Camera"
             button.id = modeName + "_" + inputData.field
+            button.classictype = "image"
             button.onclick = function () {
                 appManager.classicManager.takePhoto(this)
             }
+        } else if (inputData.type = "stopwatch") {
+            var button = document.createElement("BUTTON")
+            unit.children[1].appendChild(button)
+            button.classList.add("classicstopwatchbutton")
+            button.style.backgroundColor = "#dddddd"
+            button.innerHTML = "\u{25B6}"
+            button.onclick = function () {
+                var id = this.parentElement.children[1].id
+                if (activeStopwatches.includes(id)) {
+                    activeStopwatches.splice(activeStopwatches.indexOf(id), 1)
+                    this.innerHTML = "X"
+                } else if (this.innerHTML == "X") {
+                    this.parentElement.children[1].innerHTML = "0.0"
+                    this.innerHTML = "\u{25B6}"
+                } else {
+                    activeStopwatches.push(id)
+                    this.innerHTML = "\u{23F9}"
+                }
+            }
+
+            var time = document.createElement("DIV")
+            unit.children[1].appendChild(time)
+            time.classList.add("classicstopwatchtime")
+            time.innerHTML = "0.0"
+            time.id = modeName + "_" + inputData.field
+            time.classictype = "stopwatch"
         }
         return unit
     }
@@ -186,29 +221,29 @@ function ClassicManager(appManager) {
                     var fieldName = fieldModeLists[mode][i]
                     var input = document.getElementById(modeLookup[mode] + "_" + fieldName)
 
-                    if (input.tagName == "DIV") {
+                    if (input.classictype == "counter") {
                         result[fieldName] = Number(input.innerText)
-                    } else if (input.type == "select-one") {
+                    } else if (input.classictype == "chooser") {
                         if (isNaN(input.value)) {
                             result[fieldName] = input.value
                         } else {
                             result[fieldName] = Number(input.value)
                         }
 
-                    } else if (input.type == "textarea") {
+                    } else if (input.classictype == "text") {
                         result[fieldName] = input.value.replace(/[^\x20-\x7E]+/g, "")
-                    } else if (input.type == "number") {
+                    } else if (input.classictype == "number") {
                         result[fieldName] = Number(input.value)
-                    } else if (input.type == "submit") {
-                        if (input.innerHTML == "Camera") {
-                            result[fieldName] = input.image
+                    } else if (input.classictype == "checkbox") {
+                        if (input.style.backgroundColor == "rgb(255, 117, 117)") {
+                            result[fieldName] = 0
                         } else {
-                            if (input.style.backgroundColor == "rgb(255, 117, 117)") {
-                                result[fieldName] = 0
-                            } else {
-                                result[fieldName] = 1
-                            }
+                            result[fieldName] = 1
                         }
+                    } else if (input.classictype == "image") {
+                        result[fieldName] = input.image
+                    } else if (input.classictype == "stopwatch"){
+                        result[fieldName] = Number(input.innerHTML)
                     }
                 }
             }
@@ -235,4 +270,17 @@ function ClassicManager(appManager) {
             navigator.camera.getPicture(onSuccess, function () { }, cameraOptions)
         }
     }
+
+    // Update stopwatches every 1/10th of a second
+    setInterval(function () {
+        for (var i in activeStopwatches) {
+            var div = document.getElementById(activeStopwatches[i])
+            var time = (Number(div.innerHTML * 10) + 1) / 10
+            timeString = time.toString()
+            if (time % 1 == 0) {
+                timeString = timeString + ".0"
+            }
+            div.innerHTML = timeString
+        }
+    }, 100);
 }
