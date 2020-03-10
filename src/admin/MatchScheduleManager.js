@@ -41,6 +41,10 @@ function MatchScheduleManager(adminManager) {
                     scoutCell.classList.add("smallpad")
                     teamCell.innerHTML = schedule.teams[i]
                     scoutCell.innerHTML = schedule.scouts[i]
+                    teamCell.innerHTML = schedule.teams[i]
+                    teamCell.style.textDecoration = schedule.ready[i] ? "line-through" : "none"
+                    scoutCell.innerHTML = schedule.scouts[i]
+                    scoutCell.style.textDecoration = schedule.ready[i] ? "line-through" : "none"
                     if (i < 3) {
                         teamCell.style.backgroundColor = "#87c3ff"
                         scoutCell.style.backgroundColor = "#87c3ff"

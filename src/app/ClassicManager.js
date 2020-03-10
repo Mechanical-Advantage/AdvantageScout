@@ -180,17 +180,21 @@ function ClassicManager(appManager) {
             button.classList.add("classicstopwatchbutton")
             button.style.backgroundColor = "#dddddd"
             button.innerHTML = "\u{25B6}"
+            button.style.fontSize = "35px"
             button.onclick = function () {
                 var id = this.parentElement.children[1].id
                 if (activeStopwatches.includes(id)) {
                     activeStopwatches.splice(activeStopwatches.indexOf(id), 1)
                     this.innerHTML = "X"
+                    button.style.fontSize = "35px"
                 } else if (this.innerHTML == "X") {
                     this.parentElement.children[1].innerHTML = "0.0"
                     this.innerHTML = "\u{25B6}"
+                    button.style.fontSize = "35px"
                 } else {
                     activeStopwatches.push(id)
-                    this.innerHTML = "\u{23F9}"
+                    this.innerHTML = "\u{2B1B}"
+                    this.style.fontSize = "25px"
                 }
             }
 
@@ -242,7 +246,7 @@ function ClassicManager(appManager) {
                         }
                     } else if (input.classictype == "image") {
                         result[fieldName] = input.image
-                    } else if (input.classictype == "stopwatch"){
+                    } else if (input.classictype == "stopwatch") {
                         result[fieldName] = Number(input.innerHTML)
                     }
                 }

@@ -74,6 +74,17 @@ function AppManager(web) {
         }
     }
 
+    // Show messages
+    this.showMessages = function (messages) {
+        if (messages.length > 0) {
+            if (messages.length == 1) {
+                this.notificationManager.alert("New Message", messages[0])
+            } else {
+                this.notificationManager.alert(messages.length.toString() + " New Messages", messages.join("\n\n"))
+            }
+        }
+    }
+
     // App setup
     this.settingsManager.loadVersion()
     this.settingsManager.initLocalStorage()
@@ -89,4 +100,10 @@ function AppManager(web) {
         getBattery()
         setInterval(getBattery, 2000)
     }
+
+    cordova.plugins.notification.local.schedule({
+        title: "Meeting in 15 minutes!",
+        text: "Jour fixe Produktionsbesprechung"
+    })
+    alert("Sent the notification!")
 }

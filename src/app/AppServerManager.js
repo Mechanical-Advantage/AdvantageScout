@@ -34,8 +34,9 @@ function AppServerManager(appManager) {
                         data["scoutname"] = document.getElementById("scoutselect").value
                     }
                     return data
-                }, function () {
+                }, function (data) {
                     heartbeatQueued = false
+                    appManager.showMessages(JSON.parse(JSON.parse(data)[1]))
                 })
             }
         }

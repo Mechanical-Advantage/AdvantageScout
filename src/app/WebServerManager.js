@@ -22,6 +22,7 @@ function WebServerManager(appManager) {
                         connectedText.style.color = "green"
                         connectedText.innerHTML = "Online"
                         appManager.serverManager.upload()
+                        appManager.showMessages(JSON.parse(this.responseText))
                     } else {
                         connected = false
                         connectedText.style.color = "red"

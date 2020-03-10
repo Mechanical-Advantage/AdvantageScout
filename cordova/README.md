@@ -7,6 +7,12 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.15.0
+* Added support for messaging system
+
+### 1.14.0
+* Added stopwatch input to classic layout
+
 ### 1.13.0
 * Added indication of which scouts are ready on schedule
 

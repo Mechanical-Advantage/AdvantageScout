@@ -60,7 +60,7 @@ function DevicesManager(adminManager) {
         for (var colorId = 0; colorId < 4; colorId++) {
             for (var i = 0; i < devicesSorted[colorLookup[colorId]].length; i++) {
                 var row = document.createElement("TR")
-                for (var f = 0; f < 6; f++) {
+                for (var f = 0; f < 7; f++) {
                     row.appendChild(document.createElement("TD"))
                     row.lastChild.classList.add("devices")
                 }
@@ -97,8 +97,18 @@ function DevicesManager(adminManager) {
                 row.children[4].innerHTML = formatted + " ago"
 
                 row.children[5].appendChild(document.createElement("BUTTON"))
-                row.children[5].firstChild.onclick = function () { adminManager.devicesManager.removeDevice(this.parentElement.parentElement.children[0].innerHTML) }
+                row.children[5].firstChild.onmousedown = function () { adminManager.devicesManager.removeDevice(this.parentElement.parentElement.children[0].innerHTML) }
                 row.children[5].firstChild.innerHTML = "Remove"
+
+                row.children[6].appendChild(document.createElement("BUTTON"))
+                function sendFunc(device) {
+                    return function () {
+                        adminManager.devicesManager.sendMessage(device)
+                    }
+                }
+                row.children[6].firstChild.onmousedown = sendFunc(devicesSorted[colorLookup[colorId]][i].name)
+                row.children[6].firstChild.innerHTML = "Send"
+
                 table.appendChild(row)
             }
         }
@@ -112,6 +122,19 @@ function DevicesManager(adminManager) {
         }, {
             name: device
         }, "Failed to remove device.")
+    }
+
+    //Send message to device
+    this.sendMessage = function (device) {
+        var text = document.getElementById("messageText").value
+        if (text == "") {
+            alert("Please enter a message.")
+        } else {
+            adminManager.request("POST", "/send_message", function () { }, {
+                target: device,
+                text: text
+            }, "Failed to queue message.")
+        }
     }
 
     //Web socket code

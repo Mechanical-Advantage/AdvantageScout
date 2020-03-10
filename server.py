@@ -30,6 +30,7 @@ bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
 schedule_total_priority = 0.5  # weight to apply to total when scheduling
+message_expiration = 60  # secs after sending before message expires
 db_global = "global.db"  # database for data not tied to specific games
 db_games = "data_$GAME.db"  # database for collected scouting data
 image_dir = "images"  # folder for image data
@@ -66,6 +67,12 @@ def init_global():
         last_team INTEGER,
         last_match INTEGER,
         last_scoutname TEXT
+        ); """)
+    cur_global.execute("DROP TABLE IF EXISTS messages")
+    cur_global.execute("""CREATE TABLE messages (
+        target TEXT,
+        expiration INTEGER,
+        text TEXT
         ); """)
     cur_global.execute("DROP TABLE IF EXISTS scouts")
     cur_global.execute("""CREATE TABLE scouts (
@@ -496,10 +503,16 @@ document.body.innerHTML = window.localStorage.getItem(
         if match != -1:
             cur_global.execute(
                 "UPDATE devices SET last_match = ? WHERE name = ?", (match, device_name))
+        cur_global.execute(
+            "DELETE FROM messages WHERE expiration<?", (round(time.time()),))
+        messages = [x[0] for x in cur_global.execute(
+            "SELECT text FROM messages WHERE target=?", (device_name,))]
+        cur_global.execute(
+            "DELETE FROM messages WHERE target=?", (device_name,))
         conn_global.commit()
         conn_global.close()
         update_admin()
-        return()
+        return(json.dumps(messages))
 
     @cherrypy.expose
     def load_game(self):
@@ -745,6 +758,7 @@ document.body.innerHTML = window.localStorage.getItem(
             <h3>
                 Devices
             </h3>
+            <input type="text" placeholder="Enter message here..." id="messageText" style="width: 450px; margin-bottom: 6px;"></input>
             <table class="devices">
                 <tbody id="deviceTable">
                     <tr>
@@ -897,6 +911,16 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
         cur_global.execute("DELETE FROM devices WHERE name = ?", (name,))
+        conn_global.commit()
+        conn_global.close()
+        return()
+
+    @cherrypy.expose
+    def send_message(self, target, text):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute(
+            "INSERT INTO messages(target,expiration,text) VALUES (?,?,?)", (target, round(time.time() + message_expiration), text))
         conn_global.commit()
         conn_global.close()
         return()
@@ -1451,8 +1475,7 @@ def bluetooth_server(name, mode, client=None):
                 data = msg[2]
                 data["device_name"] = msg[0]
                 data["route"] = name
-                main_server().heartbeat(**data)
-                result = "success"
+                result = main_server().heartbeat(**data)
             elif msg[1] == "get_schedule":
                 result = json.loads(main_server().get_schedule())
             else:
