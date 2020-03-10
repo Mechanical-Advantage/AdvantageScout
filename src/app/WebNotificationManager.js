@@ -12,4 +12,8 @@ function WebNotificationManager(appManager) {
             callback(2)
         }
     }
+
+    this.beep = function (times) {
+        return
+    }
 }

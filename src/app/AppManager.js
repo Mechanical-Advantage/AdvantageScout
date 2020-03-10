@@ -77,6 +77,7 @@ function AppManager(web) {
     // Show messages
     this.showMessages = function (messages) {
         if (messages.length > 0) {
+            this.notificationManager.beep(1)
             if (messages.length == 1) {
                 this.notificationManager.alert("New Message", messages[0])
             } else {
