@@ -100,10 +100,4 @@ function AppManager(web) {
         getBattery()
         setInterval(getBattery, 2000)
     }
-
-    cordova.plugins.notification.local.schedule({
-        title: "Meeting in 15 minutes!",
-        text: "Jour fixe Produktionsbesprechung"
-    })
-    alert("Sent the notification!")
 }
