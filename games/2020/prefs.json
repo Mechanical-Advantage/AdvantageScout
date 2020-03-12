@@ -127,6 +127,11 @@
                 "binding": true
             },
             {
+                "script": "return !((data.ClimbTime != 0) && (data.ClimbSuccess == 0))",
+                "message": "Please reset the climb time to 0 if not successful.",
+                "binding": true
+            },
+            {
                 "script": "return data.ClimbSuccess + data.ParkedSuccess < 2",
                 "message": "They can't be both parked and climbed!",
                 "binding": true
@@ -145,6 +150,11 @@
                 "script": "return !((data.ParkedAttempted == 0) && (data.ParkedSuccess == 1))",
                 "message": "You have marked park as successful but not attempted. Are you sure?",
                 "binding": false
+            },
+            {
+                "script": "return !((data.AutoInnerSuccess > 0 || data.AutoOuterSuccess > 0 || data.InnerSuccess > 0 || data.OuterSuccess > 0) && data.SpeedRating == 0)",
+                "message": "Please select their shooting speed.",
+                "binding": true
             },
             {
                 "field": "Comment",
