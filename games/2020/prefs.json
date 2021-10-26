@@ -164,12 +164,12 @@
                 "binding": true
             },
             {
-                "script": "return (data.Comment.length < 50) || (data.Comment.length >= 75)",
+                "script": "return (data.Comment.length < 150) || (data.Comment.length >= 200)",
                 "message": "Your comment is pretty long. Please try to shorten it. Continue?",
                 "binding": false
             },
             {
-                "script": "return (data.Comment.length < 75)",
+                "script": "return (data.Comment.length < 200)",
                 "message": "Your comment is very long. Please shorten it.",
                 "binding": true
             },
