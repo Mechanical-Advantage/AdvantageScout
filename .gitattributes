@@ -1,2 +1,2 @@
-cordova/plugins/* linguist-detectable=false
-cordova/node_modules/* linguist-detectable=false
+cordova/plugins/* linguist-vendored
+cordova/node_modules/* linguist-vendored
