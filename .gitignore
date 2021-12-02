@@ -5,3 +5,4 @@ __pycache__
 images
 block_schedule.xlsx
 schedule.csv
+*.DS_Store
