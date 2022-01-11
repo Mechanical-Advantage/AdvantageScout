@@ -1,0 +1,15 @@
+{
+    "fields": [],
+    "forceClassic": {
+        "auto": false,
+        "teleop": false,
+        "endgame": true
+    },
+    "hideClassic": false,
+    "uploadChecks": {},
+    "classic": {
+        "auto": [],
+        "teleop": [],
+        "endgame": []
+    }
+}
