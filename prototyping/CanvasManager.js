@@ -26,242 +26,62 @@ var data = {
     LowerTeleopFail:0
 }
 function render() {
-    //hoop points
+    // left hanger
     context.clearRect(0, 0, 3000, 1600)
-    context.fillStyle = green
-    // Successful shots (green rectangle)
-    context.rect(100, 100, 200, 400) //1
-    context.fillRect(100, 100, 200, 400) //1
-    context.rect(100, 600, 200, 400) //2    
-    context.fillRect(100, 600, 200, 400) //2
-    context.rect(100, 1100, 200, 400) //3
-    context.fillRect(100, 1100, 200, 400) //3
-
-    // Failed Shots (red rectangle)
     context.fillStyle = red
-    context.rect(300, 100, 200, 400)
-    context.fillRect(300, 100, 200, 400)
-    context.rect(300, 600, 200, 400)
-    context.fillRect(300, 600, 200, 400)
-    context.rect(300, 1100, 200, 400)
-    context.fillRect(300, 1100, 200, 400)
-
-    // Text Counter 
-    context.fillStyle = "black" 
-    context.font = "120px Frutiger"
-    context.textBaseline = "middle"
-    context.textAlign = "center";
-    
-    //text numbers
-    context.fillText(auto ? data.UpperAutoSuccess : data.UpperTeleopSuccess, 200,300)
-    context.fillText(auto ? data.MidAutoSuccess : data.MidTeleopSuccess, 200,800)
-    context.fillText(auto ? data.LowerAutoSuccess : data.LowerTeleopSuccess, 200,1300)
-    
-
-  
+    context.lineStyle = red
     context.lineWidth = 10
+    context.rect(0, 0, 600, 570)
+    context.strokeStyle = "gray"
     context.stroke()
-    //more text numbers
-    context.fillText(auto ? data.UpperAutoFail : data.UpperTeleopFail, 400,300)
-    context.fillText(auto ? data.MidAutoFail : data.MidTeleopFail, 400,800)
-    context.fillText(auto ? data.LowerAutoFail : data.LowerTeleopFail, 400,1300)
-
-    // Left Key Semicircle
-    context.fillStyle = red
-
     context.beginPath()
-    context.arc(730,800,500, Math.PI/2, -Math.PI/2, true)
-    context.moveTo(730,300)
-    context.lineTo(730,1300)
-    context.fill()
+    context.lineStyle = red
+    context.moveTo(180, 0)
+    context.lineTo(180, 570)
+    context.moveTo(300, 0)
+    context.lineTo(300, 570)
+    context.moveTo(430, 0)
+    context.lineTo(430, 570)
+    context.moveTo(600, 0)
+    context.lineTo(600, 570)
+    context.strokeStyle = red
+    context.stroke()
 
+    // right hanger
     context.fillStyle = blue
-    // Right Key Semicircle
-    context.beginPath()
-    context.arc(2270, 800, 500, Math.PI/2, -Math.PI/2, false)
-    context.moveTo(2270,300)
-    context.lineTo(2270,1300)
-    context.fill()
-    // Key squares
-
-
-    if (auto){
-    context.beginPath()
-    // Right
-    
-    context.fillStyle = ((data.LocationOfRobot == 1 && data.allianceType == 0) ? lightRed : red)
-    context.rect(730,300, 250,333)
-    context.fillRect(730,300, 250,333)//1
-    context.fillStyle = ((data.LocationOfRobot == 2 && data.allianceType == 0) ? lightRed : red)
-    context.rect(980,300,250,333)
-    context.fillRect(980,300,250,333)//2
-    context.fillStyle = ((data.LocationOfRobot == 3 && data.allianceType == 0) ? lightRed : red)
-    context.rect(730,633, 250,333)
-    context.fillRect(730,633, 250,333)//3
-    context.fillStyle = ((data.LocationOfRobot == 4 && data.allianceType == 0) ? lightRed : red)
-    context.rect(980,633,250,333)
-    context.fillRect(980,633,250,333)//4
-    context.fillStyle = ((data.LocationOfRobot == 5 && data.allianceType == 0) ? lightRed : red)
-    context.rect(730,966,250,333)
-    context.fillRect(730,966,250,333)//5
-    context.fillStyle = ((data.LocationOfRobot == 6 && data.allianceType == 0) ? lightRed : red)
-    context.rect(980,966,250,333)
-    context.fillRect(980,966,250,333)//6
-
-    // Left :)
-
-    context.fillStyle = ((data.LocationOfRobot == 1 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(1770,300, 250,333)
-    context.fillRect(1770,300, 250,333)//1
-    context.fillStyle = ((data.LocationOfRobot == 2 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(2020,300,250,333)
-    context.fillRect(2020,300,250,333)//2
-    context.fillStyle = ((data.LocationOfRobot == 3 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(1770,633, 250,333)
-    context.fillRect(1770,633, 250,333)//3
-    context.fillStyle = ((data.LocationOfRobot == 4 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(2020,633,250,333)
-    context.fillRect(2020,633,250,333)//4
-    context.fillStyle = ((data.LocationOfRobot ==5 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(1770,966,250,333)
-    context.fillRect(1770,966,250,333)//5
-    context.fillStyle = ((data.LocationOfRobot == 6 && data.allianceType == 1) ? lightBlue : blue)
-    context.rect(2020,966,250,333)
-    context.fillRect(2020,966,250,333)//6
+    context.lineStyle = blue
+    context.rect(2400, 1030, 600, 570)
+    context.strokeStyle = "gray"
     context.stroke()
-    }
-
-    // Left Key Semicircle
     context.beginPath()
-    context.arc(730,800,500, Math.PI/2, -Math.PI/2, true)
-    context.moveTo(730,300)
-    context.lineTo(730,1300)
+    context.lineStyle = blue
+    context.moveTo(2820, 1030)
+    context.lineTo(2820, 1600)
+    context.moveTo(2700, 1030)
+    context.lineTo(2700, 1600)
+    context.moveTo(2570, 1030)
+    context.lineTo(2570, 1600)
+    context.moveTo(2400, 1030)
+    context.lineTo(2400, 1600)
+    context.strokeStyle = blue
     context.stroke()
 
-    // Right Key Semicircle
+    //bottom corner
     context.beginPath()
-    context.arc(2270, 800, 500, Math.PI/2, -Math.PI/2, false)
-    context.moveTo(2270,300)
-    context.lineTo(2270,1300)
+    context.moveTo(0, 1300)
+    context.lineTo(300, 1600)
+    context.strokeStyle = "gray"
     context.stroke()
+
+    //top corner
+    context.beginPath()
+    context.moveTo(2700, 0)
+    context.lineTo(3000, 300)
+    context.stroke()
+
+    //center hub square
 }
 
-//location buttons
-buttonManager.addButton("leftLocation1", new Button(730,300,250,333, function(){
-    data.LocationOfRobot = 1
-    data.allianceType = 0
-    render()
-}))
-buttonManager.addButton("leftLocation2", new Button(980,300,250,333, function(){
-    data.LocationOfRobot = 2
-    data.allianceType = 0
-    render()
-}))
-buttonManager.addButton("leftLocation3", new Button(730,633,250,333, function(){
-    data.LocationOfRobot = 3
-    data.allianceType = 0
-    render()
-}))
-buttonManager.addButton("leftLocation4", new Button(980,633,250,333, function(){
-    data.LocationOfRobot = 4
-    data.allianceType = 0
-    render()
-}))
-buttonManager.addButton("leftLocation5", new Button(730,966,250,333, function(){
-    data.LocationOfRobot = 5
-    data.allianceType = 0
-    render()
-}))
-buttonManager.addButton("leftLocation6", new Button(980,966,250,333, function(){
-    data.LocationOfRobot = 6
-    data.allianceType = 0
-    render()
-}))
-
-
-//more location buttons
-buttonManager.addButton("rightLocation1", new Button(1770,300,250,333, function(){
-    data.LocationOfRobot = 1
-    data.allianceType = 1
-    render()
-}))
-buttonManager.addButton("rightLocation2", new Button(2020,300,250,333, function(){
-    data.LocationOfRobot = 2
-    data.allianceType = 1
-    render()
-}))
-buttonManager.addButton("rightLocation3", new Button(1770,633,250,333, function(){
-    data.LocationOfRobot = 3
-    data.allianceType = 1
-    render()
-}))
-buttonManager.addButton("rightLocation4", new Button(2020,633,250,333, function(){
-    data.LocationOfRobot = 4
-    data.allianceType = 1
-    render()
-}))
-buttonManager.addButton("rightLocation5", new Button(1770,966,250,333, function(){
-    data.LocationOfRobot = 5
-    data.allianceType = 1
-    render()
-}))
-buttonManager.addButton("rightLocation6", new Button(2020,966,250,333, function(){
-    data.LocationOfRobot = 6
-    data.allianceType = 1
-    render()
-}))
-//buttons for scoring
-buttonManager.addButton("Success Upper", new Button(100, 100, 200, 400, function(){
-    if (auto == true){
-        data.UpperAutoSuccess += 1
-    }
-
-    if (auto == false){
-        data.UpperTeleopSuccess += 1
-    }
-    render()
-}))
-buttonManager.addButton("Success Mid", new Button (100, 600, 200, 400, function(){
-    if (auto == true){
-        data.MidAutoSuccess += 1
-    }
-
-    if (auto == false){
-        data.MidTeleopSuccess += 1
-    }
-    render()
-}))
-buttonManager.addButton("Success Lower", new Button (100, 1100, 200, 400, function(){
-    if (auto == true){
-        data.LowerAutoSuccess += 1
-    }
-
-    if (auto == false){
-        data.LowerTeleopSuccess += 1
-    }
-    render()
-}))
-
-buttonManager.addButton("Fails Upper", new Button(300, 100, 200, 400, function(){
-    if (auto == true){
-        data.UpperAutoFail += 1
-    }
-
-    if (auto == false){
-        data.UpperTeleopFail += 1
-    }
-    render()
-}))
-buttonManager.addButton("Fails Mid", new Button (300, 600, 200, 400, function(){
-    if (auto == true){
-        data.MidAutoFail += 1
-    }
-
-    if (auto == false){
-        data.MidTeleopFail += 1
-    }
-    render()
-}))
 buttonManager.addButton("Fails Lower", new Button (300, 1100, 200, 400, function(){
     if (auto == true){
         data.LowerAutoFail += 1
