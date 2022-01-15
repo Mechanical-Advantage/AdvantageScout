@@ -5,9 +5,27 @@ var buttonManager = new ButtonManager(canvas)
 const green = "#41D936"
 const red = "#FF0000"
 const blue = "#0000FF"
+const gray = "#D1D1D1"
+const ayushDarkGray = "#A9A9A9"
+const ayushLightGray = "#D3D3D3"
 const auto = true
 const lightRed = "lightcoral"
 const lightBlue = "lightskyblue"
+const deflectorsBottomRight = [1548,1051,1563,988,1521,898,1557,882,1597,974,1653,1004,1548,1051];
+const defelectorsBottomLeft = [1249,848,1312,863,1402,821,1418,857,1326,897,1296,953,1249,848];
+const deflectorsTopLeft = [1452,549,1437,612,1479,702,1434,718,1403,626,1347,596,1452,549];
+const deflectorsTopRight = [1751,752,1688,737,1598,779,1582,743,1674,703,1704,647,1751,752]
+function drawDeflectors(coordinates){
+    context.beginPath()
+    context.fillStyle = gray
+    context.moveTo(coordinates[0], coordinates[1])
+    for(i = 2; i < 14; i += 2) {
+    context.lineTo(coordinates[i], coordinates[i+1])
+    }
+    context.closePath()
+    context.fill()
+    context.stroke()
+}
 var data = {
     LocationOfRobot: null,
     AllianceType: null,
@@ -83,12 +101,15 @@ function render() {
     context.stroke()
     //center hub square
     context.strokeStyle = "gray"
+    context.fillStyle = ayushLightGray
     context.translate(1427, 641)
     context.rotate(21 * Math.PI / 180)
+    context.fillRect(0, 0, 250, 250)
     context.strokeRect(0, 0, 250, 250)
     context.rotate(-21 * Math.PI / 180)
     context.translate(-1427, -641)
     context.stroke()
+    
     // Bottom left tarmac
     context.beginPath()
     context.moveTo(1530,950)
@@ -100,31 +121,43 @@ function render() {
     context.stroke()
     // Top left tarmac
     context.beginPath()
-    context.moveTo(1345,830)
+    context.moveTo(1350,830)
     context.lineTo(1100,940)
-    context.lineTo(1090,640)
+    context.lineTo(1100,645)
     context.lineTo(1300,430)
-    context.lineTo(1410,675)
-    context.lineTo(1345,830)
+    context.lineTo(1410,670)
+    context.lineTo(1350,830)
     context.stroke()
     // Top right tarmac
     context.beginPath()
     context.moveTo(1470,650)
     context.lineTo(1360,400)
-    context.lineTo(1655,390)
+    context.lineTo(1655,400)
     context.lineTo(1870,600)
-    context.lineTo(1625,710)
+    context.lineTo(1630,710)
     context.lineTo(1470,650)
     context.stroke()
     // Bottom right tarmac
     context.beginPath()
     context.moveTo(1650, 770)
     context.lineTo(1900, 660)
-    context.lineTo(1905, 955)
-    context.lineTo(1700, 1175)
-    context.lineTo(1590, 925)
+    context.lineTo(1900, 955)
+    context.lineTo(1700, 1170)
+    context.lineTo(1590, 935)
     context.lineTo(1650, 770)
     context.stroke()
+    drawDeflectors(deflectorsBottomRight)
+    drawDeflectors(defelectorsBottomLeft)
+    drawDeflectors(deflectorsTopLeft)
+    drawDeflectors(deflectorsTopRight)
+    // hub circle
+    context.fillStyle = ayushDarkGray
+    context.beginPath()
+    context.arc(1500,800, 105, 0, 2*Math.PI)
+    context.closePath()
+    context.fill()
+    context.stroke()
+    
 }
 buttonManager.addButton("Fails Lower", new Button(300, 1100, 200, 400, function () {
     if (auto == true) {
