@@ -83,10 +83,10 @@
             },
             {
                 "field": "Height",
-                "operator": ">",
+                "operator": ">=",
                 "value": 0,
                 "message": "Are you sure this height is correct?",
-                "binding": false
+                "binding": true
             },
             {
                 "field": "Height",
@@ -97,16 +97,63 @@
             },
             {
                 "field": "Width",
-                "operator": ">",
+                "operator": ">=",
                 "value": 0,
+                "message": "Are you sure this width is correct?",
+                "binding": true
+            },
+            {
+                "field": "Width",
+                "operator": "<",
+                "value": 50,
                 "message": "Are you sure this width is correct?",
                 "binding": false
             },
             {
                 "field": "Length",
-                "operator": ">",
+                "operator": ">=",
                 "value": 0,
                 "message": "Are you sure this length is correct?",
+                "binding": true
+            },
+            {
+                "field": "Length",
+                "operator": "<",
+                "value": 50,
+                "message": "Are you sure this length is correct?",
+                "binding": false
+            },
+            {
+                "field": "MaxAutoShots",
+                "operator": ">=",
+                "value": 0,
+                "message": "Enter a positive value for max auto shots",
+                "binding": true
+            },
+            {
+                "field": "MaxAutoShots",
+                "operator": "<",
+                "value": 6,
+                "message": "Please confirm their max auto shots",
+                "binding": false
+            },
+            {
+                "field": "HoldingCapacity",
+                "operator": ">=",
+                "value": 0,
+                "message": "Enter a positive value for holding capacity",
+                "binding": true
+            },
+            {
+                "field": "HoldingCapacity",
+                "operator": "<=",
+                "value": 2,
+                "message": "The rules don't allow more than 2 cargo",
+                "binding": true
+            },
+            {
+                "script": "return (((data.Length * 2) + (data.Width * 2)) < 120)",
+                "message": "Their length and width exceed frame perimeter",
                 "binding": false
             }
         ],
@@ -328,14 +375,14 @@
             {
                 "type": "chooser",
                 "field": "IntakeRating",
-                    "label": "Intake",
-                    "options": {
-                        "NA": 0,
-                        "\u2B50": 1,
-                        "\u2B50\u2B50": 2,
-                        "\u2B50\u2B50\u2B50": 3,
-                        "\u2B50\u2B50\u2B50\u2B50": 4,
-                        "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                "label": "Intake",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                 }
             },
             {
