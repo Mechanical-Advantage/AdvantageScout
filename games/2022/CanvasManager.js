@@ -31,23 +31,21 @@ var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
 const secondsBetweenThreshold = 15 // # of secs needed to reset scoring timer
 var data = {
-    "CrossedLine": 0,
-    "AutoInnerSuccess": 0,
-    "AutoOuterSuccess": 0,
+    "Taxi": 0,
+    "StartPosition": "",
+    "AutoUpperSuccess": 0,
     "AutoLowerSuccess": 0,
     "AutoUpperFailures": 0,
     "AutoLowerFailures": 0,
-    "InnerSuccess": 0,
-    "OuterSuccess": 0,
-    "LowerSuccess": 0,
-    "UpperFailures": 0,
-    "LowerFailures": 0,
-    "UpperSecondsBetween": [],
-    "LastUpperButton": 0,
-    "WheelRotationSuccess": 0,
-    "WheelRotationAttempted": 0,
-    "WheelPositionSuccess": 0,
-    "WheelPositionAttempted": 0
+    "TeleUpperSuccess": 0,
+    "TeleLowerSuccess": 0,
+    "TeleUpperFailures": 0,
+    "TeleLowerFailures": 0,
+    "ScoringData": [],
+    "ClimbLow": [],
+    "ClimbMid": [],
+    "ClimbHigh": [],
+    "ClimbTraversal": []
 }
 var controlRotationSelected = true
 var dataLog = []
@@ -81,6 +79,9 @@ var controlBlue = "#00ffff"
 var controlGreen = "#00ff00"
 var controlRed = "#ff0000"
 var controlYellow = "#ffff00"
+const mediumGray = "#D1D1D1"
+const darkGray = "#A9A9A9"
+const lightGray = "#D3D3D3"
 
 // Set ponytails
 const ponytails = [Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5]
@@ -418,15 +419,15 @@ function render() {
     }
 
     // Stick figures
-    if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
-        drawFigure((mode == 0) ? 100 : 350, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
-        drawFigure((mode == 0) ? 100 : 350, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)
-        drawFigure((mode == 0) ? 100 : 350, 1275, leftColor, ponytails[2], (mode == 0) ? 1 : 2)
-    }
     if (("AllianceColor" in data) ? data["AllianceColor"] == 0 : true) {
-        drawFigure((mode == 0) ? 2900 : 2650, 325, rightColor, ponytails[3], (mode == 0) ? 1 : 0)
-        drawFigure((mode == 0) ? 2900 : 2650, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
-        drawFigure((mode == 0) ? 2900 : 2650, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
+        drawFigure((mode == 0) ? 50 : 200, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
+        drawFigure((mode == 0) ? 50 : 200, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)
+        drawFigure((mode == 0) ? 50 : 200, 1275, leftColor, ponytails[2], (mode == 0) ? 1 : 2)
+    }
+    if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
+        drawFigure((mode == 0) ? 2950 : 2800, 325, rightColor, ponytails[3], (mode == 0) ? 1 : 0)
+        drawFigure((mode == 0) ? 2950 : 2800, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
+        drawFigure((mode == 0) ? 2950 : 2800, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
     }
 
     // Write team number

@@ -3,58 +3,51 @@
         "AllianceColor INTEGER DEFAULT 0",
         "StartPos INTEGER DEFAULT 0",
         "CrossedLine INTEGER DEFAULT 0",
+        "AutoUpperSuccess INTEGER DEFAULT 0",
         "AutoLowerSuccess INTEGER DEFAULT 0",
-        "AutoOuterSuccess INTEGER DEFAULT 0",
-        "AutoInnerSuccess INTEGER DEFAULT 0",
-        "AutoLowerFailures INTEGER DEFAULT 0",
         "AutoUpperFailures INTEGER DEFAULT 0",
-        "LowerSuccess INTEGER DEFAULT 0",
-        "OuterSuccess INTEGER DEFAULT 0",
-        "InnerSuccess INTEGER DEFAULT 0",
-        "LowerFailures INTEGER DEFAULT 0",
-        "UpperFailures INTEGER DEFAULT 0",
-        "UpperSecondsBetween TEXT DEFAULT ''",
-        "ClimbTime INTEGER DEFAULT 0",
-        "ClimbAttempted INTEGER DEFAULT 0",
-        "ClimbSuccess INTEGER DEFAULT 0",
-        "LiftedOthersAttempted INTEGER DEFAULT 0",
-        "LiftedOthersSuccess INTEGER DEFAULT 0",
-        "ParkedAttempted INTEGER DEFAULT 0",
-        "ParkedSuccess INTEGER DEFAULT 0",
-        "WheelRotationAttempted INTEGER DEFAULT 0",
-        "WheelRotationSuccess INTEGER DEFAULT 0",
-        "WheelPositionAttempted INTEGER DEFAULT 0",
-        "WheelPositionSuccess INTEGER DEFAULT 0",
-        "ShootFromWall INTEGER DEFAULT 0",
-        "ShootFromOpponentSide INTEGER DEFAULT 0",
-        "ShootFromOwnSide INTEGER DEFAULT 0",
+        "AutoLowerFailures INTEGER DEFAULT 0",
+        "TeleUpperSuccess INTEGER DEFAULT 0",
+        "TeleLowerSuccess INTEGER DEFAULT 0",
+        "TeleUpperFailures INTEGER DEFAULT 0",
+        "TeleLowerFailures INTEGER DEFAULT 0",
+        "ScoringData TEXT DEFAULT ''",
+        "ClimbLow TEXT DEFAULT ''",
+        "ClimbMid TEXT DEFAULT ''",
+        "ClimbHigh TEXT DEFAULT ''",
+        "ClimbTraversal TEXT DEFAULT ''",
         "Points INTEGER DEFAULT 0",
+        "Penalties INTEGER DEFAULT 0",
         "Disabled INTEGER DEFAULT 0",
         "DriverRating INTEGER DEFAULT 0",
         "IntakeRating INTEGER DEFAULT 0",
         "DefenseRating INTEGER DEFAULT 0",
         "AvoidDefenseRating INTEGER DEFAULT 0",
-        "SpeedRating INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
-        "TopSpeed INTEGER DEFAULT 0",
         "Weight INTEGER DEFAULT 0",
         "Height INTEGER DEFAULT 0",
-        "CanMove INTEGER DEFAULT 0",
-        "CanAutoDelay TEXT DEFAULT ''",
-        "CanDeliverUpperAuto INTEGER DEFAULT 0",
-        "CanDeliverLowerAuto INTEGER DEFAULT 0",
-        "CanDeliverUpper INTEGER DEFAULT 0",
-        "CanDeliverLower INTEGER DEFAULT 0",
-        "CanRotate INTEGER DEFAULT 0",
-        "CanPosition INTEGER DEFAULT 0",
-        "ClimbHeight INTEGER DEFAULT 0",
-        "CanLiftOthers INTEGER DEFAULT 0",
-        "ShootFromWall INTEGER DEFAULT 0",
-        "ShootFromOpponentSide INTEGER DEFAULT 0",
-        "ShootFromOwnSide INTEGER DEFAULT 0",
+        "Width INTEGER DEFAULT 0",
+        "Length INTEGER DEFAULT 0",
+        "CanTaxi INTEGER DEFAULT 0",
+        "CanShootUpperAuto INTEGER DEFAULT 0",
+        "CanShootLowerAuto INTEGER DEFAULT 0",
+        "CanShootUpperTele INTEGER DEFAULT 0",
+        "CanShootLowerTele INTEGER DEFAULT 0",
+        "ClimbLow INTEGER DEFAULT 0",
+        "ClimbMid INTEGER DEFAULT 0",
+        "ClimbHigh INTEGER DEFAULT 0",
+        "ClimbTraversal INTEGER DEFAULT 0",
+        "ShootFromFender INTEGER DEFAULT 0",
+        "ShootFromTarmac INTEGER DEFAULT 0",
+        "ShootFromLaunchpad INTEGER DEFAULT 0",
+        "StartFromFender INTEGER DEFAULT 0",
+        "StartFromTarmacMid INTEGER DEFAULT 0",
+        "StartFromTarmacEdge INTEGER DEFAULT 0",
+        "MaxAutoShots INTEGER DEFAULT 0",
+        "HoldingCapacity INTEGER DEFAULT 0",
         "MultipleDriveTeams TEXT DEFAULT 0",
         "Comment TEXT DEFAULT ''",
         "Image TEXT DEFAULT ''"
@@ -98,64 +91,26 @@
             {
                 "field": "Height",
                 "operator": "<=",
-                "value": 45,
+                "value": 52,
                 "message": "Height must be measured while not extended.",
                 "binding": true
             },
             {
-                "field": "ClimbHeight",
-                "operator": "!=",
+                "field": "Width",
+                "operator": ">",
                 "value": 0,
-                "message": "Are you sure they can't climb?",
+                "message": "Are you sure this width is correct?",
                 "binding": false
             },
             {
-                "script": "return (data.ClimbHeight > 12) || (data.ClimbHeight == 0)",
-                "message": "Please enter climb height in inches.",
-                "binding": true
+                "field": "Length",
+                "operator": ">",
+                "value": 0,
+                "message": "Are you sure this length is correct?",
+                "binding": false
             }
         ],
         "match": [
-            {
-                "script": "return !((data.WheelRotationAttempted == 0) && (data.WheelRotationSuccess == 1))",
-                "message": "They can't rotate the wheel without attempting it.",
-                "binding": true
-            },
-            {
-                "script": "return !((data.WheelPositionAttempted == 0) && (data.WheelPositionSuccess == 1))",
-                "message": "They can't position the wheel without attempting it.",
-                "binding": true
-            },
-            {
-                "script": "return !((data.ClimbTime != 0) && (data.ClimbSuccess == 0))",
-                "message": "Please reset the climb time to 0 if not successful.",
-                "binding": true
-            },
-            {
-                "script": "return data.ClimbSuccess + data.ParkedSuccess < 2",
-                "message": "They can't be both parked and climbed!",
-                "binding": true
-            },
-            {
-                "script": "return !((data.ClimbAttempted == 0) && (data.ClimbSuccess == 1))",
-                "message": "They can't climb successfully without attempting it.",
-                "binding": true
-            },
-            {
-                "script": "return !((data.LiftedOthersAttempted == 0) && (data.LiftedOthersSuccess == 1))",
-                "message": "They can't lift others successfully without attempting it.",
-                "binding": true
-            },
-            {
-                "script": "return !((data.ParkedAttempted == 0) && (data.ParkedSuccess == 1))",
-                "message": "You have marked park as successful but not attempted. Are you sure?",
-                "binding": false
-            },
-            {
-                "script": "return !((data.AutoInnerSuccess > 0 || data.AutoOuterSuccess > 0 || data.InnerSuccess > 0 || data.OuterSuccess > 0) && data.SpeedRating == 0)",
-                "message": "Please select their shooting speed.",
-                "binding": true
-            },
             {
                 "field": "Comment",
                 "operator": "!=",
@@ -201,11 +156,6 @@
             },
             {
                 "type": "number",
-                "field": "TopSpeed",
-                "label": "Top Speed (f/s)"
-            },
-            {
-                "type": "number",
                 "field": "Weight",
                 "label": "Weight (lbs)"
             },
@@ -215,89 +165,116 @@
                 "label": "Height (in)"
             },
             {
-                "type": "checkbox",
-                "field": "CanMove",
-                "label": "Can Move?"
-            },
-            {
-                "type": "text",
-                "field": "CanAutoDelay",
-                "label": "Auto Routines"
-            },
-            {
-                "type": "group",
-                "label": "Can Deliver Auto?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "CanDeliverUpperAuto",
-                    "label": "Upper"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "CanDeliverLowerAuto",
-                    "label": "Lower"
-                }
-            },
-            {
-                "type": "group",
-                "label": "Can Deliver Teleop?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "CanDeliverUpper",
-                    "label": "Upper"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "CanDeliverLower",
-                    "label": "Lower"
-                }
-            },
-            {
-                "type": "group",
-                "label": "Can Do Wheel?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "CanRotate",
-                    "label": "Rotation"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "CanPosition",
-                    "label": "Position"
-                }
+                "type": "number",
+                "field": "Width",
+                "label": "Width (in)"
             },
             {
                 "type": "number",
-                "field": "ClimbHeight",
-                "label": "Max Climb Reach (in)"
+                "field": "Length",
+                "label": "Length (in)"
             },
             {
                 "type": "checkbox",
-                "field": "CanLiftOthers",
-                "label": "Can Lift Others?"
+                "field": "CanTaxi",
+                "label": "Can Taxi?"
             },
             {
-                "type": "text",
-                "field": "MultipleDriveTeams",
-                "label": "Multiple Drive Teams?"
+                "type": "group",
+                "label": "Can shoot Auto?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "CanShootUpperAuto",
+                    "label": "Upper"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "CanShootLowerAuto",
+                    "label": "Lower"
+                }
+            },
+            {
+                "type": "group",
+                "label": "Can Shoot Tele?",
+                "unit1": {
+                    "type": "checkbox",
+                    "field": "CanShootUpperTele",
+                    "label": "Upper"
+                },
+                "unit2": {
+                    "type": "checkbox",
+                    "field": "CanShootLowerTele",
+                    "label": "Lower"
+                }
             },
             {
                 "type": "break"
             },
             {
                 "type": "checkbox",
-                "field": "ShootFromWall",
-                "label": "Shoot: Wall"
+                "field": "CanClimbLow",
+                "label": "Low"
             },
             {
                 "type": "checkbox",
-                "field": "ShootFromOpponentSide",
-                "label": "Shoot: Opponent Side"
+                "field": "CanClimbMid",
+                "label": "Mid"
             },
             {
                 "type": "checkbox",
-                "field": "ShootFromOwnSide",
-                "label": "Shoot: Own Side"
+                "field": "CanClimbHigh",
+                "label": "High"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanClimbTraversal",
+                "label": "Traversal"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromFender",
+                "label": "Fender"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromTarmac",
+                "label": "Tarmac"
+            },
+            {
+                "type": "checkbox",
+                "field": "ShootFromLaunchpad",
+                "label": "Launchpad"
+            },
+            {
+                "type": "break"
+            },
+            {
+                "type": "checkbox",
+                "field": "StartFromFender",
+                "label": "Fender"
+            },
+            {
+                "type": "checkbox",
+                "field": "StartFromTarmacEdge",
+                "label": "TarmacEdge"
+            },
+            {
+                "type": "number",
+                "field": "MaxAutoShots",
+                "label": "Max Auto Shots"
+            },
+            {
+                "type": "checkbox",
+                "field": "HoldingCapacity",
+                "label": "Holding Capacity"
+            },
+            {
+                "type": "text",
+                "field": "MultipleDriveTeams",
+                "label": "Multiple Drive Teams?"
             },
             {
                 "type": "break"
@@ -316,232 +293,13 @@
                 "type": "uploadButton"
             }
         ],
-        "auto": [
-            {
-                "type": "chooser",
-                "field": "AllianceColor",
-                "label": "Alliance Color",
-                "options": {
-                    "Red": 0,
-                    "Blue": 1
-                }
-            },
-            {
-                "type": "chooser",
-                "field": "StartPos",
-                "label": "Start Position",
-                "options": {
-                    "Left": 0,
-                    "Center": 1,
-                    "Right": 2
-                }
-            },
-            {
-                "type": "checkbox",
-                "field": "CrossedLine",
-                "label": "Moved From Line"
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "counter",
-                "field": "AutoInnerSuccess",
-                "label": "Inner Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "counter",
-                "field": "AutoOuterSuccess",
-                "label": "Outer Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "counter",
-                "field": "AutoLowerSuccess",
-                "label": "Lower Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "group",
-                "label": "Failures",
-                "unit1": {
-                    "type": "counter",
-                    "field": "AutoUpperFailures",
-                    "label": "Upper",
-                    "min": 0,
-                    "max": 99,
-                    "step": 1
-                },
-                "unit2": {
-                    "type": "counter",
-                    "field": "AutoLowerFailures",
-                    "label": "Lower",
-                    "min": 0,
-                    "max": 99,
-                    "step": 1
-                }
-            }
-        ],
-        "teleop": [
-            {
-                "type": "counter",
-                "field": "InnerSuccess",
-                "label": "Inner Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "counter",
-                "field": "OuterSuccess",
-                "label": "Outer Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "counter",
-                "field": "LowerSuccess",
-                "label": "Lower Success",
-                "min": 0,
-                "max": 99,
-                "step": 1
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "group",
-                "label": "Failures",
-                "unit1": {
-                    "type": "counter",
-                    "field": "UpperFailures",
-                    "label": "Upper",
-                    "min": 0,
-                    "max": 99,
-                    "step": 1
-                },
-                "unit2": {
-                    "type": "counter",
-                    "field": "LowerFailures",
-                    "label": "Lower",
-                    "min": 0,
-                    "max": 99,
-                    "step": 1
-                }
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "group",
-                "label": "Wheel Rotation",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "WheelRotationAttempted",
-                    "label": "Attempted"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "WheelRotationSuccess",
-                    "label": "Succesful"
-                }
-            },
-            {
-                "type": "group",
-                "label": "Wheel Position",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "WheelPositionAttempted",
-                    "label": "Attempted"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "WheelPositionSuccess",
-                    "label": "Succesful"
-                }
-            }
-        ],
+        "auto": [],
+        "teleop": [],
         "endgame": [
-            {
-                "type": "stopwatch",
-                "field": "ClimbTime",
-                "label": "Climb Time"
-            },
-            {
-                "type": "group",
-                "label": "Climbed?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "ClimbAttempted",
-                    "label": "Attempted"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "ClimbSuccess",
-                    "label": "Success"
-                }
-            },
-            {
-                "type": "group",
-                "label": "Lifted Others?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "LiftedOthersAttempted",
-                    "label": "Attempted"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "LiftedOthersSuccess",
-                    "label": "Success"
-                }
-            },
-            {
-                "type": "group",
-                "label": "Parked?",
-                "unit1": {
-                    "type": "checkbox",
-                    "field": "ParkedAttempted",
-                    "label": "Attempted"
-                },
-                "unit2": {
-                    "type": "checkbox",
-                    "field": "ParkedSuccess",
-                    "label": "Success"
-                }
-            },
             {
                 "type": "checkbox",
                 "field": "Disabled",
                 "label": "Disabled/Fell?"
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "checkbox",
-                "field": "ShootFromWall",
-                "label": "Shoot: Wall"
-            },
-            {
-                "type": "checkbox",
-                "field": "ShootFromOpponentSide",
-                "label": "Shoot: Opponent Side"
-            },
-            {
-                "type": "checkbox",
-                "field": "ShootFromOwnSide",
-                "label": "Shoot: Own Side"
             },
             {
                 "type": "break"
@@ -561,7 +319,7 @@
             },
             {
                 "type": "group",
-                "label": "Power Cells",
+                "label": "Cargo",
                 "unit1": {
                     "type": "chooser",
                     "field": "IntakeRating",
@@ -574,27 +332,14 @@
                         "\u2B50\u2B50\u2B50\u2B50": 4,
                         "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
-                },
-                "unit2": {
-                    "type": "chooser",
-                    "field": "SpeedRating",
-                    "label": "Shooting Speed",
-                    "options": {
-                        "NA": 0,
-                        "Slow distinct shots": 1,
-                        "Distinct shots": 2,
-                        "Unload in 15 secs": 3,
-                        "Unload in <8 secs": 4,
-                        "Unload in <2 secs": 5
-                    }
                 }
             },
             {
                 "type": "group",
-                "label": "Defense Rating",
+                "label": "Playing Defense Rating",
                 "unit1": {
                     "type": "chooser",
-                    "field": "DefenseRating",
+                    "field": "PlayingDefenseRating",
                     "label": "While Playing",
                     "options": {
                         "NA": 0,
