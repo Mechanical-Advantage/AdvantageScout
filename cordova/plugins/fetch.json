@@ -7,14 +7,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-bluetooth-serial": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-bluetooth-serial@^0.4.7"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-app-version": {
     "source": {
       "type": "registry",
@@ -51,6 +43,22 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-file@6.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-bluetooth-serial": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-is-debug": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-is-debug"
     },
     "is_top_level": true,
     "variables": {}

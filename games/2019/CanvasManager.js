@@ -1,8 +1,9 @@
 // canvas object in variable 'canvas'
 // alliances reversed in variable 'reverseAlliances' -> no reverse = red on right
+// call uploadData() to trigger upload (required if using visual for endgame)
 // width = 3000px, height = 1600px
 var mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
-this.setMode = function(newMode) { // REQUIRED FUNCTION
+this.setMode = function (newMode) { // REQUIRED FUNCTION
     mode = newMode
     dataLog = []
     buttonManager.setEnabled("blueHab1L", mode == 0)
@@ -19,7 +20,10 @@ this.setMode = function(newMode) { // REQUIRED FUNCTION
     buttonManager.setEnabled("redCrossedLineToggle", mode == 0)
     render()
 }
-this.getData = function() { // REQUIRED FUNCTION
+this.getData = function () { // REQUIRED FUNCTION
+    if (!("AllianceColor" in data)) {
+        data["AllianceColor"] = 0
+    }
     if (reverseAlliances) {
         data["AllianceColor"] = 1 - data["AllianceColor"]
     }
@@ -41,15 +45,12 @@ this.getData = function() { // REQUIRED FUNCTION
     data["RocketL3HatchFailures"] = rocketData[1]["hatch"][0] + rocketData[1]["hatch"][6]
     return data
 }
-function uploadData() { // Closes scouting interface and saves data (if using visual for end game, must have a call to this function)
-    appManager.scoutManager.upload()
-}
 
 var context = canvas.getContext("2d")
 var buttonManager = new ButtonManager(canvas)
-var data = {"AutoShipHatch": 0, "AutoShipHatchFailures": 0, "AutoShipCargo": 0, "AutoShipCargoFailures": 0, "ShipHatch": 0, "ShipHatchFailures": 0, "ShipCargo": 0, "ShipCargoFailures": 0}
+var data = { "AutoShipHatch": 0, "AutoShipHatchFailures": 0, "AutoShipCargo": 0, "AutoShipCargoFailures": 0, "ShipHatch": 0, "ShipHatchFailures": 0, "ShipCargo": 0, "ShipCargoFailures": 0 }
 var dataLog = []
-var rocketData = {0: {"hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, 1: {"hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}}
+var rocketData = { 0: { "hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }, 1: { "hatch": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cargo": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] } }
 var rocketDataLog = []
 var selectedPiece = "none"
 var redColor = "#ff0000"
@@ -78,11 +79,11 @@ function saveData() {
 
 function render() {
     context.clearRect(0, 0, 3000, 1600)
-    
+
     // main background
     context.fillStyle = "#d1d1d1"
     context.fillRect(300, 200, 2400, 1200)
-    
+
     // blue HAB background
     context.fillStyle = blueColor
     context.fillRect(300, 500, 350, 600)
@@ -90,7 +91,7 @@ function render() {
         context.fillStyle = blueHighlightColor
         context.fillRect(650 + (data["StartLevel"] * -175), 500 + (data["StartPos"] * 200), 175, 200)
     }
-    
+
     // red HAB background
     context.fillStyle = redColor
     context.fillRect(2350, 500, 350, 600)
@@ -98,7 +99,7 @@ function render() {
         context.fillStyle = redHighlightColor
         context.fillRect(2175 + (data["StartLevel"] * 175), 900 + (data["StartPos"] * -200), 175, 200)
     }
-    
+
     // cargo & hatch
     if ("AllianceColor" in data) {
         if (selectedPiece == "cargo") {
@@ -109,11 +110,11 @@ function render() {
             context.fillStyle = "#ff8800"
         }
         context.beginPath()
-        
+
         context.arc(2875 + (data["AllianceColor"] * -2750), 600, 100, 0, 2 * Math.PI)
         context.fill()
         context.stroke()
-        
+
         if (selectedPiece == "hatch") {
             context.lineWidth = 20
             context.fillStyle = "#c7ba00"
@@ -125,15 +126,15 @@ function render() {
         context.arc(2875 + (data["AllianceColor"] * -2750), 1000, 100, 0, 2 * Math.PI)
         context.fill()
         context.stroke()
-        
+
         context.beginPath()
         context.fillStyle = "#ffffff"
         context.arc(2875 + (data["AllianceColor"] * -2750), 1000, 32, 0, 2 * Math.PI)
         context.fill()
         context.stroke()
-        
+
     }
-    
+
     // blue cargo ship
     context.beginPath()
     context.lineWidth = 5
@@ -147,7 +148,7 @@ function render() {
     context.closePath()
     context.fill()
     context.stroke()
-    
+
     // red cargo ship
     context.beginPath()
     context.lineWidth = 5
@@ -161,19 +162,19 @@ function render() {
     context.closePath()
     context.fill()
     context.stroke()
-    
+
     // cargo ship buttons
     if ("AllianceColor" in data) {
         context.fillStyle = "#00d936"
         context.fillRect(1740 + (data["AllianceColor"] * -680), 700, 200, 200)
         context.lineWidth = 5
         context.strokeRect(1740 + (data["AllianceColor"] * -680), 700, 200, 200)
-        
+
         context.fillStyle = "#b30000"
         context.fillRect(1540 + (data["AllianceColor"] * -280), 700, 200, 200)
         context.lineWidth = 5
         context.strokeRect(1540 + (data["AllianceColor"] * -280), 700, 200, 200)
-        
+
         context.textAlign = "center"
         context.textBaseline = "middle"
         context.font = "140px sans-serif"
@@ -192,62 +193,62 @@ function render() {
         }
         context.fillText(shipSuccesses, 1840 + (data["AllianceColor"] * -680), 800)
         context.fillText(shipFailures, 1640 + (data["AllianceColor"] * -280), 800)
-        
+
     }
-    
+
     // OUTLINE PATH START
     context.beginPath()
     context.lineWidth = 5
     context.lineCap = "butt"
-    
+
     // main outline
     context.strokeStyle = "#000000"
     context.strokeRect(300, 200, 2400, 1200)
-    
+
     // HAB lines
     context.moveTo(650, 200)
     context.lineTo(650, 1400)
-    
+
     context.moveTo(2350, 200)
     context.lineTo(2350, 1400)
-    
+
     // blue HAB outline
     context.strokeRect(300, 500, 350, 600)
     context.moveTo(475, 500)
     context.lineTo(475, 1100)
-    
+
     context.moveTo(300, 700)
     context.lineTo(650, 700)
-    
+
     context.moveTo(300, 900)
     context.lineTo(650, 900)
-    
+
     context.moveTo(300, 700)
     context.lineTo(475, 900)
-    
+
     context.moveTo(300, 900)
     context.lineTo(475, 700)
-    
+
     // red HAB outline
     context.strokeRect(2350, 500, 350, 600)
     context.moveTo(2525, 500)
     context.lineTo(2525, 1100)
-    
+
     context.moveTo(2350, 700)
     context.lineTo(2700, 700)
-    
+
     context.moveTo(2350, 900)
     context.lineTo(2700, 900)
-    
+
     context.moveTo(2525, 700)
     context.lineTo(2700, 900)
-    
+
     context.moveTo(2525, 900)
     context.lineTo(2700, 700)
-    
+
     // OUTLINE PATH END
     context.stroke()
-    
+
     // blue rockets
     context.lineWidth = 5
     context.fillStyle = blueColor
@@ -255,7 +256,7 @@ function render() {
     context.strokeRect(850, 5, 350, 500)
     context.fillRect(850, 1095, 350, 500)
     context.strokeRect(850, 1095, 350, 500)
-    
+
     // red rockets
     context.lineWidth = 5
     context.fillStyle = redColor
@@ -263,7 +264,7 @@ function render() {
     context.strokeRect(1800, 5, 350, 500)
     context.fillRect(1800, 1095, 350, 500)
     context.strokeRect(1800, 1095, 350, 500)
-    
+
     // rocket buttons
     if ("AllianceColor" in data) {
         context.lineWidth = 5
@@ -281,7 +282,7 @@ function render() {
             }
             context.fillRect(rocketButtonX[i] + (data["AllianceColor"] * allianceShift), rocketButtonY[i], 150, 150)
             context.strokeRect(rocketButtonX[i] + (data["AllianceColor"] * allianceShift), rocketButtonY[i], 150, 150)
-            
+
             var value = ""
             if (selectedPiece != "none") {
                 value = rocketData[mode][selectedPiece][i]
@@ -290,7 +291,7 @@ function render() {
             context.fillText(value, rocketButtonX[i] + 75 + (data["AllianceColor"] * allianceShift), rocketButtonY[i] + 75)
         }
     }
-    
+
     // crossed line arrow
     context.lineWidth = 15
     context.lineCap = "round"
@@ -319,7 +320,7 @@ function render() {
         }
         context.stroke()
     }
-    
+
     // rocket level text
     if ("AllianceColor" in data) {
         context.textBaseline = "middle"
@@ -343,12 +344,12 @@ function render() {
             context.fillText("L1", 1770, 1495)
         }
     }
-    
+
     // undo button
     if (dataLog.length > 0) {
         context.fillStyle = "#e3e3e3"
         context.fillRect(1375, 1450, 250, 150)
-        
+
         context.textBaseline = "middle"
         context.textAlign = "center"
         context.font = "70px sans-serif"
@@ -358,126 +359,126 @@ function render() {
 }
 render()
 
-buttonManager.addButton("blueHab1L", new Button(475, 500, 175, 200, function() {
-                                                data["AllianceColor"] = 1
-                                                data["StartLevel"] = 1
-                                                data["StartPos"] = 0
-                                                render()
-                                                }))
-buttonManager.addButton("blueHab1C", new Button(475, 700, 175, 200, function() {
-                                                data["AllianceColor"] = 1
-                                                data["StartLevel"] = 1
-                                                data["StartPos"] = 1
-                                                render()
-                                                }))
-buttonManager.addButton("blueHab1R", new Button(475, 900, 175, 200, function() {
-                                                data["AllianceColor"] = 1
-                                                data["StartLevel"] = 1
-                                                data["StartPos"] = 2
-                                                render()
-                                                }))
-buttonManager.addButton("blueHab2L", new Button(300, 500, 175, 200, function() {
-                                                data["AllianceColor"] = 1
-                                                data["StartLevel"] = 2
-                                                data["StartPos"] = 0
-                                                render()
-                                                }))
-buttonManager.addButton("blueHab2R", new Button(300, 900, 175, 200, function() {
-                                                data["AllianceColor"] = 1
-                                                data["StartLevel"] = 2
-                                                data["StartPos"] = 2
-                                                render()
-                                                }))
-buttonManager.addButton("redHab1R", new Button(2350, 500, 175, 200, function() {
-                                               data["AllianceColor"] = 0
-                                               data["StartLevel"] = 1
-                                               data["StartPos"] = 2
-                                               render()
-                                               }))
-buttonManager.addButton("redHab1C", new Button(2350, 700, 175, 200, function() {
-                                               data["AllianceColor"] = 0
-                                               data["StartLevel"] = 1
-                                               data["StartPos"] = 1
-                                               render()
-                                               }))
-buttonManager.addButton("redHab1L", new Button(2350, 900, 175, 200, function() {
-                                               data["AllianceColor"] = 0
-                                               data["StartLevel"] = 1
-                                               data["StartPos"] = 0
-                                               render()
-                                               }))
-buttonManager.addButton("redHab2R", new Button(2525, 500, 175, 200, function() {
-                                               data["AllianceColor"] = 0
-                                               data["StartLevel"] = 2
-                                               data["StartPos"] = 2
-                                               render()
-                                               }))
-buttonManager.addButton("redHab2L", new Button(2525, 900, 175, 200, function() {
-                                               data["AllianceColor"] = 0
-                                               data["StartLevel"] = 2
-                                               data["StartPos"] = 0
-                                               render()
-                                               }))
-buttonManager.addButton("blueCrossedLineToggle", new Button(530, 0, 240, 200, function() {
-                                                            if (data["AllianceColor"] == 1) {
-                                                            if (data["CrossedLine"] == 0) {
-                                                            data["CrossedLine"] = 1
-                                                            } else {
-                                                            data["CrossedLine"] = 0
-                                                            }
-                                                            }
-                                                            render()
-                                                            }))
-buttonManager.addButton("redCrossedLineToggle", new Button(2230, 0, 240, 200, function() {
-                                                           if (data["AllianceColor"] == 0) {
-                                                           if (data["CrossedLine"] == 0) {
-                                                           data["CrossedLine"] = 1
-                                                           } else {
-                                                           data["CrossedLine"] = 0
-                                                           }
-                                                           }
-                                                           render()
-                                                           }))
-buttonManager.addButton("blueCargoSelect", new Button(0, 450, 300, 300, function() {
-                                                      if ("AllianceColor" in data && data["AllianceColor"] == 1) {
-                                                      if (selectedPiece == "cargo") {
-                                                      selectedPiece = "none"
-                                                      } else {
-                                                      selectedPiece = "cargo"
-                                                      }
-                                                      render()
-                                                      }
-                                                      }))
-buttonManager.addButton("blueHatchSelect", new Button(0, 850, 300, 300, function() {
-                                                      if ("AllianceColor" in data && data["AllianceColor"] == 1) {
-                                                      if (selectedPiece == "hatch") {
-                                                      selectedPiece = "none"
-                                                      } else {
-                                                      selectedPiece = "hatch"
-                                                      }
-                                                      render()
-                                                      }
-                                                      }))
-buttonManager.addButton("redCargoSelect", new Button(2700, 450, 300, 300, function() {
-                                                     if ("AllianceColor" in data && data["AllianceColor"] == 0) {
-                                                     if (selectedPiece == "cargo") {
-                                                     selectedPiece = "none"
-                                                     } else {
-                                                     selectedPiece = "cargo"
-                                                     }
-                                                     render()
-                                                     }
-                                                     }))
-buttonManager.addButton("redHatchSelect", new Button(2700, 850, 300, 300, function() {
-                                                     if ("AllianceColor" in data && data["AllianceColor"] == 0) {
-                                                     if (selectedPiece == "hatch") {
-                                                     selectedPiece = "none"
-                                                     } else {
-                                                     selectedPiece = "hatch"
-                                                     }
-                                                     render()
-                                                     }
-                                                     }))
+buttonManager.addButton("blueHab1L", new Button(475, 500, 175, 200, function () {
+    data["AllianceColor"] = 1
+    data["StartLevel"] = 1
+    data["StartPos"] = 0
+    render()
+}))
+buttonManager.addButton("blueHab1C", new Button(475, 700, 175, 200, function () {
+    data["AllianceColor"] = 1
+    data["StartLevel"] = 1
+    data["StartPos"] = 1
+    render()
+}))
+buttonManager.addButton("blueHab1R", new Button(475, 900, 175, 200, function () {
+    data["AllianceColor"] = 1
+    data["StartLevel"] = 1
+    data["StartPos"] = 2
+    render()
+}))
+buttonManager.addButton("blueHab2L", new Button(300, 500, 175, 200, function () {
+    data["AllianceColor"] = 1
+    data["StartLevel"] = 2
+    data["StartPos"] = 0
+    render()
+}))
+buttonManager.addButton("blueHab2R", new Button(300, 900, 175, 200, function () {
+    data["AllianceColor"] = 1
+    data["StartLevel"] = 2
+    data["StartPos"] = 2
+    render()
+}))
+buttonManager.addButton("redHab1R", new Button(2350, 500, 175, 200, function () {
+    data["AllianceColor"] = 0
+    data["StartLevel"] = 1
+    data["StartPos"] = 2
+    render()
+}))
+buttonManager.addButton("redHab1C", new Button(2350, 700, 175, 200, function () {
+    data["AllianceColor"] = 0
+    data["StartLevel"] = 1
+    data["StartPos"] = 1
+    render()
+}))
+buttonManager.addButton("redHab1L", new Button(2350, 900, 175, 200, function () {
+    data["AllianceColor"] = 0
+    data["StartLevel"] = 1
+    data["StartPos"] = 0
+    render()
+}))
+buttonManager.addButton("redHab2R", new Button(2525, 500, 175, 200, function () {
+    data["AllianceColor"] = 0
+    data["StartLevel"] = 2
+    data["StartPos"] = 2
+    render()
+}))
+buttonManager.addButton("redHab2L", new Button(2525, 900, 175, 200, function () {
+    data["AllianceColor"] = 0
+    data["StartLevel"] = 2
+    data["StartPos"] = 0
+    render()
+}))
+buttonManager.addButton("blueCrossedLineToggle", new Button(530, 0, 240, 200, function () {
+    if (data["AllianceColor"] == 1) {
+        if (data["CrossedLine"] == 0) {
+            data["CrossedLine"] = 1
+        } else {
+            data["CrossedLine"] = 0
+        }
+    }
+    render()
+}))
+buttonManager.addButton("redCrossedLineToggle", new Button(2230, 0, 240, 200, function () {
+    if (data["AllianceColor"] == 0) {
+        if (data["CrossedLine"] == 0) {
+            data["CrossedLine"] = 1
+        } else {
+            data["CrossedLine"] = 0
+        }
+    }
+    render()
+}))
+buttonManager.addButton("blueCargoSelect", new Button(0, 450, 300, 300, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 1) {
+        if (selectedPiece == "cargo") {
+            selectedPiece = "none"
+        } else {
+            selectedPiece = "cargo"
+        }
+        render()
+    }
+}))
+buttonManager.addButton("blueHatchSelect", new Button(0, 850, 300, 300, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 1) {
+        if (selectedPiece == "hatch") {
+            selectedPiece = "none"
+        } else {
+            selectedPiece = "hatch"
+        }
+        render()
+    }
+}))
+buttonManager.addButton("redCargoSelect", new Button(2700, 450, 300, 300, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 0) {
+        if (selectedPiece == "cargo") {
+            selectedPiece = "none"
+        } else {
+            selectedPiece = "cargo"
+        }
+        render()
+    }
+}))
+buttonManager.addButton("redHatchSelect", new Button(2700, 850, 300, 300, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 0) {
+        if (selectedPiece == "hatch") {
+            selectedPiece = "none"
+        } else {
+            selectedPiece = "hatch"
+        }
+        render()
+    }
+}))
 function shipButton(failure) {
     saveData()
     var failureText = ""
@@ -486,42 +487,42 @@ function shipButton(failure) {
     }
     if (mode == 0) {
         if (selectedPiece == "hatch") {
-            data["AutoShipHatch" + failureText] ++
+            data["AutoShipHatch" + failureText]++
         } else if (selectedPiece == "cargo") {
-            data["AutoShipCargo" + failureText] ++
+            data["AutoShipCargo" + failureText]++
         }
     } else {
         if (selectedPiece == "hatch") {
-            data["ShipHatch" + failureText] ++
+            data["ShipHatch" + failureText]++
         } else if (selectedPiece == "cargo") {
-            data["ShipCargo" + failureText] ++
+            data["ShipCargo" + failureText]++
         }
     }
     render()
 }
-buttonManager.addButton("blueShipSuccess", new Button(1060, 700, 200, 200, function() {
-                                                      if ("AllianceColor" in data && data["AllianceColor"] == 1) {
-                                                      shipButton(false)
-                                                      }
-                                                      }))
-buttonManager.addButton("redShipSuccess", new Button(1740, 700, 200, 200, function() {
-                                                     if ("AllianceColor" in data && data["AllianceColor"] == 0) {
-                                                     shipButton(false)
-                                                     }
-                                                     }))
-buttonManager.addButton("blueShipFailure", new Button(1260, 700, 200, 200, function() {
-                                                      if ("AllianceColor" in data && data["AllianceColor"] == 1) {
-                                                      shipButton(true)
-                                                      }
-                                                      }))
-buttonManager.addButton("redShipFailure", new Button(1540, 700, 200, 200, function() {
-                                                     if ("AllianceColor" in data && data["AllianceColor"] == 0) {
-                                                     shipButton(true)
-                                                     }
-                                                     }))
+buttonManager.addButton("blueShipSuccess", new Button(1060, 700, 200, 200, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 1) {
+        shipButton(false)
+    }
+}))
+buttonManager.addButton("redShipSuccess", new Button(1740, 700, 200, 200, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 0) {
+        shipButton(false)
+    }
+}))
+buttonManager.addButton("blueShipFailure", new Button(1260, 700, 200, 200, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 1) {
+        shipButton(true)
+    }
+}))
+buttonManager.addButton("redShipFailure", new Button(1540, 700, 200, 200, function () {
+    if ("AllianceColor" in data && data["AllianceColor"] == 0) {
+        shipButton(true)
+    }
+}))
 function rocketButton(id) {
     saveData()
-    rocketData[mode][selectedPiece][id] ++
+    rocketData[mode][selectedPiece][id]++
     render()
 }
 for (var alliance = 0; alliance < 2; alliance++) {
@@ -536,19 +537,19 @@ for (var alliance = 0; alliance < 2; alliance++) {
         } else {
             allianceShift = -800
         }
-        buttonManager.addButton(allianceText + "RocketButton" + i.toString(), new Button(rocketButtonX[i] + (alliance * allianceShift), rocketButtonY[i], 150, 150, function() {
-                                                                                         if ("AllianceColor" in data && data["AllianceColor"] == this.data["alliance"]) {
-                                                                                         rocketButton(this.data["id"])
-                                                                                         }
-                                                                                         }))
-        buttonManager.setData(allianceText + "RocketButton" + i.toString(), {"alliance": alliance, "id": i})
+        buttonManager.addButton(allianceText + "RocketButton" + i.toString(), new Button(rocketButtonX[i] + (alliance * allianceShift), rocketButtonY[i], 150, 150, function () {
+            if ("AllianceColor" in data && data["AllianceColor"] == this.data["alliance"]) {
+                rocketButton(this.data["id"])
+            }
+        }))
+        buttonManager.setData(allianceText + "RocketButton" + i.toString(), { "alliance": alliance, "id": i })
     }
 }
 
-buttonManager.addButton("undoButton", new Button(1375, 1450, 250, 150, function() {
-                                                 if (dataLog.length > 0) {
-                                                     data = jsonCopy(dataLog.pop())
-                                                     rocketData = jsonCopy(rocketDataLog.pop())
-                                                     render()
-                                                 }
-                                                 }))
+buttonManager.addButton("undoButton", new Button(1375, 1450, 250, 150, function () {
+    if (dataLog.length > 0) {
+        data = jsonCopy(dataLog.pop())
+        rocketData = jsonCopy(rocketDataLog.pop())
+        render()
+    }
+}))

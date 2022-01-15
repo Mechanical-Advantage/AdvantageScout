@@ -2,11 +2,50 @@ body {
     font-family: sans-serif;
 }
 
-th, td {
+div.section {
+    display: inline-table;
+    margin: 3px;
+}
+
+th.devices, td.devices {
     padding: 8px;
 }
 
-table {
+td.smallpad {
+    padding: 5px;
+}
+
+td.prefsheader {
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+td.prefscell {
+    padding: 6px;
+    border: 1px solid black;
+}
+
+table.prefstable {
+    border-collapse: collapse;
+}
+
+td.uploadedheader {
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+td.uploadedcell {
+    padding: 6px;
+    border: 1px solid black;
+}
+
+table.uploadedtable {
+    border-collapse: collapse;
+}
+
+table.devices {
     border: 1px solid black;
     background-color: white;
 }
@@ -21,4 +60,8 @@ table {
 
 .green {
     background-color: #8fffa7;
+}
+
+.purple {
+    background-color: #e1b3ff;
 }

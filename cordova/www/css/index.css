@@ -60,6 +60,11 @@ body {
     margin-bottom: 15px;
 }
 
+td.schedule {
+    text-align: center;
+    padding: 5px;
+}
+
 .versiontext {
     font-style: italic;
 }
@@ -110,7 +115,7 @@ div.switcherbutton2 {
     position: fixed;
     top: 0px;
     height: 75px;
-    left: 33.33%;
+    left: 33.34%;
     width: 33.33%;
     background-color: #c7ffd1;
 }
@@ -122,6 +127,58 @@ div.switcherbutton3 {
     left: 66.66%;
     width: 33.33%;
     background-color: #c3c9fa;
+}
+
+div.helpbutton {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 40px;
+    z-index: 1;
+    background-color: rgb(189, 189, 189);
+}
+
+div.screenblocker {
+    z-index: 2;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+div.helptext {
+    z-index: 3;
+    position: fixed;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 75%;
+    box-shadow: black 0px 0px 30px 5px;
+    padding: 10px;
+}
+
+div.helptexttop {
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    font-style: italic;
+    text-align: center;
+}
+
+div.helptextbottom {
+    position: fixed;
+    top: 40px;
+    bottom: 0px;
+    overflow: auto;
 }
 
 div.visualcanvasdiv {
@@ -162,16 +219,14 @@ div.classicgroup {
 div.classicgroup_labelbox {
     position: relative;
     left: 0px;
-    width: 100%:
-    top: 0px;
+    width: 100%;
     height: 25%;
 }
 
 div.classicgroup_units {
     position: relative;
     left: 0px;
-    width: 100%:
-    top: 25%;
+    width: 100%;
     height: 75%;
 }
 
@@ -206,8 +261,7 @@ div.classiclabel {
 div.classiccontrols {
     position: relative;
     left: 0px;
-    width: 100%:
-    top: 40%;
+    width: 100%;
     height: 60%;
 }
 
@@ -230,6 +284,12 @@ select.classicinput {
     width: 75%;
     height: 50%;
     font-size: 13px;
+}
+
+input.classicinput {
+    width: 75%;
+    height: 50%;
+    font-size: 18px;
 }
 
 button.classiccheck {
@@ -293,4 +353,25 @@ button.classicimagebutton {
     font-size: 25px;
     padding: 10px;
     border-radius: 8px;
+}
+
+button.classicstopwatchbutton {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 75%;
+    width: 40%;
+    border: 1px solid black;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+div.classicstopwatchtime {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
 }

@@ -18,8 +18,9 @@
     under the License.
 -->
 <html>
-    <head>
-        <!--
+
+<head>
+    <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
@@ -28,165 +29,241 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"></meta>-->
-        <meta name="format-detection" content="telephone=no"></meta>
-        <meta name="msapplication-tap-highlight" content="no"></meta>
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover"></meta>
-        <link rel="stylesheet" type="text/css" href="css/index.css"></link>
-        <title>
+    <!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"></meta>-->
+    <meta name="format-detection" content="telephone=no">
+    </meta>
+    <meta name="msapplication-tap-highlight" content="no">
+    </meta>
+    <meta name="viewport"
+        content="initial-scale=1, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
+    </meta>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    </link>
+    <title>
+        Advantage Scout
+    </title>
+</head>
+
+<body>
+    <div id="selectionDiv" class="centered hideonnoscript">
+        <div class="title">
             Advantage Scout
-        </title>
-    </head>
-    <body>
-        <div id="selectionDiv" class="centered hideonnoscript">
-            <div class="title">
-                Advantage Scout
-            </div>
-            <div id="localcount">
+        </div>
+        <div id="onlinetext" style="color: red;">
+            Offline
+        </div>
+        <div id="servertroubletext" style="color: orange;" hidden>
+            Trouble communicating with server.
+        </div>
+        <div id="localcount">
+            Loading...
+        </div>
+        <button onclick="javascript:appManager.settingsManager.open()">
+            Settings
+        </button>
+        <br>
+        <div id="selectionDiv_matchswitch">
+            <button onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)">
+                Switch to pit
+            </button>
+        </div>
+
+        <div id="selectionDiv_pitswitch">
+            <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
+                Switch to match
+            </button>
+        </div>
+
+        <div id="scoutselectdiv">
+            Scout:
+            <select id="scoutselect" onchange="javascript:appManager.scoutManager.autoFillTeamMatch()"></select>
+        </div>
+
+        <div id="selectionDiv_match">
+            Team:
+            <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
+            <br>
+            Match:
+            <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
+            <br>
+            <span id="reverseAlliancesDiv" hidden>
+                Alliance Position:
+                <select id="reverseAlliances">
+                    <option value="0">
+                        red right, blue left
+                    </option>
+                    <option value="1">
+                        red left, blue right
+                    </option>
+                </select>
+                <br>
+            </span>
+            <div id="loadingtext">
                 Loading...
             </div>
-            <button onclick="javascript:appManager.settingsManager.open()">
-                Settings
-            </button>
-            <br>
-            <div id="selectionDiv_match">
-                <button id="pitButton" onclick="javascript:appManager.scoutManager.setSelection(&quot;pit&quot;)" hidden>
-                    Pit Scout
+            <div id="startbuttons" hidden>
+                <button id="visualstart" class="scoutstart"
+                    onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
+                    Scout! (visual)
                 </button>
-                <br id="pitButtonBreak" hidden>
-                
-                <div id="scheduleSelect" hidden>
-                    Name:
-                    <select id="nameSelect" class="teammatch" onchange="javascript:appManager.scoutManager.updatePresetList()">
-                    </select>
-                    <br>
-                    Preset:
-                    <select id="presetSelect" class="teammatch" onchange="javascript:appManager.scoutManager.setPreset()">
-                        <option value="custom">
-                            custom
-                        </option>
-                    </select>
-                </div>
-                
-                Team:
-                <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
-                <br>
-                Match:
-                <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
-                <br>
-                <span id="reverseAlliancesDiv" hidden>
-                    Alliance Position:
-                    <select id="reverseAlliances">
-                        <option value="0">
-                            red right, blue left
-                        </option>
-                        <option value="1">
-                            red left, blue right
-                        </option>
-                    </select>
-                    <br>
-                </span>
-                <div id="loadingtext">
-                    Loading...
-                </div>
-                <div id="startbuttons" hidden>
-                    <button id="visualstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;visual&quot;)">
-                        Scout! (visual)
-                    </button>
-                    <br id="twobuttonbreak">
-                    <button id="classicstart" class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
-                        Scout! (classic)
-                    </button>
-                </div>
-            </div>
-            
-            <div id="selectionDiv_pit" hidden>
-                <button onclick="javascript:appManager.scoutManager.setSelection(&quot;match&quot;)">
-                    Match Scout
-                </button>
-                <br>
-                Team:
-                <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
-                <br>
-                <button class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;pit&quot;)">
-                    Pit Scout!
+                <br id="twobuttonbreak">
+                <button id="classicstart" class="scoutstart"
+                    onclick="javascript:appManager.scoutManager.start(&quot;classic&quot;)">
+                    Scout! (classic)
                 </button>
             </div>
+
+            <div id="scheduleDiv" style="margin-top: 25px;" hidden>
+                Match <span id="schedulematch"></span> Schedule:
+                <table id="schedule"></table>
+            </div>
         </div>
-        
-        <div id="configDiv" class="centered" hidden>
-            <div class="title">
-                Advantage Scout
-            </div>
-            <div class="versiontext">
-                Version unknown
-            </div>
+
+        <div id="selectionDiv_pit" hidden>
+            Team:
+            <input id="pitTeam" type="number" min="1" max="9999" step="1" class="teammatch"></input>
             <br>
-            Enter a device name:
-            <br>
-            <input type="text" id="name"></input>
-            <br>
-            <br>
-            Select server device:
-            <br>
-            <select id="server"></select>
-            <button onclick="javascript:appManager.settingsManager.refreshDeviceList()">
-                Refresh
+            <button class="scoutstart" onclick="javascript:appManager.scoutManager.start(&quot;pit&quot;)">
+                Pit Scout!
             </button>
-            <br>
-            <button onclick="javascript:bluetoothSerial.showBluetoothSettings()">
-                Bluetooth Settings
-            </button>
-            <br>
-            <button onclick="javascript:appManager.settingsManager.close()" class="scoutstart">
-                Finish
-            </button>
-            <script>
-                
-            </script>
-        </div>
-        
-        <div id="modeSwitcherDiv" class="modeswitcher" hidden>
-            <div class="switcherbutton1" onclick="javascript:appManager.scoutManager.setMode(1)" style="font-weight: bold;">
-                Autonomous
-            </div>
-            <div class="switcherbutton2" onclick="javascript:appManager.scoutManager.setMode(2)">
-                Tele-operated
-            </div>
-            <div class="switcherbutton3" onclick="javascript:appManager.scoutManager.setMode(3)">
-                End Game
+            <div style="margin-top: 18px;">
+                <u>
+                    Take notes / list teams here:
+                </u>
+                <br>
+                <textarea style="height: 300px; width: 275px; resize: none; margin-top: 5px;"
+                    placeholder="Enter notes here..." id="pitNotes"></textarea>
             </div>
         </div>
-        
-        <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>
-            Pit Scout - <span id="pitNumber">????</span>
+    </div>
+
+    <div id="configDiv" class="centered" hidden>
+        <div class="title">
+            Advantage Scout
         </div>
-        
-        <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
-            <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+        <div class="versiontext">
+            Version unknown
         </div>
-        
-        <div id="classicDiv1" class="classicdiv" hidden>
+        <br>
+        <div>
+            Game Data Cache: <span id="cacheTime">Unknown</span>
         </div>
-        
-        <div id="classicDiv2" class="classicdiv" hidden>
+        <br>
+        Enter a device name:
+        <br>
+        <input type="text" id="name"></input>
+        <br>
+        <br>
+        Image quality:
+        <br>
+        <select id="imageQuality">
+            <option value="95">
+                Full
+            </option>
+            <option value="75">
+                High
+            </option>
+            <option value="50">
+                Medium
+            </option>
+            <option value="25" selected>
+                Low
+            </option>
+            <option value="10">
+                Terrible
+            </option>
+        </select>
+        <br>
+        <br>
+        Bluetooth settings:
+        <br>
+        <button onclick="javascript:bluetoothSerial.showBluetoothSettings()">
+            Open Settings
+        </button>
+        <br>
+        <br>
+        <button onclick="javascript:appManager.settingsManager.close()" class="scoutstart">
+            Finish
+        </button>
+        <script>
+
+        </script>
+    </div>
+
+    <div id="offlineWarningDiv" class="centered" hidden>
+        <div class="title">
+            Advantage Scout
         </div>
-        
-        <div id="classicDiv3" class="classicdiv" hidden>
+        <div class="subtitle">
+            You're offline!
         </div>
-        
-        <div id="pitClassicDiv" class="classicdiv" hidden>
+        You can keep scouting for now, but please reconnect if possible.
+        <br>
+        <br>
+        Ask someone on the scouting systems team for help if needed.
+        <br>
+        <br>
+        <button class="scoutstart" onclick="javascript:appManager.scoutManager.close(true, true)">
+            Continue
+        </button>
+    </div>
+
+    <div id="modeSwitcherDiv" class="modeswitcher" hidden>
+        <div class="switcherbutton1" onclick="javascript:appManager.scoutManager.setMode(1)" style="font-weight: bold;">
+            Autonomous
         </div>
-        
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="src/ButtonManager.js"></script>
-        <script type="text/javascript" src="src/AppManager.js"></script>
-        <script type="text/javascript" src="src/SettingsManager.js"></script>
-        <script type="text/javascript" src="src/ScoutManager.js"></script>
-        <script type="text/javascript" src="src/ClassicManager.js"></script>
-        <script type="text/javascript" src="src/VisualManager.js"></script>
-        <script type="text/javascript" src="src/AppNotificationManager.js"></script>
-        <script type="text/javascript" src="src/AppServerManager.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+        <div class="switcherbutton2" onclick="javascript:appManager.scoutManager.setMode(2)">
+            Tele-operated
+        </div>
+        <div class="switcherbutton3" onclick="javascript:appManager.scoutManager.setMode(3)">
+            End Game
+        </div>
+    </div>
+
+    <div class="helpbutton" id="helpButtonDiv" onclick="javascript:appManager.scoutManager.showHelp()">
+        ?
+    </div>
+
+    <div id="helpTextDiv" hidden>
+        <div class="screenblocker" onclick="javascript:appManager.scoutManager.hideHelp()"></div>
+        <div class="helptext" id="helpText">
+            <div class="helptexttop">
+                Tap anywhere outside this box to exit
+            </div>
+            <div class="helptextbottom"></div>
+        </div>
+    </div>
+
+    <div id="pitSwitcherDiv" class="modeswitcher pitswitcher" hidden>
+        Pit Scout - <span id="pitNumber">????</span>
+    </div>
+
+    <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
+        <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+    </div>
+
+    <div id="classicDiv1" class="classicdiv" hidden>
+    </div>
+
+    <div id="classicDiv2" class="classicdiv" hidden>
+    </div>
+
+    <div id="classicDiv3" class="classicdiv" hidden>
+    </div>
+
+    <div id="pitClassicDiv" class="classicdiv" hidden>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="src/ButtonManager.js"></script>
+    <script type="text/javascript" src="src/AppManager.js"></script>
+    <script type="text/javascript" src="src/SettingsManager.js"></script>
+    <script type="text/javascript" src="src/ScoutManager.js"></script>
+    <script type="text/javascript" src="src/ClassicManager.js"></script>
+    <script type="text/javascript" src="src/VisualManager.js"></script>
+    <script type="text/javascript" src="src/AppNotificationManager.js"></script>
+    <script type="text/javascript" src="src/AppServerManager.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
 </html>

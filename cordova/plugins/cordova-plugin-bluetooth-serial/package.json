@@ -1,28 +1,25 @@
 {
-  "_from": "cordova-plugin-bluetooth-serial",
+  "_from": "git+https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
   "_id": "cordova-plugin-bluetooth-serial@0.4.7",
   "_inBundle": false,
-  "_integrity": "sha1-HkYG7G1Ct8I/YKdKh8fEpOw4KMA=",
+  "_integrity": "",
   "_location": "/cordova-plugin-bluetooth-serial",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "cordova-plugin-bluetooth-serial",
-    "name": "cordova-plugin-bluetooth-serial",
-    "escapedName": "cordova-plugin-bluetooth-serial",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+    "type": "git",
+    "raw": "https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
+    "rawSpec": "https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
+    "saveSpec": "git+https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
+    "fetchSpec": "https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
+    "gitCommittish": null
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-bluetooth-serial/-/cordova-plugin-bluetooth-serial-0.4.7.tgz",
-  "_shasum": "1e4606ec6d42b7c23f60a74a87c7c4a4ec3828c0",
-  "_spec": "cordova-plugin-bluetooth-serial",
-  "_where": "/Users/jonah/Documents/Cordova Test/AdvantageScoutApp",
+  "_resolved": "git+https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git#5373ac9913debd656b357799fbc5c92373a8f607",
+  "_spec": "https://github.com/Mechanical-Advantage/AdvantageScoutSerial.git",
+  "_where": "/Users/jonah/Documents/AdvantageScout/cordova",
   "author": {
     "name": "Don Coleman",
     "email": "don.coleman@gmail.com"

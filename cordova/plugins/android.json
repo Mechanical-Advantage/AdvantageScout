@@ -13,20 +13,23 @@
     "cordova-plugin-bluetooth-serial": {
       "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
     },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
+    },
     "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
+    },
+    "cordova-plugin-is-debug": {
       "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
     },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
-    },
-    "cordova-plugin-camera": {
-      "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
-    },
-    "cordova-plugin-file": {
       "PACKAGE_NAME": "org.littletonrobotics.advantagescout"
     }
   },

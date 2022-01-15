@@ -7,6 +7,92 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.15.1
+* Added beep sound when message received
+
+### 1.15.0
+* Added support for messaging system
+
+### 1.14.0
+* Added stopwatch input to classic layout
+
+### 1.13.0
+* Added indication of which scouts are ready on schedule
+
+### 1.12.0
+* Added tracking of current scout name
+
+### 1.11.0
+* Added auto fill of team and match from schedule
+
+### 1.10.3
+* Fixed hiding of schedule after submitting
+
+### 1.10.2
+* Added removal of non utf-8 characters in text boxes
+
+### 1.10.1
+* Fixed instruction text in place in help box
+
+### 1.10.0
+* Added notes area for pit scouting
+* Cleaned up startup process when unconfigured
+
+### 1.9.0
+* Added support for help text when pit scouting
+* Increased size of help text box
+* Added reset of scroll position in help text box
+
+### 1.8.0
+* Changed button text for switching between match and pit scouting
+* Added help text
+
+### 1.7.1
+* Bug fixes and cleanup when writing to serial
+* Fixed loading of scout list from cache
+
+### 1.7.0
+* Added section of scout list for upcoming match
+* Added indicator of the last time game data was cached from the server
+
+### 1.6.0
+* Added hiding of schedule after upload
+
+### 1.5.4
+* Added indicator of whether a debug or release build
+
+### 1.5.3
+* Added tracking of "plugged in" status
+
+### 1.5.2
+* Added default value to scout selection
+* Made AppManager accessible to the CanvasManager
+
+### 1.5.1
+* Added battery level tracking
+
+### 1.5.0
+* Added support for new on-the-fly scheduling system
+
+### 1.4.5
+* Added support for hiding classic start button
+
+### 1.4.4
+* Added support for number fields
+
+### 1.4.3
+* Added alert when forwarding server cannot reach main server
+
+### 1.4.2
+* Add option to change image quality
+* New mode selector to increase clarity
+
+### 1.4.1
+* Changes to improve reliability when initiating connection
+
+### 1.4.0
+* New protocol for Bluetooth communication on multiple devices
+
 ### 1.3.1
 * Fix for upload button on old Android versions
 
