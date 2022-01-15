@@ -213,22 +213,22 @@
             {
                 "type": "checkbox",
                 "field": "CanClimbLow",
-                "label": "Low"
+                "label": "Climb Low"
             },
             {
                 "type": "checkbox",
                 "field": "CanClimbMid",
-                "label": "Mid"
+                "label": "Climb Mid"
             },
             {
                 "type": "checkbox",
                 "field": "CanClimbHigh",
-                "label": "High"
+                "label": "Climb High"
             },
             {
                 "type": "checkbox",
                 "field": "CanClimbTraversal",
-                "label": "Traversal"
+                "label": "Climb Traversal"
             },
             {
                 "type": "break"
@@ -236,17 +236,17 @@
             {
                 "type": "checkbox",
                 "field": "ShootFromFender",
-                "label": "Fender"
+                "label": "Shoot Fender"
             },
             {
                 "type": "checkbox",
                 "field": "ShootFromTarmac",
-                "label": "Tarmac"
+                "label": "Shoot Tarmac"
             },
             {
                 "type": "checkbox",
                 "field": "ShootFromLaunchpad",
-                "label": "Launchpad"
+                "label": "Shoot Launchpad"
             },
             {
                 "type": "break"
@@ -254,12 +254,20 @@
             {
                 "type": "checkbox",
                 "field": "StartFromFender",
-                "label": "Fender"
+                "label": "Start Fender"
+            },
+            {
+                "type": "checkbox",
+                "field": "StartFromTarmacMid",
+                "label": "Start Tarmac Middle"
             },
             {
                 "type": "checkbox",
                 "field": "StartFromTarmacEdge",
-                "label": "TarmacEdge"
+                "label": "Start Tarmac Edge"
+            },
+            {
+                "type": "break"
             },
             {
                 "type": "number",
@@ -267,7 +275,7 @@
                 "label": "Max Auto Shots"
             },
             {
-                "type": "checkbox",
+                "type": "number",
                 "field": "HoldingCapacity",
                 "label": "Holding Capacity"
             },
@@ -318,11 +326,8 @@
                 }
             },
             {
-                "type": "group",
-                "label": "Cargo",
-                "unit1": {
-                    "type": "chooser",
-                    "field": "IntakeRating",
+                "type": "chooser",
+                "field": "IntakeRating",
                     "label": "Intake",
                     "options": {
                         "NA": 0,
@@ -331,7 +336,6 @@
                         "\u2B50\u2B50\u2B50": 3,
                         "\u2B50\u2B50\u2B50\u2B50": 4,
                         "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
-                    }
                 }
             },
             {
