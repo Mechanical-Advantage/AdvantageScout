@@ -11,6 +11,33 @@ this.setMode = function (newMode) { // REQUIRED FUNCTION
     render()
 }
 
+// Color definitions and stuff
+var leftColor = (reverseAlliances) ? "#ff0000" : "#0000de"
+var rightColor = (reverseAlliances) ? "#0000de" : "#ff0000"
+var leftHighlightColor = (reverseAlliances) ? "#ff7575" : "#6666ff"
+var rightHighlightColor = (reverseAlliances) ? "#6666ff" : "#ff7575"
+var outline = "#000000"
+var fieldBackground = "#d1d1d1"
+var text = "#000000"
+var textWhite = "#ffffff"
+var success = "#00d936"
+var failure = "#b30000"
+var climbText = ["L", "M", "H", "T"]
+const black = "#000000"
+const mediumGray = "#D1D1D1"
+const darkGray = "#A9A9A9"
+const lightGray = "#D3D3D3"
+const deflectorsBottomRight = [1548, 1051, 1563, 988, 1521, 898, 1557, 882, 1597, 974, 1653, 1004, 1548, 1051];
+const defelectorsBottomLeft = [1249, 848, 1312, 863, 1402, 821, 1418, 857, 1326, 897, 1296, 953, 1249, 848];
+const deflectorsTopLeft = [1452, 549, 1437, 612, 1479, 702, 1434, 718, 1403, 626, 1347, 596, 1452, 549];
+const deflectorsTopRight = [1751, 752, 1688, 737, 1598, 779, 1582, 743, 1674, 703, 1704, 647, 1751, 752]
+const bottomLeftTarmac = [1530, 950, 1640, 1200, 1345, 1200, 1130, 1000, 1370, 890, 1530, 950]
+const topLeftTarmac = [1350, 830, 1100, 940, 1100, 645, 1300, 430, 1410, 670, 1350, 830]
+const topRightTarmac = [1470, 650, 1360, 400, 1655, 400, 1870, 600, 1630, 710, 1470, 650]
+const bottomRightTarmac = [1650, 770, 1900, 660, 1900, 955, 1700, 1170, 1590, 935, 1650, 770]
+
+
+
 this.getData = function () { // REQUIRED FUNCTION
     toSend = jsonCopy(data)
     if (!("AllianceColor" in data)) {
@@ -45,8 +72,10 @@ var data = {
     "ClimbLow": [],
     "ClimbMid": [],
     "ClimbHigh": [],
-    "ClimbTraversal": []
+    "ClimbTraversal": [],
+    "climbCounter": [0, 0, 0, 0]
 }
+data["AllianceColor"] = 0
 var controlRotationSelected = true
 var dataLog = []
 
@@ -63,29 +92,22 @@ function recordTime() {
     data["LastUpperButton"] = time
 }
 
-// Color definitions
-var leftColor = (reverseAlliances) ? "#ff0000" : "#0000de"
-var rightColor = (reverseAlliances) ? "#0000de" : "#ff0000"
-var leftHighlightColor = (reverseAlliances) ? "#ff7575" : "#6666ff"
-var rightHighlightColor = (reverseAlliances) ? "#6666ff" : "#ff7575"
-var outline = "#000000"
-var fieldBackground = "#d1d1d1"
-var text = "#000000"
-var textWhite = "#ffffff"
-var success = "#00d936"
-var failure = "#b30000"
-var controlHighlight = "#fff533"
-var controlBlue = "#00ffff"
-var controlGreen = "#00ff00"
-var controlRed = "#ff0000"
-var controlYellow = "#ffff00"
-const mediumGray = "#D1D1D1"
-const darkGray = "#A9A9A9"
-const lightGray = "#D3D3D3"
+function drawObjects(coordinates, fillColor, strokeColor) {
+    context.beginPath()
+    context.fillStyle = fillColor
+    context.strokeStyle = strokeColor
+    context.moveTo(coordinates[0], coordinates[1])
+    for (i = 2; i < coordinates.length; i += 2) {
+        context.lineTo(coordinates[i], coordinates[i + 1])
+    }
+    context.closePath()
+    context.fill()
+    context.stroke()
+}
 
 // Set ponytails
 const ponytails = [Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5]
-
+//draw people
 function drawFigure(x, y, color, ponytails, armDirection) {
     context.lineWidth = 8
     context.strokeStyle = color
@@ -132,142 +154,127 @@ function render() {
     context.clearRect(0, 0, 3000, 1600)
 
     function setFieldPath() {
+        //outerbox
         context.beginPath()
-        context.moveTo(450, 450)
-        context.lineTo(450, 1150)
-        context.lineTo(550, 1400)
-        context.lineTo(2450, 1400)
-        context.lineTo(2550, 1150)
-        context.lineTo(2550, 450)
-        context.lineTo(2450, 200)
-        context.lineTo(550, 200)
-        context.lineTo(450, 450)
-        context.lineWidth = 8
-        context.fillStyle = fieldBackground
-        context.strokeStyle = outline
+        context.moveTo(300, 200)
+        context.lineTo(2500, 200)
+        context.lineTo(2700, 400)
+        context.lineTo(2700, 1400)
+        context.lineTo(500, 1400)
+        context.lineTo(300, 1200)
+        context.lineTo(300, 200)
+        context.lineWidth = 10
+        context.fillStyle = "#D1D1D1"
+        context.strokeStyle = black
+        context.stroke()
     }
     setFieldPath()
     context.fill()
 
-    // Draw initiation lines
+    //center line
     context.beginPath()
-    context.moveTo(2250, 200)
-    context.lineTo(2250, 1400)
-    context.moveTo(750, 200)
-    context.lineTo(750, 1400)
+    context.moveTo(1235, 200)
+    context.lineTo(1765, 1400)
     context.stroke()
 
-    // Draw control panel backgrounds
-    context.fillStyle = rightColor
-    context.fillRect(1400, 200, 600, 300)
-    context.fillStyle = leftColor
-    context.fillRect(1000, 1100, 600, 300)
 
-    // Draw control panel text
-    if ("AllianceColor" in data && mode == 1) {
+    drawObjects(bottomLeftTarmac, leftColor, black)
+    drawObjects(bottomRightTarmac, rightColor, black)
+    drawObjects(topLeftTarmac, leftColor, black)
+    drawObjects(topRightTarmac, rightColor, black)
+
+
+    // left hanger
+    context.fillStyle = leftColor
+    context.lineStyle = leftColor
+    context.rect(300, 200, 460, 424)
+
+    //context.strokeStyle = "gray"
+    context.stroke()
+    context.beginPath()
+    context.lineStyle = leftColor
+    context.moveTo(442, 200)
+    context.lineTo(442, 624)
+    context.moveTo(532, 200)
+    context.lineTo(532, 624)
+    context.moveTo(622, 200)
+    context.lineTo(622, 624)
+    context.moveTo(760, 200)
+    context.lineTo(760, 624)
+    context.strokeStyle = leftColor
+    context.lineWidth = 10
+    context.stroke()
+
+    // right hanger
+    context.beginPath()
+    context.fillStyle = rightColor
+    context.lineStyle = rightColor
+    context.rect(2210, 976, 490, 424)
+    context.strokeStyle = black
+    context.stroke()
+    context.beginPath()
+    context.lineStyle = rightColor
+    context.moveTo(2558, 976)
+    context.lineTo(2558, 1400)
+    context.moveTo(2468, 976)
+    context.lineTo(2468, 1400)
+    context.moveTo(2378, 976)
+    context.lineTo(2378, 1400)
+    context.moveTo(2210, 976)
+    context.lineTo(2210, 1400)
+    context.strokeStyle = rightColor
+    context.stroke()
+
+
+
+    //center hub square
+    context.beginPath()
+    context.strokeStyle = black
+    context.fillStyle = lightGray
+    context.translate(1427, 641)
+    context.rotate(21 * Math.PI / 180)
+    context.fillRect(0, 0, 250, 250)
+    context.strokeRect(0, 0, 250, 250)
+    context.rotate(-21 * Math.PI / 180)
+    context.translate(-1427, -641)
+    context.stroke()
+
+    drawObjects(defelectorsBottomLeft, darkGray, black)
+    drawObjects(deflectorsBottomRight, darkGray, black)
+    drawObjects(deflectorsTopLeft, darkGray, black)
+    drawObjects(deflectorsTopRight, darkGray, black)
+
+    // hub circle
+    context.fillStyle = darkGray
+    context.beginPath()
+    context.arc(1500, 800, 105, 0, 2 * Math.PI)
+    context.closePath()
+    context.fill()
+    context.stroke()
+
+    // climb boxes
+    if ((mode == 1) && ("AllianceColor" in data)) {
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 0, 250, 250)
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 450, 250, 250)
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 900, 250, 250)
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 1350, 250, 250)
+        context.stroke()
+
         context.textAlign = "center"
         context.textBaseline = "middle"
         context.fillStyle = text
-        context.font = "130px sans-serif"
-        centerX = (data["AllianceColor"] == 0) ? 1700 : 1300
-        centerY = (data["AllianceColor"] == 0) ? 350 : 1250
+        context.strokeStyle = black
+        context.font = "150px sans-serif"
+        for (i = 0; i < 4; i++) {
+            context.fillText(climbText[i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
 
-        context.fillStyle = (data["AllianceColor"] == 0) ? rightHighlightColor : leftHighlightColor
-        if ((controlRotationSelected) ? data["WheelRotationAttempted"] : data["WheelPositionAttempted"] == 1) {
-            context.fillRect(centerX - 300, centerY - 150, 300, 300)
-            context.font = "bold 130px sans-serif"
-        } else {
-            context.font = "130px sans-serif"
         }
-        context.fillStyle = text
-        context.fillText("Att", centerX - 150, centerY + 10)
 
-        context.fillStyle = (data["AllianceColor"] == 0) ? rightHighlightColor : leftHighlightColor
-        if ((controlRotationSelected) ? data["WheelRotationSuccess"] : data["WheelPositionSuccess"] == 1) {
-            context.fillRect(centerX, centerY - 150, 300, 300)
-            context.font = "bold 130px sans-serif"
-        } else {
-            context.font = "130px sans-serif"
-        }
-        context.fillStyle = text
-        context.fillText("Suc", centerX + 150, centerY + 10)
+        context.stroke()
     }
-
-    // Draw upper control panel outline
-    context.strokeRect(1400, 200, 600, 300)
-    context.beginPath()
-    context.moveTo(1700, 200)
-    context.lineTo(1700, 500)
-    context.stroke()
-
-    // Draw lower control panel outline
-    context.strokeRect(1000, 1100, 600, 300)
-    context.beginPath()
-    context.moveTo(1300, 1100)
-    context.lineTo(1300, 1400)
-    context.stroke()
-
-    // Draw shield generator
-    context.beginPath()
-    context.moveTo(1700, 500)
-    context.lineTo(1750, 750)
-    context.lineTo(1250, 850)
-    context.lineTo(1200, 600)
-    context.closePath()
-    context.fillStyle = rightColor
-    context.fill()
-    context.stroke()
-
-    context.beginPath()
-    context.moveTo(1750, 750)
-    context.lineTo(1800, 1000)
-    context.lineTo(1300, 1100)
-    context.lineTo(1250, 850)
-    context.closePath()
-    context.fillStyle = leftColor
-    context.fill()
-    context.stroke()
-
-    // Draw protected areas
-    // upper left
-    context.beginPath()
-    context.moveTo(450, 450)
-    context.lineTo(550, 600)
-    context.lineTo(450, 750)
-    context.strokeStyle = rightColor
-    context.stroke()
-
-    // lower left
-    context.beginPath()
-    context.moveTo(450, 1150)
-    context.lineTo(550, 1000)
-    context.lineTo(450, 850)
-    context.strokeStyle = leftColor
-    context.stroke()
-
-    // upper right
-    context.beginPath()
-    context.moveTo(2550, 450)
-    context.lineTo(2450, 600)
-    context.lineTo(2550, 750)
-    context.strokeStyle = rightColor
-    context.stroke()
-
-    // lower right
-    context.beginPath()
-    context.moveTo(2550, 1150)
-    context.lineTo(2450, 1000)
-    context.lineTo(2550, 850)
-    context.strokeStyle = leftColor
-    context.stroke()
 
     // Draw starting positions
     if (mode == 0) {
-        context.strokeStyle = outline
-        context.fillStyle = leftColor
-        context.fillRect(2175, 200, 150, 1200)
-        context.fillStyle = rightColor
-        context.fillRect(675, 200, 150, 1200)
 
         // Highlight
         if ("StartPos" in data) {
@@ -279,19 +286,7 @@ function render() {
             }
         }
 
-        // Right outline
-        context.strokeRect(2175, 200, 150, 400)
-        context.strokeRect(2175, 600, 150, 400)
-        context.strokeRect(2175, 1000, 150, 400)
-
-        // Left outline
-        context.strokeRect(675, 200, 150, 400)
-        context.strokeRect(675, 600, 150, 400)
-        context.strokeRect(675, 1000, 150, 400)
     }
-    // Draw outline
-    setFieldPath()
-    context.stroke()
 
     // Draw moved from line symbols
     if ((mode == 0) && "AllianceColor" in data) {
@@ -302,7 +297,7 @@ function render() {
         context.arc(centerX, 100, 25, 0, 2 * Math.PI)
         context.fill()
 
-        if (data["CrossedLine"] == 1) {
+        if (data["Taxi"] == 1) {
             context.beginPath()
             context.moveTo(centerX - 105, 100)
             context.lineTo(centerX + 105, 100)
@@ -320,92 +315,14 @@ function render() {
     if ("AllianceColor" in data) {
         leftX = (data["AllianceColor"] == 0) ? 25 : 2575
         context.fillStyle = success
-        context.fillRect(leftX, 200, 175, 350)
-        context.fillRect(leftX, 625, 175, 350)
-        context.fillRect(leftX, 1050, 175, 350)
-        context.strokeRect(leftX, 200, 175, 350)
-        context.strokeRect(leftX, 625, 175, 350)
-        context.strokeRect(leftX, 1050, 175, 350)
-        context.fillStyle = failure
-        context.fillRect(leftX + 225, 200, 175, 775)
-        context.fillRect(leftX + 225, 1050, 175, 350)
-        context.strokeRect(leftX + 225, 200, 175, 775)
-        context.strokeRect(leftX + 225, 1050, 175, 350)
 
         // Write numbers
         context.textAlign = "center"
         context.textBaseline = "middle"
         context.font = "130px sans-serif"
         context.fillStyle = text
-        context.fillText((mode == 0) ? data["AutoInnerSuccess"] : data["InnerSuccess"], leftX + 88, 375)
-        context.fillText((mode == 0) ? data["AutoOuterSuccess"] : data["OuterSuccess"], leftX + 88, 810)
-        context.fillText((mode == 0) ? data["AutoLowerSuccess"] : data["LowerSuccess"], leftX + 88, 1225)
-        context.fillText((mode == 0) ? data["AutoUpperFailures"] : data["UpperFailures"], leftX + 312, 592)
-        context.fillText((mode == 0) ? data["AutoLowerFailures"] : data["LowerFailures"], leftX + 312, 1225)
     }
 
-    // Render control panel
-    if ("AllianceColor" in data && mode == 1) {
-        // Switcher buttons
-        centerX = (data["AllianceColor"] == 0) ? 1700 : 1300
-        centerY = (data["AllianceColor"] == 0) ? 100 : 1500
-
-        // Rotation
-        context.beginPath()
-        context.arc(centerX - 100, centerY, 50, 0, -0.5 * Math.PI)
-        context.moveTo(centerX - 120, centerY - 28)
-        context.lineTo(centerX - 100, centerY - 48)
-        context.lineTo(centerX - 120, centerY - 68)
-        context.stroke()
-
-        // Lower right quadrant
-        context.fillStyle = controlRed
-        context.beginPath()
-        context.moveTo(centerX + 100, centerY)
-        context.lineTo(centerX + 160, centerY)
-        context.arc(centerX + 100, centerY, 60, 0, 0.5 * Math.PI)
-        context.closePath()
-        context.fill()
-        context.stroke()
-
-        // Lower left quadrant
-        context.fillStyle = controlYellow
-        context.beginPath()
-        context.moveTo(centerX + 100, centerY)
-        context.lineTo(centerX + 100, centerY - 60)
-        context.arc(centerX + 100, centerY, 60, 0.5 * Math.PI, Math.PI)
-        context.closePath()
-        context.fill()
-        context.stroke()
-
-        // Upper left quadrant
-        context.fillStyle = controlBlue
-        context.beginPath()
-        context.moveTo(centerX + 100, centerY)
-        context.lineTo(centerX + 60, centerY)
-        context.arc(centerX + 100, centerY, 60, Math.PI, 1.5 * Math.PI)
-        context.closePath()
-        context.fill()
-        context.stroke()
-
-        // Upper right quadrant
-        context.fillStyle = controlGreen
-        context.beginPath()
-        context.moveTo(centerX + 100, centerY)
-        context.lineTo(centerX + 100, centerY + 60)
-        context.arc(centerX + 100, centerY, 60, 1.5 * Math.PI, 2 * Math.PI)
-        context.closePath()
-        context.fill()
-        context.stroke()
-
-        // Highlight circle
-        context.fillStyle = controlHighlight
-        context.beginPath()
-        context.arc(centerX + ((controlRotationSelected) ? -100 : 100), centerY, 90, 0, 2 * Math.PI)
-        context.globalAlpha = 0.6
-        context.fill()
-        context.globalAlpha = 1
-    }
     // Undo button
     if (dataLog.length > 0) {
         context.fillStyle = "#e3e3e3"
@@ -419,16 +336,16 @@ function render() {
     }
 
     // Stick figures
-    if (("AllianceColor" in data) ? data["AllianceColor"] == 0 : true) {
-        drawFigure((mode == 0) ? 50 : 200, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
-        drawFigure((mode == 0) ? 50 : 200, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)
-        drawFigure((mode == 0) ? 50 : 200, 1275, leftColor, ponytails[2], (mode == 0) ? 1 : 2)
-    }
-    if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
-        drawFigure((mode == 0) ? 2950 : 2800, 325, rightColor, ponytails[3], (mode == 0) ? 1 : 0)
-        drawFigure((mode == 0) ? 2950 : 2800, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
-        drawFigure((mode == 0) ? 2950 : 2800, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
-    }
+    // if (("AllianceColor" in data) ? data["AllianceColor"] == 0 : true) {
+    //     drawFigure((mode == 0) ? 50 : 200, 325, leftColor, ponytails[0], (mode == 0) ? 1 : 2)
+    //     drawFigure((mode == 0) ? 50 : 200, 800, leftColor, ponytails[1], (mode == 0) ? 1 : 2)
+    //     drawFigure((mode == 0) ? 50 : 200, 1275, leftColor, ponytails[2], (mode == 0) ? 1 : 2)
+    // }
+    // if (("AllianceColor" in data) ? data["AllianceColor"] == 1 : true) {
+    //     drawFigure((mode == 0) ? 2950 : 2800, 325, rightColor, ponytails[3], (mode == 0) ? 1 : 0)
+    //     drawFigure((mode == 0) ? 2950 : 2800, 800, rightColor, ponytails[4], (mode == 0) ? 1 : 0)
+    //     drawFigure((mode == 0) ? 2950 : 2800, 1275, rightColor, ponytails[5], (mode == 0) ? 1 : 0)
+    // }
 
     // Write team number
     if (mode == 0) {
@@ -441,297 +358,46 @@ function render() {
 }
 render()
 
-buttonManager.addButton("StartLeft0", new Button(675, 1000, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 0
-        data["StartPos"] = 0
-        render()
-    }
-}))
 
-buttonManager.addButton("StartLeft1", new Button(675, 600, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 0
-        data["StartPos"] = 1
-        render()
-    }
-}))
 
-buttonManager.addButton("StartLeft2", new Button(675, 200, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 0
-        data["StartPos"] = 2
-        render()
-    }
-}))
-
-buttonManager.addButton("StartRight0", new Button(2175, 200, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 1
-        data["StartPos"] = 0
-        render()
-    }
-}))
-
-buttonManager.addButton("StartRight1", new Button(2175, 600, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 1
-        data["StartPos"] = 1
-        render()
-    }
-}))
-
-buttonManager.addButton("StartRight2", new Button(2175, 1000, 150, 400, function () {
-    if (mode == 0) {
-        data["AllianceColor"] = 1
-        data["StartPos"] = 2
-        render()
-    }
-}))
-
-buttonManager.addButton("CrossedLineLeft", new Button(600, 0, 300, 200, function () {
+buttonManager.addButton("TaxiLeft", new Button(600, 0, 300, 200, function () {
     if (mode == 0 && "AllianceColor" in data) {
         if (data["AllianceColor"] == 0) {
-            data["CrossedLine"] = 1 - data["CrossedLine"]
+            data["Taxi"] = 1 - data["Taxi"]
             render()
         }
     }
 }))
 
-buttonManager.addButton("CrossedLineRight", new Button(2100, 0, 300, 200, function () {
+buttonManager.addButton("TaxiRight", new Button(2100, 0, 300, 200, function () {
     if (mode == 0 && "AllianceColor" in data) {
         if (data["AllianceColor"] == 1) {
-            data["CrossedLine"] = 1 - data["CrossedLine"]
+            data["Taxi"] = 1 - data["Taxi"]
             render()
         }
     }
 }))
 
-buttonManager.addButton("LeftInnerSuccess", new Button(25, 200, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 0) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoInnerSuccess"]++
-            } else {
-                data["InnerSuccess"]++
-            }
-            render()
+buttonManager.addButton("LowClimb", new Button(0, 0, 250, 250, function () {
+    if ((mode == 1)) {
+        data["climbCounter"][0] += 1
+        switch (data["climbCounter"][0]) {
+            case 1:
+                climbText[0] = "A"
+                break;
+            case 2:
+                climbText[0] = "S"
+                break;
+            case 3:
+                climbText[0] = "F"
+                break
+            default:
+                break;
         }
+        render()
     }
 }))
 
-buttonManager.addButton("LeftOuterSuccess", new Button(25, 625, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 0) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoOuterSuccess"]++
-            } else {
-                data["OuterSuccess"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("LeftLowerSuccess", new Button(25, 1050, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 0) {
-            addToDataLog()
-            if (mode == 0) {
-                data["AutoLowerSuccess"]++
-            } else {
-                data["LowerSuccess"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("LeftUpperFailures", new Button(250, 200, 175, 775, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 0) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoUpperFailures"]++
-            } else {
-                data["UpperFailures"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("LeftLowerFailures", new Button(250, 1050, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 0) {
-            addToDataLog()
-            if (mode == 0) {
-                data["AutoLowerFailures"]++
-            } else {
-                data["LowerFailures"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("RightInnerSuccess", new Button(2575, 200, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 1) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoInnerSuccess"]++
-            } else {
-                data["InnerSuccess"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("RightOuterSuccess", new Button(2575, 625, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 1) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoOuterSuccess"]++
-            } else {
-                data["OuterSuccess"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("RightLowerSuccess", new Button(2575, 1050, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 1) {
-            addToDataLog()
-            if (mode == 0) {
-                data["AutoLowerSuccess"]++
-            } else {
-                data["LowerSuccess"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("RightUpperFailures", new Button(2800, 200, 175, 775, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 1) {
-            addToDataLog()
-            recordTime()
-            if (mode == 0) {
-                data["AutoUpperFailures"]++
-            } else {
-                data["UpperFailures"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("RightLowerFailures", new Button(2800, 1050, 175, 350, function () {
-    if ("AllianceColor" in data) {
-        if (data["AllianceColor"] == 1) {
-            addToDataLog()
-            if (mode == 0) {
-                data["AutoLowerFailures"]++
-            } else {
-                data["LowerFailures"]++
-            }
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("TopRotationSelect", new Button(1500, 0, 200, 200, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 0) {
-            controlRotationSelected = true
-            render()
-        }
-
-    }
-}))
-
-buttonManager.addButton("TopPositionSelect", new Button(1700, 0, 200, 200, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 0) {
-            controlRotationSelected = false
-            render()
-        }
-
-    }
-}))
-
-buttonManager.addButton("BottomRotationSelect", new Button(1100, 1400, 200, 200, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 1) {
-            controlRotationSelected = true
-            render()
-        }
-
-    }
-}))
-
-buttonManager.addButton("BottomPositionSelect", new Button(1300, 1400, 200, 200, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 1) {
-            controlRotationSelected = false
-            render()
-        }
-
-    }
-}))
-
-buttonManager.addButton("TopControlAttempted", new Button(1400, 200, 300, 300, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 0) {
-            field = (controlRotationSelected) ? "WheelRotationAttempted" : "WheelPositionAttempted"
-            data[field] = 1 - data[field]
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("TopControlSuccess", new Button(1700, 200, 300, 300, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 0) {
-            field = (controlRotationSelected) ? "WheelRotationSuccess" : "WheelPositionSuccess"
-            data[field] = 1 - data[field]
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("BottomControlAttempted", new Button(1000, 1100, 300, 300, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 1) {
-            field = (controlRotationSelected) ? "WheelRotationAttempted" : "WheelPositionAttempted"
-            data[field] = 1 - data[field]
-            render()
-        }
-    }
-}))
-
-buttonManager.addButton("BottomControlSuccess", new Button(1300, 1100, 300, 300, function () {
-    if ("AllianceColor" in data && mode == 1) {
-        if (data["AllianceColor"] == 1) {
-            field = (controlRotationSelected) ? "WheelRotationSuccess" : "WheelPositionSuccess"
-            data[field] = 1 - data[field]
-            render()
-        }
-    }
-}))
 
 buttonManager.addButton("UndoButton", new Button(1750, 1450, 250, 150, function () {
     if (dataLog.length > 0) {
@@ -739,3 +405,4 @@ buttonManager.addButton("UndoButton", new Button(1750, 1450, 250, 150, function 
         render()
     }
 }))
+

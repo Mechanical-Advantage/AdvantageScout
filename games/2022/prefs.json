@@ -426,6 +426,11 @@
                 "label": "Final Score"
             },
             {
+                "type": "number",
+                "field": "Penalties",
+                "label": "Penalties"
+            },
+            {
                 "type": "uploadButton"
             }
         ]
