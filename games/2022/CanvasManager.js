@@ -73,7 +73,8 @@ var data = {
     "ClimbMid": [],
     "ClimbHigh": [],
     "ClimbTraversal": [],
-    "climbCounter": [0, 0, 0, 0]
+    "climbCounter": [0, 0, 0, 0],
+    "climbText": ["L", "M", "H", "T"]
 }
 data["AllianceColor"] = 0
 var controlRotationSelected = true
@@ -266,7 +267,7 @@ function render() {
         context.strokeStyle = black
         context.font = "150px sans-serif"
         for (i = 0; i < 4; i++) {
-            context.fillText(climbText[i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
+            context.fillText(data["climbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
 
         }
 
@@ -355,6 +356,16 @@ function render() {
         context.fillStyle = "#000000"
         context.fillText("You are scouting team " + appManager.team.toString(), 1500, 100)
     }
+    if (dataLog.length > 0) {
+        context.fillStyle = "#e3e3e3"
+        context.fillRect(1750, 1450, 250, 150)
+
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+        context.font = "70px sans-serif"
+        context.fillStyle = "#000000"
+        context.fillText("Undo", 1875, 1525)
+    }
 }
 render()
 
@@ -380,20 +391,26 @@ buttonManager.addButton("TaxiRight", new Button(2100, 0, 300, 200, function () {
 
 buttonManager.addButton("LowClimb", new Button(0, 0, 250, 250, function () {
     if ((mode == 1)) {
+        addToDataLog()
         data["climbCounter"][0] += 1
+
         switch (data["climbCounter"][0]) {
+            case 0:
+                data["climbText"][0] = "L"
+                break;
             case 1:
-                climbText[0] = "A"
+                data["climbText"][0] = "A"
                 break;
             case 2:
-                climbText[0] = "S"
+                data["climbText"][0] = "S"
                 break;
             case 3:
-                climbText[0] = "F"
+                data["climbText"][0] = "F"
                 break
             default:
                 break;
         }
+
         render()
     }
 }))
