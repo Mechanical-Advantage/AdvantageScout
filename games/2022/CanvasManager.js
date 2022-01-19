@@ -45,8 +45,9 @@ this.getData = function () { // REQUIRED FUNCTION
     } else if (reverseAlliances) {
         toSend["AllianceColor"] = 1 - toSend["AllianceColor"]
     }
-    toSend["UpperSecondsBetween"] = toSend["UpperSecondsBetween"].join()
-    delete toSend["LastUpperButton"]
+    //toSend["UpperSecondsBetween"] = toSend["UpperSecondsBetween"].join()
+    delete toSend["ClimbCounter"]
+    delete toSend["ClimbText"]
     return toSend
 }
 
@@ -73,10 +74,10 @@ var data = {
     "ClimbMid": [],
     "ClimbHigh": [],
     "ClimbTraversal": [],
-    "climbCounter": [0, 0, 0, 0],
-    "climbText": ["L", "M", "H", "T"]
+    "ClimbCounter": [0, 0, 0, 0],
+    "ClimbText": ["L", "M", "H", "T"]
 }
-data["AllianceColor"] = 0
+data["AllianceColor"] = 1
 var controlRotationSelected = true
 var dataLog = []
 
@@ -178,11 +179,17 @@ function render() {
     context.lineTo(1765, 1400)
     context.stroke()
 
-
+    // tarmac
     drawObjects(bottomLeftTarmac, leftColor, black)
     drawObjects(bottomRightTarmac, rightColor, black)
     drawObjects(topLeftTarmac, leftColor, black)
     drawObjects(topRightTarmac, rightColor, black)
+
+    if (data["StartPosition"] != "") {
+        position = data["StartPosition"].split(",")
+        context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
+        context.stroke()
+    }
 
 
     // left hanger
@@ -267,7 +274,7 @@ function render() {
         context.strokeStyle = black
         context.font = "150px sans-serif"
         for (i = 0; i < 4; i++) {
-            context.fillText(data["climbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
+            context.fillText(data["ClimbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
 
         }
 
@@ -293,10 +300,11 @@ function render() {
     if ((mode == 0) && "AllianceColor" in data) {
         centerX = (data["AllianceColor"] == 0) ? 750 : 2250
 
-        context.beginPath()
-        context.fillStyle = outline
-        context.arc(centerX, 100, 25, 0, 2 * Math.PI)
-        context.fill()
+        //context.beginPath()
+        //context.fillStyle = outline
+        //context.arc(centerX, 100, 25, 0, 2 * Math.PI)
+        //context.fill()
+        // context.moveTo(400, 200)
 
         if (data["Taxi"] == 1) {
             context.beginPath()
@@ -310,6 +318,10 @@ function render() {
             context.lineTo(centerX + 55, 150)
             context.stroke()
         }
+        context.font = "100px sarif"
+        context.textAlign = "center"
+        context.textBaseline = "middle"
+        context.fillText("\uD83D\uDE95", centerX, 100)
     }
 
     // Draw scoring area
@@ -369,6 +381,66 @@ function render() {
 }
 render()
 
+function climbButton(climbLevel, climbIndex) {
+    var time = new Date().getTime() / 1000
+    switch (data["ClimbCounter"][climbIndex]) {
+        case 0:
+            data["ClimbText"][climbIndex] = "L"
+            break;
+        case 1:
+            data["ClimbText"][climbIndex] = "A"
+            data[climbLevel].push(0, time)
+            break;
+        case 2:
+            data["ClimbText"][climbIndex] = "S"
+            data[climbLevel].push(1, time)
+            break;
+        case 3:
+            data["ClimbText"][climbIndex] = "F"
+            data[climbLevel].push(2, time)
+            break
+        default:
+            break;
+    }
+}
+
+function inZone(vertices, testx, testy) {
+    let vertx = []
+    let verty = []
+    let nvert = vertices.length / 2
+    for (i = 0; i < vertices.length; i += 2) {
+        vertx.push(vertices[i])
+        verty.push(vertices[i + 1])
+    }
+    var c = 0
+    for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+        if (((verty[i] > testy) != (verty[j] > testy)) &&
+            (testx < (vertx[j] - vertx[i]) * (testy - verty[i]) / (verty[j] - verty[i]) + vertx[i]))
+            c = !c;
+    }
+    return c;
+}
+
+canvas.addEventListener("click", event => {
+    var rect = canvas.getBoundingClientRect();
+    var x = (event.clientX - rect.left) / rect.width * canvas.width
+    var y = (event.clientY - rect.top) / rect.height * canvas.height
+
+    if (data["StartPosition"] == "" && mode == 0) {
+        if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
+            addToDataLog()
+            data["AllianceColor"] = 1 - reverseAlliances
+            data["StartPosition"] = x + "," + y
+        }
+        if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
+            addToDataLog()
+            data["AllianceColor"] = reverseAlliances
+            data["StartPosition"] = x + "," + y
+        }
+    }
+    render()
+})
+
 
 
 buttonManager.addButton("TaxiLeft", new Button(600, 0, 300, 200, function () {
@@ -389,30 +461,147 @@ buttonManager.addButton("TaxiRight", new Button(2100, 0, 300, 200, function () {
     }
 }))
 
-buttonManager.addButton("LowClimb", new Button(0, 0, 250, 250, function () {
-    if ((mode == 1)) {
-        addToDataLog()
-        data["climbCounter"][0] += 1
+buttonManager.addButton("LowClimbLeft", new Button(0, 0, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
 
-        switch (data["climbCounter"][0]) {
-            case 0:
-                data["climbText"][0] = "L"
-                break;
-            case 1:
-                data["climbText"][0] = "A"
-                break;
-            case 2:
-                data["climbText"][0] = "S"
-                break;
-            case 3:
-                data["climbText"][0] = "F"
-                break
-            default:
-                break;
+        if ((data["AllianceColor"] == 0)) {
+            addToDataLog()
+            data["ClimbCounter"][0] += 1
+            climbButton("ClimbLow", 0)
+            render()
+
         }
 
-        render()
     }
+
+
+}))
+
+buttonManager.addButton("MidClimbLeft", new Button(0, 450, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 0)) {
+            addToDataLog()
+            data["ClimbCounter"][1] += 1
+
+            climbButton("ClimbMid", 1)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+buttonManager.addButton("HighClimbLeft", new Button(0, 900, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 0)) {
+            addToDataLog()
+            data["ClimbCounter"][2] += 1
+
+            climbButton("ClimbHigh", 2)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+buttonManager.addButton("TraversalClimbLeft", new Button(0, 1350, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 0)) {
+            addToDataLog()
+            data["ClimbCounter"][3] += 1
+
+            climbButton("ClimbTraversal", 3)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+
+buttonManager.addButton("LowClimbRight", new Button(2750, 0, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 1)) {
+            addToDataLog()
+            data["ClimbCounter"][0] += 1
+
+            climbButton("ClimbLow", 0)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+buttonManager.addButton("MidClimbRight", new Button(2750, 450, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 1)) {
+            addToDataLog()
+            data["ClimbCounter"][1] += 1
+
+            climbButton("ClimbMid", 1)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+buttonManager.addButton("HighClimbRight", new Button(2750, 900, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 1)) {
+            addToDataLog()
+            data["ClimbCounter"][2] += 1
+
+            climbButton("ClimbHigh", 2)
+
+            render()
+
+        }
+
+    }
+
+
+}))
+
+buttonManager.addButton("TraversalClimbRight", new Button(2750, 1350, 250, 250, function () {
+    if ("AllianceColor" in data && mode == 1) {
+
+        if ((data["AllianceColor"] == 1)) {
+            addToDataLog()
+            data["ClimbCounter"][3] += 1
+
+            climbButton("ClimbTraversal", 3)
+
+            render()
+
+        }
+
+    }
+
+
 }))
 
 
