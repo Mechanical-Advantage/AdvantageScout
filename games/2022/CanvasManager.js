@@ -23,6 +23,9 @@ var textWhite = "#ffffff"
 var success = "#00d936"
 var failure = "#b30000"
 var climbText = ["L", "M", "H", "T"]
+var popupCenter = null
+var shootingLocationSuccesses = 0;
+var shootingLocationFailures = 0;
 const black = "#000000"
 const mediumGray = "#D1D1D1"
 const darkGray = "#A9A9A9"
@@ -48,6 +51,7 @@ this.getData = function () { // REQUIRED FUNCTION
     //toSend["UpperSecondsBetween"] = toSend["UpperSecondsBetween"].join()
     delete toSend["ClimbCounter"]
     delete toSend["ClimbText"]
+    delete toSend["ShootPosition"]
     return toSend
 }
 
@@ -75,10 +79,11 @@ var data = {
     "ClimbHigh": [],
     "ClimbTraversal": [],
     "ClimbCounter": [0, 0, 0, 0],
-    "ClimbText": ["L", "M", "H", "T"]
+    "ClimbText": ["L", "M", "H", "T"],
+    "ShootPosition": ""
 }
 data["AllianceColor"] = 1
-var controlRotationSelected = true
+var scoreSelectTime = 0
 var dataLog = []
 
 function addToDataLog() {
@@ -153,6 +158,8 @@ function drawFigure(x, y, color, ponytails, armDirection) {
 }
 
 function render() {
+
+
     context.clearRect(0, 0, 3000, 1600)
 
     function setFieldPath() {
@@ -168,10 +175,10 @@ function render() {
         context.lineWidth = 10
         context.fillStyle = "#D1D1D1"
         context.strokeStyle = black
-        context.stroke()
     }
     setFieldPath()
     context.fill()
+    context.stroke()
 
     //center line
     context.beginPath()
@@ -184,13 +191,25 @@ function render() {
     drawObjects(bottomRightTarmac, rightColor, black)
     drawObjects(topLeftTarmac, leftColor, black)
     drawObjects(topRightTarmac, rightColor, black)
-
-    if (data["StartPosition"] != "") {
-        position = data["StartPosition"].split(",")
-        context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
-        context.stroke()
+    // Draw start position
+    if (mode == 0) {
+        if (data["StartPosition"] != "") {
+            position = data["StartPosition"].split(",")
+            context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
+            context.stroke()
+        }
     }
 
+    if (mode == 0 || mode == 1) {
+        if (data["ShootPosition"] != "") {
+            position = data["ShootPosition"].split(",")
+            // context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
+            context.beginPath()
+            context.arc(position[0], position[1], 50, 0, 2 * Math.PI)
+            context.fill()
+            context.stroke()
+        }
+    }
 
     // left hanger
     context.fillStyle = leftColor
@@ -277,22 +296,35 @@ function render() {
             context.fillText(data["ClimbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
 
         }
-
         context.stroke()
     }
 
-    // Draw starting positions
-    if (mode == 0) {
+    //
+    if (mode == 1 || mode == 0) {
+        context.fillStyle = success
+        context.fillRect((data["AllianceColor"] == 0) ? 2750 : 0, 0, 250, 300)
+        context.fillRect((data["AllianceColor"] == 0) ? 2750 : 0, 900, 250, 300)
+        context.stroke()
 
-        // Highlight
-        if ("StartPos" in data) {
-            context.fillStyle = (data["AllianceColor"] == 0) ? rightHighlightColor : leftHighlightColor
-            if (data["AllianceColor"] == 0) {
-                context.fillRect(675, 1000 - data["StartPos"] * 400, 150, 400)
-            } else {
-                context.fillRect(2175, 200 + data["StartPos"] * 400, 150, 400)
-            }
-        }
+
+        context.fillStyle = failure
+        context.fillRect((data["AllianceColor"] == 0) ? 2750 : 0, 375, 250, 300)
+        context.fillRect((data["AllianceColor"] == 0) ? 2750 : 0, 1275, 250, 300)
+        context.stroke()
+
+        context.textAlign = "center"
+        context.textBaseline = "middle"
+        context.fillStyle = text
+        context.strokeStyle = black
+        context.font = "200px sans-serif"
+
+        context.fillText((mode == 0) ? data["AutoUpperSuccess"] : data["TeleUpperSuccess"], (data["AllianceColor"] == 0) ? 2875 : 125, 150)
+
+        context.fillText((mode == 0) ? data["AutoUpperFailures"] : data["TeleUpperFailures"], (data["AllianceColor"] == 0) ? 2875 : 125, 525)
+
+        context.fillText((mode == 0) ? data["AutoLowerSuccess"] : data["TeleLowerSuccess"], (data["AllianceColor"] == 0) ? 2875 : 125, 1050)
+
+        context.fillText((mode == 0) ? data["AutoLowerFailures"] : data["TeleLowerFailures"], (data["AllianceColor"] == 0) ? 2875 : 125, 1425)
 
     }
 
@@ -300,10 +332,10 @@ function render() {
     if ((mode == 0) && "AllianceColor" in data) {
         centerX = (data["AllianceColor"] == 0) ? 750 : 2250
 
-        //context.beginPath()
-        //context.fillStyle = outline
-        //context.arc(centerX, 100, 25, 0, 2 * Math.PI)
-        //context.fill()
+        // context.beginPath()
+        // context.fillStyle = outline
+        // context.arc(centerX, 100, 25, 0, 2 * Math.PI)
+        // context.fill()
         // context.moveTo(400, 200)
 
         if (data["Taxi"] == 1) {
@@ -378,6 +410,19 @@ function render() {
         context.fillStyle = "#000000"
         context.fillText("Undo", 1875, 1525)
     }
+
+    if (popupCenter != null) {
+        context.strokeStyle = "black"
+        context.font = "120px sans-serif"
+
+        context.lineWidth = 5
+        context.fillStyle = "green"
+        context.fillRect(popupCenter[0] - 100, popupCenter[1] - 250, 200, 200)
+        context.strokeRect(popupCenter[0] - 100, popupCenter[1] - 250, 200, 200)
+        context.fillStyle = "black"
+    }
+
+
 }
 render()
 
@@ -426,6 +471,20 @@ canvas.addEventListener("click", event => {
     var x = (event.clientX - rect.left) / rect.width * canvas.width
     var y = (event.clientY - rect.top) / rect.height * canvas.height
 
+    // if (popupCenter == null) { // No popup, create it
+    //     popupCenter = [x, y]
+    // } else { // There's a popup, did the user press a button?
+    //     if ((popupCenter[0] - 100 < x) && (x < popupCenter[0] + 100)) {
+    //         if ((popupCenter[1] - 250 < y) && (y < popupCenter[1] - 50)) { // Success button
+    //             //successCounter++
+    //         }
+    //         if ((popupCenter[1] + 50 < y) && (y < popupCenter[1] + 250)) { // Failure button
+    //             //failureCounter++
+    //         }
+    //     }
+    //     popupCenter = null // Clear popup
+    // }
+
     if (data["StartPosition"] == "" && mode == 0) {
         if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
             addToDataLog()
@@ -437,9 +496,29 @@ canvas.addEventListener("click", event => {
             data["AllianceColor"] = reverseAlliances
             data["StartPosition"] = x + "," + y
         }
+    } else if (data["StartPosition"] == "" && mode == 0) {
+        if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
+            addToDataLog()
+            data["AllianceColor"] = 1 - reverseAlliances
+            data["StartPosition"] = x + "," + y
+        }
+        if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
+            addToDataLog()
+            data["AllianceColor"] = reverseAlliances
+            data["StartPosition"] = x + "," + y
+        }
+    } else if (data["StartPosition"] != "") {
+        if ((x > 300 && x < 2700) && (y > 200 && y < 1400)) {
+            scoreSelectTime = new Date().getTime() / 1000
+            data["ShootPosition"] = x + "," + y
+            shootingLocationSuccesses = 0;
+            shootingLocationFailures = 0;
+        }
     }
     render()
 })
+
+
 
 
 
@@ -469,7 +548,6 @@ buttonManager.addButton("LowClimbLeft", new Button(0, 0, 250, 250, function () {
             data["ClimbCounter"][0] += 1
             climbButton("ClimbLow", 0)
             render()
-
         }
 
     }
@@ -600,8 +678,166 @@ buttonManager.addButton("TraversalClimbRight", new Button(2750, 1350, 250, 250, 
         }
 
     }
+}))
 
 
+
+
+buttonManager.addButton("LeftUpperSuccess", new Button(0, 0, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoUpperSuccess"] += 1
+            }
+            else {
+                addToDataLog()
+                data["TeleUpperSuccess"] += 1
+
+                render()
+            }
+            shootingLocationSuccesses += 1
+            var temp = {
+                "x": data["ShootPosition"].split(",")[0],
+                "y": data["ShootPosition"].split(",")[1],
+                "mode": mode,
+                "US": shootingLocationSuccesses,
+                "UF": 0,
+                "LS": 0,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            console.log(temp)
+            data["ScoringData"].push(temp)
+        }
+    }
+}))
+
+buttonManager.addButton("LeftUpperFailures", new Button(0, 375, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoUpperFailures"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleUpperFailures"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+buttonManager.addButton("LeftLowerSuccess", new Button(0, 900, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoLowerSuccess"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleLowerSuccess"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+buttonManager.addButton("LeftLowerFailures", new Button(0, 1275, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 1) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoLowerFailures"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleLowerFailures"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+
+buttonManager.addButton("RightUpperSuccess", new Button(2750, 0, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoUpperSuccess"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleUpperSuccess"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+buttonManager.addButton("RightUpperFailures", new Button(2750, 375, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoUpperFailures"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleUpperFailures"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+buttonManager.addButton("RightLowerSuccess", new Button(2750, 900, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoLowerSuccess"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleLowerSuccess"] += 1
+
+                render()
+            }
+        }
+    }
+}))
+
+buttonManager.addButton("RightLowerFailures", new Button(2750, 1275, 250, 300, function () {
+    if ("AllianceColor" in data) {
+        if (data["AllianceColor"] == 0) {
+            if ((mode == 0)) {
+                addToDataLog()
+                data["AutoLowerFailures"] += 1
+
+            }
+            else {
+                addToDataLog()
+                data["TeleLowerFailures"] += 1
+
+                render()
+            }
+        }
+    }
 }))
 
 
