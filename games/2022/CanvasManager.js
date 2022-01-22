@@ -16,6 +16,7 @@ var leftColor = (reverseAlliances) ? "#ff0000" : "#0000de"
 var rightColor = (reverseAlliances) ? "#0000de" : "#ff0000"
 var leftHighlightColor = (reverseAlliances) ? "#ff7575" : "#6666ff"
 var rightHighlightColor = (reverseAlliances) ? "#6666ff" : "#ff7575"
+var yellow = "#FFFF00"
 var outline = "#000000"
 var fieldBackground = "#d1d1d1"
 var text = "#000000"
@@ -38,6 +39,7 @@ const bottomLeftTarmac = [1530, 950, 1640, 1200, 1345, 1200, 1130, 1000, 1370, 8
 const topLeftTarmac = [1350, 830, 1100, 940, 1100, 645, 1300, 430, 1410, 670, 1350, 830]
 const topRightTarmac = [1470, 650, 1360, 400, 1655, 400, 1870, 600, 1630, 710, 1470, 650]
 const bottomRightTarmac = [1650, 770, 1900, 660, 1900, 955, 1700, 1170, 1590, 935, 1650, 770]
+const fieldCoordinate = [300, 200, 2500, 200, 2700, 400, 2700, 1400, 500, 1400, 300, 1200, 300, 200]
 
 
 
@@ -82,7 +84,7 @@ var data = {
     "ClimbText": ["L", "M", "H", "T"],
     "ShootPosition": ""
 }
-data["AllianceColor"] = 1
+//data["AllianceColor"] = 1
 var scoreSelectTime = 0
 var dataLog = []
 
@@ -110,6 +112,37 @@ function drawObjects(coordinates, fillColor, strokeColor) {
     context.closePath()
     context.fill()
     context.stroke()
+}
+
+// Gets color of climb boxes
+function getClimbBoxColor(climbText) {
+    if (climbText == "L" || climbText == "M" || climbText == "H" || climbText == "T") {
+        return fieldBackground
+    }
+    if (climbText == "A") {
+        return yellow
+    }
+    if (climbText == "S") {
+        return success
+    }
+    if (climbText == "F") {
+        return failure
+    }
+}
+
+function flippedCoordinates(shootLocation) {
+    x = shootLocation.split(",")[0]
+    y = shootLocation.split(",")[1]
+    if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+        var flipX = Math.round(2700 - x)
+        var flipY = Math.round(1400 - y)
+        console.log(reverseAlliances, data["AllianceColor"], shootLocation, x, y, flipX, flipY)
+        return flipX + "," + flipY
+    }
+    else {
+        console.log(Math.round(x), Math.round(y))
+        return Math.round(x) + "," + Math.round(y)
+    }
 }
 
 // Set ponytails
@@ -206,6 +239,7 @@ function render() {
             // context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
             context.beginPath()
             context.arc(position[0], position[1], 50, 0, 2 * Math.PI)
+            context.fillStyle = yellow;
             context.fill()
             context.stroke()
         }
@@ -281,9 +315,16 @@ function render() {
 
     // climb boxes
     if ((mode == 1) && ("AllianceColor" in data)) {
+        context.fillStyle = getClimbBoxColor(data["ClimbText"][0])
         context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 0, 250, 250)
+        context.stroke()
+        context.fillStyle = getClimbBoxColor(data["ClimbText"][1])
         context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 450, 250, 250)
+        context.stroke()
+        context.fillStyle = getClimbBoxColor(data["ClimbText"][2])
         context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 900, 250, 250)
+        context.stroke()
+        context.fillStyle = getClimbBoxColor(data["ClimbText"][3])
         context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 1350, 250, 250)
         context.stroke()
 
@@ -299,7 +340,7 @@ function render() {
         context.stroke()
     }
 
-    //
+    //scoring boxes
     if (mode == 1 || mode == 0) {
         context.fillStyle = success
         context.fillRect((data["AllianceColor"] == 0) ? 2750 : 0, 0, 250, 300)
@@ -340,20 +381,20 @@ function render() {
 
         if (data["Taxi"] == 1) {
             context.beginPath()
-            context.moveTo(centerX - 105, 100)
-            context.lineTo(centerX + 105, 100)
-            context.moveTo(centerX - 55, 50)
-            context.lineTo(centerX - 105, 100)
-            context.lineTo(centerX - 55, 150)
-            context.moveTo(centerX + 55, 50)
-            context.lineTo(centerX + 105, 100)
-            context.lineTo(centerX + 55, 150)
+            context.moveTo(centerX - 205, 100)
+            context.lineTo(centerX + 205, 100)
+            context.moveTo(centerX - 155, 50)
+            context.lineTo(centerX - 205, 100)
+            context.lineTo(centerX - 155, 150)
+            context.moveTo(centerX + 155, 50)
+            context.lineTo(centerX + 205, 100)
+            context.lineTo(centerX + 155, 150)
             context.stroke()
         }
-        context.font = "100px sarif"
+        context.font = "250px sarif"
         context.textAlign = "center"
-        context.textBaseline = "middle"
-        context.fillText("\uD83D\uDE95", centerX, 100)
+        context.textBaseline = "bottom"
+        context.fillText("\uD83D\uDE95", centerX, 150)
     }
 
     // Draw scoring area
@@ -434,7 +475,7 @@ function climbButton(climbLevel, climbIndex) {
             break;
         case 1:
             data["ClimbText"][climbIndex] = "A"
-            data[climbLevel].push(0, time)
+            data[climbLevel].push(1, time)
             break;
         case 2:
             data["ClimbText"][climbIndex] = "S"
@@ -442,7 +483,9 @@ function climbButton(climbLevel, climbIndex) {
             break;
         case 3:
             data["ClimbText"][climbIndex] = "F"
-            data[climbLevel].push(2, time)
+            data[climbLevel].pop()
+            data[climbLevel].push(0, time)
+            data[climbLevel].push(1, time)
             break
         default:
             break;
@@ -471,44 +514,30 @@ canvas.addEventListener("click", event => {
     var x = (event.clientX - rect.left) / rect.width * canvas.width
     var y = (event.clientY - rect.top) / rect.height * canvas.height
 
-    // if (popupCenter == null) { // No popup, create it
-    //     popupCenter = [x, y]
-    // } else { // There's a popup, did the user press a button?
-    //     if ((popupCenter[0] - 100 < x) && (x < popupCenter[0] + 100)) {
-    //         if ((popupCenter[1] - 250 < y) && (y < popupCenter[1] - 50)) { // Success button
-    //             //successCounter++
-    //         }
-    //         if ((popupCenter[1] + 50 < y) && (y < popupCenter[1] + 250)) { // Failure button
-    //             //failureCounter++
-    //         }
-    //     }
-    //     popupCenter = null // Clear popup
-    // }
-
     if (data["StartPosition"] == "" && mode == 0) {
         if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
             addToDataLog()
-            data["AllianceColor"] = 1 - reverseAlliances
+            data["AllianceColor"] = reverseAlliances
             data["StartPosition"] = x + "," + y
         }
         if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
             addToDataLog()
-            data["AllianceColor"] = reverseAlliances
+            data["AllianceColor"] = 1 - reverseAlliances
             data["StartPosition"] = x + "," + y
         }
     } else if (data["StartPosition"] == "" && mode == 0) {
         if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
             addToDataLog()
-            data["AllianceColor"] = 1 - reverseAlliances
+            data["AllianceColor"] = reverseAlliances
             data["StartPosition"] = x + "," + y
         }
         if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
             addToDataLog()
-            data["AllianceColor"] = reverseAlliances
+            data["AllianceColor"] = 1 - reverseAlliances
             data["StartPosition"] = x + "," + y
         }
     } else if (data["StartPosition"] != "") {
-        if ((x > 300 && x < 2700) && (y > 200 && y < 1400)) {
+        if (inZone(fieldCoordinate, x, y)) {
             scoreSelectTime = new Date().getTime() / 1000
             data["ShootPosition"] = x + "," + y
             shootingLocationSuccesses = 0;
@@ -693,22 +722,20 @@ buttonManager.addButton("LeftUpperSuccess", new Button(0, 0, 250, 300, function 
             else {
                 addToDataLog()
                 data["TeleUpperSuccess"] += 1
-
-                render()
             }
             shootingLocationSuccesses += 1
             var temp = {
-                "x": data["ShootPosition"].split(",")[0],
-                "y": data["ShootPosition"].split(",")[1],
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
                 "mode": mode,
-                "US": shootingLocationSuccesses,
+                "US": 1,
                 "UF": 0,
                 "LS": 0,
                 "LF": 0,
                 "time": scoreSelectTime
             }
-            console.log(temp)
             data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -724,9 +751,20 @@ buttonManager.addButton("LeftUpperFailures", new Button(0, 375, 250, 300, functi
             else {
                 addToDataLog()
                 data["TeleUpperFailures"] += 1
-
-                render()
             }
+            shootingLocationFailures += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 1,
+                "LS": 0,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -742,9 +780,20 @@ buttonManager.addButton("LeftLowerSuccess", new Button(0, 900, 250, 300, functio
             else {
                 addToDataLog()
                 data["TeleLowerSuccess"] += 1
-
-                render()
             }
+            shootingLocationSuccesses += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 0,
+                "LS": 1,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -760,9 +809,20 @@ buttonManager.addButton("LeftLowerFailures", new Button(0, 1275, 250, 300, funct
             else {
                 addToDataLog()
                 data["TeleLowerFailures"] += 1
-
-                render()
             }
+            shootingLocationFailures += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 0,
+                "LS": 0,
+                "LF": 1,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -779,9 +839,20 @@ buttonManager.addButton("RightUpperSuccess", new Button(2750, 0, 250, 300, funct
             else {
                 addToDataLog()
                 data["TeleUpperSuccess"] += 1
-
-                render()
             }
+            shootingLocationSuccesses += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 1,
+                "UF": 0,
+                "LS": 0,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -797,9 +868,20 @@ buttonManager.addButton("RightUpperFailures", new Button(2750, 375, 250, 300, fu
             else {
                 addToDataLog()
                 data["TeleUpperFailures"] += 1
-
-                render()
             }
+            shootingLocationFailures += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 1,
+                "LS": 0,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -815,9 +897,20 @@ buttonManager.addButton("RightLowerSuccess", new Button(2750, 900, 250, 300, fun
             else {
                 addToDataLog()
                 data["TeleLowerSuccess"] += 1
-
-                render()
             }
+            shootingLocationSuccesses += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 0,
+                "LS": 1,
+                "LF": 0,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
@@ -833,9 +926,20 @@ buttonManager.addButton("RightLowerFailures", new Button(2750, 1275, 250, 300, f
             else {
                 addToDataLog()
                 data["TeleLowerFailures"] += 1
-
-                render()
             }
+            shootingLocationFailures += 1
+            var temp = {
+                "x": flippedCoordinates(data["ShootPosition"]).split(",")[0],
+                "y": flippedCoordinates(data["ShootPosition"]).split(",")[1],
+                "mode": mode,
+                "US": 0,
+                "UF": 0,
+                "LS": 0,
+                "LF": 1,
+                "time": scoreSelectTime
+            }
+            data["ScoringData"].push(temp)
+            render()
         }
     }
 }))
