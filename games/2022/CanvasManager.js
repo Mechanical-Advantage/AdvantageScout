@@ -84,7 +84,7 @@ var data = {
     "ClimbText": ["L", "M", "H", "T"],
     "ShootPosition": ""
 }
-data["AllianceColor"] = 1
+//data["AllianceColor"] = 1
 var scoreSelectTime = 0
 var dataLog = []
 
