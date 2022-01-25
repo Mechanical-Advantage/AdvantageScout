@@ -1,8 +1,8 @@
 {
     "fields": [
         "AllianceColor INTEGER DEFAULT 0",
-        "StartPos INTEGER DEFAULT 0",
-        "CrossedLine INTEGER DEFAULT 0",
+        "StartPosition TEXT DEFAULT ''",
+        "Taxi INTEGER DEFAULT 0",
         "AutoUpperSuccess INTEGER DEFAULT 0",
         "AutoLowerSuccess INTEGER DEFAULT 0",
         "AutoUpperFailures INTEGER DEFAULT 0",
