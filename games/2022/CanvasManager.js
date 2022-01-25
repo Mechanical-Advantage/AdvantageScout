@@ -84,7 +84,7 @@ var data = {
     "ClimbText": ["L", "M", "H", "T"],
     "ShootPosition": ""
 }
-//data["AllianceColor"] = 1
+data["AllianceColor"] = 1
 var scoreSelectTime = 0
 var dataLog = []
 
@@ -140,8 +140,8 @@ function flippedCoordinates(shootLocation) {
         return flipX + "," + flipY
     }
     else {
-        console.log(Math.round(x), Math.round(y))
-        return Math.round(x) + "," + Math.round(y)
+        console.log(data["AllianceColor"], reverseAlliances, Math.round(x - 300), Math.round(y - 200))
+        return Math.round(x - 300) + "," + Math.round(y - 200)
     }
 }
 
