@@ -3,7 +3,7 @@
   <Nodes>
     <Node ToolID="1">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
-        <Position x="54" y="186" />
+        <Position x="54" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -32,7 +32,7 @@ Query=config</DefaultAnnotationText>
     </Node>
     <Node ToolID="2">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
-        <Position x="150" y="186" />
+        <Position x="150" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -63,7 +63,7 @@ Query=config</DefaultAnnotationText>
     </Node>
     <Node ToolID="3">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AppendFields.AppendFields">
-        <Position x="270" y="282" />
+        <Position x="270" y="270" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -90,7 +90,7 @@ Query=config</DefaultAnnotationText>
     </Node>
     <Node ToolID="4">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
-        <Position x="54" y="318" />
+        <Position x="54" y="306" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -150,7 +150,7 @@ Query=match</DefaultAnnotationText>
     </Node>
     <Node ToolID="5">
       <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
-        <Position x="570" y="342" />
+        <Position x="570" y="330" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -206,11 +206,11 @@ Query=match</DefaultAnnotationText>
     </Node>
     <Node ToolID="6">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="762" y="342" />
+        <Position x="762" y="330" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_69ecb8f357214a5f8922727176633c3e_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_236341e4c5c042d3b20866e449a1d29f_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -234,7 +234,7 @@ Query=match</DefaultAnnotationText>
     </Node>
     <Node ToolID="7">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="462" y="282" />
+        <Position x="462" y="270" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -257,7 +257,7 @@ TotalLowerSuccess = [A...</DefaultAnnotationText>
     </Node>
     <Node ToolID="9">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
-        <Position x="366" y="282" />
+        <Position x="366" y="270" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -277,7 +277,7 @@ Match - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="10">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="438" y="210" />
+        <Position x="438" y="198" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -326,7 +326,7 @@ Match - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="13">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="522" y="150" />
+        <Position x="522" y="138" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -348,7 +348,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="14">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="642" y="186" />
+        <Position x="642" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -369,11 +369,11 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="15">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="1506" y="186" />
+        <Position x="1506" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_dc50e2153932454ea9eb43649fff2bd2_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_0473ae3c3fd1447e8df09f2899768537_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -397,7 +397,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="16">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="738" y="186" />
+        <Position x="738" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -418,7 +418,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="17">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="834" y="186" />
+        <Position x="834" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -439,7 +439,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="18">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="930" y="186" />
+        <Position x="930" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -460,7 +460,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="19">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="1026" y="186" />
+        <Position x="1026" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -504,7 +504,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="20">
       <GuiSettings>
-        <Position x="1122" y="186" />
+        <Position x="1122" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -532,7 +532,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="21">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="1218" y="186" />
+        <Position x="1218" y="174" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -556,11 +556,11 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="22">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="1086" y="246" />
+        <Position x="1086" y="234" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_cd2c3b4f433e4c0b984e0fe75965e7d6_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_41fa383a5daf47879c178672621f8c08_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -584,7 +584,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="24">
       <GuiSettings Plugin="AlteryxBasePluginsGui.JSONParse.JSONParse">
-        <Position x="1410" y="162" />
+        <Position x="1410" y="150" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -602,11 +602,11 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="25">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="1266" y="114" />
+        <Position x="1266" y="102" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_ebbfbd9a535c49f08aca43b2dc095baa_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_88f07576c88a472eae67b6e94e868859_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -630,7 +630,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="26">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="1458" y="114" />
+        <Position x="1458" y="102" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -655,7 +655,7 @@ FixedClimbMid = Sub...</DefaultAnnotationText>
     </Node>
     <Node ToolID="27">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
-        <Position x="1530" y="114" />
+        <Position x="1530" y="102" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -677,7 +677,7 @@ JSON_Name - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="29">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
-        <Position x="1626" y="114" />
+        <Position x="1626" y="102" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -708,7 +708,7 @@ JSON_Name - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="31">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="1722" y="114" />
+        <Position x="1722" y="102" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -729,7 +729,7 @@ JSON_Name - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="34">
       <GuiSettings Plugin="AlteryxBasePluginsGui.CrossTab.CrossTab">
-        <Position x="2034" y="126" />
+        <Position x="2034" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -779,7 +779,7 @@ JSON_Name - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="35">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
-        <Position x="1818" y="126" />
+        <Position x="1818" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -803,7 +803,7 @@ JSON_Name3 - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="38">
       <GuiSettings Plugin="AlteryxBasePluginsGui.MultiRowFormula.MultiRowFormula">
-        <Position x="1926" y="126" />
+        <Position x="1926" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -831,7 +831,7 @@ JSON_Name3 - Ascending</DefaultAnnotationText>
     </Node>
     <Node ToolID="39">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="2226" y="126" />
+        <Position x="2226" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -852,7 +852,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="40">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="2130" y="126" />
+        <Position x="2130" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -880,11 +880,11 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="41">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="2958" y="318" />
+        <Position x="2958" y="306" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_cf2f9e05ee4347f780477ee13a75f78e_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_25812b72b9604e8a8f215aca2053a8c0_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -908,7 +908,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="42">
       <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
-        <Position x="2418" y="318" />
+        <Position x="2418" y="306" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -921,8 +921,6 @@ GridY = FLOOR([y] / 100)
             <SummarizeField field="LS" action="Sum" rename="Sum_LS" />
             <SummarizeField field="UF" action="Sum" rename="Sum_UF" />
             <SummarizeField field="US" action="Sum" rename="Sum_US" />
-            <SummarizeField field="x" action="GroupBy" rename="x" />
-            <SummarizeField field="y" action="GroupBy" rename="y" />
           </SummarizeFields>
         </Configuration>
         <Annotation DisplayMode="0">
@@ -935,7 +933,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="45">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
-        <Position x="2898" y="174" />
+        <Position x="2862" y="234" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -959,7 +957,7 @@ Query=ShootingDataByTeam</DefaultAnnotationText>
     </Node>
     <Node ToolID="46">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
-        <Position x="2310" y="126" />
+        <Position x="2310" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -985,7 +983,7 @@ GridX - Ascending
     </Node>
     <Node ToolID="47">
       <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
-        <Position x="2406" y="126" />
+        <Position x="2406" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1011,7 +1009,7 @@ GridX - Ascending
     </Node>
     <Node ToolID="48">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="2502" y="126" />
+        <Position x="2502" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1036,7 +1034,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="49">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
-        <Position x="2706" y="66" />
+        <Position x="2706" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1060,11 +1058,11 @@ Query=ShootingDataByMatch</DefaultAnnotationText>
     </Node>
     <Node ToolID="50">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="2814" y="66" />
+        <Position x="2814" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_b91a1f286a134d4d87dab2c20a3eb2e8_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_742555ec6fb845cb94d3ceb6c72a7e8a_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -1088,7 +1086,7 @@ Query=ShootingDataByMatch</DefaultAnnotationText>
     </Node>
     <Node ToolID="51">
       <GuiSettings>
-        <Position x="2598" y="126" />
+        <Position x="2598" y="114" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1116,7 +1114,7 @@ Query=ShootingDataByMatch</DefaultAnnotationText>
     </Node>
     <Node ToolID="53">
       <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
-        <Position x="2778" y="438" />
+        <Position x="2778" y="426" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1139,7 +1137,7 @@ Query=ShootingDataByMatch</DefaultAnnotationText>
     </Node>
     <Node ToolID="54">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
-        <Position x="2874" y="438" />
+        <Position x="2874" y="426" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1163,17 +1161,17 @@ Query=ShootingDataByEvent</DefaultAnnotationText>
     </Node>
     <Node ToolID="44">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="2574" y="318" />
+        <Position x="2574" y="306" />
       </GuiSettings>
       <Properties>
         <Configuration>
           <FormulaFields>
             <FormulaField expression="[Sum_UF]+[Sum_US]" field="TotalUpperShots" size="4" type="Int32" />
             <FormulaField expression="[Sum_LF]+[Sum_LS]" field="TotalLowerShots" size="4" type="Int32" />
-            <FormulaField expression="[Sum_US]/[TotalUpperShots] * 100" field="UpperShotAccuracy" size="8" type="Double" />
-            <FormulaField expression="[Sum_LS]/[TotalLowerShots] * 100" field="LowerShotAccuracy" size="8" type="Double" />
+            <FormulaField expression="[Sum_US]/[TotalUpperShots]" field="UpperShotAccuracy" size="4" type="Int32" />
+            <FormulaField expression="[Sum_LS]/[TotalLowerShots]" field="LowerShotAccuracy" size="4" type="Int32" />
             <FormulaField expression="[TotalUpperShots]+[TotalLowerShots]" field="TotalShots" size="4" type="Int32" />
-            <FormulaField expression="([Sum_US]+[Sum_LS])/[TotalShots] * 100" field="TotalShotAccuracy" size="8" type="Double" />
+            <FormulaField expression="([Sum_US]+[Sum_LS])/[TotalShots]" field="TotalShotAccuracy" size="4" type="Int32" />
           </FormulaFields>
         </Configuration>
         <Annotation DisplayMode="0">
@@ -1188,7 +1186,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="52">
       <GuiSettings>
-        <Position x="2742" y="318" />
+        <Position x="2742" y="306" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1216,7 +1214,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="55">
       <GuiSettings>
-        <Position x="666" y="342" />
+        <Position x="666" y="330" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1244,7 +1242,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="56">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="438" y="78" />
+        <Position x="438" y="66" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1268,7 +1266,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="57">
       <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
-        <Position x="534" y="66" />
+        <Position x="534" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1289,11 +1287,11 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="58">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="1014" y="66" />
+        <Position x="1014" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_d2a1c3fd4fcc42839141186ab6e9efef_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_08eb48bff79946c48bf9840836af5381_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>
@@ -1317,7 +1315,7 @@ UpperSho...</DefaultAnnotationText>
     </Node>
     <Node ToolID="59">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
-        <Position x="822" y="66" />
+        <Position x="822" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1338,7 +1336,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="60">
       <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
-        <Position x="630" y="54" />
+        <Position x="630" y="42" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1360,7 +1358,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="61">
       <GuiSettings>
-        <Position x="726" y="54" />
+        <Position x="726" y="42" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1383,12 +1381,15 @@ GridY = FLOOR([y] / 100)
           <DefaultAnnotationText />
           <Left value="False" />
         </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
       </Properties>
       <EngineSettings Macro="Cleanse.yxmc" />
     </Node>
     <Node ToolID="62">
       <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
-        <Position x="918" y="66" />
+        <Position x="918" y="54" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1405,7 +1406,7 @@ GridY = FLOOR([y] / 100)
     </Node>
     <Node ToolID="63">
       <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
-        <Position x="1086" y="54" />
+        <Position x="1086" y="42" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -1424,16 +1425,19 @@ GridY = FLOOR([y] / 100)
 Query=StartPositionByName</DefaultAnnotationText>
           <Left value="False" />
         </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
       </Properties>
       <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
     </Node>
     <Node ToolID="64">
       <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
-        <Position x="2286" y="54" />
+        <Position x="2286" y="42" />
       </GuiSettings>
       <Properties>
         <Configuration>
-          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_14368_d0c8dd51041048e1a8e1bf267d34dc49_\Engine_3196_8cf694cfc48348fa8cdbca3f4f736a94_.yxdb</TempFile>
+          <TempFile>C:\Users\Admin\AppData\Local\Temp\Engine_600_849c1fe2d0d84098bd50ac1f36bceb29_\Engine_11360_87f6a8a66e6d42cba29b7c970ad76fd3_.yxdb</TempFile>
           <TempFileDataProfiling />
           <Layout>
             <ViewMode>Single</ViewMode>

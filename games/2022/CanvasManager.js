@@ -6,6 +6,7 @@ var mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
 this.setMode = function (newMode) { // REQUIRED FUNCTION
     if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
         dataLog = []
+        data["ShootPosition"] = ""
     }
     mode = newMode
     render()
@@ -27,6 +28,7 @@ var climbText = ["L", "M", "H", "T"]
 var popupCenter = null
 var shootingLocationSuccesses = 0;
 var shootingLocationFailures = 0;
+var displayStartPosition = "";
 const black = "#000000"
 const mediumGray = "#D1D1D1"
 const darkGray = "#A9A9A9"
@@ -134,14 +136,14 @@ function flippedCoordinates(shootLocation) {
     x = shootLocation.split(",")[0]
     y = shootLocation.split(",")[1]
     if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-        var flipX = Math.round(2700 - x)
-        var flipY = Math.round(1400 - y)
+        var flipX = Math.round(3000 - x)
+        var flipY = Math.round(1600 - y)
         console.log(reverseAlliances, data["AllianceColor"], shootLocation, x, y, flipX, flipY)
         return flipX + "," + flipY
     }
     else {
         console.log(data["AllianceColor"], reverseAlliances, Math.round(x - 300), Math.round(y - 200))
-        return Math.round(x - 300) + "," + Math.round(y - 200)
+        return Math.round(x) + "," + Math.round(y)
     }
 }
 
@@ -227,8 +229,9 @@ function render() {
     // Draw start position
     if (mode == 0) {
         if (data["StartPosition"] != "") {
-            position = data["StartPosition"].split(",")
+            position = displayStartPosition.split(",")
             context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
+            console.log(position[0], position[1])
             context.stroke()
         }
     }
@@ -517,26 +520,30 @@ canvas.addEventListener("click", event => {
     if (data["StartPosition"] == "" && mode == 0) {
         if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
             addToDataLog()
+            displayStartPosition = x + "," + y
             data["AllianceColor"] = reverseAlliances
-            data["StartPosition"] = x + "," + y
+            data["StartPosition"] = flippedCoordinates(x + "," + y)
         }
         if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
             addToDataLog()
+            displayStartPosition = x + "," + y
             data["AllianceColor"] = 1 - reverseAlliances
-            data["StartPosition"] = x + "," + y
+            data["StartPosition"] = flippedCoordinates(x + "," + y)
         }
-    } else if (data["StartPosition"] == "" && mode == 0) {
-        if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
-            addToDataLog()
-            data["AllianceColor"] = reverseAlliances
-            data["StartPosition"] = x + "," + y
-        }
-        if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
-            addToDataLog()
-            data["AllianceColor"] = 1 - reverseAlliances
-            data["StartPosition"] = x + "," + y
-        }
-    } else if (data["StartPosition"] != "") {
+    }
+    //else if (data["StartPosition"] == "" && mode == 0) {
+    //     if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
+    //         addToDataLog()
+    //         data["AllianceColor"] = reverseAlliances
+    //         data["StartPosition"] = flippedCoordinates(x + "," + y)
+    //     }
+    //     if (inZone(bottomRightTarmac, x, y) || inZone(topRightTarmac, x, y)) {
+    //         addToDataLog()
+    //         data["AllianceColor"] = 1 - reverseAlliances
+    //         data["StartPosition"] = flippedCoordinates(x + "," + y)
+    //     }
+    // }
+    else if (data["StartPosition"] != "") {
         if (inZone(fieldCoordinate, x, y)) {
             scoreSelectTime = new Date().getTime() / 1000
             data["ShootPosition"] = x + "," + y
