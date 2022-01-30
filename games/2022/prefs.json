@@ -16,13 +16,16 @@
         "ClimbMid TEXT DEFAULT ''",
         "ClimbHigh TEXT DEFAULT ''",
         "ClimbTraversal TEXT DEFAULT ''",
+        "StartPositionZone INTEGER DEFAULT 0",
+        "PlayingDefenseDuration INTEGER DEFAULT 0",
+        "UnderDefenseDuration INTEGER DEFAULT 0",
         "Points INTEGER DEFAULT 0",
         "Penalties INTEGER DEFAULT 0",
         "Disabled INTEGER DEFAULT 0",
         "DriverRating INTEGER DEFAULT 0",
         "IntakeRating INTEGER DEFAULT 0",
         "DefenseRating INTEGER DEFAULT 0",
-        "AvoidDefenseRating INTEGER DEFAULT 0",
+        "UnderDefenseRating INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [
@@ -387,11 +390,11 @@
             },
             {
                 "type": "group",
-                "label": "Playing Defense Rating",
+                "label": "Playing Defense",
                 "unit1": {
                     "type": "chooser",
                     "field": "DefenseRating",
-                    "label": "While Playing",
+                    "label": "Rating",
                     "options": {
                         "NA": 0,
                         "\u2B50": 1,
@@ -403,8 +406,24 @@
                 },
                 "unit2": {
                     "type": "chooser",
-                    "field": "AvoidDefenseRating",
-                    "label": "While Under",
+                    "field": "PlayingDefenseDuration",
+                    "label": "Duration",
+                    "options": {
+                        "None": 0,
+                        "Little (1-15s)": 1,
+                        "Some (16-60s)": 2,
+                        "Most (60-90)": 3,
+                        "All (90+)": 4
+                    }
+                }
+            },
+            {
+                "type": "group",
+                "label": "Under Defense",
+                "unit1": {
+                    "type": "chooser",
+                    "field": "UnderDefenseRating",
+                    "label": "Rating",
                     "options": {
                         "NA": 0,
                         "\u2B50": 1,
@@ -413,7 +432,22 @@
                         "\u2B50\u2B50\u2B50\u2B50": 4,
                         "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
                     }
+                },
+                "unit2": {
+                    "type": "chooser",
+                    "field": "UnderDefenseDuration",
+                    "label": "Duration",
+                    "options": {
+                        "None": 0,
+                        "Little (1-15s)": 1,
+                        "Some (16-60s)": 2,
+                        "Most (60-90s)": 3,
+                        "All (90+)": 4
+                    }
                 }
+            },
+            {
+                "type": "break"
             },
             {
                 "type": "text",

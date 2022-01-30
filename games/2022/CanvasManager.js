@@ -42,6 +42,12 @@ const topLeftTarmac = [1350, 830, 1100, 940, 1100, 645, 1300, 430, 1410, 670, 13
 const topRightTarmac = [1470, 650, 1360, 400, 1655, 400, 1870, 600, 1630, 710, 1470, 650]
 const bottomRightTarmac = [1650, 770, 1900, 660, 1900, 955, 1700, 1170, 1590, 935, 1650, 770]
 const fieldCoordinate = [300, 200, 2500, 200, 2700, 400, 2700, 1400, 500, 1400, 300, 1200, 300, 200]
+const bottomLeftFender = [1530, 950, 1587, 1105, 1210, 690, 1370, 890, 1530, 950]
+const bottomRightFender = [1650, 770, 1815, 695, 1667, 1095, 1590, 935, 1650, 770]
+const topLeftFender = [1350, 830, 1180, 905, 1334, 505, 1410, 670, 1350, 830]
+const topRightFender = [1470, 650, 1398, 487, 1778, 639, 1630, 710, 1470, 650]
+const leftLaunchPad = [710, 524, 860, 524, 860, 774, 860, 524, 710, 524]
+const rightLaunchPad = [2110, 926, 2260, 926, 2260, 1076, 2110, 1076, 2210, 926]
 
 
 
@@ -82,6 +88,7 @@ var data = {
     "ClimbMid": [],
     "ClimbHigh": [],
     "ClimbTraversal": [],
+    "StartPositionZone": 0,
     "ClimbCounter": [0, 0, 0, 0],
     "ClimbText": ["L", "M", "H", "T"],
     "ShootPosition": ""
@@ -226,6 +233,33 @@ function render() {
     drawObjects(bottomRightTarmac, rightColor, black)
     drawObjects(topLeftTarmac, leftColor, black)
     drawObjects(topRightTarmac, rightColor, black)
+
+
+    //top left tarmac fender line
+    context.beginPath()
+    context.setLineDash([5, 15])
+    context.moveTo(1334, 505)
+    context.lineTo(1180, 905)
+    context.stroke()
+
+    //top right tarmac fender line
+    context.moveTo(1398, 487)
+    context.lineTo(1778, 634)
+    context.stroke()
+
+
+    //bottom right tarmac fender line
+    context.moveTo(1815, 695)
+    context.lineTo(1667, 1095)
+    context.stroke()
+
+    //bottom left tarmac fender line
+    context.moveTo(1587, 1105)
+    context.lineTo(1210, 960)
+    context.stroke()
+    context.beginPath()
+    context.setLineDash([])
+
     // Draw start position
     if (mode == 0) {
         if (data["StartPosition"] != "") {
@@ -253,6 +287,8 @@ function render() {
     context.lineStyle = leftColor
     context.rect(300, 200, 460, 424)
 
+
+
     //context.strokeStyle = "gray"
     context.stroke()
     context.beginPath()
@@ -267,6 +303,8 @@ function render() {
     context.lineTo(760, 624)
     context.strokeStyle = leftColor
     context.lineWidth = 10
+
+
     context.stroke()
 
     // right hanger
@@ -288,8 +326,6 @@ function render() {
     context.lineTo(2210, 1400)
     context.strokeStyle = rightColor
     context.stroke()
-
-
 
     //center hub square
     context.beginPath()
@@ -468,7 +504,24 @@ function render() {
 
 
 }
+
+
 render()
+
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180.0)
+}
+function rotX(x, y, theta) {
+    console.log(x * Math.cos(toRadians(theta)) - y * Math.sin(toRadians(theta)) + 1200)
+    return x * Math.cos(toRadians(theta)) - y * Math.sin(toRadians(theta)) + 1200
+
+
+}
+function rotY(x, y, theta) {
+    console.log(x * Math.sin(toRadians(theta)) + y * Math.cos(toRadians(theta)) + 600)
+    return x * Math.sin(toRadians(theta)) + y * Math.cos(toRadians(theta)) + 600
+}
+
 
 function climbButton(climbLevel, climbIndex) {
     var time = new Date().getTime() / 1000
@@ -487,7 +540,7 @@ function climbButton(climbLevel, climbIndex) {
         case 3:
             data["ClimbText"][climbIndex] = "F"
             data[climbLevel].pop()
-            data[climbLevel].push(0, time)
+            data[climbLevel].pop()
             data[climbLevel].push(1, time)
             break
         default:
@@ -512,6 +565,183 @@ function inZone(vertices, testx, testy) {
     return c;
 }
 
+
+function startPositionZone(x, y) {
+    // 1 - right fender
+    // 2 - right tarmac
+    // 3- left fender
+    // 4 - left tarmac
+    if (inZone(topRightFender, x, y)) {
+        return 1
+    }
+    else if (inZone(bottomRightFender, x, y)) {
+        return 3
+    }
+    else if (inZone(bottomLeftFender, x, y)) {
+        return 1
+    }
+    else if (inZone(topLeftFender, x, y)) {
+        return 3
+    }
+    else if (inZone(topRightTarmac, x, y)) {
+        return 2
+    }
+
+    else if (inZone(bottomLeftTarmac, x, y)) {
+        return 4
+    }
+    else if (inZone(bottomRightTarmac, x, y)) {
+        return 2
+    }
+    else if (inZone(topLeftTarmac, x, y)) {
+        return 4
+    }
+}
+
+function shootPositionZone(x, y) {
+    // 1 - own left fender
+    // 2 - own left tarmac
+    // 3 - own right fender
+    // 4 - own right tarmac
+    // 5 - own launchpad
+    // 6 - own side
+    // 7 - opponent left fender
+    // 8 - opponent left tarmac
+    // 9 - opponent right fender
+    // 10 - opponent right tarmac
+    // 11 - opponent launchpad
+    // 12 - opponent side
+    shootZone = 0
+    if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+        shootZone = 6
+    }
+    else {
+        shootZone = 12
+    }
+
+    if (inZone(topLeftTarmac, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 10
+        }
+        else {
+            shootZone = 2
+        }
+    }
+
+    if (inZone(bottomRightTarmac, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 2
+        }
+        else {
+            shootZone = 10
+        }
+    }
+
+
+    if (inZone(bottomLeftTarmac, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 8
+        }
+        else {
+            shootZone = 4
+        }
+
+    }
+
+    if (inZone(topRightTarmac, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 4
+        }
+        else {
+            shootZone = 8
+        }
+
+    }
+
+    if (inZone(topLeftFender, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 9
+        }
+        else {
+            shootZone = 1
+        }
+    }
+
+    if (inZone(bottomRightFender)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 1
+        }
+        else {
+            shootZone = 9
+        }
+    }
+
+    if (inZone(topRightFender, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 3
+        }
+        else {
+            shootZone = 7
+        }
+    }
+
+    if (inZone(bottomLeftFender, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 7
+        }
+        else {
+            shootZone = 3
+        }
+    }
+
+    if (inZone(topRightFender, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 7
+        }
+        else {
+            shootZone = 3
+        }
+    }
+
+    if (inZone(rightLaunchPad, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 6
+        }
+        else {
+            shootZone = 12
+        }
+    }
+
+    if (inZone(rightLaunchPad, x, y)) {
+        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+
+            shootZone = 12
+        }
+        else {
+            shootZone = 6
+        }
+
+    }
+    return shootZone;
+}
+
+
+
+
+
+
+
 canvas.addEventListener("click", event => {
     var rect = canvas.getBoundingClientRect();
     var x = (event.clientX - rect.left) / rect.width * canvas.width
@@ -530,6 +760,7 @@ canvas.addEventListener("click", event => {
             data["AllianceColor"] = 1 - reverseAlliances
             data["StartPosition"] = flippedCoordinates(x + "," + y)
         }
+        data["StartPositionZone"] = startPositionZone(x, y)
     }
     //else if (data["StartPosition"] == "" && mode == 0) {
     //     if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
@@ -739,6 +970,7 @@ buttonManager.addButton("LeftUpperSuccess", new Button(0, 0, 250, 300, function 
                 "UF": 0,
                 "LS": 0,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -768,6 +1000,7 @@ buttonManager.addButton("LeftUpperFailures", new Button(0, 375, 250, 300, functi
                 "UF": 1,
                 "LS": 0,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -797,6 +1030,7 @@ buttonManager.addButton("LeftLowerSuccess", new Button(0, 900, 250, 300, functio
                 "UF": 0,
                 "LS": 1,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -826,6 +1060,7 @@ buttonManager.addButton("LeftLowerFailures", new Button(0, 1275, 250, 300, funct
                 "UF": 0,
                 "LS": 0,
                 "LF": 1,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -856,6 +1091,7 @@ buttonManager.addButton("RightUpperSuccess", new Button(2750, 0, 250, 300, funct
                 "UF": 0,
                 "LS": 0,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -885,6 +1121,7 @@ buttonManager.addButton("RightUpperFailures", new Button(2750, 375, 250, 300, fu
                 "UF": 1,
                 "LS": 0,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -914,6 +1151,7 @@ buttonManager.addButton("RightLowerSuccess", new Button(2750, 900, 250, 300, fun
                 "UF": 0,
                 "LS": 1,
                 "LF": 0,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
@@ -943,6 +1181,7 @@ buttonManager.addButton("RightLowerFailures", new Button(2750, 1275, 250, 300, f
                 "UF": 0,
                 "LS": 0,
                 "LF": 1,
+                "ShootingPositionZone": shootPositionZone(data["ShootPosition"].split(",")[0], data["ShootPosition"].split(",")[1]),
                 "time": scoreSelectTime
             }
             data["ScoringData"].push(temp)
