@@ -7,6 +7,10 @@ function ScoutManager(appManager) {
     var tempHiddenScheduleKey = ""
     var noReloadScheduleKey = ""
 
+    const autoNames = ["A", "Auto", "Autonomous"]
+    const teleopNames = ["T", "Teleop", "Teleoperated"]
+    const endgameNames = ["E", "End", "Endgame"]
+
     // Load config and game data
     this.loadData = function () {
         // Reverse alliances
@@ -62,6 +66,9 @@ function ScoutManager(appManager) {
             document.getElementById("match").value = Math.floor(Math.random() * 99)
             this.start("visual")
         }
+
+        // Update mode text (in case an alias is used)
+        this.resizeText()
     }
 
     // Create list of scouts based on config data
@@ -471,26 +478,38 @@ function ScoutManager(appManager) {
     this.resizeText = function () {
         document.body.style.height = window.innerHeight + "px"
         var width = document.body.clientWidth
-        var autoText = "Autonomous"
-        var teleopText = "Tele-operated"
-        var endgameText = "End Game"
-        if (width < 610) {
-            teleopText = "Teleoperated"
-            endgameText = "Endgame"
+
+        var tempAutoNames = autoNames
+        var tempTeleopNames = teleopNames
+        var tempEndgameNames = endgameNames
+        if (appManager.game != undefined) {
+            if ("modeAliases" in appManager.game.prefs) {
+                if ("auto" in appManager.game.prefs.modeAliases) {
+                    tempAutoNames = appManager.game.prefs.modeAliases.auto
+                }
+                if ("teleop" in appManager.game.prefs.modeAliases) {
+                    tempTeleopNames = appManager.game.prefs.modeAliases.teleop
+                }
+                if ("endgame" in appManager.game.prefs.modeAliases) {
+                    tempEndgameNames = appManager.game.prefs.modeAliases.endgame
+                }
+            }
         }
-        if (width < 570) {
-            autoText = "Auto"
-            teleopText = "Tele-op"
-            endgameText = "End"
+
+        if (width < 300) {
+            var autoText = tempAutoNames[0]
+            var teleopText = tempTeleopNames[0]
+            var endgameText = tempEndgameNames[0]
+        } else if (width < 650) {
+            var autoText = tempAutoNames[1]
+            var teleopText = tempTeleopNames[1]
+            var endgameText = tempEndgameNames[1]
+        } else {
+            var autoText = tempAutoNames[2]
+            var teleopText = tempTeleopNames[2]
+            var endgameText = tempEndgameNames[2]
         }
-        if (width < 340) {
-            teleopText = "Teleop"
-        }
-        if (width < 270) {
-            autoText = "A"
-            teleopText = "T"
-            endgameText = "E"
-        }
+
         if (autoText != lastAutoText) {
             document.getElementsByClassName("switcherbutton1")[0].innerHTML = autoText
             lastAutoText = autoText
