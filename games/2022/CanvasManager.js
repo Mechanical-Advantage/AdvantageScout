@@ -46,8 +46,8 @@ const bottomLeftFender = [1530, 950, 1587, 1105, 1210, 690, 1370, 890, 1530, 950
 const bottomRightFender = [1650, 770, 1815, 695, 1667, 1095, 1590, 935, 1650, 770]
 const topLeftFender = [1350, 830, 1180, 905, 1334, 505, 1410, 670, 1350, 830]
 const topRightFender = [1470, 650, 1398, 487, 1778, 639, 1630, 710, 1470, 650]
-const leftLaunchPad = [710, 524, 860, 524, 860, 774, 860, 524, 710, 524]
-const rightLaunchPad = [2110, 926, 2260, 926, 2260, 1076, 2110, 1076, 2210, 926]
+const leftLaunchPad = [300, 200, 880, 200, 880, 700, 300, 700, 300, 200]
+const rightLaunchPad = [2080, 900, 2700, 900, 2200, 1400, 2080, 1400, 2080, 900]
 
 
 
@@ -599,20 +599,23 @@ function startPositionZone(x, y) {
 }
 
 function shootPositionZone(x, y) {
-    // 1 - own left fender
-    // 2 - own left tarmac
-    // 3 - own right fender
-    // 4 - own right tarmac
-    // 5 - own launchpad
-    // 6 - own side
-    // 7 - opponent left fender
-    // 8 - opponent left tarmac
-    // 9 - opponent right fender
-    // 10 - opponent right tarmac
-    // 11 - opponent launchpad
-    // 12 - opponent side
+    // 1 - own left fender (top left)
+    // 2 - own left tarmac (top left)
+    // 3 - own right fender (bottom left)
+    // 4 - own right tarmac (bottom left)
+    // 5 - own launchpad (left)
+    // 6 - own side (left)
+    // 7 - opponent left fender (top right)
+    // 8 - opponent left tarmac (top right)
+    // 9 - opponent right fender (bottom right)
+    // 10 - opponent right tarmac (bottom right)
+    // 11 - opponent launchpad (right)
+    // 12 - opponent side (right)
     shootZone = 0
-    if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
+    var zoneCoordinates = flippedCoordinates(x + "," + y)
+    x = zoneCoordinates.split(",")[0]
+    y = zoneCoordinates.split(",")[1]
+    if (x < 1200) {
 
         shootZone = 6
     }
@@ -621,117 +624,44 @@ function shootPositionZone(x, y) {
     }
 
     if (inZone(topLeftTarmac, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 10
-        }
-        else {
-            shootZone = 2
-        }
+        shootZone = 2
     }
 
     if (inZone(bottomRightTarmac, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 2
-        }
-        else {
-            shootZone = 10
-        }
+        shootZone = 10
     }
 
 
     if (inZone(bottomLeftTarmac, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 8
-        }
-        else {
-            shootZone = 4
-        }
-
+        shootZone = 4
     }
 
     if (inZone(topRightTarmac, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 4
-        }
-        else {
-            shootZone = 8
-        }
-
+        shootZone = 8
     }
 
     if (inZone(topLeftFender, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 9
-        }
-        else {
-            shootZone = 1
-        }
+        shootZone = 1
     }
 
     if (inZone(bottomRightFender)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 1
-        }
-        else {
-            shootZone = 9
-        }
+        shootZone = 9
     }
 
     if (inZone(topRightFender, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 3
-        }
-        else {
-            shootZone = 7
-        }
+        shootZone = 7
     }
 
     if (inZone(bottomLeftFender, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 7
-        }
-        else {
-            shootZone = 3
-        }
-    }
-
-    if (inZone(topRightFender, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 7
-        }
-        else {
-            shootZone = 3
-        }
+        shootZone = 3
     }
 
     if (inZone(rightLaunchPad, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 6
-        }
-        else {
-            shootZone = 12
-        }
+        shootZone = 11
     }
 
-    if (inZone(rightLaunchPad, x, y)) {
-        if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
-
-            shootZone = 12
-        }
-        else {
-            shootZone = 6
-        }
-
+    if (inZone(leftLaunchPad, x, y)) {
+        shootZone = 5
     }
     return shootZone;
 }
