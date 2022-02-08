@@ -60,6 +60,13 @@
         "teleop": false,
         "endgame": true
     },
+    "modeAliases": {
+        "endgame": [
+            "P",
+            "Post",
+            "Post Game"
+        ]
+    },
     "hideClassic": true,
     "uploadChecks": {
         "pit": [
