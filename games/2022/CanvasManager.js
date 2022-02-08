@@ -42,7 +42,7 @@ const topLeftTarmac = [1350, 830, 1100, 940, 1100, 645, 1300, 430, 1410, 670, 13
 const topRightTarmac = [1470, 650, 1360, 400, 1655, 400, 1870, 600, 1630, 710, 1470, 650]
 const bottomRightTarmac = [1650, 770, 1900, 660, 1900, 955, 1700, 1170, 1590, 935, 1650, 770]
 const fieldCoordinate = [300, 200, 2500, 200, 2700, 400, 2700, 1400, 500, 1400, 300, 1200, 300, 200]
-const bottomLeftFender = [1530, 950, 1587, 1105, 1210, 690, 1370, 890, 1530, 950]
+const bottomLeftFender = [1530, 950, 1587, 1105, 1246, 940, 1370, 890, 1530, 950]
 const bottomRightFender = [1650, 770, 1815, 695, 1667, 1095, 1590, 935, 1650, 770]
 const topLeftFender = [1350, 830, 1180, 905, 1334, 505, 1410, 670, 1350, 830]
 const topRightFender = [1470, 650, 1398, 487, 1778, 639, 1630, 710, 1470, 650]
@@ -145,11 +145,11 @@ function flippedCoordinates(shootLocation) {
     if ((reverseAlliances && data["AllianceColor"] == 0) || (!reverseAlliances && data["AllianceColor"] == 1)) {
         var flipX = Math.round(3000 - x)
         var flipY = Math.round(1600 - y)
-        console.log(reverseAlliances, data["AllianceColor"], shootLocation, x, y, flipX, flipY)
+        //console.log(reverseAlliances, data["AllianceColor"], shootLocation, x, y, flipX, flipY)
         return flipX + "," + flipY
     }
     else {
-        console.log(data["AllianceColor"], reverseAlliances, Math.round(x - 300), Math.round(y - 200))
+        //console.log(data["AllianceColor"], reverseAlliances, Math.round(x - 300), Math.round(y - 200))
         return Math.round(x) + "," + Math.round(y)
     }
 }
@@ -644,7 +644,7 @@ function shootPositionZone(x, y) {
         shootZone = 1
     }
 
-    if (inZone(bottomRightFender)) {
+    if (inZone(bottomRightFender, x, y)) {
         shootZone = 9
     }
 
@@ -663,6 +663,7 @@ function shootPositionZone(x, y) {
     if (inZone(leftLaunchPad, x, y)) {
         shootZone = 5
     }
+    console.log(x, y, shootZone)
     return shootZone;
 }
 
