@@ -192,10 +192,53 @@
             },
             {
                 "field": "Points",
-                "operator": ">",
+                "operator": ">=",
                 "value": 0,
                 "message": "Are you sure the final score is correct?",
+                "binding": true
+            },
+            {
+                "field": "Points",
+                "operator": "<",
+                "value": 300,
+                "message": "Are you sure the final score is correct?",
                 "binding": false
+            },
+            {
+                "script": "return data.Points % 1 == 0",
+                "message": "Points should be a whole number!",
+                "binding": true
+            },
+            {
+                "field": "Penalties",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure the penalties are correct?",
+                "binding": true
+            },
+            {
+                "field": "Penalties",
+                "operator": "<",
+                "value": 50,
+                "message": "Are you sure the final penalties are correct?",
+                "binding": false
+            },
+            {
+                "script": "return data.Penalties % 1 == 0",
+                "message": "Penalties should be a whole number!",
+                "binding": true
+            },
+            {
+                "script": "return data.AutoUpperSuccess + data.AutoUpperFailures + data.AutoLowerSuccess + data.AutoLowerFailures < 7",
+                "message": "They phyically cannot score that much in Auto",
+                "binding": false
+            },
+            {
+                "field": "StartPosition",
+                "operator": "!=",
+                "value": "",
+                "message": "Please enter a starting position",
+                "binding": true
             }
         ]
     },
