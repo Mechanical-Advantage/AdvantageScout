@@ -265,7 +265,7 @@ function render() {
         if (data["StartPosition"] != "") {
             position = displayStartPosition.split(",")
             context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
-            console.log(position[0], position[1])
+            // console.log(position[0], position[1])
             context.stroke()
         }
     }
@@ -512,13 +512,13 @@ function toRadians(degrees) {
     return degrees * (Math.PI / 180.0)
 }
 function rotX(x, y, theta) {
-    console.log(x * Math.cos(toRadians(theta)) - y * Math.sin(toRadians(theta)) + 1200)
+    // console.log(x * Math.cos(toRadians(theta)) - y * Math.sin(toRadians(theta)) + 1200)
     return x * Math.cos(toRadians(theta)) - y * Math.sin(toRadians(theta)) + 1200
 
 
 }
 function rotY(x, y, theta) {
-    console.log(x * Math.sin(toRadians(theta)) + y * Math.cos(toRadians(theta)) + 600)
+    //console.log(x * Math.sin(toRadians(theta)) + y * Math.cos(toRadians(theta)) + 600)
     return x * Math.sin(toRadians(theta)) + y * Math.cos(toRadians(theta)) + 600
 }
 
@@ -588,10 +588,10 @@ function startPositionZone(x, y) {
     }
 
     else if (inZone(bottomLeftTarmac, x, y)) {
-        return 4
+        return 2
     }
     else if (inZone(bottomRightTarmac, x, y)) {
-        return 2
+        return 4
     }
     else if (inZone(topLeftTarmac, x, y)) {
         return 4
@@ -663,7 +663,7 @@ function shootPositionZone(x, y) {
     if (inZone(leftLaunchPad, x, y)) {
         shootZone = 5
     }
-    console.log(x, y, shootZone)
+    // console.log(x, y, shootZone)
     return shootZone;
 }
 
@@ -692,6 +692,7 @@ canvas.addEventListener("click", event => {
             data["StartPosition"] = flippedCoordinates(x + "," + y)
         }
         data["StartPositionZone"] = startPositionZone(x, y)
+        console.log(startPositionZone(x, y))
     }
     //else if (data["StartPosition"] == "" && mode == 0) {
     //     if (inZone(bottomLeftTarmac, x, y) || inZone(topLeftTarmac, x, y)) {
