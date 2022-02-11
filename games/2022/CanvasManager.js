@@ -539,8 +539,8 @@ function climbButton(climbLevel, climbIndex) {
             break;
         case 3:
             data["ClimbText"][climbIndex] = "F"
-            data[climbLevel].pop()
-            data[climbLevel].pop()
+            //data[climbLevel].pop()
+            //data[climbLevel].pop()
             data[climbLevel].push(1, time)
             break
         default:

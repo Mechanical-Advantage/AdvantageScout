@@ -192,6 +192,7 @@
             },
             {
                 "field": "Points",
+                "type": "integer",
                 "operator": ">=",
                 "value": 0,
                 "message": "Are you sure the final score is correct?",
@@ -239,6 +240,11 @@
                 "value": "",
                 "message": "Please enter a starting position",
                 "binding": true
+            },
+            {
+                "script": "if (data.ClimbHigh == 1 || data.ClimbTraversal == 1) then (data.ClimbLow == 1 || data.ClimbMid == 1)",
+                "message": "Are you sure the robot skipped multiple rungs?",
+                "binding": false
             }
         ]
     },
