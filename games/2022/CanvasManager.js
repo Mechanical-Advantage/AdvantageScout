@@ -2,11 +2,13 @@
 // alliances reversed in variable 'reverseAlliances' -> no reverse = red on right
 // call uploadData() to trigger upload (required if using visual for endgame)
 // width = 3000px, height = 1600px
+var shootPositionSelected = false
 var mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
 this.setMode = function (newMode) { // REQUIRED FUNCTION
     if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
         dataLog = []
         data["ShootPosition"] = ""
+        shootPositionSelected = false
     }
     mode = newMode
     render()
@@ -48,6 +50,11 @@ const topLeftFender = [1350, 830, 1180, 905, 1334, 505, 1410, 670, 1350, 830]
 const topRightFender = [1470, 650, 1398, 487, 1778, 639, 1630, 710, 1470, 650]
 const leftLaunchPad = [300, 200, 880, 200, 880, 700, 300, 700, 300, 200]
 const rightLaunchPad = [2080, 900, 2700, 900, 2200, 1400, 2080, 1400, 2080, 900]
+const topLeftTarmacExtended = [1340, 870, 1010, 1025, 1007, 618, 1283, 319, 1430, 650, 1340, 870]
+const bottomLeftTarmacextended = [1570, 960, 1715, 1293, 1318, 1293, 1010, 1025, 1340, 870, 1570, 960]
+const bottomRightTarmacExtended = [1660, 730, 1993, 585, 1993, 982, 1715, 1293, 1570, 960, 1660, 730]
+const topRightTarmacExtended = [1430, 650, 1283, 319, 1682, 307, 1993, 585, 1660, 730, 1430, 650]
+
 
 
 
@@ -273,6 +280,7 @@ function render() {
     if (mode == 0 || mode == 1) {
         if (data["ShootPosition"] != "") {
             position = data["ShootPosition"].split(",")
+            shootPositionSelected = true
             // context.strokeRect(position[0] - 25, position[1] - 25, 50, 50)
             context.beginPath()
             context.arc(position[0], position[1], 50, 0, 2 * Math.PI)
@@ -623,20 +631,20 @@ function shootPositionZone(x, y) {
         shootZone = 12
     }
 
-    if (inZone(topLeftTarmac, x, y)) {
+    if (inZone(topLeftTarmacExtended, x, y)) {
         shootZone = 2
     }
 
-    if (inZone(bottomRightTarmac, x, y)) {
+    if (inZone(bottomRightTarmacExtended, x, y)) {
         shootZone = 10
     }
 
 
-    if (inZone(bottomLeftTarmac, x, y)) {
+    if (inZone(bottomLeftTarmacextended, x, y)) {
         shootZone = 4
     }
 
-    if (inZone(topRightTarmac, x, y)) {
+    if (inZone(topRightTarmacExtended, x, y)) {
         shootZone = 8
     }
 
@@ -883,7 +891,7 @@ buttonManager.addButton("TraversalClimbRight", new Button(2750, 1350, 250, 250, 
 
 
 buttonManager.addButton("LeftUpperSuccess", new Button(0, 0, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 1) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -912,7 +920,7 @@ buttonManager.addButton("LeftUpperSuccess", new Button(0, 0, 250, 300, function 
 }))
 
 buttonManager.addButton("LeftUpperFailures", new Button(0, 375, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 1) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -942,7 +950,7 @@ buttonManager.addButton("LeftUpperFailures", new Button(0, 375, 250, 300, functi
 }))
 
 buttonManager.addButton("LeftLowerSuccess", new Button(0, 900, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 1) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -972,7 +980,7 @@ buttonManager.addButton("LeftLowerSuccess", new Button(0, 900, 250, 300, functio
 }))
 
 buttonManager.addButton("LeftLowerFailures", new Button(0, 1275, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 1) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -1003,7 +1011,7 @@ buttonManager.addButton("LeftLowerFailures", new Button(0, 1275, 250, 300, funct
 
 
 buttonManager.addButton("RightUpperSuccess", new Button(2750, 0, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 0) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -1033,7 +1041,7 @@ buttonManager.addButton("RightUpperSuccess", new Button(2750, 0, 250, 300, funct
 }))
 
 buttonManager.addButton("RightUpperFailures", new Button(2750, 375, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 0) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -1063,7 +1071,7 @@ buttonManager.addButton("RightUpperFailures", new Button(2750, 375, 250, 300, fu
 }))
 
 buttonManager.addButton("RightLowerSuccess", new Button(2750, 900, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 0) {
             if ((mode == 0)) {
                 addToDataLog()
@@ -1093,7 +1101,7 @@ buttonManager.addButton("RightLowerSuccess", new Button(2750, 900, 250, 300, fun
 }))
 
 buttonManager.addButton("RightLowerFailures", new Button(2750, 1275, 250, 300, function () {
-    if ("AllianceColor" in data) {
+    if ("AllianceColor" in data && shootPositionSelected) {
         if (data["AllianceColor"] == 0) {
             if ((mode == 0)) {
                 addToDataLog()

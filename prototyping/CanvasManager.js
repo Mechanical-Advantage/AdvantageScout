@@ -11,16 +11,16 @@ const ayushLightGray = "#D3D3D3"
 const auto = true
 const lightRed = "lightcoral"
 const lightBlue = "lightskyblue"
-const deflectorsBottomRight = [1548,1051,1563,988,1521,898,1557,882,1597,974,1653,1004,1548,1051];
-const defelectorsBottomLeft = [1249,848,1312,863,1402,821,1418,857,1326,897,1296,953,1249,848];
-const deflectorsTopLeft = [1452,549,1437,612,1479,702,1434,718,1403,626,1347,596,1452,549];
-const deflectorsTopRight = [1751,752,1688,737,1598,779,1582,743,1674,703,1704,647,1751,752]
-function drawDeflectors(coordinates){
+const deflectorsBottomRight = [1548, 1051, 1563, 988, 1521, 898, 1557, 882, 1597, 974, 1653, 1004, 1548, 1051];
+const defelectorsBottomLeft = [1249, 848, 1312, 863, 1402, 821, 1418, 857, 1326, 897, 1296, 953, 1249, 848];
+const deflectorsTopLeft = [1452, 549, 1437, 612, 1479, 702, 1434, 718, 1403, 626, 1347, 596, 1452, 549];
+const deflectorsTopRight = [1751, 752, 1688, 737, 1598, 779, 1582, 743, 1674, 703, 1704, 647, 1751, 752]
+function drawDeflectors(coordinates) {
     context.beginPath()
     context.fillStyle = gray
     context.moveTo(coordinates[0], coordinates[1])
-    for(i = 2; i < 14; i += 2) {
-    context.lineTo(coordinates[i], coordinates[i+1])
+    for (i = 2; i < 14; i += 2) {
+        context.lineTo(coordinates[i], coordinates[i + 1])
     }
     context.closePath()
     context.fill()
@@ -109,33 +109,60 @@ function render() {
     context.rotate(-21 * Math.PI / 180)
     context.translate(-1427, -641)
     context.stroke()
-    
+
     // Bottom left tarmac
     context.beginPath()
-    context.moveTo(1530,950)
-    context.lineTo(1640,1200)
-    context.lineTo(1345,1200)
-    context.lineTo(1130,1000)
-    context.lineTo(1370,890)
-    context.lineTo(1530,950)
+    context.moveTo(1570, 960)
+    context.lineTo(1640, 1200)
+    context.lineTo(1345, 1200)
+    context.lineTo(1130, 1000)
+    context.lineTo(1370, 890)
+    context.lineTo(1530, 950)
+    context.stroke()
+
+    //bottom right tarmac zone
+    context.beginPath()
+    context.moveTo(1660, 730)
+    context.lineTo(1993, 585)
+    context.lineTo(1993, 982)
+    context.lineTo(1715, 1293)
+    context.lineTo(1570, 960)
     context.stroke()
     // Top left tarmac
     context.beginPath()
-    context.moveTo(1350,830)
-    context.lineTo(1100,940)
-    context.lineTo(1100,645)
-    context.lineTo(1300,430)
-    context.lineTo(1410,670)
-    context.lineTo(1350,830)
+    context.moveTo(1350, 830)
+    context.lineTo(1100, 940)
+    context.lineTo(1100, 645)
+    context.lineTo(1300, 430)
+    context.lineTo(1410, 670)
+    context.lineTo(1350, 830)
     context.stroke()
+
+    //top left tarmac zone
+    context.beginPath();
+    context.moveTo(1340, 870)
+    context.lineTo(1010, 1025)
+    context.lineTo(1007, 618)
+    context.lineTo(1283, 319)
+    context.lineTo(1430, 650)
+    context.stroke();
     // Top right tarmac
     context.beginPath()
-    context.moveTo(1470,650)
-    context.lineTo(1360,400)
-    context.lineTo(1655,400)
-    context.lineTo(1870,600)
-    context.lineTo(1630,710)
-    context.lineTo(1470,650)
+    context.moveTo(1470, 650)
+    context.lineTo(1360, 400)
+    context.lineTo(1655, 400)
+    context.lineTo(1870, 600)
+    context.lineTo(1630, 710)
+    context.lineTo(1470, 650)
+    context.stroke()
+
+    //bottom left tarmac zone
+    context.beginPath();
+    context.moveTo(1570, 960)
+    context.lineTo(1715, 1293)
+    context.lineTo(1318, 1293)
+    context.lineTo(1010, 1025)
+    context.lineTo(1340, 870)
     context.stroke()
     // Bottom right tarmac
     context.beginPath()
@@ -146,6 +173,15 @@ function render() {
     context.lineTo(1590, 935)
     context.lineTo(1650, 770)
     context.stroke()
+
+    //Top right tarmac zone
+    context.beginPath()
+    context.lineTo(1430, 650)
+    context.lineTo(1283, 319)
+    context.lineTo(1682, 307)
+    context.lineTo(1993, 585)
+    context.lineTo(1660, 730)
+    context.stroke()
     drawDeflectors(deflectorsBottomRight)
     drawDeflectors(defelectorsBottomLeft)
     drawDeflectors(deflectorsTopLeft)
@@ -153,11 +189,11 @@ function render() {
     // hub circle
     context.fillStyle = ayushDarkGray
     context.beginPath()
-    context.arc(1500,800, 105, 0, 2*Math.PI)
+    context.arc(1500, 800, 105, 0, 2 * Math.PI)
     context.closePath()
     context.fill()
     context.stroke()
-    
+
 }
 buttonManager.addButton("Fails Lower", new Button(300, 1100, 200, 400, function () {
     if (auto == true) {

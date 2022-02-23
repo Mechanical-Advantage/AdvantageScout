@@ -176,12 +176,12 @@
                 "binding": true
             },
             {
-                "script": "return (data.Comment.length < 150) || (data.Comment.length >= 200)",
+                "script": "return (data.Comment.length < 200) || (data.Comment.length >= 500)",
                 "message": "Your comment is pretty long. Please try to shorten it. Continue?",
                 "binding": false
             },
             {
-                "script": "return (data.Comment.length < 200)",
+                "script": "return (data.Comment.length < 500)",
                 "message": "Your comment is very long. Please shorten it.",
                 "binding": true
             },
@@ -220,7 +220,7 @@
             {
                 "field": "Penalties",
                 "operator": "<",
-                "value": 50,
+                "value": 10,
                 "message": "Are you sure the final penalties are correct?",
                 "binding": false
             },
@@ -240,11 +240,6 @@
                 "value": "",
                 "message": "Please enter a starting position",
                 "binding": true
-            },
-            {
-                "script": "if (data.ClimbHigh == 1 || data.ClimbTraversal == 1) then (data.ClimbLow == 1 || data.ClimbMid == 1)",
-                "message": "Are you sure the robot skipped multiple rungs?",
-                "binding": false
             }
         ]
     },
