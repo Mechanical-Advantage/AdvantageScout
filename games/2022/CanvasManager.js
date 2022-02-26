@@ -442,9 +442,13 @@ function render() {
         context.textAlign = "center"
         context.textBaseline = "bottom"
         context.fillText("\uD83D\uDE95", centerX, 150)
+        if (data["Taxi"] == 0) {
+            context.font = "140px sarif"
+            context.fillText("\u{1F6AB}", centerX, 160)
+        }
     }
 
-    // Draw scoring area
+    // Draw scoring area    
     if ("AllianceColor" in data) {
         leftX = (data["AllianceColor"] == 0) ? 25 : 2575
         context.fillStyle = success
