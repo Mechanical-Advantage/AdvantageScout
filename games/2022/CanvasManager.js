@@ -363,16 +363,16 @@ function render() {
     // climb boxes
     if ((mode == 1) && ("AllianceColor" in data)) {
         context.fillStyle = getClimbBoxColor(data["ClimbText"][0])
-        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 0, 250, 250)
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 1350, 250, 250)
         context.stroke()
         context.fillStyle = getClimbBoxColor(data["ClimbText"][1])
-        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 450, 250, 250)
-        context.stroke()
-        context.fillStyle = getClimbBoxColor(data["ClimbText"][2])
         context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 900, 250, 250)
         context.stroke()
+        context.fillStyle = getClimbBoxColor(data["ClimbText"][2])
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 450, 250, 250)
+        context.stroke()
         context.fillStyle = getClimbBoxColor(data["ClimbText"][3])
-        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 1350, 250, 250)
+        context.fillRect((data["AllianceColor"] == 0) ? 0 : 2750, 0, 250, 250)
         context.stroke()
 
         context.textAlign = "center"
@@ -381,7 +381,7 @@ function render() {
         context.strokeStyle = black
         context.font = "150px sans-serif"
         for (i = 0; i < 4; i++) {
-            context.fillText(data["ClimbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 125 + i * 450)
+            context.fillText(data["ClimbText"][i], (data["AllianceColor"] == 0) ? 125 : 2875, 1475 - i * 450)
 
         }
         context.stroke()
@@ -751,7 +751,7 @@ buttonManager.addButton("TaxiRight", new Button(2100, 0, 300, 200, function () {
     }
 }))
 
-buttonManager.addButton("LowClimbLeft", new Button(0, 0, 250, 250, function () {
+buttonManager.addButton("LowClimbLeft", new Button(0, 1350, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 0)) {
@@ -766,7 +766,7 @@ buttonManager.addButton("LowClimbLeft", new Button(0, 0, 250, 250, function () {
 
 }))
 
-buttonManager.addButton("MidClimbLeft", new Button(0, 450, 250, 250, function () {
+buttonManager.addButton("MidClimbLeft", new Button(0, 900, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 0)) {
@@ -784,7 +784,7 @@ buttonManager.addButton("MidClimbLeft", new Button(0, 450, 250, 250, function ()
 
 }))
 
-buttonManager.addButton("HighClimbLeft", new Button(0, 900, 250, 250, function () {
+buttonManager.addButton("HighClimbLeft", new Button(0, 450, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 0)) {
@@ -802,7 +802,7 @@ buttonManager.addButton("HighClimbLeft", new Button(0, 900, 250, 250, function (
 
 }))
 
-buttonManager.addButton("TraversalClimbLeft", new Button(0, 1350, 250, 250, function () {
+buttonManager.addButton("TraversalClimbLeft", new Button(0, 0, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 0)) {
@@ -821,7 +821,7 @@ buttonManager.addButton("TraversalClimbLeft", new Button(0, 1350, 250, 250, func
 }))
 
 
-buttonManager.addButton("LowClimbRight", new Button(2750, 0, 250, 250, function () {
+buttonManager.addButton("LowClimbRight", new Button(2750, 1350, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 1)) {
@@ -839,7 +839,7 @@ buttonManager.addButton("LowClimbRight", new Button(2750, 0, 250, 250, function 
 
 }))
 
-buttonManager.addButton("MidClimbRight", new Button(2750, 450, 250, 250, function () {
+buttonManager.addButton("MidClimbRight", new Button(2750, 900, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 1)) {
@@ -857,7 +857,7 @@ buttonManager.addButton("MidClimbRight", new Button(2750, 450, 250, 250, functio
 
 }))
 
-buttonManager.addButton("HighClimbRight", new Button(2750, 900, 250, 250, function () {
+buttonManager.addButton("HighClimbRight", new Button(2750, 450, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 1)) {
@@ -875,7 +875,7 @@ buttonManager.addButton("HighClimbRight", new Button(2750, 900, 250, 250, functi
 
 }))
 
-buttonManager.addButton("TraversalClimbRight", new Button(2750, 1350, 250, 250, function () {
+buttonManager.addButton("TraversalClimbRight", new Button(2750, 0, 250, 250, function () {
     if ("AllianceColor" in data && mode == 1) {
 
         if ((data["AllianceColor"] == 1)) {
