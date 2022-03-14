@@ -39,10 +39,10 @@
         "CanShootLowerAuto INTEGER DEFAULT 0",
         "CanShootUpperTele INTEGER DEFAULT 0",
         "CanShootLowerTele INTEGER DEFAULT 0",
-        "ClimbLow INTEGER DEFAULT 0",
-        "ClimbMid INTEGER DEFAULT 0",
-        "ClimbHigh INTEGER DEFAULT 0",
-        "ClimbTraversal INTEGER DEFAULT 0",
+        "CanClimbLow INTEGER DEFAULT 0",
+        "CanClimbMid INTEGER DEFAULT 0",
+        "CanClimbHigh INTEGER DEFAULT 0",
+        "CanClimbTraversal INTEGER DEFAULT 0",
         "ShootFromFender INTEGER DEFAULT 0",
         "ShootFromTarmac INTEGER DEFAULT 0",
         "ShootFromLaunchpad INTEGER DEFAULT 0",
@@ -53,7 +53,9 @@
         "HoldingCapacity INTEGER DEFAULT 0",
         "MultipleDriveTeams TEXT DEFAULT 0",
         "Comment TEXT DEFAULT ''",
-        "Image TEXT DEFAULT ''"
+        "Image TEXT DEFAULT ''",
+        "UsesFalcon500s INTEGER DEFAULT 0",
+        "InspectedFalcon500s INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -165,6 +167,11 @@
                 "script": "return (((data.Length * 2) + (data.Width * 2)) < 120)",
                 "message": "Their length and width exceed frame perimeter",
                 "binding": false
+            },
+            {
+                "script": "return ((data.UsesFalcon500s - data.InspectedFalcon500s >= 0))",
+                "message": "They do not have Falcon 500s but they inspected them. Why???",
+                "binding": false
             }
         ],
         "match": [
@@ -241,6 +248,7 @@
                 "message": "Please enter a starting position",
                 "binding": true
             }
+            
         ]
     },
     "helpText": {
@@ -250,6 +258,19 @@
     },
     "classic": {
         "pit": [
+            {
+                "type": "checkbox",
+                "field": "UsesFalcon500s",
+                "label": "F500 S2021?"
+            },
+            {
+                "type": "checkbox",
+                "field": "InspectedFalcon500s",
+                "label": "Inspected F500?"
+            },
+            {
+                "type": "break"
+            },
             {
                 "type": "text",
                 "field": "DriveTrain",
