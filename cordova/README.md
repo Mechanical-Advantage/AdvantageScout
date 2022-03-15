@@ -7,8 +7,11 @@ The app is not available on the Google Play Store, so it must be installed one o
 2. Use the short link http://bit.ly/6328scout
 
 ## Changelog
+### 1.17.0
+* Added match type dropdown
+
 ### 1.16.0
-* Added support for mode aliases.
+* Added support for mode aliases
 
 ### 1.15.1
 * Added beep sound when message received
