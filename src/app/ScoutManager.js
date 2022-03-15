@@ -64,6 +64,7 @@ function ScoutManager(appManager) {
             document.getElementById("scoutselect").selectedIndex = 1
             document.getElementById("team").value = Math.floor(Math.random() * 9999)
             document.getElementById("match").value = Math.floor(Math.random() * 99)
+            document.getElementById("matchtype").value = "Qualifications"
             this.start("visual")
         }
 
@@ -124,6 +125,13 @@ function ScoutManager(appManager) {
         noReloadScheduleKey = key
     }
 
+    // Update match dropdown based on match type
+    this.updateMatchType = function () {
+        var isPlayoffs = document.getElementById("matchtype").value == "Playoffs"
+        document.getElementById("match").hidden = isPlayoffs
+        document.getElementById("playoffmatch").hidden = !isPlayoffs
+    }
+
     // Update schedule table based on data
     this.loadSchedule = function () {
         // Update scout list if needed
@@ -178,6 +186,7 @@ function ScoutManager(appManager) {
 
     // Set team and match from schedule
     this.autoFillTeamMatch = function () {
+        if (document.getElementById("matchtype").value == "Playoffs") return
         if (appManager.schedule) {
             var scout = document.getElementById("scoutselect").value
             if (appManager.schedule.scouts.includes(scout)) {
@@ -216,7 +225,13 @@ function ScoutManager(appManager) {
 
         } else {
             appManager.team = document.getElementById("team").value
-            appManager.match = document.getElementById("match").value
+
+            if (document.getElementById("matchtype").value == "Qualifications") {
+                appManager.match = document.getElementById("match").value
+            } else {
+                appManager.match = document.getElementById("playoffmatch").value
+            }
+
             if (appManager.team == "" || appManager.match == "" || document.getElementById("scoutselect").value == "Please select") {
                 appManager.notificationManager.alert("Hold Your Horses!", "Please enter a scout name, team number, and match number.")
                 return

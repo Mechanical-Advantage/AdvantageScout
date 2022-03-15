@@ -252,11 +252,46 @@ class main_server(object):
             </div>
 
             <div id="selectionDiv_match">
+                Type:
+                <select id="matchtype" onchange="javascript:appManager.scoutManager.updateMatchType()">
+                    <option>Qualifications</option>
+                    <option>Playoffs</option>
+                </select>
+                <br>
                 Team:
                 <input id="team" type="number" min="1" max="9999" step="1" class="teammatch"></input>
                 <br>
                 Match:
                 <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
+                <select id="playoffmatch" onchange="" hidden>
+                    <optgroup label="Quarterfinals">
+                        <option value="1111">QF1M1</option>
+                        <option value="1112">QF1M2</option>
+                        <option value="1113">QF1M3</option>
+                        <option value="1121">QF2M1</option>
+                        <option value="1122">QF2M2</option>
+                        <option value="1123">QF2M3</option>
+                        <option value="1131">QF3M1</option>
+                        <option value="1132">QF3M2</option>
+                        <option value="1133">QF3M3</option>
+                        <option value="1141">QF4M1</option>
+                        <option value="1142">QF4M2</option>
+                        <option value="1143">QF4M3</option>
+                    </optgroup>
+                    <optgroup label="Semifinals">
+                        <option value="1211">SF1M1</option>
+                        <option value="1212">SF1M2</option>
+                        <option value="1213">SF1M3</option>
+                        <option value="1221">SF2M1</option>
+                        <option value="1222">SF2M2</option>
+                        <option value="1223">SF2M3</option>
+                    </optgroup>
+                    <optgroup label="Finals">
+                        <option value="1311">FM1</option>
+                        <option value="1312">FM2</option>
+                        <option value="1313">FM3</option>
+                    </optgroup>
+                </select>
                 <br>
                 <span id="reverseAlliancesDiv" hidden>
                     Alliance Position:
