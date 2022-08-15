@@ -1,4 +1,7 @@
 # Advantage Scout
+
+**Note: This system has been replaced by [Advantage Scout 2](https://github.com/Mechanical-Advantage/AdvantageScout2).**
+
 Advantage Scout is a custom web based scouting system, which is intended to connect to both team and student devices over Bluetooth PAN. The site is build as a 'web app' using JavaScript, meaning it can run without a persistent connection to the server. It is designed to work on a wide variety of screen sizes in any orientation. Features two scouting layouts which can be switched based on user preference:
 
 * **Classic layout** - Uses standard inputs (selectors, counters, textboxes, etc.) simliar to many other scouting apps
