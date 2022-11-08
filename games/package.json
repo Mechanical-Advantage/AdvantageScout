@@ -1,0 +1,24 @@
+{
+    "name": "advantage-scout-plus",
+    "scripts": {
+        "build": "npm-run-all \"build:create-symlink {@}\" \"build:run-tailwind\" \"build:run-rollup\" \"build:run-merge\" --",
+        "build:create-symlink": "node createSymlink.js",
+        "build:run-tailwind": "tailwindcss -m -c tailwind.config.js -o ./build/game_tailwind.css",
+        "build:run-rollup": "rollup --config rollup.config.js",
+        "build:run-merge": "node mergeCss.js admin"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-node-resolve": "^11.0.0",
+        "daisyui": "^2.24.0",
+        "npm-run-all": "^4.1.5",
+        "rollup": "^2.3.4",
+        "rollup-plugin-css-only": "^3.1.0",
+        "rollup-plugin-svelte": "^7.0.0",
+        "rollup-plugin-terser": "^7.0.0",
+        "svelte": "^3.0.0",
+        "symlink-dir": "^5.0.1",
+        "tailwindcss": "^3.1.8",
+        "tailwindcss-animate": "^1.0.5"
+    }
+}

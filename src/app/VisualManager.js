@@ -7,6 +7,7 @@ function VisualManager(appManager) {
     this.loadData = function () {
         try {
             CanvasManager = new Function("canvas", "reverseAlliances", "uploadData", "appManager", appManager.game.CanvasManager)
+            // appManager.game.GameManager.js
         }
         catch (error) {
             appManager.notificationManager.alert("Error", "Failed to load game data. (" + error.message + ")")

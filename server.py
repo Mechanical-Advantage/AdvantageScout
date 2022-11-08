@@ -1,20 +1,23 @@
-import scheduler
+import base64
+import json
+import os
+import random
 import sqlite3 as sql
+import string
+import sys
+import threading
+import time
+from enum import Enum
+from pathlib import Path
+
 import cherrypy
 import tbapy
-from simple_websocket_server import WebSocketServer, WebSocket
 import xlsxwriter
 from jsmin import jsmin
-import json
-import base64
-import random
-import time
-import string
-import threading
-from pathlib import Path
-from enum import Enum
-import os
-import sys
+from simple_websocket_server import WebSocket, WebSocketServer
+
+import scheduler
+from svelte_interface import SvelteInterface
 
 # Config
 our_team = 6328
@@ -22,7 +25,7 @@ default_port = 8000  # can override w/ command line argument
 admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
                      "COM8", "COM9"]  # current implementation
@@ -41,6 +44,9 @@ default_game = "2019"
 # Import serial library
 if bt_enable:
     import serial
+
+# Create svelte interface
+svelte_interface = SvelteInterface(db_global)
 
 
 # Log output in cherrypy format
@@ -557,17 +563,13 @@ document.body.innerHTML = window.localStorage.getItem(
         game = cur_global.fetchall()[0][0]
         conn_global.close()
 
-        path = "games" + os.path.sep + str(game) + os.path.sep
-        if Path(path + "CanvasManager.js").is_file():
-            result = {
-                "prefs": json.loads(quickread(path + "prefs.json")),
-                "CanvasManager": jsmin(quickread(path + "CanvasManager.js"))
-            }
-        else:
-            result = {
-                "prefs": json.loads(quickread(path + "prefs.json"))
-            }
-        return(json.dumps(result))
+        path = "games" + os.path.sep + "config" + \
+            os.path.sep + str(game) + ".json"
+        result = {
+            "prefs": json.loads(quickread(path)),
+            "GameManager": svelte_interface.get_game()
+        }
+        return(jsmin(json.dumps(result)))
 
     @cherrypy.expose
     def upload(self, data):
@@ -1700,6 +1702,9 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
 
 
 if __name__ == "__main__":
+    # Start svelte thread
+    svelte_interface.start()
+
     # Start bluetooth servers
     if bt_enable:
         bt_servers = []
