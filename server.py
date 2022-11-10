@@ -213,6 +213,9 @@ class main_server(object):
         output = """
 <html>
     <head>
+        <style id="svelte-game-component"> 
+
+        </style>
         <title>
             Advantage Scout
         </title>
@@ -396,7 +399,7 @@ class main_server(object):
         </div>
 
         <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
-            <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+            
         </div>
 
         <div id="classicDiv1" class="classicdiv" hidden>

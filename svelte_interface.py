@@ -95,7 +95,7 @@ class SvelteInterface:
             response = input("Install Node modules for Svelte? (y-n) ")
             if response == "y" or response == "yes":
                 node = subprocess.Popen(["npm", "install"],
-                                        cwd=self._get_absolute_path("game"))
+                                        cwd=self._get_absolute_path("games"))
                 code = node.wait()
                 if code == 0:
                     print("Successfully installed Node modules.\n")
