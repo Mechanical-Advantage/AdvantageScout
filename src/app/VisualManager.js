@@ -1,12 +1,14 @@
 // Responsible for managing visual layout and CanvasManager
 function VisualManager(appManager) {
-    var canvasManager
-    var CanvasManager
+    var gameManager
+    var GameManager
 
     // Create CanvasManager class from game data
     this.loadData = function () {
         try {
-            CanvasManager = new Function("canvas", "reverseAlliances", "uploadData", "appManager", appManager.game.CanvasManager)
+            GameManager = new Function("return" + appManager.game.GamManager.js.substring(16)(), appManager.game.GameManager)
+            gameManager = new GameManager()
+            
             // appManager.game.GameManager.js
         }
         catch (error) {
@@ -16,25 +18,25 @@ function VisualManager(appManager) {
 
     // Initialize canvas manager
     this.start = function () {
-        var oldCanvas = document.getElementsByClassName("visualcanvas")[0]
-        var newCanvas = oldCanvas.cloneNode(true)
-        oldCanvas.parentElement.replaceChild(newCanvas, oldCanvas)
-        if (appManager.game.CanvasManager) {
-            canvasManager = new CanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, appManager.scoutManager.upload, appManager)
+
+        if (appManager.game.GameManager) {
+            gameManager = new GameManager(document.getElementsById("visualCanvasDiv"), appManager)
+            gameManager.setReverseAlliance(reversed)
+            document.getElementById("svelte-game-component").innerHTML = appManager.game.GamManager.css
         }
     }
 
     // Signal canvas manager to switch modes
     this.setMode = function (state) {
-        if (appManager.game.CanvasManager) {
-            canvasManager.setMode(state - 1)
+        if (appManager.game.GameManager) {
+            gameManager.setMode(state - 1)
         }
     }
 
     // Retrieve data from canvas manager
     this.getData = function () {
-        if (appManager.game.CanvasManager) {
-            return canvasManager.getData()
+        if (appManager.game.GameManager) {
+            return gameManager.getData()
         } else {
             return {}
         }
