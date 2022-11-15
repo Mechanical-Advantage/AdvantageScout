@@ -5,9 +5,13 @@ function VisualManager(appManager) {
 
     // Create CanvasManager class from game data
     this.loadData = function () {
+
         try {
-            GameManager = new Function("return" + appManager.game.GamManager.js.substring(16)(), appManager.game.GameManager)
-            gameManager = new GameManager()
+            GameManager = new Function("return " + appManager.game.GameManager.js.substring(16))()
+            console.log(appManager.game)
+            console.log(GameManager)
+
+            
             
             // appManager.game.GameManager.js
         }
@@ -20,9 +24,9 @@ function VisualManager(appManager) {
     this.start = function () {
 
         if (appManager.game.GameManager) {
-            gameManager = new GameManager(document.getElementsById("visualCanvasDiv"), appManager)
-            gameManager.setReverseAlliance(reversed)
-            document.getElementById("svelte-game-component").innerHTML = appManager.game.GamManager.css
+            gameManager = new GameManager(document.getElementById("visualCanvasDiv"), appManager)
+            //gameManager.setReverseAlliance(reversed)
+            document.getElementById("svelte-game-component").innerHTML = appManager.game.GameManager.css
         }
     }
 
