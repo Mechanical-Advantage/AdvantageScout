@@ -32,7 +32,7 @@ class SvelteInterface:
 
     def _build(self, game=""):
         node = subprocess.Popen(["npm", "run", "build", "--", game],
-                                cwd=self._get_absolute_path("games"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                                cwd=self._get_absolute_path("games"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
         code = node.wait()
         if code == 0:
             cherrypy.log(
@@ -95,7 +95,7 @@ class SvelteInterface:
             response = input("Install Node modules for Svelte? (y-n) ")
             if response == "y" or response == "yes":
                 node = subprocess.Popen(["npm", "install"],
-                                        cwd=self._get_absolute_path("games"))
+                                        cwd=self._get_absolute_path("games"), shell=True)
                 code = node.wait()
                 if code == 0:
                     print("Successfully installed Node modules.\n")
