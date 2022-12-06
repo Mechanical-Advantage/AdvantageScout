@@ -1,79 +1,110 @@
 <script>
     import ButtonGroup from "./ButtonGroup.svelte";
 
+    let shootPositionSelected = false;
+    let mode = 0; // 0 = auto, 1 = teleop, 2 = endgame
+    // this.setMode = function (newMode) { // REQUIRED FUNCTION
+    //     if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
+    //         dataLog = []
+    //         data["ShootPosition"] = ""
+    //         shootPositionSelected = false
+    //     }
 
-let shootPositionSelected = false
-let mode = 0 // 0 = auto, 1 = teleop, 2 = endgame
-// this.setMode = function (newMode) { // REQUIRED FUNCTION
-//     if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
-//         dataLog = []
-//         data["ShootPosition"] = ""
-//         shootPositionSelected = false
-//     }
+    //     mode = newMode
+    // }
 
-//     mode = newMode
-// }
+    let gameData = {
+        Taxi: 0,
+        StartPosition: "",
+        AutoUpperSuccess: 0,
+        AutoLowerSuccess: 0,
+        AutoUpperFailures: 0,
+        AutoLowerFailures: 0,
+        TeleUpperSuccess: 0,
+        TeleLowerSuccess: 0,
+        TeleUpperFailures: 0,
+        TeleLowerFailures: 0,
+        ScoringData: [],
+        ClimbLow: [],
+        ClimbMid: [],
+        ClimbHigh: [],
+        ClimbTraversal: [],
+        StartPositionZone: 0,
+        ClimbCounter: [0, 0, 0, 0],
+        ClimbText: ["L", "M", "H", "T"],
+        ShootPosition: "",
+    };
 
-let gameData = {
-"Taxi": 0,
-"StartPosition": "",
-"AutoUpperSuccess": 0,
-"AutoLowerSuccess": 0,
-"AutoUpperFailures": 0,
-"AutoLowerFailures": 0,
-"TeleUpperSuccess": 0,
-"TeleLowerSuccess": 0,
-"TeleUpperFailures": 0,
-"TeleLowerFailures": 0,
-"ScoringData": [],
-"ClimbLow": [],
-"ClimbMid": [],
-"ClimbHigh": [],
-"ClimbTraversal": [],
-"StartPositionZone": 0,
-"ClimbCounter": [0, 0, 0, 0],
-"ClimbText": ["L", "M", "H", "T"],
-"ShootPosition": ""
-}
+    function handleClick(varName, operation) {
+        gameData[varName] += operation;
+        console.log(gameData);
+    }
 
-function handleClick(varName, operation){
-gameData[varName] += operation
-console.log(gameData)
-} 
+    function handleClimb(climb) {
+        let time = new Date().getTime() / 1000;
 
-function handleClimb (climb){
-    let time = new Date().getTime() / 1000
+        gameData[climb] = [];
+        gameData[climb].push(1, time);
 
-    gameData[climb] = []
-    gameData[climb].push(1, time)
+        console.log(gameData[climb]);
+    }
 
-    console.log(gameData[climb])
-
-}
-
-function handleTaxi(){
-    gameData["Taxi"] = 1 - gameData["Taxi"]
-    console.log(gameData["Taxi"])
-}
-
-
-
+    function handleTaxi() {
+        gameData["Taxi"] = 1 - gameData["Taxi"];
+        console.log(gameData["Taxi"]);
+    }
 </script>
 
 <main>
     <div class="line">
         <div class="btn-group">
-            <button class="btn s" on:click={() => handleClick(mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess", 1)}>+</button>
-            <button class="btn n">{gameData[mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess"]}</button>
-            <button class="btn s" on:click={() => handleClick(mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess", -1)}>-</button>
+            <button
+                class="btn s"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess",
+                        1
+                    )}>+</button
+            >
+            <button class="btn n"
+                >{gameData[
+                    mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess"
+                ]}</button
+            >
+            <button
+                class="btn s"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoUpperSuccess" : "TeleUpperSuccess",
+                        -1
+                    )}>-</button
+            >
         </div>
     </div>
 
     <div class="line">
         <div class="btn-group">
-            <button class="btn f" on:click={() => handleClick(mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures", 1)}>+</button>
-            <button class="btn n">{gameData[mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures"]}</button>
-            <button class="btn f" on:click={() => handleClick(mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures", -1)}>-</button>
+            <button
+                class="btn f"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures",
+                        1
+                    )}>+</button
+            >
+            <button class="btn n"
+                >{gameData[
+                    mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures"
+                ]}</button
+            >
+            <button
+                class="btn f"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoUpperFailures" : "TeleUpperFailures",
+                        -1
+                    )}>-</button
+            >
         </div>
     </div>
 
@@ -89,17 +120,53 @@ function handleTaxi(){
 
     <div class="line">
         <div class="btn-group">
-            <button class="btn s" on:click={() => handleClick(mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess", 1)}>+</button>
-            <button class="btn n">{gameData[mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess"]}</button>
-            <button class="btn s" on:click={() => handleClick(mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess", -1)}>-</button>
+            <button
+                class="btn s"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess",
+                        1
+                    )}>+</button
+            >
+            <button class="btn n"
+                >{gameData[
+                    mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess"
+                ]}</button
+            >
+            <button
+                class="btn s"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoLowerSuccess" : "TeleLowerSuccess",
+                        -1
+                    )}>-</button
+            >
         </div>
     </div>
 
     <div class="line">
         <div class="btn-group">
-            <button class="btn f" on:click={() => handleClick(mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures", 1)}>+</button>
-            <button class="btn n">{gameData[mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures"]}</button>
-            <button class="btn f" on:click={() => handleClick(mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures", -1)}>-</button>
+            <button
+                class="btn f"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures",
+                        1
+                    )}>+</button
+            >
+            <button class="btn n"
+                >{gameData[
+                    mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures"
+                ]}</button
+            >
+            <button
+                class="btn f"
+                on:click={() =>
+                    handleClick(
+                        mode == 0 ? "AutoLowerFailures" : "TeleLowerFailures",
+                        -1
+                    )}>-</button
+            >
         </div>
     </div>
 
@@ -115,20 +182,30 @@ function handleTaxi(){
     <ButtonGroup />
     <ButtonGroup /> -->
     {#if mode == 1}
-    <div class="btn-group btn-group-vertical">
-        <button class="btn m-1" on:click={() => handleClimb("ClimbLow", 1)}>Low</button>
-        <button class="btn m-1" on:click={() => handleClimb("ClimbMid", 1)}>Mid</button>
-        <button class="btn m-1" on:click={() => handleClimb("ClimbHigh", 1)}>High</button>
-        <button class="btn m-1" on:click={() => handleClimb("ClimbTraversal", 1)}>Traversal</button>
-      </div>
+        <div class="btn-group btn-group-vertical">
+            <button class="btn m-1" on:click={() => handleClimb("ClimbLow", 1)}
+                >Low</button
+            >
+            <button class="btn m-1" on:click={() => handleClimb("ClimbMid", 1)}
+                >Mid</button
+            >
+            <button class="btn m-1" on:click={() => handleClimb("ClimbHigh", 1)}
+                >High</button
+            >
+            <button
+                class="btn m-1"
+                on:click={() => handleClimb("ClimbTraversal", 1)}
+                >Traversal</button
+            >
+        </div>
     {/if}
 
     {#if mode == 0}
-    <label class="swap">
-        <input type="checkbox" />
-        <div class="swap-off" on:click={handleTaxi}>NO TAXI</div>
-        <div class="swap-on" on:click={handleTaxi}>TAXI</div>
-      </label>
+        <label class="swap">
+            <input type="checkbox" />
+            <div class="swap-off" on:click={handleTaxi}>NO TAXI</div>
+            <div class="swap-on" on:click={handleTaxi}>TAXI</div>
+        </label>
     {/if}
 </main>
 

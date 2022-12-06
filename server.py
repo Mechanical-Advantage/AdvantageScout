@@ -25,7 +25,7 @@ default_port = 8000  # can override w/ command line argument
 admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
-bt_enable = False
+bt_enable = True
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
                      "COM8", "COM9"]  # current implementation
@@ -186,11 +186,11 @@ def quickread(file):
     file = open(file, "r")
     result = file.read()
     file.close()
-    return(result)
+    return (result)
 
 
 def currentTime():
-    return(int(round(time.time())))
+    return (int(round(time.time())))
 
 
 favicon_code = """
@@ -432,7 +432,7 @@ class main_server(object):
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return (output.replace("$FAVICON_CODE", favicon_code))
 
     @cherrypy.expose
     def config(self):
@@ -475,11 +475,11 @@ class main_server(object):
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return (output.replace("$FAVICON_CODE", favicon_code))
 
     @cherrypy.expose
     def export(self):
-        return("""
+        return ("""
 <html>
 <body>
 <script>
@@ -522,7 +522,7 @@ document.body.innerHTML = window.localStorage.getItem(
         output = ""
         for name in names:
             output += open("src/admin/" + name + ".js", "r").read() + "\n"
-        return(jsmin(output))
+        return (jsmin(output))
 
     @cherrypy.expose
     def heartbeat(self, device_name, state, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
@@ -556,7 +556,7 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_global.commit()
         conn_global.close()
         update_admin()
-        return(json.dumps(messages))
+        return (json.dumps(messages))
 
     @cherrypy.expose
     def load_game(self):
@@ -572,7 +572,7 @@ document.body.innerHTML = window.localStorage.getItem(
             "prefs": json.loads(quickread(path)),
             "GameManager": svelte_interface.get_game()
         }
-        return(jsmin(json.dumps(result)))
+        return json.dumps(result)
 
     @cherrypy.expose
     def upload(self, data):
@@ -585,7 +585,7 @@ document.body.innerHTML = window.localStorage.getItem(
         try:
             data = json.loads(data)
         except:
-            return(json.dumps(result))
+            return (json.dumps(result))
         result["count"] = len(data)
 
         for i in range(len(data)):
@@ -639,7 +639,7 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_game.commit()
         conn_game.close()
         result["success"] = True
-        return(json.dumps(result))
+        return (json.dumps(result))
 
     @cherrypy.expose
     def get_schedule(self):
@@ -907,7 +907,7 @@ document.body.innerHTML = window.localStorage.getItem(
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code).replace("$OUR_TEAM", str(our_team)))
+        return (output.replace("$FAVICON_CODE", favicon_code).replace("$OUR_TEAM", str(our_team)))
 
     @cherrypy.expose
     def add_scout(self, scout):
@@ -944,7 +944,7 @@ document.body.innerHTML = window.localStorage.getItem(
             data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i]
                          [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8]})
         conn_global.close()
-        return(json.dumps(data))
+        return (json.dumps(data))
 
     @cherrypy.expose
     def remove_device(self, name):
@@ -953,7 +953,7 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global.execute("DELETE FROM devices WHERE name = ?", (name,))
         conn_global.commit()
         conn_global.close()
-        return()
+        return ()
 
     @cherrypy.expose
     def send_message(self, target, text):
@@ -963,7 +963,7 @@ document.body.innerHTML = window.localStorage.getItem(
             "INSERT INTO messages(target,expiration,text) VALUES (?,?,?)", (target, round(time.time() + message_expiration), text))
         conn_global.commit()
         conn_global.close()
-        return()
+        return ()
 
     @cherrypy.expose
     def get_config(self):
@@ -988,7 +988,7 @@ document.body.innerHTML = window.localStorage.getItem(
             "SELECT value FROM config WHERE key = 'auto_schedule'")
         data["auto_schedule"] = cur_global.fetchall()[0][0]
         conn_global.close()
-        return(json.dumps(data))
+        return (json.dumps(data))
 
     @cherrypy.expose
     def set_config(self, key, value):
@@ -1025,7 +1025,7 @@ document.body.innerHTML = window.localStorage.getItem(
                 response = "Auto scheduling enabled"
         else:
             response = "Error: unknown key \"" + key + "\""
-        return(response)
+        return (response)
 
     @cherrypy.expose
     def get_cache(self, source="tba"):
@@ -1084,7 +1084,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_global.commit()
         conn_global.close()
-        return("Saved schedule for " + event + ".")
+        return ("Saved schedule for " + event + ".")
 
     @cherrypy.expose
     def reschedule(self, force_match=None):
@@ -1098,7 +1098,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_game.close()
         conn_global.close()
-        return(result)
+        return (result)
 
     @cherrypy.expose
     def get_uploaded(self):
@@ -1126,7 +1126,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_game.close()
         conn_global.close()
-        return(json.dumps(output))
+        return (json.dumps(output))
 
     @cherrypy.expose
     def get_scoutprefs(self):
@@ -1376,7 +1376,7 @@ def save_image(raw):
     file = open(file_path, "wb")
     file.write(base64.decodebytes(raw[23:].encode("utf-8")))
     file.close()
-    return(file_path)
+    return (file_path)
 
 
 def serial_readline(source, name, mode):
@@ -1413,7 +1413,7 @@ def serial_readline(source, name, mode):
                 try:
                     wait = len(forward_queues[source]) == 0
                 except:
-                    return(False)
+                    return (False)
             line = forward_queues[source].pop(0)
         else:
             if source.is_open:
@@ -1445,7 +1445,7 @@ def serial_readline(source, name, mode):
             full_line += line[:-1]
             break
     last_data = -2
-    return(full_line)
+    return (full_line)
 
 
 class serial_mode(Enum):
@@ -1630,7 +1630,7 @@ def get_next_schedule_match(cur_game, cur_global):
             break
     if to_schedule == -1:
         to_schedule = 1
-    return(to_schedule)
+    return (to_schedule)
 
 
 def schedule_match(cur_game, cur_global, conn_global, force_match=None):
@@ -1647,7 +1647,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
         "SELECT b1,b2,b3,r1,r2,r3 FROM schedule WHERE match=?", (to_schedule,)).fetchall()
     if len(teams) == 0:
         log("Could not create schedule for match " + str(to_schedule))
-        return("Could not create schedule for match " + str(to_schedule))
+        return ("Could not create schedule for match " + str(to_schedule))
     teams = teams[0]
 
     # Get scout records
@@ -1656,7 +1656,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
     if len(scouts) < 6:
         log("Not enough scouts to schedule match " +
             str(to_schedule) + " - HURRY!")
-        return("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
+        return ("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
 
     scout_records = []
     for scout in scouts:
@@ -1701,7 +1701,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
         cur_global.execute(
             "INSERT INTO schedule_next(team,scout) VALUES (?,?)", (team, schedule[team]))
     conn_global.commit()
-    return("Successfully created schedule for match " + str(to_schedule))
+    return ("Successfully created schedule for match " + str(to_schedule))
 
 
 if __name__ == "__main__":

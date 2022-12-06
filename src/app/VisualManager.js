@@ -7,12 +7,15 @@ function VisualManager(appManager) {
     this.loadData = function () {
 
         try {
+            // console.log(appManager.game.GameManager.js)
+            // alert(appManager.game.GameManager.js)
             GameManager = new Function("return " + appManager.game.GameManager.js.substring(16))()
-            console.log(appManager.game)
-            console.log(GameManager)
 
-            
-            
+            // console.log(appManager.game)
+            // console.log(GameManager)
+
+
+
             // appManager.game.GameManager.js
         }
         catch (error) {
@@ -24,6 +27,7 @@ function VisualManager(appManager) {
     this.start = function () {
 
         if (appManager.game.GameManager) {
+            document.getElementById("visualCanvasDiv").innerHTML = ""
             gameManager = new GameManager(document.getElementById("visualCanvasDiv"), appManager)
             //gameManager.setReverseAlliance(reversed)
             document.getElementById("svelte-game-component").innerHTML = appManager.game.GameManager.css

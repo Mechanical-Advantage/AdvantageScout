@@ -10,7 +10,19 @@ export default class Game {
         });
     }
 
-    setMode(mode) {}
-    setReverseAlliance(reversed) {}
-    getData() {}
+    setMode(mode) { }
+    setReverseAlliance(reversed) { }
+    getData() { }
 }
+
+// export default class Game {
+//     constructor(root, appManager) {
+//         console.log("Hello, this is the module for the 2022 game!", root);
+//         root.style.backgroundColor = "pink";
+//     }
+
+//     setMode(mode) { }
+//     setReverseAlliance(reversed) { }
+//     getData() { }
+// }
+

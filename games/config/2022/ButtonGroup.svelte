@@ -19,14 +19,14 @@
         padding-bottom: 60px;
 
         display: inline-block;
-        font-size: 30px;
+        font-size: 10px;
 
         margin-top: 50px;
         text-align: center;
         vertical-align: middle;
         line-height: 0;
 
-        width: 150px;
+        width: 10%;
 
         margin-left: 25px;
         margin-right: 25px;

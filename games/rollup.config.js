@@ -1,8 +1,9 @@
-import svelte from "rollup-plugin-svelte";
-import { terser } from "rollup-plugin-terser";
-import css from "rollup-plugin-css-only";
+import babel from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
+import css from "rollup-plugin-css-only";
+import svelte from "rollup-plugin-svelte";
+import { terser } from "rollup-plugin-terser";
 
 export default {
     input: "current/GameManager.js",
@@ -19,6 +20,7 @@ export default {
             browser: true,
             dedupe: ["svelte"]
         }),
-        commonjs()
+        commonjs(),
+        babel({ babelHelpers: "bundled" })
     ]
 };
