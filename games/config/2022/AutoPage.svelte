@@ -1,5 +1,9 @@
 <script>
+    import { get } from "svelte/store";
     import ButtonGroup from "./ButtonGroup.svelte";
+    //   import { writable } from "svelte/store";
+    //import { data } from "./data";
+    import { state } from "./gameState";
 
     let shootPositionSelected = false;
     let mode = 0; // 0 = auto, 1 = teleop, 2 = endgame
@@ -39,6 +43,7 @@
     function handleClick(varName, operation) {
         gameData[varName] += operation;
         console.log(gameData);
+        console.log("game state", get(state));
     }
 
     function handleClimb(climb) {

@@ -1,5 +1,5 @@
-import { Writable } from "svelte/store";
-export const data = {
+import { writable } from "svelte/store";
+export const data = writable({
     Taxi: 0,
     StartPosition: "",
     AutoUpperSuccess: 0,
@@ -30,4 +30,4 @@ export const data = {
     Points: 0,
     Penalties: 0
 
-};
+});
