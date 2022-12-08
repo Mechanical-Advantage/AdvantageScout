@@ -3,15 +3,16 @@
 
     let shootPositionSelected = false;
     let mode = 0; // 0 = auto, 1 = teleop, 2 = endgame
-    // this.setMode = function (newMode) { // REQUIRED FUNCTION
+    // this.setMode = function (newMode) {
+    //     // REQUIRED FUNCTION
     //     if ((mode == 0 && newMode == 1) || (mode == 1 && newMode == 0)) {
-    //         dataLog = []
-    //         data["ShootPosition"] = ""
-    //         shootPositionSelected = false
+    //         // dataLog = []
+    //         // data["ShootPosition"] = ""
+    //         //   shootPositionSelected = false
     //     }
 
-    //     mode = newMode
-    // }
+    //     mode = newMode;
+    // };
 
     let gameData = {
         Taxi: 0,
@@ -224,9 +225,9 @@
         vertical-align: middle;
         line-height: 0;
 
-        width: 150px;
+        width: 110px;
 
-        margin-left: 25px;
+        margin-left: 10px;
         margin-right: 25px;
     }
 
@@ -243,7 +244,7 @@
 
     .line {
         display: inline-block;
-        margin-top: 150px;
+        margin-top: 110px;
     }
 
     .d {

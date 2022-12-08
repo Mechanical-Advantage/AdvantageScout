@@ -1,4 +1,10 @@
 import GameComponent from "./GameComponent.svelte";
+import { Writable } from "svelte/store";
+import { get } from "svelte/store";
+
+import data from "./data.js";
+import state from "./gamestate.js";
+
 
 export default class Game {
     #gameComponent = null;
@@ -9,10 +15,17 @@ export default class Game {
             target: root
         });
     }
+    //implement store here
 
-    setMode(mode) { }
+    setMode(mode) {
+        state.update(state => appManager.state - 1);
+    }
     setReverseAlliance(reversed) { }
-    getData() { }
+    getData() {
+        return get(data);
+    }
+
+    // appManager.scoutManager.upload()
 }
 
 // export default class Game {
