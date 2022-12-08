@@ -482,7 +482,9 @@ function ScoutManager(appManager) {
 
     // Setup text resizing on app startup
     this.resizeTextInit = function () {
-        window.addEventListener("resize", function () { appManager.scoutManager.resizeText() })
+        window.addEventListener("resize", function () {
+            appManager.scoutManager.resizeText()
+        })
         this.resizeText()
     }
 

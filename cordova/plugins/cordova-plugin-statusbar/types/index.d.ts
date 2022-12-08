@@ -9,7 +9,8 @@
 */
 interface Window {
     StatusBar: StatusBar;
-    addEventListener(type: "statusTap", listener: (ev: Event) => any, useCapture?: boolean): void;
+
+    addEventListener(type: string, listener: (ev: Event) => any, useCapture?: boolean): void;
 }
 
 /**
