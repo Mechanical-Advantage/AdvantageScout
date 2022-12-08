@@ -7,6 +7,7 @@
     export let ceiling = 1000
     export let colors = "success" //can be success, error, or mix
     let textLeft = 188
+    let textTop = 58
 
     function pressed(event) {
         if (event.detail.value === "plus") {
@@ -21,9 +22,11 @@
             }
         }
         textLeft = 188+15 - (value.toString().length*15)
+        textTop = 58+15 - (value.toString().length*15)
     }
 </script>
 
+{#if orientation === "horizontal"}
 <div class="absolute">
     <PlusMinusButton on:pressed={pressed} color={((colors === "error" || colors === "mix") ? "error" : "success")}
                  plusOrMinus="minus"/>
@@ -40,3 +43,25 @@
     <PlusMinusButton on:pressed={pressed} color={((colors === "success" || colors === "mix") ? "success" : "error")}
                  plusOrMinus="plus" class="absolute"/>
 </div>
+
+    {/if}
+{#if orientation === "vertical"}
+    <div class="absolute">
+
+        <PlusMinusButton on:pressed={pressed} color={((colors === "success" || colors === "mix") ? "success" : "error")}
+                         plusOrMinus="plus" class="absolute"/>
+    </div>
+
+
+    <div class="absolute text-5xl mt-[110px]"
+         style="transform:
+		translate({textTop}px,0px)">
+        {value}
+    </div>
+
+    <div class="absolute mt-[170px]">
+        <PlusMinusButton on:pressed={pressed} color={((colors === "error" || colors === "mix") ? "error" : "success")}
+                         plusOrMinus="minus"/>
+    </div>
+
+{/if}

@@ -5,5 +5,5 @@
 
 </script>
 
-<PlusMinus colors="error" />
+<PlusMinus colors="error" orientation="vertical" />
 
