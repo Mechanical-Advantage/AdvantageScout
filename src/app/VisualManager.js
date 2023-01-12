@@ -9,7 +9,12 @@ function VisualManager(appManager) {
         try {
             // console.log(appManager.game.GameManager.js)
             // alert(appManager.game.GameManager.js)
-            GameManager = new Function("return " + appManager.game.GameManager.js.substring(16))()
+            GameManager = new Function(
+                "return " +
+                  appManager.game.GameManager.js.substring(
+                    appManager.game.GameManager.js.indexOf("=") + 1
+                  )
+              )()
 
             // console.log(appManager.game)
             // console.log(GameManager)
