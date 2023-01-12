@@ -31,7 +31,7 @@ class SvelteInterface:
         return os.path.abspath(joined_path)
 
     def _build(self, game=""):
-        node = subprocess.Popen(["npm", "run", "build", "--", game],
+        node = subprocess.Popen(["npm run build -- \"" + game + "\""],
                                 cwd=self._get_absolute_path("games"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
         code = node.wait()
         if code == 0:
@@ -94,7 +94,7 @@ class SvelteInterface:
             launch_allowed = True
             response = input("Install Node modules for Svelte? (y-n) ")
             if response == "y" or response == "yes":
-                node = subprocess.Popen(["npm", "install"],
+                node = subprocess.Popen(["npm install"],
                                         cwd=self._get_absolute_path("games"), shell=True)
                 code = node.wait()
                 if code == 0:
