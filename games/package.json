@@ -1,11 +1,11 @@
 {
-    "name": "advantage-scout-plus",
+    "name": "advantage-scout-game",
     "scripts": {
         "build": "npm-run-all \"build:create-symlink {@}\" \"build:run-tailwind\" \"build:run-rollup\" \"build:run-merge\" --",
         "build:create-symlink": "node createSymlink.js",
         "build:run-tailwind": "tailwindcss -m -c tailwind.config.js -o ./build/game_tailwind.css",
         "build:run-rollup": "rollup --config rollup.config.js",
-        "build:run-merge": "node mergeCss.js admin"
+        "build:run-merge": "node mergeCss.js"
     },
     "devDependencies": {
         "@babel/core": "^7.20.5",
