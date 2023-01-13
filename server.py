@@ -25,7 +25,7 @@ default_port = 8000  # can override w/ command line argument
 admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
-bt_enable = True
+bt_enable = False
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
                      "COM8", "COM9"]  # current implementation
@@ -675,6 +675,48 @@ document.body.innerHTML = window.localStorage.getItem(
 
     @cherrypy.expose
     def admin(self):
+        return """
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <title>Admin - Advantage Scout</title>
+
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+                    "Helvetica Neue", sans-serif;
+            }
+        </style>
+
+        <link rel="stylesheet" href="/admin_css.css" />
+        <script src="/admin_js.js"></script>
+    </head>
+
+    <body>
+        <script>
+            window.admin = new Admin();
+        </script>
+    </body>
+</html>
+
+        """
+
+    @cherrypy.expose(["admin_css.css"])
+    def admin_css(self):
+        cherrypy.response.headers["Content-Type"] = "text/css"
+        return svelte_interface.get_admin()["css"]
+
+    @cherrypy.expose(["admin_js.js"])
+    def admin_js(self):
+        cherrypy.response.headers["Content-Type"] = "text/js"
+        return svelte_interface.get_admin()["js"]
+
+    @cherrypy.expose
+    def admin_old(self):
         output = """
 <html>
     <head>
@@ -915,6 +957,29 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global = conn_global.cursor()
         cur_global.execute(
             "INSERT INTO scouts(name,enabled) VALUES (?,1)", (scout,))
+        conn_global.commit()
+        conn_global.close()
+        return
+
+    @cherrypy.expose
+    def get_scouts(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT * FROM scouts ORDER BY name")
+        raw = cur_global.fetchall()
+        scouts = []
+        for i in range(len(raw)):
+            scouts.append({"name": raw[i][0], "enabled": raw[i][1] == 1})
+        conn_global.commit()
+        conn_global.close()
+        return (json.dumps(scouts))
+
+    @cherrypy.expose
+    def remove_scout(self, scout):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        print(scout)
+        cur_global.execute("DELETE FROM scouts WHERE name=?", (scout,))
         conn_global.commit()
         conn_global.close()
         return
