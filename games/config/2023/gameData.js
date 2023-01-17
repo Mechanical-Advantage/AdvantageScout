@@ -1,0 +1,33 @@
+import { writable } from "svelte/store";
+export const data = writable({
+    Taxi: 0,
+    StartPosition: "",
+    AutoUpperSuccess: 0,
+    AutoLowerSuccess: 0,
+    AutoUpperFailures: 0,
+    AutoLowerFailures: 0,
+    TeleUpperSuccess: 0,
+    TeleLowerSuccess: 0,
+    TeleUpperFailures: 0,
+    TeleLowerFailures: 0,
+    ScoringData: [],
+    ClimbLow: [],
+    ClimbMid: [],
+    ClimbHigh: [],
+    ClimbTraversal: [],
+    StartPositionZone: 0,
+    ClimbCounter: [0, 0, 0, 0],
+    ClimbText: ["L", "M", "H", "T"],
+    ShootPosition: "",
+    Disabled: 0,
+    DriverRating: 0,
+    IntakeRating: 0,
+    DefenseRating: 0,
+    PlayingDefenseDuration: 0,
+    UnderDefenseRating: 0,
+    UnderDefenseDuration: 0,
+    Comment: "",
+    Points: 0,
+    Penalties: 0
+
+});

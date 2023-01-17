@@ -37,10 +37,10 @@ class SvelteInterface:
 
     def _build(self, is_game, game=""):
         if is_game:
-            node = subprocess.Popen(["npm run build -- \"" + game + "\""],
+            node = subprocess.Popen("npm run build -- \"" + game + "\"",
                                     cwd=self._get_absolute_path("games"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
         else:
-            node = subprocess.Popen(["npm run build"],
+            node = subprocess.Popen("npm run build",
                                     cwd=self._get_absolute_path("admin"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
         code = node.wait()
         if code == 0:
@@ -91,7 +91,8 @@ class SvelteInterface:
                     last_game = game
                     has_changed = True
 
-                current_files = [str(x) for x in Path(monitor_folder).rglob("*.*")]
+                current_files = [str(x)
+                                 for x in Path(monitor_folder).rglob("*.*")]
 
                 for x in current_files:
                     if x not in last_modified_cache or last_modified_cache[x] != os.stat(x).st_mtime:
@@ -121,10 +122,10 @@ class SvelteInterface:
             launch_allowed = True
             response = input("Install Node modules for Svelte? (y-n) ")
             if response == "y" or response == "yes":
-                node_1 = subprocess.Popen(["npm install"],
+                node_1 = subprocess.Popen("npm install",
                                           cwd=self._get_absolute_path("games"), shell=True)
                 code_1 = node_1.wait()
-                node_2 = subprocess.Popen(["npm install"],
+                node_2 = subprocess.Popen("npm install",
                                           cwd=self._get_absolute_path("admin"), shell=True)
                 code_2 = node_2.wait()
                 if code_1 == 0 and code_2 == 0:
