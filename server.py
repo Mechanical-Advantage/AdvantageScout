@@ -156,12 +156,13 @@ def gamedb_connect(force_connect=False):
 # Initialize game db
 def init_game():
     game_result = gamedb_connect(force_connect=True)
+
     conn_game = game_result["conn"]
     cur_game = conn_game.cursor()
-    config = json.loads(quickread("games" + os.path.sep +
-                                  game_result["name"] + os.path.sep + "prefs.json"))
-
-    # Matches table
+    config = json.loads(quickread("games" + os.path.sep + "config" + os.path.sep + 
+                                  game_result["name"] + ".json"))
+ 
+     # Matches table
     create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, ScoutName TEXT, "
     for i in range(len(config["fields"])):
         create_text += config["fields"][i] + ","
@@ -1069,6 +1070,7 @@ document.body.innerHTML = window.localStorage.getItem(
                 response = "Updated game to \"" + value + "\""
             else:
                 try:
+                    print("Attempting to initialize game")
                     init_game()
                     response = "Created database for game \"" + value + "\""
                 except:
