@@ -3,7 +3,7 @@ import GameComponent from "./GameComponent.svelte";
 import { get } from "svelte/store";
 
 //import { data } from "./data.js";
-import { state } from "./gameState.js";
+//import { state } from "./gameState.js";
 
 
 export default class Game {

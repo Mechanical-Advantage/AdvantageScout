@@ -25,7 +25,7 @@ default_port = 8000  # can override w/ command line argument
 admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
-bt_enable = False
+bt_enable = True
 bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
                      "COM8", "COM9"]  # current implementation
@@ -159,10 +159,10 @@ def init_game():
 
     conn_game = game_result["conn"]
     cur_game = conn_game.cursor()
-    config = json.loads(quickread("games" + os.path.sep + "config" + os.path.sep + 
+    config = json.loads(quickread("games" + os.path.sep + "config" + os.path.sep +
                                   game_result["name"] + ".json"))
- 
-     # Matches table
+
+    # Matches table
     create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, ScoutName TEXT, "
     for i in range(len(config["fields"])):
         create_text += config["fields"][i] + ","

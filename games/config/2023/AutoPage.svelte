@@ -1,10 +1,43 @@
 <script>
     //import ButtonGroup from "./ButtonGroup.svelte";
+    import Nodes from "./Nodes.svelte";
+    import GameObject from "./GameObject.svelte";
 </script>
 
 <main>
+
+
+    <Nodes level = 3 type = "success"/>
+    <Nodes level = 3 type = "fail"/>
+    <br>
+    <Nodes level = 2 type = "success"/>
+    <Nodes level = 2 type = "fail"/>
+    <br>
+    <Nodes level = 1 type = "success"/>
+    <Nodes level = 1 type = "fail"/>
+    <!-- <GameObject gamePiece = 'cube'/> -->
+    <!-- <GameObject gamePiece = 'cone'/> -->
+<!-- <Nodes/> -->
+
+    <!-- <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="1000.000000pt" height="500.000000pt" viewBox="0 0 1000.000000 500.000000"
+ preserveAspectRatio="xMidYMid meet">
+<metadata>
+Created by potrace 1.10, written by Peter Selinger 2001-2011
+</metadata>
+<g transform="translate(0.000000,154.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M17 1533 c-4 -3 -7 -350 -7 -770 l0 -763 1493 2 1492 3 3 759 c2 601
+0 761 -10 768 -16 9 -2962 11 -2971 1z m1765 -225 c1 -112 2 -212 2 -223 1
+-19 11 -20 236 -27 129 -5 247 -6 263 -3 l27 5 0 -296 c0 -243 3 -298 14 -310
+12 -11 70 -14 330 -14 l316 0 0 -205 0 -205 -1467 0 -1468 0 0 740 0 740 873
+0 872 0 2 -202z m1188 -315 l0 -518 -315 -4 -315 -3 0 297 c0 244 -3 299 -14
+311 -12 11 -61 14 -260 14 l-246 0 0 88 c0 49 -3 144 -7 210 l-6 122 581 0
+582 0 0 -517z"/>
+</g>
+</svg> -->
     <!--checkbox and cross-->
-    <div class="btn group">
+    <!-- <div class="btn group">
         <button class="btn btn-square btn-outline">
             <svg
                 fill="#1bbb43"
@@ -120,10 +153,11 @@
                 ></svg
             >
         </button>
-    </div>
+    </div> -->
+
 
     <!--cone and cube-->
-    <div class="ml-[650px] mt-[100px]">
+    <div class="ml-[60%] -mt-[2%]">
         <button class="btn btn-outline btn-warning btn-square btn-lg">
             <svg
                 class="-mt-2.5 bi bi-cone"
@@ -165,7 +199,7 @@
             >
         </button>
     </div>
-    <div class="ml-[825px] mt-[50px]">
+    <div class="ml-[85%] mt-[2%]">
         <button class="btn btn-outline btn-warning btn-square btn-lg">
             <svg
                 class="-mt-2.5 bi bi-cone"
@@ -207,7 +241,7 @@
             >
         </button>
     </div>
-    <div class="ml-[650px]">
+    <div class="ml-[60%] mt-[10%]">
         <button class="btn btn-outline btn-warning btn-square btn-lg">
             <svg
                 class="-mt-2.5 bi bi-cone"
