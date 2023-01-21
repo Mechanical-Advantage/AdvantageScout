@@ -2,22 +2,39 @@
     //import ButtonGroup from "./ButtonGroup.svelte";
     import Nodes from "./Nodes.svelte";
     import GameObject from "./GameObject.svelte";
+    import ScoringGrid from "./ScoringGrid.svelte";
+    import GamePieceLocation from "./GamePieceLocation.svelte";
 </script>
 
 <main>
+    <!-- <ScoringGrid /> -->
+    <div class="absolute left-[20px] top-[40px]">
+        <Nodes level="3" type="success" />
+    </div>
+    <div class="absolute left-[160px] top-[40px]">
+        <Nodes level="3" type="fail" />
+    </div>
+    <div class="absolute left-[20px] top-[195px]">
+        <Nodes level="2" type="success" />
+    </div>
+    <div class="absolute left-[160px] top-[195px]">
+        <Nodes level="2" type="fail" />
+    </div>
+    <div class="absolute left-[20px] top-[350px]">
+        <Nodes level="2" type="success" />
+    </div>
+    <div class="absolute left-[160px] top-[350px]">
+        <Nodes level="2" type="fail" />
+    </div>
 
+    <div class="absolute left-[600px] absolute top-[350px]">
+        <GamePieceLocation location="floor" />
+    </div>
+    <div class="absolute left-[300px] absolute top-[350px]">
+        <GamePieceLocation location="single" />
+    </div>
 
-    <Nodes level = 3 type = "success"/>
-    <Nodes level = 3 type = "fail"/>
-    <br>
-    <Nodes level = 2 type = "success"/>
-    <Nodes level = 2 type = "fail"/>
-    <br>
-    <Nodes level = 1 type = "success"/>
-    <Nodes level = 1 type = "fail"/>
-    <!-- <GameObject gamePiece = 'cube'/> -->
-    <!-- <GameObject gamePiece = 'cone'/> -->
-<!-- <Nodes/> -->
+    <!-- <Nodes/> -->
 
     <!-- <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="1000.000000pt" height="500.000000pt" viewBox="0 0 1000.000000 500.000000"
@@ -155,9 +172,8 @@ fill="#000000" stroke="none">
         </button>
     </div> -->
 
-
     <!--cone and cube-->
-    <div class="ml-[60%] -mt-[2%]">
+    <!-- <div class="ml-[60%] -mt-[2%]">
         <button class="btn btn-outline btn-warning btn-square btn-lg">
             <svg
                 class="-mt-2.5 bi bi-cone"
@@ -282,5 +298,5 @@ fill="#000000" stroke="none">
                 ></svg
             >
         </button>
-    </div>
+    </div> -->
 </main>
