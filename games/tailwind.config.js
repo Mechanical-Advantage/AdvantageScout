@@ -5,9 +5,9 @@ module.exports = {
         themes: [
             {
                 mytheme: {
-                    primary: "#6419E6",
+                    primary: "#3b82f6",
                     secondary: "#facc15",
-                    accent: "#f3f4f6",
+                    accent: "#c729c2",
                     neutral: "#191D24",
                     "base-100": "#1a1a1a",
                     info: "#3ABFF8",
@@ -19,7 +19,19 @@ module.exports = {
         ]
     },
     theme: {
-        extend: {}
+        extend: {
+            keyframes: {
+                softbounce: {
+                    '0%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(50px)' },
+                    '100%': {transform: 'translateY(0)'}
+                }
+            },
+
+            animation: {
+                'softbounce': 'softbounce 2s ease-in-out infinte'
+            }
+        }
     },
     plugins: [require("daisyui"), require("tailwindcss-animate")]
 };

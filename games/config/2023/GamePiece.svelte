@@ -5,22 +5,27 @@
         highConeSuccess,
         floorPickup,
     } from "./stores";
-    export let gamePiece = "cube";
-    export let location = "floor";
+    export let gamePiece = "Cube";
+    export let location = "Floor";
 
     let coneSVG = "";
     function updateGameObject() {
         console.log("score");
+        $liveGamepiece = gamePiece
     }
 </script>
 
-<button class="btn  " on:click={updateGameObject}>
-    {#if gamePiece === "cube"}
+<button
+    class="btn btn-square btn-outline w-24 h-24 hover:animate-bounce {gamePiece === 'Cube'
+        ? 'btn-accent'
+        : 'btn-secondary'}  "
+    on:click={updateGameObject}
+>
+    {#if gamePiece === "Cube"}
         <svg
-            class="-mt-2.5"
             fill="#c729c2"
-            width="72px"
-            height="72px"
+            width="84px"
+            height="84px"
             viewBox="0 0 56 56"
             xmlns="http://www.w3.org/2000/svg"
             stroke="#c729c2"
@@ -36,9 +41,9 @@
         >
     {:else}
         <svg
-            class="-mt-2.5 bi bi-cone"
-            width="72px"
-            height="72px"
+            class=" bi bi-cone"
+            width="84px"
+            height="84px"
             viewBox="0 0 16.00 16.00"
             xmlns="http://www.w3.org/2000/svg"
             fill="#dccc18"

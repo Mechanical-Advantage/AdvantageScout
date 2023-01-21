@@ -1,32 +1,11 @@
 <script>
     import AutoPage from "./AutoPage.svelte";
+    import TeleopPage from "./TeleopPage.svelte";
+    import { gameState } from "./stores";
 </script>
 
-<!-- <div class="absolute w-screen h-screen">
-    <svg
-        version="1.0"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 300 800"
-        preserveAspectRatio="xMidYMid meet"
-    >
-        <metadata>
-            Created by potrace 1.10, written by Peter Selinger 2001-2011
-        </metadata>
-        <g
-            transform="translate(0.000000,154.000000) scale(0.100000,-0.100000)"
-            fill="#ffffff"
-            stroke="none"
-        >
-            <path
-                d="M17 1533 c-4 -3 -7 -350 -7 -770 l0 -763 1493 2 1492 3 3 759 c2 601
-0 761 -10 768 -16 9 -2962 11 -2971 1z m1765 -225 c1 -112 2 -212 2 -223 1
--19 11 -20 236 -27 129 -5 247 -6 263 -3 l27 5 0 -296 c0 -243 3 -298 14 -310
-12 -11 70 -14 330 -14 l316 0 0 -205 0 -205 -1467 0 -1468 0 0 740 0 740 873
-0 872 0 2 -202z m1188 -315 l0 -518 -315 -4 -315 -3 0 297 c0 244 -3 299 -14
-311 -12 11 -61 14 -260 14 l-246 0 0 88 c0 49 -3 144 -7 210 l-6 122 581 0
-582 0 0 -517z"
-            />
-        </g>
-    </svg>
-</div> -->
+{#if $gameState == 0}
 <AutoPage />
+{:else if $gameState == 1}
+<TeleopPage/>
+{/if}

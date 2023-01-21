@@ -4,35 +4,54 @@
         liveLocation,
         highConeSuccess,
         floorPickup,
+        gameData
     } from "./stores";
     export let level = 1;
     export let type = "success";
+    export let gameMode = "Auto"
+
+    let dataField = " "
+
+    let displayConeValue = 0
+    let displayCubeValue = 0
 
     function update() {
         console.log("score");
+        dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type
+        $gameData[dataField] = $gameData[dataField] + 1
+        console.log(level, gameLevelMap[level], $gameData["AutoHighConeSuccess"])
+        
+        console.log(dataField)
+        displayConeValue = $gameData[gameMode + gameLevelMap[level] + "Cone" + type]
+        displayCubeValue = $gameData[gameMode + gameLevelMap[level] + "Cube" + type]
+        console.log(displayValue)
 
-        if ($liveGamepiece === "cone" && level === "3") {
-            console.log("score");
-            $highConeSuccess++;
-        }
-        if ($liveLocation === "floor") {
-            $floorPickup++;
-        }
     }
+
+let gameLevelMap = {
+    1:"Hybrid",
+    2:"Mid",
+    3:"High"
+}
+    
+
+
+
+
 </script>
 
 <div class="indicator">
-    <span class="indicator-item badge badge-primary text-xl"
-        >{$highConeSuccess}</span
+    <span class="indicator-item badge badge-accent text-xl"
+        >{displayCubeValue}</span
     >
     <span class="indicator-item indicator-start badge badge-secondary text-xl"
-        >{$highConeSuccess}</span
+        >{displayConeValue}</span
     >
     <button
         class="btn btn-square btn-outline rounded-md w-24 h-24"
         on:click={update}
     >
-        {#if type === "success"}
+        {#if type === "Success"}
             <svg
                 fill="#1bbb43"
                 viewBox="0 0 24 24"

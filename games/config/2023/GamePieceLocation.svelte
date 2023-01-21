@@ -1,14 +1,22 @@
 <script>
-    import GameObject from "./GameObject.svelte";
+    import GamePiece from "./GamePiece.svelte";
 
-    export let location = "floor";
+    export let location = "Floor";
+
 </script>
 
-<div class="tooltip tooltip-open tooltip-left" datatip={location}>
-    <div>
-        <GameObject gamePiece="cone" {...location} />
+
+<div class="indicator absolute">
+
+    <span
+        class="indicator-item indicator-middle indicator-center indicator-start badge badge-primary "
+        >{location}</span
+    >
+    <div class="absolute">
+        <GamePiece gamePiece="Cone" {...location} />
     </div>
-    <div class="ml-[200px] -mt-[50px]">
-        <GameObject gamePiece="cube" {...location} />
+    <div class="absolute ml-[140px]">
+        <GamePiece gamePiece="Cube" {...location} />
     </div>
 </div>
+

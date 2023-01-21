@@ -1,6 +1,7 @@
 import GameComponent from "./GameComponent.svelte";
 //import { writable } from "svelte/store";
 import { get } from "svelte/store";
+import { gameState } from "./stores";
 
 //import { data } from "./data.js";
 //import { state } from "./gameState.js";
@@ -19,8 +20,8 @@ export default class Game {
 
     setMode(mode) {
         console.log("app state", appManager.state)
-        state.update(n => appManager.state - 1);
-        console.log("Updates state", get(state))
+        gameState.update(n => appManager.state - 1);
+        console.log("Updates state", get(gameState))
     }
     setReverseAlliance(reversed) { }
     getData() {
