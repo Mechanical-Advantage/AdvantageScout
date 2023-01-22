@@ -7,7 +7,7 @@
         gameData
     } from "./stores";
     export let level = 1;
-    export let type = "success";
+    export let type = "Success";
     export let gameMode = "Auto"
 
     let dataField = " "
