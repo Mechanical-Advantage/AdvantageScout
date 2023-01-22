@@ -24,8 +24,6 @@
         console.log(dataField)
         displayConeValue = $gameData[gameMode + gameLevelMap[level] + "Cone" + type]
         displayCubeValue = $gameData[gameMode + gameLevelMap[level] + "Cube" + type]
-        console.log(displayValue)
-
     }
 
 let gameLevelMap = {

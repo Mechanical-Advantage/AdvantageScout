@@ -9,7 +9,7 @@
 
     export let gameMode = "Auto"
     let displayConeValue = 0
-    let displayCubeValue = 1
+    let displayCubeValue = 0
     let dataField = " "
 
     function update() {
