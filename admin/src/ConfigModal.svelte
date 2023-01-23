@@ -1,4 +1,9 @@
 <!-- The button to open modal -->
+<script>
+    function updateConfig(){
+
+    }
+</script>
 <label for="my-modal-3" class="btn modal-button">Config</label>
 
 <!-- Put this part before </body> tag -->
@@ -19,7 +24,7 @@
             </label>
             <input type="text" placeholder="Current Event" class="input input-bordered" />
         </div>
-        <label class="btn modal-button">Save</label>
+        <button on:click={updateConfig}>Save Event</button>
         <div class="form-control w-full max-w-xs">
             <label class="label">
                 <span class="label-text">Field Orientation</span>
