@@ -1,9 +1,22 @@
-<!-- The button to open modal -->
 <script>
-    function updateConfig(){
+    let currentGame = 'Game'
+    let currentEvent = 'Event'
+    let reverse_alliances = 'Red Left, Blue Right'
+    let dev_mode = 'On'
+    let auto_schedule = 'Auto'
 
+    let key = ''
+    let value = ''
+    let actionurl = "/set_config/"
+    async function updateConfig(key, value) {
+        const res = await fetch(actionurl, {
+            method: "POST",
+            body: JSON.stringify({key, value})
+        })
     }
 </script>
+
+<!-- The button to open modal -->
 <label for="my-modal-3" class="btn modal-button">Config</label>
 
 <!-- Put this part before </body> tag -->
@@ -11,49 +24,29 @@
 <div class="modal">
     <div class="modal-box relative">
         <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-        <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Game</span>
-            </label>
-            <input type="text" placeholder="Current Game" class="input input-bordered" />
-        </div>
-        <label class="btn modal-button">Save</label>
-        <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Event</span>
-            </label>
-            <input type="text" placeholder="Current Event" class="input input-bordered" />
-        </div>
-        <button on:click={updateConfig}>Save Event</button>
-        <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Field Orientation</span>
-            </label>
-            <select class="select select-bordered w-full max-w-xs">
-                <option>Red Alliance</option>
-                <option>Blue Alliance</option>
+            Game
+            <div><input bind:value = {currentGame}></div>
+            <button on:click={updateConfig("game", currentGame)}>Save Game</button>
+            Event
+            <div><input bind:value = {currentEvent}></div>
+            <button on:click={updateConfig("event", currentEvent)}>Save Event</button>
+            Reverse Alliances
+            <select id = "reverse_alliances" name = "reverse_alliances" bind:value={reverse_alliances}>
+                <option value = "0">Red Left, Blue Right</option>
+                <option value = "1">Blue Left, Red Right</option>
             </select>
-            <label class="btn modal-button">Save</label>
-            <div class="form-control w-full max-w-xs">
-                <label class="label">
-                    <span class="label-text">Dev Mode</span>
-                </label>
-                <select class="select select-bordered w-full max-w-xs">
-                    <option>On</option>
-                    <option>Off</option>
-                </select>
-                <label class="btn modal-button">Save</label>
-                <div class="form-control w-full max-w-xs">
-                    <label class="label">
-                        <span class="label-text">Scheduling Method</span>
-                    </label>
-                    <select class="select select-bordered w-full max-w-xs">
-                        <option>Block Scheduling</option>
-                        <option>Round Robin</option>
-                    </select>
-                    <label class="btn modal-button">Save</label>
-                </div>
-            </div>
-        </div>
+            <button on:click={updateConfig("reverse_alliances", reverse_alliances)}>Save Reverse Alliances</button>
+            Dev Mode
+            <select id = "dev_mode" name = "dev_mode" bind:value={dev_mode}>
+                <option value = "0">On</option>
+                <option value = "1">Off</option>
+            </select>
+            <button on:click={updateConfig("dev_mode", dev_mode)}>Save Dev Mode</button>
+            Auto Schedule
+            <select id = "auto_schedule" name = "auto_schedule" bind:value={auto_schedule}>
+                <option value = "0">Auto</option>
+                <option value = "1">Manual</option>
+            </select>
+            <button on:click={updateConfig("auto_schedule", auto_schedule)}>Save Auto Schedule</button>
     </div>
 </div>
