@@ -24,6 +24,7 @@
         console.log(dataField)
         displayConeValue = $gameData[gameMode + gameLevelMap[level] + "Cone" + type]
         displayCubeValue = $gameData[gameMode + gameLevelMap[level] + "Cube" + type]
+        $liveGamepiece = 0
     }
 
 let gameLevelMap = {
@@ -46,7 +47,7 @@ let gameLevelMap = {
         >{displayConeValue}</span
     >
     <button
-        class="btn btn-square btn-outline rounded-md w-24 h-24"
+        class="btn btn-square btn-outline rounded-md w-24 h-24" disabled={$liveGamepiece == 0}
         on:click={update}
     >
         {#if type === "Success"}

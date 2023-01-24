@@ -28,6 +28,7 @@ module.exports = {
                 }
             },
 
+
             animation: {
                 'softbounce': 'softbounce 2s ease-in-out infinte'
             }

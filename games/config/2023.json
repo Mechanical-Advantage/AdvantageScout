@@ -2,6 +2,8 @@
     "fields": [
         "AllianceColor INTEGER DEFAULT 0",
         "StartPosition INTEGER DEFAULT 0",
+        "StartGamePiece TEXT DEFAULT ''",
+        "StartConfig TEXT DEFAULT'",
         "Mobility INTEGER DEFAULT 0",
         "AutoHybridConeSuccess INTEGER DEFAULT 0",
         "AutoHybridConeFail INTEGER DEFAULT 0",

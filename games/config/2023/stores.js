@@ -1,13 +1,17 @@
 import { writable } from 'svelte/store';
 
-export const liveGamepiece = writable("Cone");
+export const liveGamepiece = writable(0);
 export const liveLocation = writable("Floor");
 export const floorPickup = writable(0);
 export const highConeSuccess = writable(0);
 export const gameState = writable(0)
+export const autoState = writable(0)
+
 
 export const gameData = writable({
     StartPosition: 0,
+    StartConfig: ["Cone", "Cone", "Cone", "Cone"],
+    StartGamePiece: "Cone",
     Mobility: 0,
     AutoHybridConeSuccess: 0,
     AutoHybridConeFail: 0,

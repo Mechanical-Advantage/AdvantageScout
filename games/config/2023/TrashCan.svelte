@@ -21,6 +21,7 @@
         console.log(dataField)
         displayConeValue = $gameData[gameMode + "Cube" + "Drop"]
         displayCubeValue = $gameData[gameMode + "Cone" + "Drop"]
+        $liveGamepiece = 0
     
 
     }
@@ -33,7 +34,7 @@
     <span class="indicator-item indicator-start badge badge-secondary text-xl"
         >{displayCubeValue}</span
     >
-<button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update}>
+<button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update} disabled={$liveGamepiece == 0}>
     <svg
         width="84px"
         height="84px"

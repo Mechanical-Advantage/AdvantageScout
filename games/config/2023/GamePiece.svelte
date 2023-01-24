@@ -16,7 +16,7 @@
 </script>
 
 <button
-    class="btn btn-square btn-outline w-24 h-24 hover:animate-bounce {gamePiece === 'Cube'
+    class="btn btn-square btn-outline w-24 h-24 {gamePiece === 'Cube'
         ? 'btn-accent'
         : 'btn-secondary'}  "
     on:click={updateGameObject}
