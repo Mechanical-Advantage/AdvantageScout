@@ -5,11 +5,11 @@
     const ctx = canvas.getContext("2d");
     let robotX = 1000;
     let robotY = 1000;
-    export let flippedH = true;
+    export let flippedH = false;
     export let flippedV = true;
     let orientString = "transform: ";
     let yRobotOffset = 0;
-    let strokeWidth = 5;
+    export let strokeWidth = 5;
     let red = "#ff0000";
     let blue = "#002eff";
     export let AllianceColor = "red";
@@ -21,7 +21,7 @@
     export let xOffset = 0;
     export let yOffset = 0;
     export let robotSize = 30;
-    export let robotEmoji = "\uD83E\uDD16"; // (:
+    export let robotEmoji = "🤖"; // (:
     let screenOffset = 61;
     //testest
 
@@ -258,6 +258,6 @@
         text-anchor="middle"
         transform={flippedV
             ? `translate(${robotX},${robotY}) rotate(180) translate(${-robotX},${-robotY})`
-            : ""}>X</text
+            : ""}>{robotEmoji}</text
     >
 </svg>

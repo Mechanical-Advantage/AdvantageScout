@@ -5,6 +5,10 @@
     import GamePieceLocation from "./GamePieceLocation.svelte";
     import LocationSelector from "./LocationSelector.svelte";
     import TrashCan from "./TrashCan.svelte";
+    import { autoState } from "./stores";
+    function handleClick(){
+        $autoState = 0
+    }
 </script>
 
 <main>
@@ -32,7 +36,13 @@
         <LocationSelector gameMode="Auto" />
     </div>
 
+
+    <div class="absolute left-[465px]">
+        <button class="btn btn-primary"on:click={handleClick}>Back</button>
+    </div>
     <div class="absolute left-[465px] top-[350px]">
         <TrashCan gameMode="Auto"/>
     </div>
+   
+
 </main>

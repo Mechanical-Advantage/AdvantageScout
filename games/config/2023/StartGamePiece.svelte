@@ -1,5 +1,4 @@
 <script>
-    import GameComponent from "./GameComponent.svelte";
     import GamePiece from "./GamePiece.svelte";
     import { gameData, liveGamepiece } from "./stores";
     export let mode = 0
