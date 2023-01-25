@@ -7,11 +7,16 @@
 
     let key = ''
     let value = ''
-    let actionurl = "/set_config/"
+    let actionurl = "/set_config"
+
+
     async function updateConfig(key, value) {
+        const formData = new FormData();
+        formData.append("key", key);
+        formData.append("value", value);
         const res = await fetch(actionurl, {
             method: "POST",
-            body: JSON.stringify({key, value})
+            body: formData,
         })
     }
 </script>
