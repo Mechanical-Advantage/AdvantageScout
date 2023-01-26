@@ -29,7 +29,7 @@
         "TeleHighConeFail INTEGER DEFAULT 0",
         "TeleHighCubeSuccess INTEGER DEFAULT 0",
         "TeleHighCubeFail INTEGER DEFAULT 0",
-        "AutoDock TEXT DEFAULT ''",
+        "AutoDock INTEGER DEFAULT 0",
         "AutoEngage INTEGER DEFAULT 0",
         "TeleDock TEXT DEFAULT ''",
         "TeleEngage TEXT DEFAULT ''",

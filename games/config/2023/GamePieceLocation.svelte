@@ -1,7 +1,7 @@
 <script>
     import GamePiece from "./GamePiece.svelte";
 
-    export let location = "Floor";
+    export let location
 
 </script>
 

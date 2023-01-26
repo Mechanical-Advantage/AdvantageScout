@@ -1,19 +1,20 @@
 <script>
     import { gameData } from "../../current/stores";
 
-    let buttonColor
+    let buttonColor = "btn-primary"
 
     function handleClick(){
-        if($gameData["AutoDock"]==3){
+        if($gameData["AutoDock"]===3){
             $gameData["AutoDock"] = 0
         }
 
        
 
-        buttonColor = $gameData["AutoDock"] == 0 ? "bg-gray" : $gameData["AutoDock"] == 1 ? "bg-yellow" : "bg-green"
+        buttonColor = $gameData["AutoDock"] === 0 ? "btn-primary" : $gameData["AutoDock"] === 1 ? "btn-secondary" : "btn-success"
+
     }
 
 </script>
 
 
-<button class="btn btn-primary {buttonColor}" on:click={handleClick}>Docked?</button>
+<button class="btn {buttonColor}" on:click={handleClick}>Docked?</button>

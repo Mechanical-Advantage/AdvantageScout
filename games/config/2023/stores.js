@@ -37,7 +37,7 @@ export const gameData = writable({
     TeleHighConeFail: 0,
     TeleHighCubeSuccess: 0,
     TeleHighCubeFail: 0,
-    AutoDock: " ",
+    AutoDock: 0,
     AutoEngage: 0,
     TeleDock: " ",
     TeleEngage: " ",

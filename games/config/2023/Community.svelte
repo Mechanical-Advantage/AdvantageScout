@@ -18,7 +18,7 @@
     export let height = 330;
     let defaultWidth = 210; //Dont Touch
     let defaultHeight = 330; //Dont Touch
-    export let xOffset = 0;
+    export let xOffset = 110;
     export let yOffset = 0;
     export let robotSize = 30;
     export let robotEmoji = "🤖"; // (:
