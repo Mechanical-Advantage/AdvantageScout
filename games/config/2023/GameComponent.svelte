@@ -8,7 +8,7 @@
 
 {#if $gameState == 0}
     {#if $autoState == 0}
-    <PrematchConfig width=210 height=330/>
+    <PrematchConfig />
 {:else}
     <AutoPage />
 {/if}

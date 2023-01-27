@@ -4,7 +4,8 @@
         liveLocation,
         highConeSuccess,
         floorPickup,
-        gameData
+        gameData,
+        dataLog
     } from "./stores";
 
     export let gameMode = "Auto"
@@ -13,26 +14,22 @@
     let dataField = " "
 
     function update() {
+        $dataLog.push(JSON.parse(JSON.stringify($gameData)))
         console.log("score");
         dataField = gameMode + $liveGamepiece + "Drop" 
-        $gameData[dataField] = $gameData[dataField] + 1
-
-        
+        $gameData[dataField] = $gameData[dataField] + 1    
         console.log(dataField)
-        displayConeValue = $gameData[gameMode + "Cube" + "Drop"]
-        displayCubeValue = $gameData[gameMode + "Cone" + "Drop"]
-        $liveGamepiece = 0
-    
 
+        $liveGamepiece = 0
     }
 
 </script>
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-xl"
-        >{displayConeValue}</span
+        >{$gameData[gameMode + "Cube" + "Drop"]}</span
     >
     <span class="indicator-item indicator-start badge badge-secondary text-xl"
-        >{displayCubeValue}</span
+        >{$gameData[gameMode + "Cone" + "Drop"]}</span
     >
 <button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update} disabled={$liveGamepiece == 0}>
     <svg

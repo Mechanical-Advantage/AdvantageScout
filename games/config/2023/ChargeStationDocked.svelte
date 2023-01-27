@@ -4,8 +4,11 @@
     let buttonColor = "btn-primary"
 
     function handleClick(){
-        if($gameData["AutoDock"]===3){
+        if($gameData["AutoDock"]=== 2){
             $gameData["AutoDock"] = 0
+        }
+        else{
+            $gameData["AutoDock"] +=1
         }
 
        

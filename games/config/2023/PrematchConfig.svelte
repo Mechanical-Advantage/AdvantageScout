@@ -27,14 +27,11 @@
     </div>
 </div>
 
-<div class="absolute bg-grey ml-[475px] -mt-[400px]">
-    <ChargeStation />
-</div>
-
 <div class="absolute -mt-[400px] ml-[850px]">
 <StartingLine />
 </div>
-<div class="absolute -mt-[400px] ml-[850px]">
+
+<div class="absolute top-0 right-0 m-2">
     <button class="btn btn-primary" on:click={handleClick}>Start</button>
 </div>
 

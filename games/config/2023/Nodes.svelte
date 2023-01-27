@@ -4,50 +4,52 @@
         liveLocation,
         highConeSuccess,
         floorPickup,
-        gameData
+        gameData,
+        dataLog,
     } from "./stores";
+
     export let level = 1;
     export let type = "Success";
-    export let gameMode = "Auto"
+    export let gameMode = "Auto";
 
-    let dataField = " "
+    let dataField = " ";
 
-    let displayConeValue = 0
-    let displayCubeValue = 0
+    let displayConeValue = 0;
+    let displayCubeValue = 0;
 
     function update() {
+        $dataLog.push(JSON.parse(JSON.stringify($gameData)));
         console.log("score");
-        dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type
-        $gameData[dataField] = $gameData[dataField] + 1
-        console.log(level, gameLevelMap[level], $gameData["AutoHighConeSuccess"])
-        
-        console.log(dataField)
-        displayConeValue = $gameData[gameMode + gameLevelMap[level] + "Cone" + type]
-        displayCubeValue = $gameData[gameMode + gameLevelMap[level] + "Cube" + type]
+        dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
+        $gameData[dataField] = $gameData[dataField] + 1;
+        console.log(
+            level,
+            gameLevelMap[level],
+            $gameData["AutoHighConeSuccess"]
+        );
+
+        console.log(dataField);
+
         $liveGamepiece = 0
     }
 
-let gameLevelMap = {
-    1:"Hybrid",
-    2:"Mid",
-    3:"High"
-}
-    
-
-
-
-
+    let gameLevelMap = {
+        1: "Hybrid",
+        2: "Mid",
+        3: "High",
+    };
 </script>
 
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-xl"
-        >{displayCubeValue}</span
+        >{$gameData[gameMode + gameLevelMap[level] + "Cube" + type]}</span
     >
     <span class="indicator-item indicator-start badge badge-secondary text-xl"
-        >{displayConeValue}</span
+        >{$gameData[gameMode + gameLevelMap[level] + "Cone" + type]}</span
     >
     <button
-        class="btn btn-square btn-outline rounded-md w-24 h-24" disabled={$liveGamepiece == 0}
+        class="btn btn-square btn-outline rounded-md w-24 h-24"
+        disabled={$liveGamepiece == 0}
         on:click={update}
     >
         {#if type === "Success"}
