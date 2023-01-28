@@ -1,29 +1,28 @@
 <script>
     import { onMount } from "svelte";
-
+    import { gameData } from "./stores";
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     let robotX = 1000;
     let robotY = 1000;
-    export let flippedH = false;
-    export let flippedV = true;
+    let screenOffset = 60;
+    export let flippedH = true;
+    export let flippedV = false;
     let orientString = "transform: ";
     let yRobotOffset = 0;
-    export let strokeWidth = 5;
+    let strokeWidth = 5;
     let red = "#ff0000";
     let blue = "#002eff";
     export let AllianceColor = "red";
     export let strokeColor = AllianceColor === "red" ? red : blue; //Red is #ff0000 Blue is #002eff
-    export let width = 210;
-    export let height = 330;
+    export let width = 410;
+    export let height = 660;
     let defaultWidth = 210; //Dont Touch
     let defaultHeight = 330; //Dont Touch
-    export let xOffset = 110;
+    export let xOffset = 0;
     export let yOffset = 0;
     export let robotSize = 30;
     export let robotEmoji = "🤖"; // (:
-    let screenOffset = 61;
-    //testest
 
     let zones = [
         [
@@ -63,12 +62,13 @@
             [11, 10],
         ],
     ];
-
+    flippedH = flippedH == "true" ? true : false;
+    flippedV = flippedV == "true" ? true : false;
     if (flippedV) {
         //Determines the offset for displaying the robot emoji, as it changes based on orientation
-        yRobotOffset = 0;
+        yRobotOffset = robotSize / -4;
     } else {
-        yRobotOffset = 0;
+        yRobotOffset = robotSize / 4;
     }
 
     if (flippedH) {
@@ -83,6 +83,8 @@
         //whenever you click somewhere in the total rectangle of the community
         let clickX = event.clientX - xOffset;
         let clickY = event.clientY - yOffset - screenOffset;
+        $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
+        console.log($gameData["AllianceColor"]);
 
         if (flippedH) {
             //flips the input X and Y depending on if the SVG is flipped
@@ -251,13 +253,15 @@
         />
     </g>
     <text
-        fill="white"
         x={robotX}
         y={robotY}
         font-size={robotSize}
         text-anchor="middle"
+        fill="white"
         transform={flippedV
             ? `translate(${robotX},${robotY}) rotate(180) translate(${-robotX},${-robotY})`
-            : ""}>{robotEmoji}</text
+            : ""}
     >
+        X
+    </text>
 </svg>

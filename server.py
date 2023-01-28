@@ -580,8 +580,9 @@ document.body.innerHTML = window.localStorage.getItem(
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
         cur_game = conn_game.cursor()
-        prefs = json.loads(quickread("games" + os.path.sep +
-                                     str(game_result["name"]) + os.path.sep + "prefs.json"))
+        prefs = json.loads(quickread("games" + os.path.sep + "config" +
+                                     os.path.sep + str(game_result["name"]) + ".json"))
+        print(prefs)
         result = {"success": False, "count": 0}
         try:
             data = json.loads(data)

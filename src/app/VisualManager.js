@@ -11,10 +11,10 @@ function VisualManager(appManager) {
             // alert(appManager.game.GameManager.js)
             GameManager = new Function(
                 "return " +
-                  appManager.game.GameManager.js.substring(
+                appManager.game.GameManager.js.substring(
                     appManager.game.GameManager.js.indexOf("=") + 1
-                  )
-              )()
+                )
+            )()
 
             // console.log(appManager.game)
             // console.log(GameManager)
@@ -33,8 +33,9 @@ function VisualManager(appManager) {
 
         if (appManager.game.GameManager) {
             document.getElementById("visualCanvasDiv").innerHTML = ""
-            gameManager = new GameManager(document.getElementById("visualCanvasDiv"), appManager)
-            //gameManager.setReverseAlliance(reversed)
+            gameManager = new GameManager(document.getElementById("visualCanvasDiv"), appManager, document.getElementById("reverseAlliances").selectedIndex)
+
+            // gameManager.setReverseAlliance(document.getElementById("reverseAlliances").selectedIndex)
             document.getElementById("svelte-game-component").innerHTML = appManager.game.GameManager.css
         }
     }

@@ -13,6 +13,7 @@
     export let gameMode = "Auto";
 
     let dataField = " ";
+    $gameData["StartPosition"] = 2;
 
     let displayConeValue = 0;
     let displayCubeValue = 0;
@@ -30,7 +31,7 @@
 
         console.log(dataField);
 
-        $liveGamepiece = 0
+        $liveGamepiece = 0;
     }
 
     let gameLevelMap = {

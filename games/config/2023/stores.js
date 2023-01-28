@@ -7,9 +7,11 @@ export const highConeSuccess = writable(0);
 export const gameState = writable(0)
 export const autoState = writable(0)
 export const dataLog = writable([])
+export const reversedAlliance = writable(0)
 
 
 export const gameData = writable({
+    AllianceColor: 0,
     StartPosition: 0,
     StartConfig: ["Cone", "Cone", "Cone", "Cone"],
     StartGamePiece: "Cone",

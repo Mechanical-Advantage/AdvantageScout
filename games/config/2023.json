@@ -206,12 +206,7 @@
                 "binding": true
             },
             {
-                "script": "return data.AutoUpperSuccess + data.AutoUpperFailures + data.AutoLowerSuccess + data.AutoLowerFailures < 7",
-                "message": "They phyically cannot score that much in Auto",
-                "binding": false
-            },
-            {
-                "script": "return data.AutoConeCollect + data.AutoCubeCollect < 4",
+                "script": "return data.AutoFloorConeCollect + data.AutoFloorCubeCollect < 4",
                 "message": "They phyically cannot collect that much in Auto",
                 "binding": false
             },
