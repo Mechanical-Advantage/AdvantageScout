@@ -27,35 +27,29 @@
     // }
 </script>
 
-<main>
-    <table>
-        <thead>
+<div class="relative overflow-y-auto">
+    <table class="table-auto border-separate border-spacing-2">
+        <thead class="border-slate-700">
             <tr>
-                <th>match</th>
-                <th class="red">R1</th>
-                <th class="red">R2</th>
-                <th class="red">R3</th>
-                <th class="blue">B1</th>
-                <th class="blue">B2</th>
-                <th class="blue">B3</th>
+                <th class="bg-gray-500">match</th>
+                <th class="bg-red-500">R1</th>
+                <th class="bg-red-500">R2</th>
+                <th class="bg-red-500">R3</th>
+                <th class="bg-blue-500">B1</th>
+                <th class="bg-blue-500">B2</th>
+                <th class="bg-blue-500">B3</th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="rounded-md table-auto">
             {#each matches as match, i}
                 <tr />
-                <td class={match.teams.includes(6328) ? "matchUs" : "match"}
+                <td class={match.teams.includes(6328) ? "text-yellow-500 font-bold" : "text-white font-bold"}
                     >match {i + 1}</td
                 >
                 {#each match.teams as team, i}
                     <td
-                        class={team == 6328
-                            ? match.uploaded[i]
-                                ? "uploadedUs"
-                                : "notUploadedUs"
-                            : match.uploaded[i]
-                            ? "uploaded"
-                            : "notUploaded"}
+                        class={match.uploaded[i] ? "text-green-500" : team== 6328 ? "text-yellow-500" : "text-white"}
                     >
                         {team}
                     </td>
@@ -63,10 +57,39 @@
             {/each}
         </tbody>
     </table>
-</main>
+</div>
+
+<!-- <div class="relative overflow-y auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-6 py-3">
+                Match
+            </th>
+            <th scope="col" class="px-6 py-3">
+                R1
+            </th>
+            <th scope="col" class="px-6 py-3">
+                R2
+            </th>
+            <th scope="col" class="px-6 py-3">
+                R3
+            </th>
+            <th scope="col" class="px-6 py-3">
+                B3
+            </th>
+            <th scope="col" class="px-6 py-3">
+                B3
+            </th>
+            <th scope="col" class="px-6 py-3">
+                B3
+            </th>
+        </tr>
+    </table>
+</div> -->
+
 
 <style>
-    table {
+    /* table {
         border-collapse: collapse;
         width: 100;
     }
@@ -130,5 +153,5 @@
         background-color: rgb(200, 200, 200);
         font-weight: bold;
         color: rgb(0, 0, 0);
-    }
+    } */
 </style>
