@@ -1,16 +1,19 @@
 <script>
-    let currentGame = 'Game'
-    let currentEvent = 'Event'
-    let reverse_alliances = 'Red Left, Blue Right'
-    let dev_mode = 'On'
-    let auto_schedule = 'Auto'
+    import { onMount } from "svelte";
 
     let key = ''
     let value = ''
     let actionurl = "/set_config"
-
+    let data = {}
+    let displayValue = ""
+    let currentGame = ""
+    let currentEvent = ""
+    let reverse_alliances = ""
+    let dev_mode = ""
+    let auto_schedule = ""
 
     async function updateConfig(key, value) {
+        let returnValue = ""
         const formData = new FormData();
         formData.append("key", key);
         formData.append("value", value);
@@ -18,8 +21,46 @@
             method: "POST",
             body: formData,
         })
-        alert("UPDATED " + key.toUpperCase() + " TO " + value.toUpperCase() + "!")
+        if (key == "game" || key == "event") {
+            returnValue = value
+        }
+        else if (key == "reverse_alliances"){
+            if (value == 0) {
+                returnValue = "Blue Left, Red Right"
+            }
+            else {returnValue = "Red Left, Blue Right"}
+        }
+        else if (key == "dev_mode"){
+            if (value == 0) {
+                returnValue = "Off"
+            }
+            else {returnValue = "On"}
+        }
+        else if (key == "auto_schedule"){
+            if (value == 0) {
+                returnValue = "Auto"
+            }
+            else {returnValue = "Manual"}
+        }
+
+        alert("UPDATED " + key.toUpperCase() + " TO " + returnValue.toUpperCase() + "!")
     }
+
+    onMount(async () => {
+        const response = await fetch("/get_config", { method: "GET" });
+        data = await response.json();
+        console.log(data)
+        console.log(data["game"])
+        currentGame = data["game"]
+        currentEvent = data["event"]
+        reverse_alliances = data["reverse_alliances"]
+        dev_mode = data["dev_mode"]
+        auto_schedule = data["auto_schedule"]
+    });
+
+    console.log(currentGame)
+
+
 </script>
 
 <!-- The button to open modal -->
