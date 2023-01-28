@@ -1,16 +1,21 @@
 <script>
     import Community from "./Community.svelte";
-    import { reversedAlliance } from "./stores";
+    import { reversedAlliance, gameData, selectedCommunity } from "./stores";
 
     let fieldConfigurations = {
         0: ["false", "false", "true", "false", "blue", "red"],
         1: ["false", "true", "true", "true", "red", "blue"],
     };
+    console.log($gameData["StartPosition"])
 
-    console.log("Reversed from full field", $reversedAlliance);
+
+
+    // console.log("Reversed from full field", $reversedAlliance);
 </script>
 
 <!-- right side community -->
+
+<!-- {#if $gameData["StartPosition"] === 0 || $selectedCommunity == fieldConfigurations[$reversedAlliance][5] == "blue" ? 0 : 1 }  -->
 <div class="absolute left-[730px]">
     <Community
         width="294"
@@ -32,3 +37,4 @@
     flippedV={fieldConfigurations[$reversedAlliance][1]}
     AllianceColor={fieldConfigurations[$reversedAlliance][4]}
 />
+<!-- {/if} -->

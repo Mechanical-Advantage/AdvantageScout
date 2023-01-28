@@ -1,11 +1,11 @@
 <script>
     
-    import { gameData } from "./stores";
+    import { gameData, gameState } from "./stores";
 
     let buttonColor = "btn-primary"
        function handleClick(){
 
-                $gameData["AutoEngage"] = $gameData["AutoEngage"] + 1
+            $gameData["AutoEngage"] = $gameData["AutoEngage"] + 1
 
         if($gameData["AutoEngage"]===2){
             $gameData["AutoEngage"] = 0

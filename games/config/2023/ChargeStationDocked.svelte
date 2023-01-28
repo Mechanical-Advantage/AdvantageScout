@@ -1,5 +1,5 @@
 <script>
-    import { gameData } from "../../current/stores";
+    import { gameData, gameState } from "../../current/stores";
 
     let buttonColor = "btn-primary"
 

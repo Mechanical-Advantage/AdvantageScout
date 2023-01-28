@@ -1,11 +1,10 @@
 <script>
-    import { onMount } from "svelte";
-    import { gameData } from "./stores";
+    import { gameData, selectedCommunity, displayText } from "./stores";
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     let robotX = 1000;
     let robotY = 1000;
-    let screenOffset = 60;
+    let screenOffset = 0;
     export let flippedH = true;
     export let flippedV = false;
     let orientString = "transform: ";
@@ -20,48 +19,20 @@
     let defaultWidth = 210; //Dont Touch
     let defaultHeight = 330; //Dont Touch
     export let xOffset = 0;
-    export let yOffset = 0;
+    export let yOffset = 60;
     export let robotSize = 30;
     export let robotEmoji = "🤖"; // (:
 
-    let zones = [
-        [
-            [0, 0],
-            [0, 1],
-            [1, 1],
-            [1, 0],
-        ],
-        [
-            [2, 2],
-            [2, 3],
-            [3, 3],
-            [3, 2],
-        ],
-        [
-            [4, 4],
-            [4, 5],
-            [5, 5],
-            [5, 4],
-        ],
-        [
-            [6, 6],
-            [6, 7],
-            [7, 7],
-            [7, 6],
-        ],
-        [
-            [8, 8],
-            [8, 9],
-            [9, 9],
-            [9, 8],
-        ],
-        [
-            [10, 10],
-            [10, 11],
-            [11, 11],
-            [11, 10],
-        ],
-    ];
+    $gameData["AllianceColor"] = $gameData["AllianceColor"]
+
+    let zones = {
+        1: [90, 20, 120, 20, 120, 90, 90, 90],
+        2: [90, 20, 90, 90, 10, 90, 10, 20],
+        3: [10, 90, 90, 90, 90, 150, 10, 150],
+        4: [10, 150, 90, 150, 100, 240, 10, 240],
+        5: [10, 240, 105, 240, 105, 315, 10, 315],
+        6: [105, 240, 200, 240, 200, 315, 105, 315],
+    };
     flippedH = flippedH == "true" ? true : false;
     flippedV = flippedV == "true" ? true : false;
     if (flippedV) {
@@ -85,14 +56,24 @@
         let clickY = event.clientY - yOffset - screenOffset;
         $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
         console.log($gameData["AllianceColor"]);
+        $selectedCommunity = AllianceColor == "blue" ? 0 : 1;
+        if (AllianceColor === "red"){
+        $displayText = [" ", "X"]
+        }
+        else{
+            $displayText = ["X", " "]
+        }
+
 
         if (flippedH) {
             //flips the input X and Y depending on if the SVG is flipped
             clickX = width - clickX;
+            console.log("FLIPPEDH");
         }
 
         if (flippedV) {
             clickY = height - clickY;
+            console.log("FLIPPEDV");
         }
 
         if (!isPointInSvg(clickX, clickY, ctx)) {
@@ -100,6 +81,7 @@
             console.log("Click outside of SVG bounds");
             return;
         }
+
         console.log(
             `x: ${clickX * (defaultWidth / width)}, y: ${
                 clickY * (defaultHeight / height)
@@ -107,6 +89,13 @@
         ); //logs the altered coords. Use these for the data and finding zones
         robotX = clickX;
         robotY = clickY + yRobotOffset; //adds offset to the emoji displaying coords
+
+        $gameData["StartPosition"] = inZone(
+            clickX * (defaultWidth / width),
+            clickY * (defaultHeight / height)
+        );
+
+        console.log("ZONE" + $gameData["StartPosition"]);
     }
 
     function isPointInSvg(x, y, ctx) {
@@ -140,25 +129,37 @@
         return ctx.isPointInPath(x, y); //checks if the point is within the drawn canvas shape
     }
 
-    function zoneFinder(x, y) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let point = { x: x, y: y };
-        let containedZone = 0;
+    function inZone(testx, testy) {
+        let i;
+        let j;
+        console.log(testx, testy);
+        for (let zone in zones) {
+            let vertx = [];
+            let verty = [];
+            let vertices = zones[zone];
 
-        for (let i = 0; i < zones.length; i++) {
-            ctx.beginPath();
-            ctx.moveTo(zones[i][0][0], zones[i][0][1]);
-            for (let j = 1; j < zones[i].length; j++) {
-                ctx.lineTo(zones[i][j][0], zones[i][j][1]);
+            let nvert = vertices.length / 2;
+            for (let i = 0; i < vertices.length; i += 2) {
+                vertx.push(vertices[i]);
+                verty.push(vertices[i + 1]);
             }
-            ctx.closePath();
+            var c = 0;
+            for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+                if (
+                    verty[i] > testy != verty[j] > testy &&
+                    testx <
+                        ((vertx[j] - vertx[i]) * (testy - verty[i])) /
+                            (verty[j] - verty[i]) +
+                            vertx[i]
+                )
+                    c = !c;
+            }
 
-            if (ctx.isPointInPath(point.x, point.y)) {
-                containedZone = i;
-                break;
+            if (c) {
+                return zone;
             }
+            // return c;
         }
-        return containedZone;
     }
 </script>
 
@@ -262,6 +263,6 @@
             ? `translate(${robotX},${robotY}) rotate(180) translate(${-robotX},${-robotY})`
             : ""}
     >
-        X
+        {$displayText[AllianceColor === "blue" ? 0 : 1]}
     </text>
 </svg>

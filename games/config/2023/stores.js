@@ -8,6 +8,8 @@ export const gameState = writable(0)
 export const autoState = writable(0)
 export const dataLog = writable([])
 export const reversedAlliance = writable(0)
+export const selectedCommunity = writable(0) //blue is 0, red is 1
+export const displayText = writable(["x", " " ]) //idek
 
 
 export const gameData = writable({
@@ -42,8 +44,8 @@ export const gameData = writable({
     TeleHighCubeFail: 0,
     AutoDock: 0,
     AutoEngage: 0,
-    TeleDock: " ",
-    TeleEngage: " ",
+    TeleDock: "",
+    TeleEngage: "",
     AutoDockTraverse: 0,
     TeleDockTraverse: 0,
     AutoFloorConeCollect: 0,
