@@ -1,58 +1,43 @@
 // Responsible for managing visual layout and CanvasManager
 function VisualManager(appManager) {
-    var gameManager
-    var GameManager
+  var gameManager;
 
-    // Create CanvasManager class from game data
-    this.loadData = function () {
+  // Create CanvasManager class from game data
+  this.loadData = function () {};
 
-        try {
-            // console.log(appManager.game.GameManager.js)
-            // alert(appManager.game.GameManager.js)
-            GameManager = new Function(
-                "return " +
-                appManager.game.GameManager.js.substring(
-                    appManager.game.GameManager.js.indexOf("=") + 1
-                )
-            )()
-
-            // console.log(appManager.game)
-            // console.log(GameManager)
-
-
-
-            // appManager.game.GameManager.js
-        }
-        catch (error) {
-            appManager.notificationManager.alert("Error", "Failed to load game data. (" + error.message + ")")
-        }
+  // Initialize canvas manager
+  this.start = function () {
+    if (appManager.game.GameManager) {
+      document.getElementById("visualCanvasDiv").innerHTML = "";
+      gameManager = new (new Function(
+        "return " +
+          appManager.game.GameManager.js.substring(
+            appManager.game.GameManager.js.indexOf("=") + 1
+          )
+      )())(
+        document.getElementById("visualCanvasDiv"),
+        appManager,
+        document.getElementById("reverseAlliances").selectedIndex
+      );
+      document.getElementById("svelte-game-component").innerHTML =
+        appManager.game.GameManager.css;
     }
+  };
 
-    // Initialize canvas manager
-    this.start = function () {
-
-        if (appManager.game.GameManager) {
-            document.getElementById("visualCanvasDiv").innerHTML = ""
-            gameManager = new GameManager(document.getElementById("visualCanvasDiv"), appManager, document.getElementById("reverseAlliances").selectedIndex)
-
-            // gameManager.setReverseAlliance(document.getElementById("reverseAlliances").selectedIndex)
-            document.getElementById("svelte-game-component").innerHTML = appManager.game.GameManager.css
-        }
+  // Signal canvas manager to switch modes
+  this.setMode = function (state) {
+    if (appManager.game.GameManager) {
+      console.log("SETTING THE GAME MODE");
+      gameManager.setMode(state - 1);
     }
+  };
 
-    // Signal canvas manager to switch modes
-    this.setMode = function (state) {
-        if (appManager.game.GameManager) {
-            gameManager.setMode(state - 1)
-        }
+  // Retrieve data from canvas manager
+  this.getData = function () {
+    if (appManager.game.GameManager) {
+      return gameManager.getData();
+    } else {
+      return {};
     }
-
-    // Retrieve data from canvas manager
-    this.getData = function () {
-        if (appManager.game.GameManager) {
-            return gameManager.getData()
-        } else {
-            return {}
-        }
-    }
+  };
 }
