@@ -4,6 +4,7 @@
     import TrashCan from "./TrashCan.svelte";
     import ChargeStation from "./ChargeStation.svelte";
     import Undo from "./Undo.svelte";
+    import { teleDataLog } from "./stores";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -36,10 +37,10 @@
 
 <div class="flex flex-row gap-x-[50px] absolute left-[415px] top-[350px]">
     <div>
-        <TrashCan gameMode="Auto" />
+        <TrashCan gameMode="Tele" />
     </div>
 
     <div class="mt-[25px]">
-        <Undo />
+            <Undo />
     </div>
 </div>

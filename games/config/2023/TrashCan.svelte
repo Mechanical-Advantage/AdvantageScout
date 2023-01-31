@@ -1,20 +1,21 @@
 <script>
     import {
         liveGamepiece,
-        liveLocation,
-        highConeSuccess,
-        floorPickup,
+        autoDataLog,
+        teleDataLog,
         gameData,
-        dataLog
+        gameState
     } from "./stores";
 
     export let gameMode = "Auto"
-    let displayConeValue = 0
-    let displayCubeValue = 0
     let dataField = " "
 
     function update() {
-        $dataLog.push(JSON.parse(JSON.stringify($gameData)))
+        if ($gameState === 0) {
+            $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
+        } else {
+            $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
+        }
         console.log("score");
         dataField = gameMode + $liveGamepiece + "Drop" 
         $gameData[dataField] = $gameData[dataField] + 1    

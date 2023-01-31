@@ -1,11 +1,10 @@
 <script>
     import {
         liveGamepiece,
-        liveLocation,
-        highConeSuccess,
-        floorPickup,
+        gameState,
         gameData,
-        dataLog,
+        autoDataLog,
+        teleDataLog,
     } from "./stores";
 
     export let level = 1;
@@ -19,7 +18,12 @@
     let displayCubeValue = 0;
 
     function update() {
-        $dataLog.push(JSON.parse(JSON.stringify($gameData)));
+        if ($gameState === 0) {
+            $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
+            
+        } else {
+            $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
+        }
         console.log("score");
         dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
         $gameData[dataField] = $gameData[dataField] + 1;
