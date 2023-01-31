@@ -28,6 +28,56 @@
 </script>
 
 <div class="relative overflow-y-auto">
+    <table class="table-auto border-separate border-spacing-1 ">
+        <thead class="border-slate-700">
+            <tr>
+                <th class="bg-gray-700 text-white">match</th>
+                <th class="bg-red-500">R1</th>
+                <th class="bg-red-500">R2</th>
+                <th class="bg-red-500">R3</th>
+                <th class="bg-blue-500">B1</th>
+                <th class="bg-blue-500">B2</th>
+                <th class="bg-blue-500">B3</th>
+            </tr>
+        </thead>
+
+        <tbody class="rounded-md table-auto">
+            {#each matches as match, i}
+                <tr />
+                <td class={match.teams.includes(6328) ? " bg-gray-500 text-yellow-500 font-bold" : "bg-gray-500 text-white font-bold"}
+                    >match {i + 1}</td
+                >
+                {#each match.teams as team, i}
+                    <td
+                        class={match.uploaded[i] ? "text-green-500":
+                        team==6328 ? team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-400 text-yellow-500": "bg-blue-400 text-yellow-500":
+                        team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-400": "bg-blue-400"}
+                    >
+                        {team}
+                    </td>
+                {/each}
+            {/each}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="relative overflow-y-auto">
     <table class="table-auto border-separate border-spacing-2">
         <thead class="border-slate-700">
             <tr>
@@ -56,34 +106,6 @@
                 {/each}
             {/each}
         </tbody>
-    </table>
-</div>
-
-<!-- <div class="relative overflow-y auto">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="px-6 py-3">
-                Match
-            </th>
-            <th scope="col" class="px-6 py-3">
-                R1
-            </th>
-            <th scope="col" class="px-6 py-3">
-                R2
-            </th>
-            <th scope="col" class="px-6 py-3">
-                R3
-            </th>
-            <th scope="col" class="px-6 py-3">
-                B3
-            </th>
-            <th scope="col" class="px-6 py-3">
-                B3
-            </th>
-            <th scope="col" class="px-6 py-3">
-                B3
-            </th>
-        </tr>
     </table>
 </div> -->
 
