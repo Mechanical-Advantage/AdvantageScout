@@ -198,6 +198,30 @@
             return "Pit Scout";
         }
     };
+
+    function formattedTime(unixTime) {
+        let diff = Math.round(Date.now() / 1000) - unixTime
+        let hours = Math.floor(diff / 3600)
+        diff -= hours * 3600
+        let minutes = Math.floor(diff / 60)
+        let seconds = diff - minutes * 60
+
+        let formatted = ""
+        if (hours != 0) {
+            formatted = String(hours) + "h "
+        }
+        if (minutes != 0) {
+            formatted = formatted + String(minutes) + "m "
+        }
+        if (seconds != 0) {
+            formatted = formatted + String(seconds) + "s "
+        }
+        formatted = formatted.substring(0, formatted.length - 1);
+        if (formatted == "") {
+            formatted = "0s"
+        }
+        return formatted
+    }
 </script>
 
 <table class="table-auto border-separate border-spacing-2">
@@ -220,7 +244,7 @@
                 <td
                     class={device.last_heartbeat > 1646270198
                         ? "bg-red-900"
-                        : "bg-[#f59e0b]"}>{device.last_heartbeat}</td
+                        : "bg-[#f59e0b]"}>{formattedTime(device.last_heartbeat)}</td
                 >
                 <td>{device.last_route}</td>
                 <td

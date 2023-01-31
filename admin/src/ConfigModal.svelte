@@ -49,8 +49,6 @@
     onMount(async () => {
         const response = await fetch("/get_config", { method: "GET" });
         data = await response.json();
-        console.log(data)
-        console.log(data["game"])
         currentGame = data["game"]
         currentEvent = data["event"]
         reverse_alliances = data["reverse_alliances"]
@@ -58,7 +56,6 @@
         auto_schedule = data["auto_schedule"]
     });
 
-    console.log(currentGame)
 
 
 </script>
