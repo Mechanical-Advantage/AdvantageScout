@@ -26,4 +26,4 @@
     }
 </script>
 
-<button class="btn {buttonColor}" on:click={handleClick}>Docked?</button>
+<button class="btn {buttonColor} {$gameData["Park"] === 1 ? "btn-disabled" : ""}" on:click={handleClick}>Docked?</button>

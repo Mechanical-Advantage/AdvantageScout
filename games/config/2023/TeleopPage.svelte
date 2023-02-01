@@ -4,6 +4,7 @@
     import TrashCan from "./TrashCan.svelte";
     import ChargeStation from "./ChargeStation.svelte";
     import Undo from "./Undo.svelte";
+    import Parked from "./Parked.svelte";
     import { teleDataLog } from "./stores";
 </script>
 
@@ -31,8 +32,12 @@
     <LocationSelector gameMode="Tele" />
 </div>
 
+
 <div class="absolute ml-[465px] mt-[70px]">
+    <div class="flex flex-col gap-y-2">
+    <Parked />
     <ChargeStation />
+    </div>
 </div>
 
 <div class="flex flex-row gap-x-[50px] absolute left-[415px] top-[350px]">
