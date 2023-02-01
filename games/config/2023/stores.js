@@ -6,10 +6,12 @@ export const floorPickup = writable(0);
 export const highConeSuccess = writable(0);
 export const gameState = writable(0)
 export const autoState = writable(0)
-export const dataLog = writable([])
+export const autoDataLog = writable([])
+export const teleDataLog = writable([])
 export const reversedAlliance = writable(0)
 export const selectedCommunity = writable(0) //blue is 0, red is 1
-export const displayText = writable(["x", " " ]) //idek
+export const displayText = writable(["x", " "]) //idek
+export const undoDisplayCondition = writable(false)
 
 
 export const gameData = writable({

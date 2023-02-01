@@ -66,14 +66,13 @@
         "DriveTrain TEXT DEFAULT ''",
         "Width INTEGER DEFAULT 0",
         "Length INTEGER DEFAULT 0",
-        "CanMobile INTEGER DEFAULT 0",
         "MultipleDriveTeams TEXT DEFAULT 0",
         "Comment TEXT DEFAULT ''",
         "Image TEXT DEFAULT ''",
-        "UsesFalcon500s INTEGER DEFAULT 0",
-        "InspectedFalcon500s INTEGER DEFAULT 0",
-        "BuildQualityRating INTEGER DEFAULT 0",
-        "PreferedPickup TEXT DEFAULT ''"
+        "BuildQuality INTEGER DEFAULT 0",
+        "ProgrammingLanguage TEXT DEFAULT ''",
+        "BumperQuality INTEGER DEFAULT 0",
+        "Gyro INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -98,8 +97,15 @@
                 "binding": true
             },
             {
+                "field": "ProgrammingLanguage",
+                "operator": "!=",
+                "value": "",
+                "message": "Please enter a Programming Language.",
+                "binding": true
+            },
+            {
                 "field": "Width",
-                "operator": ">=",
+                "operator": ">",
                 "value": 0,
                 "message": "Are you sure this width is correct?",
                 "binding": true
@@ -113,7 +119,7 @@
             },
             {
                 "field": "Length",
-                "operator": ">=",
+                "operator": ">",
                 "value": 0,
                 "message": "Are you sure this length is correct?",
                 "binding": true
@@ -131,15 +137,17 @@
                 "binding": false
             },
             {
-                "script": "return ((data.UsesFalcon500s - data.InspectedFalcon500s >= 0))",
-                "message": "They do not have Falcon 500s but they inspected them. Why???",
-                "binding": false
-            },
-            {
                 "field": "BuildQuality",
                 "operator": ">",
                 "value": 0,
                 "message": "Please enter a build quality rating",
+                "binding": true
+            },
+            {
+                "field": "BumperQuality",
+                "operator": ">",
+                "value": 0,
+                "message": "Please enter a bumper quality rating",
                 "binding": true
             }
         ],
@@ -226,22 +234,18 @@
     "classic": {
         "pit": [
             {
-                "type": "checkbox",
-                "field": "UsesFalcon500s",
-                "label": "F500 S2021?"
-            },
-            {
-                "type": "checkbox",
-                "field": "InspectedFalcon500s",
-                "label": "Inspected F500?"
-            },
-            {
-                "type": "break"
-            },
-            {
-                "type": "text",
+                "type": "chooser",
                 "field": "DriveTrain",
-                "label": "Drive Train Type"
+                "label": "Drive Train Type",
+                "options": {
+                    "NA": "",
+                    "Tank": "Tank",
+                    "West Coast": "West Coast",
+                    "Mecanum": "Mecanum",
+                    "Swerve": "Swerve",
+                    "H-Drive": "H-Drive",
+                    "Other": "Other (Please Comment)"
+                }
             },
             {
                 "type": "number",
@@ -254,19 +258,41 @@
                 "label": "Length (in)"
             },
             {
-                "type": "checkbox",
-                "field": "CanMobile",
-                "label": "Can Mobile?"
+                "type": "chooser",
+                "field": "ProgrammingLanguage",
+                "label": "Programming Language",
+                "options": {
+                    "NA": "",
+                    "Java": "Java",
+                    "C++": "C++",
+                    "Python": "Python",
+                    "LabVIEW": "LabView",
+                    "ROS": "ROS",
+                    "Other": "Other (Please Comment)"
+                }
             },
             {
-                "type": "text",
+                "type": "checkbox",
+                "field": "Gyro",
+                "label": "Gyro"
+            },
+            {
+                "type": "chooser",
+                "field": "BumperQuality",
+                "label": "Bumper Quality?",
+                "options": {
+                    "NA": 0,
+                    "\u2B50": 1,
+                    "\u2B50\u2B50": 2,
+                    "\u2B50\u2B50\u2B50": 3,
+                    "\u2B50\u2B50\u2B50\u2B50": 4,
+                    "\u2B50\u2B50\u2B50\u2B50\u2B50": 5
+                }
+            },
+            {
+                "type": "checkbox",
                 "field": "MultipleDriveTeams",
                 "label": "Multiple Drive Teams?"
-            },
-            {
-                "type": "text",
-                "field": "PreferredPickup",
-                "label": "Preferred Pickup?"
             },
             {
                 "type": "chooser",

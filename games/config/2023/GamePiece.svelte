@@ -1,12 +1,9 @@
 <script>
   import {
-    liveGamepiece,
-    liveLocation,
-    highConeSuccess,
-    floorPickup,
+    liveGamepiece
   } from "./stores";
   export let gamePiece = "Cube";
-  export let location = "Floor";
+  export const location = "Floor";
 
   let coneSVG = "";
   function updateGameObject() {
