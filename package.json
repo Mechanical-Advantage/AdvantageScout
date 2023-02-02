@@ -1,0 +1,7 @@
+{
+  "name": "AdvantageScout",
+  "version": "1.0.0",
+  "dependencies": {
+    "svelte": "^3.55.1"
+  }
+}
