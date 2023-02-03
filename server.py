@@ -1,20 +1,23 @@
-import scheduler
+import base64
+import json
+import os
+import random
 import sqlite3 as sql
+import string
+import sys
+import threading
+import time
+from enum import Enum
+from pathlib import Path
+
 import cherrypy
 import tbapy
-from simple_websocket_server import WebSocketServer, WebSocket
 import xlsxwriter
 from jsmin import jsmin
-import json
-import base64
-import random
-import time
-import string
-import threading
-from pathlib import Path
-from enum import Enum
-import os
-import sys
+from simple_websocket_server import WebSocket, WebSocketServer
+
+import scheduler
+from svelte_interface import SvelteInterface
 
 # Config
 our_team = 6328
@@ -41,6 +44,9 @@ default_game = "2019"
 # Import serial library
 if bt_enable:
     import serial
+
+# Create svelte interface
+svelte_interface = SvelteInterface(db_global)
 
 
 # Log output in cherrypy format
@@ -150,10 +156,11 @@ def gamedb_connect(force_connect=False):
 # Initialize game db
 def init_game():
     game_result = gamedb_connect(force_connect=True)
+
     conn_game = game_result["conn"]
     cur_game = conn_game.cursor()
-    config = json.loads(quickread("games" + os.path.sep +
-                                  game_result["name"] + os.path.sep + "prefs.json"))
+    config = json.loads(quickread("games" + os.path.sep + "config" + os.path.sep +
+                                  game_result["name"] + ".json"))
 
     # Matches table
     create_text = "Event TEXT, Team INTEGER, Match INTEGER, DeviceName TEXT, Version TEXT, InterfaceType TEXT, Time INTEGER, UploadTime INTEGER, ScoutName TEXT, "
@@ -180,11 +187,11 @@ def quickread(file):
     file = open(file, "r")
     result = file.read()
     file.close()
-    return(result)
+    return (result)
 
 
 def currentTime():
-    return(int(round(time.time())))
+    return (int(round(time.time())))
 
 
 favicon_code = """
@@ -207,6 +214,9 @@ class main_server(object):
         output = """
 <html>
     <head>
+        <style id="svelte-game-component"> 
+
+        </style>
         <title>
             Advantage Scout
         </title>
@@ -390,7 +400,7 @@ class main_server(object):
         </div>
 
         <div id="visualCanvasDiv" class="visualcanvasdiv" hidden>
-            <canvas class="visualcanvas" width="3000" height="1600"></canvas>
+            
         </div>
 
         <div id="classicDiv1" class="classicdiv" hidden>
@@ -423,7 +433,7 @@ class main_server(object):
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return (output.replace("$FAVICON_CODE", favicon_code))
 
     @cherrypy.expose
     def config(self):
@@ -466,11 +476,11 @@ class main_server(object):
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code))
+        return (output.replace("$FAVICON_CODE", favicon_code))
 
     @cherrypy.expose
     def export(self):
-        return("""
+        return ("""
 <html>
 <body>
 <script>
@@ -513,7 +523,7 @@ document.body.innerHTML = window.localStorage.getItem(
         output = ""
         for name in names:
             output += open("src/admin/" + name + ".js", "r").read() + "\n"
-        return(jsmin(output))
+        return (jsmin(output))
 
     @cherrypy.expose
     def heartbeat(self, device_name, state, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
@@ -547,7 +557,7 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_global.commit()
         conn_global.close()
         update_admin()
-        return(json.dumps(messages))
+        return (json.dumps(messages))
 
     @cherrypy.expose
     def load_game(self):
@@ -557,30 +567,27 @@ document.body.innerHTML = window.localStorage.getItem(
         game = cur_global.fetchall()[0][0]
         conn_global.close()
 
-        path = "games" + os.path.sep + str(game) + os.path.sep
-        if Path(path + "CanvasManager.js").is_file():
-            result = {
-                "prefs": json.loads(quickread(path + "prefs.json")),
-                "CanvasManager": jsmin(quickread(path + "CanvasManager.js"))
-            }
-        else:
-            result = {
-                "prefs": json.loads(quickread(path + "prefs.json"))
-            }
-        return(json.dumps(result))
+        path = "games" + os.path.sep + "config" + \
+            os.path.sep + str(game) + ".json"
+        result = {
+            "prefs": json.loads(quickread(path)),
+            "GameManager": svelte_interface.get_game()
+        }
+        return json.dumps(result)
 
     @cherrypy.expose
     def upload(self, data):
         game_result = gamedb_connect()
         conn_game = game_result["conn"]
         cur_game = conn_game.cursor()
-        prefs = json.loads(quickread("games" + os.path.sep +
-                                     str(game_result["name"]) + os.path.sep + "prefs.json"))
+        prefs = json.loads(quickread("games" + os.path.sep + "config" +
+                                     os.path.sep + str(game_result["name"]) + ".json"))
+        print(prefs)
         result = {"success": False, "count": 0}
         try:
             data = json.loads(data)
         except:
-            return(json.dumps(result))
+            return (json.dumps(result))
         result["count"] = len(data)
 
         for i in range(len(data)):
@@ -634,7 +641,7 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_game.commit()
         conn_game.close()
         result["success"] = True
-        return(json.dumps(result))
+        return (json.dumps(result))
 
     @cherrypy.expose
     def get_schedule(self):
@@ -670,6 +677,48 @@ document.body.innerHTML = window.localStorage.getItem(
 
     @cherrypy.expose
     def admin(self):
+        return """
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <title>Admin - Advantage Scout</title>
+
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+                    "Helvetica Neue", sans-serif;
+            }
+        </style>
+
+        <link rel="stylesheet" href="/admin_css.css" />
+        <script src="/admin_js.js"></script>
+    </head>
+
+    <body>
+        <script>
+            window.admin = new Admin();
+        </script>
+    </body>
+</html>
+
+        """
+
+    @cherrypy.expose(["admin_css.css"])
+    def admin_css(self):
+        cherrypy.response.headers["Content-Type"] = "text/css"
+        return svelte_interface.get_admin()["css"]
+
+    @cherrypy.expose(["admin_js.js"])
+    def admin_js(self):
+        cherrypy.response.headers["Content-Type"] = "text/js"
+        return svelte_interface.get_admin()["js"]
+
+    @cherrypy.expose
+    def admin_old(self):
         output = """
 <html>
     <head>
@@ -902,7 +951,7 @@ document.body.innerHTML = window.localStorage.getItem(
     </body>
 </html>
             """
-        return(output.replace("$FAVICON_CODE", favicon_code).replace("$OUR_TEAM", str(our_team)))
+        return (output.replace("$FAVICON_CODE", favicon_code).replace("$OUR_TEAM", str(our_team)))
 
     @cherrypy.expose
     def add_scout(self, scout):
@@ -910,6 +959,29 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global = conn_global.cursor()
         cur_global.execute(
             "INSERT INTO scouts(name,enabled) VALUES (?,1)", (scout,))
+        conn_global.commit()
+        conn_global.close()
+        return
+
+    @cherrypy.expose
+    def get_scouts(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT * FROM scouts ORDER BY name")
+        raw = cur_global.fetchall()
+        scouts = []
+        for i in range(len(raw)):
+            scouts.append({"name": raw[i][0], "enabled": raw[i][1] == 1})
+        conn_global.commit()
+        conn_global.close()
+        return (json.dumps(scouts))
+
+    @cherrypy.expose
+    def remove_scout(self, scout):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        print(scout)
+        cur_global.execute("DELETE FROM scouts WHERE name=?", (scout,))
         conn_global.commit()
         conn_global.close()
         return
@@ -939,7 +1011,7 @@ document.body.innerHTML = window.localStorage.getItem(
             data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i]
                          [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8]})
         conn_global.close()
-        return(json.dumps(data))
+        return (json.dumps(data))
 
     @cherrypy.expose
     def remove_device(self, name):
@@ -948,7 +1020,7 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global.execute("DELETE FROM devices WHERE name = ?", (name,))
         conn_global.commit()
         conn_global.close()
-        return()
+        return ()
 
     @cherrypy.expose
     def send_message(self, target, text):
@@ -958,7 +1030,7 @@ document.body.innerHTML = window.localStorage.getItem(
             "INSERT INTO messages(target,expiration,text) VALUES (?,?,?)", (target, round(time.time() + message_expiration), text))
         conn_global.commit()
         conn_global.close()
-        return()
+        return ()
 
     @cherrypy.expose
     def get_config(self):
@@ -983,7 +1055,7 @@ document.body.innerHTML = window.localStorage.getItem(
             "SELECT value FROM config WHERE key = 'auto_schedule'")
         data["auto_schedule"] = cur_global.fetchall()[0][0]
         conn_global.close()
-        return(json.dumps(data))
+        return (json.dumps(data))
 
     @cherrypy.expose
     def set_config(self, key, value):
@@ -999,6 +1071,7 @@ document.body.innerHTML = window.localStorage.getItem(
                 response = "Updated game to \"" + value + "\""
             else:
                 try:
+                    print("Attempting to initialize game")
                     init_game()
                     response = "Created database for game \"" + value + "\""
                 except:
@@ -1020,7 +1093,7 @@ document.body.innerHTML = window.localStorage.getItem(
                 response = "Auto scheduling enabled"
         else:
             response = "Error: unknown key \"" + key + "\""
-        return(response)
+        return (response)
 
     @cherrypy.expose
     def get_cache(self, source="tba"):
@@ -1079,7 +1152,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_global.commit()
         conn_global.close()
-        return("Saved schedule for " + event + ".")
+        return ("Saved schedule for " + event + ".")
 
     @cherrypy.expose
     def reschedule(self, force_match=None):
@@ -1093,7 +1166,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_game.close()
         conn_global.close()
-        return(result)
+        return (result)
 
     @cherrypy.expose
     def get_uploaded(self):
@@ -1121,7 +1194,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_game.close()
         conn_global.close()
-        return(json.dumps(output))
+        return (json.dumps(output))
 
     @cherrypy.expose
     def get_scoutprefs(self):
@@ -1371,7 +1444,7 @@ def save_image(raw):
     file = open(file_path, "wb")
     file.write(base64.decodebytes(raw[23:].encode("utf-8")))
     file.close()
-    return(file_path)
+    return (file_path)
 
 
 def serial_readline(source, name, mode):
@@ -1408,7 +1481,7 @@ def serial_readline(source, name, mode):
                 try:
                     wait = len(forward_queues[source]) == 0
                 except:
-                    return(False)
+                    return (False)
             line = forward_queues[source].pop(0)
         else:
             if source.is_open:
@@ -1440,7 +1513,7 @@ def serial_readline(source, name, mode):
             full_line += line[:-1]
             break
     last_data = -2
-    return(full_line)
+    return (full_line)
 
 
 class serial_mode(Enum):
@@ -1625,7 +1698,7 @@ def get_next_schedule_match(cur_game, cur_global):
             break
     if to_schedule == -1:
         to_schedule = 1
-    return(to_schedule)
+    return (to_schedule)
 
 
 def schedule_match(cur_game, cur_global, conn_global, force_match=None):
@@ -1642,7 +1715,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
         "SELECT b1,b2,b3,r1,r2,r3 FROM schedule WHERE match=?", (to_schedule,)).fetchall()
     if len(teams) == 0:
         log("Could not create schedule for match " + str(to_schedule))
-        return("Could not create schedule for match " + str(to_schedule))
+        return ("Could not create schedule for match " + str(to_schedule))
     teams = teams[0]
 
     # Get scout records
@@ -1651,7 +1724,7 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
     if len(scouts) < 6:
         log("Not enough scouts to schedule match " +
             str(to_schedule) + " - HURRY!")
-        return("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
+        return ("Not enough scouts to schedule match " + str(to_schedule) + " - HURRY!")
 
     scout_records = []
     for scout in scouts:
@@ -1696,10 +1769,13 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
         cur_global.execute(
             "INSERT INTO schedule_next(team,scout) VALUES (?,?)", (team, schedule[team]))
     conn_global.commit()
-    return("Successfully created schedule for match " + str(to_schedule))
+    return ("Successfully created schedule for match " + str(to_schedule))
 
 
 if __name__ == "__main__":
+    # Start svelte thread
+    svelte_interface.start()
+
     # Start bluetooth servers
     if bt_enable:
         bt_servers = []

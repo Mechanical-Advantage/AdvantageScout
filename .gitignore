@@ -6,3 +6,7 @@ images
 block_schedule.xlsx
 schedule.csv
 *.DS_Store
+games/build
+games/current
+admin/build
+**/node_modules

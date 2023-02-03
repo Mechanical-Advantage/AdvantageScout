@@ -27,7 +27,7 @@ function ScoutManager(appManager) {
         if ("hideClassic" in appManager.game.prefs) {
             showClassic = !appManager.game.prefs.hideClassic
         }
-        var showVisual = appManager.game.CanvasManager != undefined
+        var showVisual = appManager.game.GameManager != undefined
         if (showVisual) {
             appManager.visualManager.loadData()
         }

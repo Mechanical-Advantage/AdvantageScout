@@ -1,41 +1,43 @@
 // Responsible for managing visual layout and CanvasManager
 function VisualManager(appManager) {
-    var canvasManager
-    var CanvasManager
+  var gameManager;
 
-    // Create CanvasManager class from game data
-    this.loadData = function () {
-        try {
-            CanvasManager = new Function("canvas", "reverseAlliances", "uploadData", "appManager", appManager.game.CanvasManager)
-        }
-        catch (error) {
-            appManager.notificationManager.alert("Error", "Failed to load game data. (" + error.message + ")")
-        }
-    }
+  // Create CanvasManager class from game data
+  this.loadData = function () {};
 
-    // Initialize canvas manager
-    this.start = function () {
-        var oldCanvas = document.getElementsByClassName("visualcanvas")[0]
-        var newCanvas = oldCanvas.cloneNode(true)
-        oldCanvas.parentElement.replaceChild(newCanvas, oldCanvas)
-        if (appManager.game.CanvasManager) {
-            canvasManager = new CanvasManager(document.getElementsByClassName("visualcanvas")[0], document.getElementById("reverseAlliances").selectedIndex == 1, appManager.scoutManager.upload, appManager)
-        }
+  // Initialize canvas manager
+  this.start = function () {
+    if (appManager.game.GameManager) {
+      document.getElementById("visualCanvasDiv").innerHTML = "";
+      gameManager = new (new Function(
+        "return " +
+          appManager.game.GameManager.js.substring(
+            appManager.game.GameManager.js.indexOf("=") + 1
+          )
+      )())(
+        document.getElementById("visualCanvasDiv"),
+        appManager,
+        document.getElementById("reverseAlliances").selectedIndex
+      );
+      document.getElementById("svelte-game-component").innerHTML =
+        appManager.game.GameManager.css;
     }
+  };
 
-    // Signal canvas manager to switch modes
-    this.setMode = function (state) {
-        if (appManager.game.CanvasManager) {
-            canvasManager.setMode(state - 1)
-        }
+  // Signal canvas manager to switch modes
+  this.setMode = function (state) {
+    if (appManager.game.GameManager) {
+      console.log("SETTING THE GAME MODE");
+      gameManager.setMode(state - 1);
     }
+  };
 
-    // Retrieve data from canvas manager
-    this.getData = function () {
-        if (appManager.game.CanvasManager) {
-            return canvasManager.getData()
-        } else {
-            return {}
-        }
+  // Retrieve data from canvas manager
+  this.getData = function () {
+    if (appManager.game.GameManager) {
+      return gameManager.getData();
+    } else {
+      return {};
     }
+  };
 }
