@@ -1,6 +1,6 @@
 <script>
     import StartGamePiece from "./StartGamePiece.svelte";
-    import { autoState } from "./stores";
+    import { autoState, gameData } from "./stores";
     import StartingLine from "./StartingLine.svelte";
     import FullField from "./FullField.svelte";
 
@@ -21,7 +21,7 @@
 </div>
 
 <div class="absolute top-0 left-[460px] m-2">
-    <button class="btn btn-primary" on:click={handleClick}>Start</button>
+    <button class="btn btn-primary {$gameData["StartPosition"] > 0 ? " ": "btn-disabled"}" on:click={handleClick}>Start</button>
 </div>
 
 <div class="absolute -mt-[400px] ml-[460px]">

@@ -1,23 +1,29 @@
 <script>
     import { gameData, gameState } from "../../current/stores";
 
-    let buttonColor = "btn-primary"
+    let buttonColor = "btn-primary";
+    let dockButton = "";
 
-    function handleClick(){
-        if($gameData["AutoDock"]=== 2){
-            $gameData["AutoDock"] = 0
+    function handleClick() {
+        if ($gameState === 0) {
+            dockButton = "AutoDock";
+        } else {
+            dockButton = "TeleDock";
         }
-        else{
-            $gameData["AutoDock"] +=1
+        if ($gameData[dockButton] === 2) {
+            $gameData[dockButton] = 0;
+        } else {
+            $gameData[dockButton] = $gameData[dockButton] + 1;
         }
 
-       
-
-        buttonColor = $gameData["AutoDock"] === 0 ? "btn-primary" : $gameData["AutoDock"] === 1 ? "btn-secondary" : "btn-success"
-
+        buttonColor =
+            $gameData[dockButton] === 0
+                ? "btn-primary"
+                : $gameData[dockButton] === 1
+                ? "btn-secondary"
+                : "btn-success";
+        console.log($gameData[dockButton]);
     }
-
 </script>
 
-
-<button class="btn {buttonColor}" on:click={handleClick}>Docked?</button>
+<button class="btn {buttonColor} {$gameData["Park"] === 1 ? "btn-disabled" : ""}" on:click={handleClick}>Docked?</button>

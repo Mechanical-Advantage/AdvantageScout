@@ -1,5 +1,5 @@
 <script>
-    import ChargeStationBalanced from './ChargeStationBalanced.svelte';
+    import ChargeStationBalanced from './ChargeStationEngaged.svelte';
     import ChargeStationCrossedButton from './ChargeStationCrossedButton.svelte';
     import ChargeStationDocked from './ChargeStationDocked.svelte';
     import { gameState } from './stores';

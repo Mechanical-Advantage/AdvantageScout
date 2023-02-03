@@ -1,129 +1,224 @@
 <script>
-	import { onMount } from "svelte";
-	let cols = 3;
-        let scoutPrefs = [];
+    import DragDropList from "./ScoutPrefList.svelte";
+    import { onMount } from "svelte";
 
-	
-	
-  let scout = "";
-  let team = "";
-	onMount(async () => {
-        const response = await fetch("/get_scoutprefs", {method: "GET"})
-	    const data = await response.json();
-	    scoutPrefs = data;
-    });  
-  const updatePrefs =() => {
-        if (action == 0 || action == 1) {
-            record = scoutPrefs.splice(index, 1)[0]
-            scoutPrefs.splice(index + ((action == 0) ? -1 : 1), 0, record)
-        } else if (action == 2) {
-            scoutPrefs.splice(index, 1)
-        }
-        
+    let removesItems = false;
+    let addPrefName = "";
+    let addPrefTeam = "";
+    let bulkEntryTeams = [];
+    let bulkEntryNames = [];
+    let numberOfBulkEntries = 3;
 
-  const addScoutPref = () => {
-    scoutPrefs = [
-      ...scoutPrefs,
-      {
-        team,
-        scout 
-      }
+    let data = [
+        { team: "6328", scout: "Ayush" },
+        { team: "254", scout: "Aryan" },
+        { team: "118", scout: "Keith" },
+        { team: "3467", scout: "Connor" },
+        { team: "1678", scout: "Manthan" },
     ];
-    doPost(team,scout, "/set_scoutprefs")
-    name = "";
-  };
+    onMount(async () => {
+        const response = await fetch("/get_scoutprefs", { method: "GET" });
+        data = await response.json();
+    });
+    async function doPost(data, actionUrl) {
+        const formData = new FormData();
 
-   
-  async function doPost (data,actionUrl){
-      const formData = new FormData()
-      const res = await fetch(actionUrl, {
-      method: 'POST',
-      data: json.stringify(formData)
-      })
-  };
-  async function getScoutPrefs(){
-    const response = await fetch("/get_scoutprefs", {method: "GET"})
-		const data = await response.json();
-		scoutPrefs = data;
-  }
+        formData.append("data", JSON.stringify(data));
+
+        const res = await fetch(actionUrl, {
+            method: "POST",
+            body: formData,
+        });
+    }
+    async function getScoutPrefs() {
+        const response = await fetch("/get_scoutprefs", { method: "GET" });
+        const prefs = await response.json();
+        data = prefs;
+    }
+    function addPref() {
+        let present = false;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].team === addPrefTeam && data[i].scout === addPrefName) {
+                present = true;
+                break;
+            }
+        }
+        if (!present && addPrefTeam !== "" && addPrefName !== "") {
+            data.push({ team: addPrefTeam, scout: addPrefName });
+            addPrefName = "";
+            addPrefTeam = "";
+            data = data;
+        }
+
+        doPost(data, "/set_scoutprefs");
+    }
+
+    function addBulkEntry() {
+        numberOfBulkEntries++;
+        numberOfBulkEntries = numberOfBulkEntries;
+    }
+    function resetBulk() {
+        numberOfBulkEntries = 3;
+        bulkEntryTeams = [];
+        bulkEntryNames = [];
+    }
+    function submitBulk() {
+        for (let i = 0; i < numberOfBulkEntries; i++) {
+            for (let k = 0; k < numberOfBulkEntries; k++) {
+                if (
+                    bulkEntryNames[i] !== null &&
+                    bulkEntryTeams !== null &&
+                    bulkEntryNames[i] !== undefined &&
+                    bulkEntryTeams[i] !== undefined
+                ) {
+                    addPrefName = bulkEntryNames[i];
+                    addPrefTeam = bulkEntryTeams[k];
+                    addPref();
+                }
+            }
+        }
+        resetBulk();
+        addPrefName = "";
+        addPrefTeam = "";
+    }
 </script>
 
-<div>
-    <h1>Scout Preferences</h1>
+<main class="absolute">
+    <p />
 
-    <form on:submit|preventDefault={addScoutPref}>
-        <label for="scout">Add a preference</label>
-        <input id="scout" type="text" bind:value={scout} />
-        <input id="team" type="text" bind:value={team} />
+    <div class="form-control w-[100px] absolute z-40">
+        <label class="cursor-pointer label absolute ml-[282px] mt-[90px]">
+            <span class="label-text text-white font-bold absolute">Delete</span>
+            <input
+                type="checkbox"
+                scout="removesItems"
+                bind:checked={removesItems}
+                class="checkbox checkbox-lg checkbox-accent absolute mt-[60px] ml-[5px]"
+            />
+        </label>
+    </div>
+
+    <label
+        class="btn modal-button btn-success btn-square w-20 h-20 z-50 absolute ml-[270px]"
+        for="entry-modal-2"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+            class="w-14 h-14"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+            />
+        </svg>
+    </label>
+
+    <div class="w-[250px] absolute">
+        <DragDropList bind:data {removesItems} />
+    </div>
+
+    <form on:submit={addPref} action="#">
+        <input type="checkbox" id="entry-modal-2" class="modal-toggle" />
+        <label for="entry-modal-2" class="modal cursor-pointer">
+            <label class="modal-box relative" for="entry-modal-2">
+                <input
+                    type="text"
+                    placeholder="Scout Name"
+                    class="input input-bordered w-1/3 max-w-xs"
+                    bind:value={addPrefName}
+                />
+                <input
+                    type="text"
+                    placeholder="Team #"
+                    class="input input-bordered w-1/3 max-w-xs"
+                    bind:value={addPrefTeam}
+                />
+                <input
+                    type="submit"
+                    class="btn btn-success ml-7 w-24"
+                    on:click={addPref}
+                    value="Add"
+                />
+                <label
+                    type="button"
+                    for="bulk-modal"
+                    class="btn btn-circle btn-warning modal-button absolute btn-xs text-4xs -mt-[10px] -ml-[10px]"
+                    on:click={resetBulk}
+                >
+                    ...
+                </label>
+            </label>
+        </label>
     </form>
 
-    <ul>
-        <tbody>
-            {#each scoutPrefs as pref}
-                <tr>
-                    <td>{pref.team}</td>
-                    <td>{pref.scout}</td>
-                    <td>>&#x2191;</td>
-                    <td>&#x2193;</td>
-                    <td>&#x1F5D1;</td>
-                </tr>
-            {/each}
-        </tbody>
-    </ul>
-</div>
+    <form on:submit={addPref} action="#">
+        <input type="checkbox" id="bulk-modal" class="modal-toggle" />
+        <label for="bulk-modal" class="modal cursor-pointer">
+            <label class="modal-box relative h-fit" for="bulk-modal">
+                {#each Array(numberOfBulkEntries) as _, i}
+                    <input
+                        type="text"
+                        placeholder="Scout Name"
+                        class="input input-bordered w-1/3 max-w-xs mt-3"
+                        bind:value={bulkEntryNames[i]}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Team #"
+                        class="input input-bordered w-1/3 max-w-xs mt-3 ml-2"
+                        bind:value={bulkEntryTeams[i]}
+                    />
+                {/each}
+                <button
+                    class="btn absolute -ml-[180px] mt-[60px] btn-xs"
+                    on:click={addBulkEntry}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                    </svg>
+                </button>
+                <input
+                    type="submit"
+                    class="btn btn-success w-16 absolute ml-3 mt-5"
+                    on:click={submitBulk}
+                    value="Submit"
+                />
+
+                <!--                <input type="submit" class="btn btn-success ml-7 w-24" on:click={addPref} value="Add"/>-->
+            </label>
+        </label>
+    </form>
+</main>
 
 <style>
-    div,
-    h1 {
-        color: #333;
-        max-width: 300px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    }
-    #name {
-        width: 100%;
-    }
-    form {
-        margin-bottom: 0.5em;
-    }
-    input[type="text"] {
-        outline: none;
-        margin: 0;
-    }
-    input[type="text"]:focus {
-        border-color: #b53fe8;
-        box-shadow: 0 0 2px #b53fe8;
+    main {
+        text-align: center;
     }
 
-    label {
-        display: block;
-        text-transform: uppercase;
-        font-size: 0.8em;
-        color: #777;
-        opacity: 1;
+    .checkboxContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 1em;
     }
-    button {
-        border: 0;
-        cursor: pointer;
-        border-radius: 6px;
-        #padding: 14% 24%;
-        width: 150px;
-        height: 40px;
-        font-weight: bold;
-        box-shadow: 1px 2px 3px;
-        background: #ea4566;
-    }
-    .enabled {
-        background: #11dd42;
-    }
-    .remove {
-        #background: #120fbf;
-        background: #fefefe;
-        color: #ff0000;
-        font-size: 22px;
-        width: 40px;
-        height: 40px;
-        padding: 10px;
-        border-right: 40px;
+
+    .checkboxContainer input {
+        margin-right: 0.5em;
     }
 </style>

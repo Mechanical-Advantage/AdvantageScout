@@ -20,17 +20,8 @@ module.exports = {
     },
     theme: {
         extend: {
-            keyframes: {
-                softbounce: {
-                    '0%': { transform: 'translateY(0)' },
-                    '50%': { transform: 'translateY(50px)' },
-                    '100%': {transform: 'translateY(0)'}
-                }
-            },
-
-
             animation: {
-                'softbounce': 'softbounce 2s ease-in-out infinte'
+                'mobility': 'skew-5deg translate-70px fade-out'
             }
         }
     },
