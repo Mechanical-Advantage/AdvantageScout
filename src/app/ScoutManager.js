@@ -462,6 +462,8 @@ function ScoutManager(appManager) {
         document.getElementById("pitClassicDiv").hidden = true
         document.getElementById("visualCanvasDiv").hidden = true
 
+        appManager.visualManager.end()
+
         if (!forceTitle && !appManager.serverManager.connected()) {
             appManager.state = 4
             document.getElementById("offlineWarningDiv").hidden = false
