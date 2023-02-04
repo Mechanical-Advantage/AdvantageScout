@@ -77,7 +77,7 @@
     "forceClassic": {
         "auto": false,
         "teleop": false,
-        "endgame": true
+        "endgame": false
     },
     "modeAliases": {
         "endgame": [
