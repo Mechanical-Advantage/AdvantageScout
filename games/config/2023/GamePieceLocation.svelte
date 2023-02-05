@@ -2,6 +2,7 @@
     import GamePiece from "./GamePiece.svelte";
 
     export let location
+    export let gamePieceLocation
 
 </script>
 
@@ -13,10 +14,10 @@
         >{location}</span
     >
     <div class="absolute hover:animate-bounce">
-        <GamePiece gamePiece="Cone" {...location} />
+        <GamePiece gamePiece="Cone" gamePieceLocation={location} {...location} />
     </div>
     <div class="absolute ml-[140px] hover:animate-bounce">
-        <GamePiece gamePiece="Cube" {...location} />
+        <GamePiece gamePiece="Cube" gamePieceLocation={location} {...location} />
     </div>
 </div>
 

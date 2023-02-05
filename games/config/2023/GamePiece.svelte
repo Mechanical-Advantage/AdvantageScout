@@ -4,12 +4,14 @@
   } from "./stores";
   export let gamePiece = "Cube";
   export let location = "Floor";
+  export let gamePieceLocation ="Floor";
 
   let coneSVG = "";
   function updateGameObject() {
-    console.log("score",location);
+
     $liveGamepiece = gamePiece;
-    $liveLocation = location;
+    $liveLocation = gamePieceLocation;
+    console.log("score",$liveLocation);
   }
 </script>
 
