@@ -13,10 +13,10 @@
         >{location}</span
     >
     <div class="absolute hover:animate-bounce">
-        <GamePiece gamePiece="Cone" {...location} />
+        <GamePiece gamePiece="Cone" {location} />
     </div>
     <div class="absolute ml-[140px] hover:animate-bounce">
-        <GamePiece gamePiece="Cube" {...location} />
+        <GamePiece gamePiece="Cube" {location} />
     </div>
 </div>
 

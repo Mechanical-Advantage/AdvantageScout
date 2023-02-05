@@ -5,6 +5,7 @@
         gameData,
         autoDataLog,
         teleDataLog,
+        liveLocation
     } from "./stores";
 
     export let level = 1;
@@ -12,6 +13,7 @@
     export let gameMode = "Auto";
 
     let dataField = " ";
+    let locationField = " "
     $gameData["StartPosition"] = 2;
 
     let displayConeValue = 0;
@@ -26,14 +28,17 @@
         }
         console.log("score");
         dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
+        locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
-        console.log(
-            level,
-            gameLevelMap[level],
-            $gameData["AutoHighConeSuccess"]
-        );
+        $gameData[locationField] = $gameData[locationField] + 1;
+        // console.log(
+        //     level,
+        //     gameLevelMap[level],
+        //     $gameData["AutoHighConeSuccess"]
+        // );
 
         console.log(dataField);
+        console.log(locationField,$gameData[locationField])
 
         $liveGamepiece = 0;
     }
