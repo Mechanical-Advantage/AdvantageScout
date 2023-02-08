@@ -79,6 +79,5 @@
     </div>
 
     <button class="btn {$gameData["Comment"].length < 14 ? "btn-disabled" : "btn-primary"}" on:click={upload}
-        >Upload</button
-    >
+        >Upload</button>
 </div>
