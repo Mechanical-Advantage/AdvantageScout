@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+  import { is_function } from "svelte/internal";
 
     // let matches = [
     //     { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
@@ -48,27 +49,111 @@
                     >match {i + 1}</td
                 >
                 {#each match.teams as team, i}
-                    <td
+                    <!-- <td
                         class={match.uploaded[i] ? "text-green-500":
                         team==6328 ? team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-500 text-yellow-500 font-bold": "bg-blue-500 text-yellow-500 font-bold":
                         team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-500": "bg-blue-500"}
-                    >
-                        {team}
-                    </td>
+                    > -->
+                    {#if team == match.teams[0] || team == match.teams[1] || team == match.teams[2]}
+                        {#if team == 6328}
+                            {#if match.uploaded[i]}
+                                <td class = "uploadedUs">{team}</td>
+                            {:else}
+                                <td class = "red notUploadedUs">{team}</td>
+                            {/if}
+                        {:else}
+                            {#if match.uploaded[i]}
+                                <td class = "uploaded">{team}</td>
+                            {:else}
+                                <td class = "red notUploaded">{team}</td>
+                            {/if}
+                        {/if}
+                    {:else}
+                        {#if team == 6328}
+                            {#if match.uploaded[i]}
+                                <td class = "uploadedUs">{team}</td>
+                            {:else}
+                                <td class = "blue notUploadedUs">{team}</td>
+                            {/if}
+                        {:else}
+                            {#if match.uploaded[i]}
+                                <td class = "uploaded">{team}</td>
+                            {:else}
+                                <td class = "blue notUploaded">{team}</td>
+                            {/if}
+                        {/if}
+                    {/if}
                 {/each}
             {/each}
         </tbody>
     </table>
 </div>
 
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100;
+    }
 
+    tr {
+        border: 1px solid rgb(0, 0, 0);
+    }
 
+    /* td {
+        padding: 10px;
+        border: 1px solid rgb(0, 0, 0);
+        background-color: rgb(200, 200, 200);
+        font-weight: bold;
+    } */
 
+    /* th {
+        padding: 10px;
+        border: 1px solid rgb(0, 0, 0);
+        background-color: rgb(150, 150, 150);
+    } */
 
+    .red {
+        background-color: rgb(255, 100, 100);
+    }
 
+    .blue {
+        background-color: rgb(100, 100, 255);
+    }
 
+    .uploaded {
+        background-color: rgb(100, 255, 70);
+        font-weight: normal;
+        color: rgb(0, 0, 0);
+    }
 
+    .notUploaded {
+        font-weight: normal;
+        color: rgb(0, 0, 0);
+    }
 
+    .uploadedUs {
+        background-color: rgb(100, 255, 70);
+        font-weight: bold;
+        color: rgb(255, 255, 25);
+    }
+
+    .notUploadedUs {
+        font-weight: bold;
+        color: rgb(255, 255, 25);
+    }
+
+    .matchUs {
+        background-color: rgb(225, 225, 0);
+        font-weight: bold;
+        color: rgb(0, 150, 225);
+    }
+
+    .match {
+        background-color: rgb(200, 200, 200);
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+</style>
 
 
 
@@ -108,72 +193,3 @@
         </tbody>
     </table>
 </div> -->
-
-
-<style>
-    /* table {
-        border-collapse: collapse;
-        width: 100;
-    }
-
-    tr {
-        border: 1px solid rgb(0, 0, 0);
-    }
-
-    td {
-        padding: 10px;
-        border: 1px solid rgb(0, 0, 0);
-        background-color: rgb(200, 200, 200);
-        font-weight: bold;
-    }
-
-    th {
-        padding: 10px;
-        border: 1px solid rgb(0, 0, 0);
-        background-color: rgb(150, 150, 150);
-    }
-
-    .red {
-        background-color: rgb(255, 0, 0);
-    }
-
-    .blue {
-        background-color: rgba(0, 0, 255);
-    }
-
-    .uploaded {
-        background-color: rgb(225, 225, 0);
-        font-weight: normal;
-        color: rgb(0, 0, 0);
-    }
-
-    .notUploaded {
-        background-color: rgb(200, 200, 200);
-        font-weight: normal;
-        color: rgb(0, 0, 0);
-    }
-
-    .uploadedUs {
-        background-color: rgb(225, 225, 0);
-        font-weight: bold;
-        color: rgb(0, 150, 255);
-    }
-
-    .notUploadedUs {
-        background-color: rgb(200, 200, 200);
-        font-weight: bold;
-        color: rgb(0, 150, 225);
-    }
-
-    .matchUs {
-        background-color: rgb(225, 225, 0);
-        font-weight: bold;
-        color: rgb(0, 150, 225);
-    }
-
-    .match {
-        background-color: rgb(200, 200, 200);
-        font-weight: bold;
-        color: rgb(0, 0, 0);
-    } */
-</style>
