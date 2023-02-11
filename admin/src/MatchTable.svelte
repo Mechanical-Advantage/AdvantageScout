@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
   import { is_function } from "svelte/internal";
 
+
     // let matches = [
     //     { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
     //     { teams: [3323, 8626, 501, 1761, 1922, 2423], uploaded: [true, true, true, true, true, true] },
@@ -23,9 +24,12 @@
         matches = data;
     });
 
+
     // function deleteRow(rowToBeDeleted) {
     //     data = data.filter((row) => row != rowToBeDeleted);
     // }
+
+    let style = {uploadedUs: "uploadedUs", uploaded: "uploaded", notUploaded: "notUploaded", notUploadedUs: "notUploadedUs", red: "red", blue: "blue"}
 </script>
 
 <div class="relative overflow-y-auto">
@@ -53,36 +57,40 @@
                         class={match.uploaded[i] ? "text-green-500":
                         team==6328 ? team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-500 text-yellow-500 font-bold": "bg-blue-500 text-yellow-500 font-bold":
                         team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-500": "bg-blue-500"}
-                    > -->
+                    >{team}</td> -->
+
+                    <td class = "{team===6328 ? 'font-bold text-yellow-600' : ''} {match.uploaded[i] ? 'bg-green-300' : ''} {!match.uploaded[i] ? ((team == match.teams[0] || team == match.teams[1] || team == match.teams[2]) ? 'bg-red-400 text-black' : 'bg-blue-300 text-black') : 'text-black'} text-center">{team}</td>
+
+<!--                     
                     {#if team == match.teams[0] || team == match.teams[1] || team == match.teams[2]}
                         {#if team == 6328}
                             {#if match.uploaded[i]}
-                                <td class = "uploadedUs">{team}</td>
+                                <td class = "{style['uploadedUs']} text-center">{team}</td>
                             {:else}
-                                <td class = "red notUploadedUs">{team}</td>
+                                <td class = "{style['red']} {style['notUploadedUs']} text-center">{team}</td>
                             {/if}
                         {:else}
                             {#if match.uploaded[i]}
-                                <td class = "uploaded">{team}</td>
+                                <td class = "{style['uploaded']} text-center">{team}</td>
                             {:else}
-                                <td class = "red notUploaded">{team}</td>
+                                <td class = "{style['red']} {style['notUploaded']} text-center">{team}</td>
                             {/if}
                         {/if}
                     {:else}
                         {#if team == 6328}
                             {#if match.uploaded[i]}
-                                <td class = "uploadedUs">{team}</td>
+                                <td class = "{style['uploadedUs']} text-center">{team}</td>
                             {:else}
-                                <td class = "blue notUploadedUs">{team}</td>
+                                <td class = "{style['blue']} {style['notUploadedUs']} text-center">{team}</td>
                             {/if}
                         {:else}
                             {#if match.uploaded[i]}
-                                <td class = "uploaded">{team}</td>
+                                <td class = "{style['uploaded']} text-center">{team}</td>
                             {:else}
-                                <td class = "blue notUploaded">{team}</td>
+                                <td class = "{style['blue']} {style['notUploaded']} text-center">{team}</td>
                             {/if}
                         {/if}
-                    {/if}
+                    {/if} -->
                 {/each}
             {/each}
         </tbody>
@@ -121,20 +129,20 @@
     }
 
     .uploaded {
-        background-color: rgb(100, 255, 70);
+        background-color: rgb(175, 255, 160);
         font-weight: normal;
         color: rgb(0, 0, 0);
     }
 
     .notUploaded {
         font-weight: normal;
-        color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
     }
 
     .uploadedUs {
-        background-color: rgb(100, 255, 70);
+        background-color: rgb(175, 255, 160);
         font-weight: bold;
-        color: rgb(255, 255, 25);
+        color: rgb(255, 255, 0);
     }
 
     .notUploadedUs {
