@@ -11,7 +11,9 @@
 
     function upload(){
         console.log($gameData["DriverRating"])
+        $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "")
         $uploadState += 1
+
 
     }
 </script>

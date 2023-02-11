@@ -77,7 +77,7 @@ button.scoutstart {
     margin-top: 10px;
     background-color: #c2f7ff;
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 16px;
     padding: 10px;
     border-radius: 8px;
 }
@@ -104,6 +104,8 @@ div.pitswitcher {
     width: 100%;
     background-color: #f4bfff;
     font-weight: bold;
+    font-size: 15px;
+    padding: 14px 40px;
 }
 
 div.switcherbutton1 {

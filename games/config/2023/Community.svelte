@@ -10,7 +10,7 @@
     let orientString = "transform: ";
     let yRobotOffset = 0;
     let strokeWidth = 5;
-    let red = "#ff0000";
+    let red = "#FFFFFF";
     let blue = "#002eff";
     export let AllianceColor = "red";
     export let strokeColor = AllianceColor === "red" ? red : blue; //Red is #ff0000 Blue is #002eff
