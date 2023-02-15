@@ -11,7 +11,7 @@
 
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
-    console.log("score",$liveLocation);
+
   }
 </script>
 

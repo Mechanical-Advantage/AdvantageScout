@@ -55,7 +55,6 @@
         let clickX = event.clientX - xOffset;
         let clickY = event.clientY - yOffset - screenOffset;
         $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
-        console.log($gameData["AllianceColor"]);
         $selectedCommunity = AllianceColor == "blue" ? 0 : 1;
         if (AllianceColor === "red"){
         $displayText = [" ", "X"]
@@ -68,17 +67,17 @@
         if (flippedH) {
             //flips the input X and Y depending on if the SVG is flipped
             clickX = width - clickX;
-            console.log("FLIPPEDH");
+            
         }
 
         if (flippedV) {
             clickY = height - clickY;
-            console.log("FLIPPEDV");
+            
         }
 
         if (!isPointInSvg(clickX, clickY, ctx)) {
             //checks if the click is outside the bounds formed by the lines of the svg
-            console.log("Click outside of SVG bounds");
+            
             return;
         }
 
@@ -95,7 +94,7 @@
             clickY * (defaultHeight / height)
         );
 
-        console.log("ZONE" + $gameData["StartPosition"]);
+        
     }
 
     function isPointInSvg(x, y, ctx) {
@@ -132,7 +131,6 @@
     function inZone(testx, testy) {
         let i;
         let j;
-        console.log(testx, testy);
         for (let zone in zones) {
             let vertx = [];
             let verty = [];

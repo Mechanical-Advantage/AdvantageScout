@@ -63,7 +63,7 @@
         $gameData[undoList[i]] = tempUndoData[undoList[i]]
   }
 }
-    console.log(undoList)
+    
     }
 
 </script>

@@ -24,7 +24,6 @@
         buttonType = $gameData[dockedButton] === 2 ? "btn-disabled" : "";
 
 
-        console.log($gameData[dockedButton]);
     }
 </script>
 

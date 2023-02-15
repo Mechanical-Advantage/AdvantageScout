@@ -18,13 +18,13 @@
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
-        console.log("score");
+        
         dataField = gameMode + $liveGamepiece + "Drop" 
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1  
         $gameData[locationField] = $gameData[locationField] + 1;
           
-        console.log(dataField)
+        
 
         $liveGamepiece = 0
     }

@@ -18,7 +18,7 @@
 
     }
 
-    console.log($gameData[dockButton]);
+    
 </script>
 
 <button class="btn {$gameData[dockButton] === 0

@@ -16,8 +16,7 @@
             $gameData["StartConfig"][position] = $gameData["StartConfig"][position] === "Cube" ? "Cone" : "Cube"
          }
 
-         console.log($gameData["StartGamePiece"])
-         console.log($gameData["StartConfig"])
+         
 
 
     }

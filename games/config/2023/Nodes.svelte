@@ -26,7 +26,6 @@
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
-        console.log("score");
         dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
@@ -37,8 +36,7 @@
         //     $gameData["AutoHighConeSuccess"]
         // );
 
-        console.log(dataField);
-        console.log(locationField,$gameData[locationField])
+        
 
         $liveGamepiece = 0;
     }
