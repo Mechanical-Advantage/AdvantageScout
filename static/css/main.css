@@ -58,14 +58,11 @@ input.teammatch {
 }
 
 div.modeswitcher {
-    top: 0px;
-        height: 75px;
-        left: 0%;
-        width: 100%;
-        background-color: #f4bfff;
-        font-weight: bold;
-        font-size: 15px;
-        padding: 14px 40px;
+    position: fixed;
+    z-index: 1;
+    text-align: center;
+    font-size: 30px;
+    line-height: 75px;
 }
 
 div.pitswitcher {
