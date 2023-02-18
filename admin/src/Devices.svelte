@@ -9,6 +9,7 @@
         const response = await fetch("/get_devices", { method: "GET" });
         const data = await response.json();
         devices = data;
+        //console.log("Data" + data)
     
 }
 setInterval(getData, 500)
