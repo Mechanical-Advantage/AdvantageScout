@@ -10,7 +10,8 @@
 
 
          if(mode === "Start"){
-             $gameData["StartGamePiece"] = $gameData["StartGamePiece"] === "Cube" ? "Cone" : "Cube"
+             $gameData["StartGamePiece"] = $gameData["StartGamePiece"] === "Cube" ? "Cone" : "Cube" 
+            $liveGamepiece = $gameData["StartGamePiece"]
          }
          else if (mode === "Line"){
             $gameData["StartConfig"][position] = $gameData["StartConfig"][position] === "Cube" ? "Cone" : "Cube"
