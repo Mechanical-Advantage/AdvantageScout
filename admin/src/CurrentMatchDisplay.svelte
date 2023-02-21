@@ -9,9 +9,7 @@
     const response = await fetch("/get_schedule", { method: "GET" });
     const data = await response.json();
     schedule = data;
-    console.log("Schedule" + data["match"])
     teams = schedule["teams"]
-    console.log(teams)
     scouts = schedule["scouts"]
     ready = schedule["ready"]
     match = schedule["match"]
