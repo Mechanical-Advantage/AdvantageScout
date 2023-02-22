@@ -17,4 +17,4 @@
 </script>
 
 
-<button class="btn {$gameData["AutoDockTraverse"] === 0 ? "btn-primary" : "btn-success"}" on:click={handleClick}>Crossed?</button>
+<button class="btn {$gameData["AutoDockTraverse"] === 0 ? "btn-primary" : "btn-success"}" on:click={handleClick}>Crossed Station?</button>

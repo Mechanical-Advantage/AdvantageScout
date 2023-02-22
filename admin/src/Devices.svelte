@@ -12,7 +12,7 @@
         //console.log("Data" + data)
     
 }
-setInterval(getData, 500)
+setInterval(getData, 1500)
 
     
     // if device.last_battery is between 70 - 100, bg-green-500
