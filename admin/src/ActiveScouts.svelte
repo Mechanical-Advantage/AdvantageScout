@@ -67,10 +67,7 @@
     function mouseCoordHandler(e) {
         getDropBoxHeight();
 
-<<<<<<< HEAD
-=======
         //console.log($withinBox);
->>>>>>> 12e3307 (work on match and block schedule modals)
         dropBoxRect = document.getElementById("dropBox");
         let trashRect = document.getElementById("trash");
         $mouseCoords.x = e.clientX;
@@ -100,10 +97,7 @@
     }
 
     function disable(event) {
-<<<<<<< HEAD
-=======
         //console.log("disable");
->>>>>>> 12e3307 (work on match and block schedule modals)
         enabled = enabled.filter((e) => e !== event.detail.text);
         disabled.unshift(event.detail.text);
         doPost(event.detail.text, "/toggle_scout");
@@ -112,10 +106,7 @@
     }
 
     function enable(event) {
-<<<<<<< HEAD
-=======
         //console.log("enable");
->>>>>>> 12e3307 (work on match and block schedule modals)
         disabled = disabled.filter((e) => e !== event.detail.text);
         enabled.push(event.detail.text);
         doPost(event.detail.text, "/toggle_scout");
@@ -136,10 +127,7 @@
             !enabled.includes(addScoutEntry)
         ) {
             disabled.unshift(addScoutEntry);
-<<<<<<< HEAD
-=======
             //console.log("Adding Scout");
->>>>>>> 12e3307 (work on match and block schedule modals)
             if (addScoutEntry != "") {
                 doPost(addScoutEntry, "/add_scout");
             }
