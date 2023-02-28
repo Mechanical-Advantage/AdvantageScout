@@ -32,10 +32,10 @@ for result in results:
         print("Sending break schedule to ",scoutname,slackUid,breakStart,breakEnd)
         msgText="You have a break starting on match " + str(breakStart) + " ending on match " + str(breakEnd)
 
-    # response = client.chat_postEphemeral(
-            #     channel="CHY2B720Z",
-            #     text="Hello from my Linux VM via Python",
-            #     user="UJD1564E9"
-            # )
+    response = client.chat_postEphemeral(
+                channel=slackUid,
+                text=msgText
+               
+            )
 
 
