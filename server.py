@@ -1269,7 +1269,8 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global = conn_global.cursor()
         scouts = [x[0] for x in cur_global.execute(
             "SELECT name FROM scouts WHERE enabled='1' ORDER BY RANDOM()").fetchall()]
-        conn_global.close()
+        # conn_global.close()
+        cur_global.execute("DELETE FROM break_schedule")
 
         # Generate global schedule
         schedule_global = []
@@ -1284,6 +1285,10 @@ document.body.innerHTML = window.localStorage.getItem(
                 "end": block_end,
                 "scouts": scoutlist
             })
+            cur_global.execute(
+                "INSERT INTO break_schedule(BreakStart,BreakEnd,Scout,Notified) VALUES (?,?,?,?)", (block_start, block_end, json.dumps(scoutlist), 0))
+        conn_global.commit()
+        conn_global.close()
 
         # Generate scout schedules
         schedule_scouts = {}
