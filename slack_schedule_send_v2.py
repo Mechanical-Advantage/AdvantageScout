@@ -2,6 +2,11 @@ import os
 from slack_sdk import WebClient
 import sqlite3 as sql
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
+slack_token = os.getenv('SLACK_TOKEN')
 
 db_global = "global.db"
 slack_token = "xoxb-613175484016-4825252694418-bV16MtapZ4CAifJrIiW5OLbM"
@@ -17,7 +22,6 @@ scouts = []
 results = cur_global.execute(
     "select Scout,BreakEnd,BreakStart from break_schedule").fetchall()
 scoutBreakInfo = {}
-print(results)
 for result in results:
     breakStart = result[2]
     breakEnd = result[1]
@@ -37,17 +41,30 @@ for result in results:
             newList.append(breakList)
         scoutBreakInfo[scoutName] = newList
 
-        try:
-            slackUid = cur_global.execute(
-                "select userid from Slack_UserIDs where name = ? ", (scoutName,)).fetchall()[0][0]
 
-        except:
-            slackUid = "none"
+for scout in scoutBreakInfo:
+    breaks = scoutBreakInfo[scout]
+    try:
+        slackUid = cur_global.execute(
+            "select userid from Slack_UserIDs where name = ? ", (scoutName,)).fetchall()[0][0]
 
-        print("Sending break schedule to ", scoutName,
-              slackUid, breakStart, breakEnd)
-        msgText = "You have a break starting on match " + \
-            str(breakStart) + " ending on match " + str(breakEnd)
+    except:
+        slackUid = "none"
 
-        # S
-print(scoutBreakInfo)
+    print("Sending break schedule to ", scout, " - ", slackUid)
+    msgText = "You have the following scheduled breaks \r\n"
+    for breakInfo in breaks:
+
+        breakStart = breakInfo[0]
+        breakEnd = breakInfo[1]
+
+        msgText = msgText+"Starting on match " + \
+            str(breakStart) + " ending on match " + str(breakEnd)+"\r\n"
+
+    print(scout, msgText)
+    # try:
+    #     response = client.chat_postMessage(
+    #         channel=slackUid,
+    #         text=msgText)
+    # except:
+    #     print("Message to ", scout, " failed")

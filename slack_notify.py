@@ -38,7 +38,7 @@ for scoutOnBreak in offBreakScouts:
         slackUid = "none"
         print("Sending end of break message to ", scoutOnBreak, slackUid)
         msgText = "You have a break is ending in 2 matches. Please return to the stands "
-    response = client.chat_postEphemeral(
+    response = client.chat_postMessage(
         channel=slackUid,
         text=msgText
     )
