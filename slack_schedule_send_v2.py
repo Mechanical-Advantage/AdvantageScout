@@ -9,7 +9,7 @@ load_dotenv()
 slack_token = os.getenv('SLACK_TOKEN')
 
 db_global = "global.db"
-slack_token = "xoxb-613175484016-4825252694418-bV16MtapZ4CAifJrIiW5OLbM"
+
 client = WebClient(token=slack_token)
 conn_global = sql.connect(db_global)
 cur_global = conn_global.cursor()
