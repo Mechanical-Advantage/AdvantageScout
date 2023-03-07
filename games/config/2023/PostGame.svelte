@@ -4,16 +4,21 @@
 
     let buttonColor = "btn-primary";
     function handleClick() {
-        $gameData["Disabled"] = $gameData["Disabled"] === 0 ? 1 : 0
+        $gameData["Disabled"] = $gameData["Disabled"] === 0 ? 1 : 0;
 
-        buttonColor = $gameData["Disabled"] === 0 ? "btn-primary" : "btn-error"
+        buttonColor = $gameData["Disabled"] === 0 ? "btn-primary" : "btn-error";
     }
 
-    function upload(){
-        $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "")
-        $uploadState += 1
-
-
+    function upload() {
+        $gameData["Comment"] = $gameData["Comment"].replace(
+            /[^\x20-\x7E]+/g,
+            ""
+        );
+        $gameData["Points"] =
+            $gameData["Points"] === null ? 0 : $gameData["Points"];
+        $gameData["Penalties"] =
+            $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
+        $uploadState += 1;
     }
 </script>
 
@@ -34,9 +39,7 @@
 </div>
 
 <div class="absolute ml-[700px] -mt-[200px]">
-    <label
-        for="message"
-        class="block mb-2 text-sm font-bold text-white"
+    <label for="message" class="block mb-2 text-sm font-bold text-white"
         >Comment</label
     >
     <textarea
@@ -63,6 +66,7 @@
             type="number"
             class="rounded-none rounded-r-lg w-[90px] text-sm p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             bind:value={$gameData["Points"]}
+            min="0"
         />
     </div>
 
@@ -76,9 +80,14 @@
             type="number"
             class="rounded-none rounded-r-lg w-[90px] text-sm p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             bind:value={$gameData["Penalties"]}
+            min="0"
         />
     </div>
 
-    <button class="btn {$gameData["Comment"].length < 14 ? "btn-disabled" : "btn-primary"}" on:click={upload}
-        >Upload</button>
+    <button
+        class="btn {$gameData['Comment'].length < 14
+            ? 'btn-disabled'
+            : 'btn-primary'}"
+        on:click={upload}>Upload</button
+    >
 </div>

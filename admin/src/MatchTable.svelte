@@ -1,7 +1,6 @@
 <script>
     import { onMount } from "svelte";
-  import { is_function } from "svelte/internal";
-
+    import { is_function } from "svelte/internal";
 
     // let matches = [
     //     { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
@@ -18,18 +17,27 @@
 
     let name = "";
     let matches = [];
-    onMount(async () => {
+    async function getUploaded() {
         const response = await fetch("/get_uploaded", { method: "GET" });
         const data = await response.json();
         matches = data;
-    });
-
+        matches = matches;
+        console.log(matches);
+    }
+    setInterval(getUploaded, 1500);
 
     // function deleteRow(rowToBeDeleted) {
     //     data = data.filter((row) => row != rowToBeDeleted);
     // }
 
-    let style = {uploadedUs: "uploadedUs", uploaded: "uploaded", notUploaded: "notUploaded", notUploadedUs: "notUploadedUs", red: "red", blue: "blue"}
+    let style = {
+        uploadedUs: "uploadedUs",
+        uploaded: "uploaded",
+        notUploaded: "notUploaded",
+        notUploadedUs: "notUploadedUs",
+        red: "red",
+        blue: "blue",
+    };
 </script>
 
 <div class="relative overflow-y-auto">
@@ -49,8 +57,10 @@
         <tbody class="rounded-md table-auto">
             {#each matches as match, i}
                 <tr />
-                <td class={match.teams.includes(6328) ? " bg-gray-600 text-yellow-500 font-bold" : "bg-gray-600 text-white font-bold"}
-                    >match {i + 1}</td
+                <td
+                    class={match.teams.includes(6328)
+                        ? " bg-gray-600 text-yellow-500 font-bold"
+                        : "bg-gray-600 text-white font-bold"}>match {i + 1}</td
                 >
                 {#each match.teams as team, i}
                     <!-- <td
@@ -59,9 +69,21 @@
                         team==match.teams[0] || team==match.teams[1] || team==match.teams[2] ? "bg-red-500": "bg-blue-500"}
                     >{team}</td> -->
 
-                    <td class = "{team===6328 ? 'font-bold text-yellow-600' : ''} {match.uploaded[i] ? 'bg-green-300' : ''} {!match.uploaded[i] ? ((team == match.teams[0] || team == match.teams[1] || team == match.teams[2]) ? 'bg-red-400 text-black' : 'bg-blue-300 text-black') : 'text-black'} text-center">{team}</td>
+                    <td
+                        class="{team === 6328
+                            ? 'font-bold text-yellow-600'
+                            : ''} {match.uploaded[i]
+                            ? 'bg-green-300'
+                            : ''} {!match.uploaded[i]
+                            ? team == match.teams[0] ||
+                              team == match.teams[1] ||
+                              team == match.teams[2]
+                                ? 'bg-red-400 text-black'
+                                : 'bg-blue-300 text-black'
+                            : 'text-black'} text-center">{team}</td
+                    >
 
-<!--                     
+                    <!--                     
                     {#if team == match.teams[0] || team == match.teams[1] || team == match.teams[2]}
                         {#if team == 6328}
                             {#if match.uploaded[i]}
@@ -97,6 +119,37 @@
     </table>
 </div>
 
+<!-- <div class="relative overflow-y-auto">
+    <table class="table-auto border-separate border-spacing-2">
+        <thead class="border-slate-700">
+            <tr>
+                <th class="bg-gray-500">match</th>
+                <th class="bg-red-500">R1</th>
+                <th class="bg-red-500">R2</th>
+                <th class="bg-red-500">R3</th>
+                <th class="bg-blue-500">B1</th>
+                <th class="bg-blue-500">B2</th>
+                <th class="bg-blue-500">B3</th>
+            </tr>
+        </thead>
+
+        <tbody class="rounded-md table-auto">
+            {#each matches as match, i}
+                <tr />
+                <td class={match.teams.includes(6328) ? "text-yellow-500 font-bold" : "text-white font-bold"}
+                    >match {i + 1}</td
+                >
+                {#each match.teams as team, i}
+                    <td
+                        class={match.uploaded[i] ? "text-green-500" : team== 6328 ? "text-yellow-500" : "text-white"}
+                    >
+                        {team}
+                    </td>
+                {/each}
+            {/each}
+        </tbody>
+    </table>
+</div> -->
 <style>
     table {
         border-collapse: collapse;
@@ -162,42 +215,3 @@
         color: rgb(0, 0, 0);
     }
 </style>
-
-
-
-
-
-
-
-
-<!-- <div class="relative overflow-y-auto">
-    <table class="table-auto border-separate border-spacing-2">
-        <thead class="border-slate-700">
-            <tr>
-                <th class="bg-gray-500">match</th>
-                <th class="bg-red-500">R1</th>
-                <th class="bg-red-500">R2</th>
-                <th class="bg-red-500">R3</th>
-                <th class="bg-blue-500">B1</th>
-                <th class="bg-blue-500">B2</th>
-                <th class="bg-blue-500">B3</th>
-            </tr>
-        </thead>
-
-        <tbody class="rounded-md table-auto">
-            {#each matches as match, i}
-                <tr />
-                <td class={match.teams.includes(6328) ? "text-yellow-500 font-bold" : "text-white font-bold"}
-                    >match {i + 1}</td
-                >
-                {#each match.teams as team, i}
-                    <td
-                        class={match.uploaded[i] ? "text-green-500" : team== 6328 ? "text-yellow-500" : "text-white"}
-                    >
-                        {team}
-                    </td>
-                {/each}
-            {/each}
-        </tbody>
-    </table>
-</div> -->
