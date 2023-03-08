@@ -7,7 +7,8 @@ cur1 = conn1.cursor()
 cur1.execute("SELECT value FROM config WHERE key = 'event'")
 Event = cur1.fetchall()[0][0]
 print(Event)
-conn = sql.connect("C:\\Users\\aryan\Documents\\2023AdvantageScout\AdvantageScout\\data_2023.db")
+conn = sql.connect(
+    "C:\\mascout\\AdvantageScout\\data_2023.db")
 cur = conn.cursor()
 # event_name
 cur.execute("SELECT * FROM pit WHERE Event = ? order by Team", (Event,))
@@ -76,20 +77,20 @@ Pitscout = cur.fetchall()
 # ", ".join(lists[list_name])
 
 for row in Pitscout:
-#     lists = {
-#         "auto": [],
-#         "shoot_to": [],
-#         "shoot_from": [],
-#         "wheel": []
-#     }
-#     for column in name_lookup.keys():
-#         if row[column] == 1:
-#             lists[name_lookup[column]["section"]].append(
-#                 name_lookup[column]["value"])
-#     if row[20] == 0:
-#         canliftoutput = "No"
-#     else:
-#         canliftoutput = "Yes"
+    #     lists = {
+    #         "auto": [],
+    #         "shoot_to": [],
+    #         "shoot_from": [],
+    #         "wheel": []
+    #     }
+    #     for column in name_lookup.keys():
+    #         if row[column] == 1:
+    #             lists[name_lookup[column]["section"]].append(
+    #                 name_lookup[column]["value"])
+    #     if row[20] == 0:
+    #         canliftoutput = "No"
+    #     else:
+    #         canliftoutput = "Yes"
 
     pdf.add_page()
     pdf.set_font('Arial', 'B', 30)

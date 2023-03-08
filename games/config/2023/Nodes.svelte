@@ -5,7 +5,7 @@
         gameData,
         autoDataLog,
         teleDataLog,
-        liveLocation
+        liveLocation,
     } from "./stores";
 
     export let level = 1;
@@ -13,7 +13,7 @@
     export let gameMode = "Auto";
 
     let dataField = " ";
-    let locationField = " "
+    let locationField = " ";
     $gameData["StartPosition"] = 2;
 
     let displayConeValue = 0;
@@ -22,7 +22,6 @@
     function update() {
         if ($gameState === 0) {
             $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
-            
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
@@ -35,8 +34,6 @@
         //     gameLevelMap[level],
         //     $gameData["AutoHighConeSuccess"]
         // );
-
-        
 
         $liveGamepiece = 0;
     }
@@ -64,6 +61,8 @@
             <svg
                 fill="#1bbb43"
                 viewBox="0 0 24 24"
+                width="96px"
+                height="96px"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#1bbb43"
                 ><g id="SVGRepo_bgCarrier" stroke-width="0" /><g
@@ -81,6 +80,8 @@
             <svg
                 fill="#e31c1c"
                 viewBox="0 0 24 24"
+                width="96px"
+                height="96px"
                 xmlns="http://www.w3.org/2000/svg"
                 id="cross"
                 class="icon glyph"
