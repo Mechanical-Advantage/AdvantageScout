@@ -14,13 +14,13 @@
 
     let dataField = " ";
     let locationField = " ";
-    $gameData["StartPosition"] = 2;
 
     let displayConeValue = 0;
     let displayCubeValue = 0;
 
     function update() {
         if ($gameState === 0) {
+            $liveLocation = "Floor"; //force pickup location to be floor in auto
             $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
@@ -29,11 +29,6 @@
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
         $gameData[locationField] = $gameData[locationField] + 1;
-        // console.log(
-        //     level,
-        //     gameLevelMap[level],
-        //     $gameData["AutoHighConeSuccess"]
-        // );
 
         $liveGamepiece = 0;
     }

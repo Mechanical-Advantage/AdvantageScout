@@ -62,11 +62,11 @@ for scout in scoutBreakInfo:
             str(breakStart) + " ending on match " + str(breakEnd)+"\r\n"
 
     print(scout, msgText)
-    if (slackUid in test_users):
-        print("sending via slack")
-        try:
-            response = client.chat_postMessage(
-                channel=slackUid,
-                text=msgText)
-        except:
-            print("Message to ", scout, " failed")
+
+    print("sending via slack")
+    try:
+        response = client.chat_postMessage(
+            channel=slackUid,
+            text=msgText)
+    except:
+        print("Message to ", scout, " failed")

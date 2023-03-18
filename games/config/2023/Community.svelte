@@ -23,7 +23,7 @@
     export let robotSize = 30;
     export let robotEmoji = "🤖"; // (:
 
-    $gameData["AllianceColor"] = $gameData["AllianceColor"]
+    $gameData["AllianceColor"] = $gameData["AllianceColor"];
 
     let zones = {
         1: [90, 20, 120, 20, 120, 90, 90, 90],
@@ -56,28 +56,24 @@
         let clickY = event.clientY - yOffset - screenOffset;
         $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
         $selectedCommunity = AllianceColor == "blue" ? 0 : 1;
-        if (AllianceColor === "red"){
-        $displayText = [" ", "X"]
+        if (AllianceColor === "red") {
+            $displayText = [" ", "X"];
+        } else {
+            $displayText = ["X", " "];
         }
-        else{
-            $displayText = ["X", " "]
-        }
-
 
         if (flippedH) {
             //flips the input X and Y depending on if the SVG is flipped
             clickX = width - clickX;
-            
         }
 
         if (flippedV) {
             clickY = height - clickY;
-            
         }
 
         if (!isPointInSvg(clickX, clickY, ctx)) {
             //checks if the click is outside the bounds formed by the lines of the svg
-            
+
             return;
         }
 
@@ -93,8 +89,7 @@
             clickX * (defaultWidth / width),
             clickY * (defaultHeight / height)
         );
-
-        
+        console.log("Start zone in data", $gameData["StartPosition"]);
     }
 
     function isPointInSvg(x, y, ctx) {
@@ -154,6 +149,7 @@
             }
 
             if (c) {
+                console.log("In Zone", zone);
                 return zone;
             }
             // return c;

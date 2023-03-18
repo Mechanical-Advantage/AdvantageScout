@@ -1,25 +1,22 @@
 <script>
     import GamePiece from "./GamePiece.svelte";
     import { gameData, liveGamepiece } from "./stores";
-    export let mode = 0
-    export let position = 0
+    export let mode = 0;
+    export let position = 0;
 
-
+    if (mode === "Start") {
+        $liveGamepiece = $gameData["StartGamePiece"];
+    }
 
     function updateGamePiece() {
-
-
-         if(mode === "Start"){
-             $gameData["StartGamePiece"] = $gameData["StartGamePiece"] === "Cube" ? "Cone" : "Cube" 
-            $liveGamepiece = $gameData["StartGamePiece"]
-         }
-         else if (mode === "Line"){
-            $gameData["StartConfig"][position] = $gameData["StartConfig"][position] === "Cube" ? "Cone" : "Cube"
-         }
-
-         
-
-
+        if (mode === "Start") {
+            $gameData["StartGamePiece"] =
+                $gameData["StartGamePiece"] === "Cube" ? "Cone" : "Cube";
+            $liveGamepiece = $gameData["StartGamePiece"];
+        } else if (mode === "Line") {
+            $gameData["StartConfig"][position] =
+                $gameData["StartConfig"][position] === "Cube" ? "Cone" : "Cube";
+        }
     }
 </script>
 
