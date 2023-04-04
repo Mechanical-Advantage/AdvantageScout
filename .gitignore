@@ -10,3 +10,4 @@ games/build
 games/current
 admin/build
 **/node_modules
+.env

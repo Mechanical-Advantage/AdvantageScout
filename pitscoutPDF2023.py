@@ -107,7 +107,7 @@ for row in Pitscout:
     pdf.cell(40, 10, 'Comment: ' + str(row[11]), ln=1)
     pdf.cell(40, 10, str(row[12]), ln=1)
     if len(row[12]) >= 1:
-        pdf.image("path on scouting laptop" + row[12], 10, 120, 125)
+        pdf.image("C:\\mascout\\AdvantageScout\\" + row[12], 10, 120, 125)
     # pdf.cell(40, 10, 'Top Speed: ' + str(row[8]), ln=1)
     # pdf.cell(40, 10, 'Weight: ' + str(row[9]))
     # pdf.cell(40, 10, 'Height: ' + str(row[10]), ln=1)

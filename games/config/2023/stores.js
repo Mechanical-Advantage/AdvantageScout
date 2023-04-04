@@ -13,6 +13,7 @@ export const selectedCommunity = writable(0) //blue is 0, red is 1
 export const displayText = writable(["x", " "]) //idek
 export const undoDisplayCondition = writable(false)
 export const uploadState = writable(0)
+export const currentTeam = writable(0)
 
 
 export const gameData = writable({

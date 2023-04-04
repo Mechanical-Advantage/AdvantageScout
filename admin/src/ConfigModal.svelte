@@ -38,9 +38,9 @@
         }
         else if (key == "auto_schedule"){
             if (value == 0) {
-                returnValue = "Auto"
+                returnValue = "Manual"
             }
-            else {returnValue = "Manual"}
+            else {returnValue = "Auto"}
         }
 
         alert("UPDATED " + key.toUpperCase() + " TO " + returnValue.toUpperCase() + "!")
@@ -89,8 +89,8 @@
             <button class = "h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-blue-700" on:click={updateConfig("dev_mode", dev_mode)}>Save</button>
             <div class = "text-2xl font-bold text-yellow-500">Auto Schedule</div>
             <select id = "auto_schedule" name = "auto_schedule" class = "text-black rounded-md" bind:value={auto_schedule}>
-                <option value = "0">Auto</option>
-                <option value = "1">Manual</option>
+                <option value = "0">Manual</option>
+                <option value = "1">Auto</option>
             </select>
             <button class = "h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-blue-700" on:click={updateConfig("auto_schedule", auto_schedule)}>Save</button>
     </div>

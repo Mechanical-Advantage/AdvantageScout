@@ -76,7 +76,6 @@ def Login_Notify():
     print("sleep over")
     currentScoutList = get_scouts()
     for index in currentScoutList:
-        if index in test_users:
             if currentScoutList[index] != initialScoutList[index]:
                 if currentScoutList[index] == 1:
                     slack_notify(index, "You are Signed In.")
@@ -88,3 +87,4 @@ def Login_Notify():
 initialScoutList = get_scouts()
 while (True):
     Login_Notify()
+    Break_Notify()

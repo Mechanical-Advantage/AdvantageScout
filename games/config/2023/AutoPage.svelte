@@ -7,6 +7,7 @@
     import ChargeStation from "./ChargeStation.svelte";
     import Undo from "./Undo.svelte";
     import Mobility from "./Mobility.svelte";
+    import CurrentTeam from "./CurrentTeam.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -14,6 +15,11 @@
 </script>
 
 <main>
+    <!-- <CurrentTeam/> -->
+    <div class="absolute left-[350px] mt-[50px]">
+        <CurrentTeam />
+    </div>
+
     <!-- <ScoringGrid /> -->
     <div class="absolute left-[20px] top-[40px]">
         <Nodes level="3" type="Success" gameMode="Auto" />
@@ -57,7 +63,7 @@
         </div>
 
         <div class="mt-[25px]">
-                <Undo />
+            <Undo />
         </div>
     </div>
 </main>

@@ -6,6 +6,7 @@
     import Undo from "./Undo.svelte";
     import Parked from "./Parked.svelte";
     import { teleDataLog } from "./stores";
+    import CurrentTeam from "./CurrentTeam.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -48,4 +49,7 @@
     <div class="mt-[25px]">
             <Undo />
     </div>
+</div>
+<div class="ml-[350px] mt-[50px]">
+    <CurrentTeam />
 </div>

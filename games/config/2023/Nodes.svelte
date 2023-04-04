@@ -25,10 +25,12 @@
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
+    
         dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
         $gameData[locationField] = $gameData[locationField] + 1;
+        console.log($liveLocation)
 
         $liveGamepiece = 0;
     }
