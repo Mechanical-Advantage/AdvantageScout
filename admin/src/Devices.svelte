@@ -46,7 +46,10 @@
             return "Offline";
         } else if (status == 5) {
             return "Pit Scout";
+        } else {
+            return "Offline"
         }
+
     };
 
     function formattedTime(unixTime) {
