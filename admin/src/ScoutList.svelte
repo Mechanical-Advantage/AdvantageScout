@@ -23,7 +23,6 @@
     };
 
     const remove = (scout) => {
-        console.log(scout);
         doPost(scout.name, "/remove_scout");
         scoutList = scoutList.filter((i) => i !== scout);
     };
@@ -46,7 +45,6 @@
     };
 
     async function doPost(scoutName, actionUrl) {
-        console.log(actionUrl);
         const formData = new FormData();
         formData.append("scout", scoutName);
         const res = await fetch(actionUrl, {

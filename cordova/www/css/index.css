@@ -17,7 +17,8 @@
  * under the License.
  */
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
 @font-face {
@@ -26,9 +27,12 @@
 }
 
 body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    -webkit-touch-callout: none;
+    /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;
+    /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;
+    /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color: "#ffffff";
     font-family: sans-serif;
     font-size: 20px;
@@ -73,7 +77,7 @@ button.scoutstart {
     margin-top: 10px;
     background-color: #c2f7ff;
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 16px;
     padding: 10px;
     border-radius: 8px;
 }
@@ -100,6 +104,8 @@ div.pitswitcher {
     width: 100%;
     background-color: #f4bfff;
     font-weight: bold;
+    font-size: 15px;
+    padding: 14px 40px;
 }
 
 div.switcherbutton1 {
@@ -109,6 +115,7 @@ div.switcherbutton1 {
     left: 0%;
     width: 33.33%;
     background-color: #ffc7c7;
+    color: black;
 }
 
 div.switcherbutton2 {
@@ -118,6 +125,7 @@ div.switcherbutton2 {
     left: 33.34%;
     width: 33.33%;
     background-color: #c7ffd1;
+    color: black;
 }
 
 div.switcherbutton3 {
@@ -127,6 +135,7 @@ div.switcherbutton3 {
     left: 66.66%;
     width: 33.33%;
     background-color: #c3c9fa;
+    color: black;
 }
 
 div.helpbutton {

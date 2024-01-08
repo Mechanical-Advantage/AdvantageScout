@@ -10,7 +10,7 @@
     let orientString = "transform: ";
     let yRobotOffset = 0;
     let strokeWidth = 5;
-    let red = "#ff0000";
+    let red = "#FF0000";
     let blue = "#002eff";
     export let AllianceColor = "red";
     export let strokeColor = AllianceColor === "red" ? red : blue; //Red is #ff0000 Blue is #002eff
@@ -23,7 +23,7 @@
     export let robotSize = 30;
     export let robotEmoji = "🤖"; // (:
 
-    $gameData["AllianceColor"] = $gameData["AllianceColor"]
+    $gameData["AllianceColor"] = $gameData["AllianceColor"];
 
     let zones = {
         1: [90, 20, 120, 20, 120, 90, 90, 90],
@@ -55,30 +55,25 @@
         let clickX = event.clientX - xOffset;
         let clickY = event.clientY - yOffset - screenOffset;
         $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
-        console.log($gameData["AllianceColor"]);
         $selectedCommunity = AllianceColor == "blue" ? 0 : 1;
-        if (AllianceColor === "red"){
-        $displayText = [" ", "X"]
+        if (AllianceColor === "red") {
+            $displayText = [" ", "X"];
+        } else {
+            $displayText = ["X", " "];
         }
-        else{
-            $displayText = ["X", " "]
-        }
-
 
         if (flippedH) {
             //flips the input X and Y depending on if the SVG is flipped
             clickX = width - clickX;
-            console.log("FLIPPEDH");
         }
 
         if (flippedV) {
             clickY = height - clickY;
-            console.log("FLIPPEDV");
         }
 
         if (!isPointInSvg(clickX, clickY, ctx)) {
             //checks if the click is outside the bounds formed by the lines of the svg
-            console.log("Click outside of SVG bounds");
+
             return;
         }
 
@@ -94,8 +89,7 @@
             clickX * (defaultWidth / width),
             clickY * (defaultHeight / height)
         );
-
-        console.log("ZONE" + $gameData["StartPosition"]);
+        console.log("Start zone in data", $gameData["StartPosition"]);
     }
 
     function isPointInSvg(x, y, ctx) {
@@ -132,7 +126,6 @@
     function inZone(testx, testy) {
         let i;
         let j;
-        console.log(testx, testy);
         for (let zone in zones) {
             let vertx = [];
             let verty = [];
@@ -156,6 +149,7 @@
             }
 
             if (c) {
+                console.log("In Zone", zone);
                 return zone;
             }
             // return c;

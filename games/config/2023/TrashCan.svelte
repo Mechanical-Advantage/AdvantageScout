@@ -4,10 +4,12 @@
         autoDataLog,
         teleDataLog,
         gameData,
+        liveLocation,
         gameState
     } from "./stores";
 
     export let gameMode = "Auto"
+    let locationField = " "
     let dataField = " "
 
     function update() {
@@ -16,10 +18,13 @@
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
-        console.log("score");
+        
         dataField = gameMode + $liveGamepiece + "Drop" 
-        $gameData[dataField] = $gameData[dataField] + 1    
-        console.log(dataField)
+        locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
+        $gameData[dataField] = $gameData[dataField] + 1  
+        $gameData[locationField] = $gameData[locationField] + 1;
+          
+        
 
         $liveGamepiece = 0
     }

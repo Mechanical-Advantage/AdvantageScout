@@ -1,14 +1,17 @@
 <script>
   import {
-    liveGamepiece
+    liveGamepiece,liveLocation
   } from "./stores";
   export let gamePiece = "Cube";
-  export const location = "Floor";
+  export let location = "Floor";
+  export let gamePieceLocation ="Floor";
 
   let coneSVG = "";
   function updateGameObject() {
-    console.log("score");
+
     $liveGamepiece = gamePiece;
+    $liveLocation = gamePieceLocation;
+
   }
 </script>
 

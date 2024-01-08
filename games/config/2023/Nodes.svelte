@@ -5,6 +5,7 @@
         gameData,
         autoDataLog,
         teleDataLog,
+        liveLocation,
     } from "./stores";
 
     export let level = 1;
@@ -12,28 +13,24 @@
     export let gameMode = "Auto";
 
     let dataField = " ";
-    $gameData["StartPosition"] = 2;
+    let locationField = " ";
 
     let displayConeValue = 0;
     let displayCubeValue = 0;
 
     function update() {
         if ($gameState === 0) {
+            $liveLocation = "Floor"; //force pickup location to be floor in auto
             $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
-            
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
         }
-        console.log("score");
+    
         dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
+        locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
-        console.log(
-            level,
-            gameLevelMap[level],
-            $gameData["AutoHighConeSuccess"]
-        );
-
-        console.log(dataField);
+        $gameData[locationField] = $gameData[locationField] + 1;
+        console.log($liveLocation)
 
         $liveGamepiece = 0;
     }
@@ -61,6 +58,8 @@
             <svg
                 fill="#1bbb43"
                 viewBox="0 0 24 24"
+                width="96px"
+                height="96px"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#1bbb43"
                 ><g id="SVGRepo_bgCarrier" stroke-width="0" /><g
@@ -78,6 +77,8 @@
             <svg
                 fill="#e31c1c"
                 viewBox="0 0 24 24"
+                width="96px"
+                height="96px"
                 xmlns="http://www.w3.org/2000/svg"
                 id="cross"
                 class="icon glyph"

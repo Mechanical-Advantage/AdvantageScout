@@ -26,9 +26,9 @@ admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
 host = "0.0.0.0"
 bt_enable = True
-bt_ports_incoming = ["COM3"]  # not current, only for app versions < 1.4.0
+bt_ports_incoming = ["COM12"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
-                     "COM8", "COM9"]  # current implementation
+                     "COM8", "COM3"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
@@ -265,7 +265,7 @@ class main_server(object):
                 Type:
                 <select id="matchtype" onchange="javascript:appManager.scoutManager.updateMatchType()">
                     <option>Qualifications</option>
-                    <option>Playoffs</option>
+                    <option>Elimations</option>
                 </select>
                 <br>
                 Team:
@@ -274,28 +274,23 @@ class main_server(object):
                 Match:
                 <input id="match" type="number" min="1" max="999" step="1" class="teammatch"></input>
                 <select id="playoffmatch" onchange="" hidden>
-                    <optgroup label="Quarterfinals">
-                        <option value="1111">QF1M1</option>
-                        <option value="1112">QF1M2</option>
-                        <option value="1113">QF1M3</option>
-                        <option value="1121">QF2M1</option>
-                        <option value="1122">QF2M2</option>
-                        <option value="1123">QF2M3</option>
-                        <option value="1131">QF3M1</option>
-                        <option value="1132">QF3M2</option>
-                        <option value="1133">QF3M3</option>
-                        <option value="1141">QF4M1</option>
-                        <option value="1142">QF4M2</option>
-                        <option value="1143">QF4M3</option>
+                    <optgroup label="Double Eliminations">
+                        <option value="1001">EM1</option>
+                        <option value="1002">EM2</option>
+                        <option value="1003">EM3</option>
+                        <option value="1004">EM4</option>
+                        <option value="1005">EM5</option>
+                        <option value="1006">EM6</option>
+                        <option value="1007">EM7</option>
+                        <option value="1008">EM8</option>
+                        <option value="1009">EM9</option>
+                        <option value="1010">EM10</option>
+                        <option value="1011">EM11</option>
+                        <option value="1012">EM12</option>
+                        <option value="1013">EM13</option>
+                      
                     </optgroup>
-                    <optgroup label="Semifinals">
-                        <option value="1211">SF1M1</option>
-                        <option value="1212">SF1M2</option>
-                        <option value="1213">SF1M3</option>
-                        <option value="1221">SF2M1</option>
-                        <option value="1222">SF2M2</option>
-                        <option value="1223">SF2M3</option>
-                    </optgroup>
+            
                     <optgroup label="Finals">
                         <option value="1311">FM1</option>
                         <option value="1312">FM2</option>
@@ -1274,7 +1269,8 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_global = conn_global.cursor()
         scouts = [x[0] for x in cur_global.execute(
             "SELECT name FROM scouts WHERE enabled='1' ORDER BY RANDOM()").fetchall()]
-        conn_global.close()
+        # conn_global.close()
+        cur_global.execute("DELETE FROM break_schedule")
 
         # Generate global schedule
         schedule_global = []
@@ -1289,6 +1285,10 @@ document.body.innerHTML = window.localStorage.getItem(
                 "end": block_end,
                 "scouts": scoutlist
             })
+            cur_global.execute(
+                "INSERT INTO break_schedule(BreakStart,BreakEnd,Scout,Notified) VALUES (?,?,?,?)", (block_start, block_end, json.dumps(scoutlist), 0))
+        conn_global.commit()
+        conn_global.close()
 
         # Generate scout schedules
         schedule_scouts = {}

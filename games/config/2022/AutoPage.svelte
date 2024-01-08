@@ -42,8 +42,6 @@
 
     function handleClick(varName, operation) {
         gameData[varName] += operation;
-        console.log(gameData);
-        console.log("game state", get(state));
     }
 
     function handleClimb(climb) {
@@ -51,13 +49,10 @@
 
         gameData[climb] = [];
         gameData[climb].push(1, time);
-
-        console.log(gameData[climb]);
     }
 
     function handleTaxi() {
         gameData["Taxi"] = 1 - gameData["Taxi"];
-        console.log(gameData["Taxi"]);
     }
 </script>
 

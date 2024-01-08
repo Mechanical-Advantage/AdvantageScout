@@ -1,4 +1,6 @@
 // Responsible for managing scouting screen
+// import { writable } from 'svelte/store';
+// export const team = writable(0)
 function ScoutManager(appManager) {
     const modeLookup = ["auto", "teleop", "endgame"]
     const highlightLookup = ["#ff6363", "#59ff78", "#8f9aff"]
@@ -192,6 +194,7 @@ function ScoutManager(appManager) {
             if (appManager.schedule.scouts.includes(scout)) {
                 document.getElementById("team").value = appManager.schedule.teams[appManager.schedule.scouts.indexOf(scout)]
                 document.getElementById("match").value = appManager.schedule.match
+                // $team = writable(appManager.schedule.teams[appManager.schedule.scouts.indexOf(scout)]);
             } else {
                 clearTeamMatch()
             }
@@ -461,6 +464,8 @@ function ScoutManager(appManager) {
         document.getElementById("classicDiv3").hidden = true
         document.getElementById("pitClassicDiv").hidden = true
         document.getElementById("visualCanvasDiv").hidden = true
+
+        appManager.visualManager.end()
 
         if (!forceTitle && !appManager.serverManager.connected()) {
             appManager.state = 4

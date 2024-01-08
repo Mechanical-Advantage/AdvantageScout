@@ -6,7 +6,7 @@
         0: ["false", "false", "true", "false", "blue", "red"],
         1: ["false", "true", "true", "true", "red", "blue"],
     };
-    console.log($gameData["StartPosition"])
+    
 
 
 

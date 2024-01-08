@@ -1,7 +1,6 @@
 <script>
 
     import { gameData } from "./stores";
-    let buttonColor = "btn-primary"
 
     function handleClick(){
 
@@ -13,10 +12,9 @@
         }
 
 
-        buttonColor = $gameData["AutoDockTraverse"] === 0 ? "btn-primary" : "btn-success"
     }
     
 </script>
 
 
-<button class="btn {buttonColor}" on:click={handleClick}>Crossed?</button>
+<button class="btn {$gameData["AutoDockTraverse"] === 0 ? "btn-primary" : "btn-success"}" on:click={handleClick}>Crossed Station?</button>

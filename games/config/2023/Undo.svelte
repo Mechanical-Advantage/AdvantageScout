@@ -1,13 +1,71 @@
 <script>
-    import { autoDataLog, teleDataLog, gameData, gameState } from "./stores";
+    import { autoDataLog, teleDataLog, gameData, gameState, undoDisplayCondition } from "./stores";
+
+    let autoList = ["AutoHybridConeSuccess",
+    "AutoHybridConeFail",
+    "AutoHybridCubeSuccess",
+    "AutoHybridCubeFail",
+    "AutoMidConeSuccess",
+    "AutoMidConeFail",
+    "AutoMidCubeSuccess",
+    "AutoMidCubeFail",
+    "AutoHighConeSuccess",
+    "AutoHighConeFail",
+    "AutoHighCubeSuccess",
+    "AutoHighCubeFail",
+    "AutoDock",
+    "AutoEngage",
+    "AutoDockTraverse",
+    "AutoFloorConeCollect",
+    "AutoFloorCubeCollect",
+    "AutoConeDrop",
+    "AutoCubeDrop"]
+
+    let tempUndoData = {}
+
+    let teleList = ["TeleHybridConeSuccess",
+    "TeleHybridConeFail",
+    "TeleHybridCubeSuccess",
+    "TeleHybridCubeFail",
+    "TeleMidConeSuccess",
+    "TeleMidConeFail",
+    "TeleMidCubeSuccess",
+    "TeleMidCubeFail",
+    "TeleHighConeSuccess",
+    "TeleHighConeFail",
+    "TeleHighCubeSuccess",
+    "TeleHighCubeFail",
+    "TeleDock",
+    "TeleEngage",
+    "TeleDockTraverse",
+    "TeleFloorConeCollect",
+    "TeleFloorCubeCollect",
+    "TeleSingleConeCollect",
+    "TeleSingleCubeCollect",
+    "TeleDoubleConeCollect",
+    "TeleDoubleCubeCollect",
+    "TeleConeDrop",
+    "TeleCubeDrop"]
+
+    let undoList = []
 
     function handleClick() {
         if ($gameState === 0 && $autoDataLog.length > 0) {
-            $gameData = $autoDataLog.pop();
+            tempUndoData = $autoDataLog.pop();
+            UpdateLists(autoList)
         } else if ($gameState === 1 && $teleDataLog.length > 0) {
-            $gameData = $teleDataLog.pop();
+            tempUndoData = $teleDataLog.pop();
+            UpdateLists(teleList)
         }
+
+    function UpdateLists(undoList) {
+        for (let i = 0; i < undoList.length; i++) {
+        $gameData[undoList[i]] = tempUndoData[undoList[i]]
+  }
+}
+    
     }
+
 </script>
 
 {#if ($gameState === 0 && $autoDataLog.length > 0) || ($gameState === 1 && $teleDataLog.length > 0)}

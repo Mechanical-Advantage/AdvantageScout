@@ -34,12 +34,9 @@
         if ($withinTrash) {
             deleteName();
         } else if (enabled && !$withinBox) {
-            console.log("disabled");
             disableName();
-            console.log("disabled");
         } else if (!enabled && $withinBox) {
             enableName();
-            console.log("enabled");
             this.parentNode.removeChild(this);
         }
 

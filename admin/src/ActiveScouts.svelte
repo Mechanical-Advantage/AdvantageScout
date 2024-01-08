@@ -67,7 +67,7 @@
     function mouseCoordHandler(e) {
         getDropBoxHeight();
 
-        console.log($withinBox);
+        //console.log($withinBox);
         dropBoxRect = document.getElementById("dropBox");
         let trashRect = document.getElementById("trash");
         $mouseCoords.x = e.clientX;
@@ -97,7 +97,7 @@
     }
 
     function disable(event) {
-        console.log("disable");
+        //console.log("disable");
         enabled = enabled.filter((e) => e !== event.detail.text);
         disabled.unshift(event.detail.text);
         doPost(event.detail.text, "/toggle_scout");
@@ -106,7 +106,7 @@
     }
 
     function enable(event) {
-        console.log("enable");
+        //console.log("enable");
         disabled = disabled.filter((e) => e !== event.detail.text);
         enabled.push(event.detail.text);
         doPost(event.detail.text, "/toggle_scout");
@@ -127,7 +127,7 @@
             !enabled.includes(addScoutEntry)
         ) {
             disabled.unshift(addScoutEntry);
-            console.log("Adding Scout");
+            //console.log("Adding Scout");
             if (addScoutEntry != "") {
                 doPost(addScoutEntry, "/add_scout");
             }
