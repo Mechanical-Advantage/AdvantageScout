@@ -3,7 +3,7 @@
         "AllianceColor INTEGER DEFAULT 0",
         "StartPosition INTEGER DEFAULT 0",
         "StartGamePiece TEXT DEFAULT ''",
-        "StartConfig TEXT DEFAULT'",
+        "StartConfig TEXT DEFAULT ''",
         "Leave INTEGER DEFAULT 0",
         "AutoSpeakerNoteSuccess INTEGER DEFAULT 0",
         "AutoSpeakerNoteFail INTEGER DEFAULT 0",
