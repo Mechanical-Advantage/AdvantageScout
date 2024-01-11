@@ -56,6 +56,8 @@
         let clickY = event.clientY - yOffset - screenOffset;
         $gameData["AllianceColor"] = AllianceColor == "blue" ? 0 : 1;
         $selectedCommunity = AllianceColor == "blue" ? 0 : 1;
+
+        //the solution!!
         if (AllianceColor === "red") {
             $displayText = [" ", "X"];
         } else {
@@ -157,6 +159,7 @@
     }
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <svg
     {width}
     {height}
@@ -166,52 +169,55 @@
 >
     <g>
         <title>Layer 1</title>
+        <!-- start zone -->
         <line
             stroke-width={strokeWidth}
             id="svg_2"
             y2={(height / defaultHeight) * 10}
-            x2={(width / defaultWidth) * 121.4}
+            x2={(width / defaultWidth) * 208.4}
             y1={(height / defaultHeight) * 10}
             x1={(width / defaultWidth) * 7.6}
             stroke={strokeColor}
             fill="none"
         />
+        <!-- start zone -->
         <line
             stroke-width={strokeWidth}
             id="svg_3"
-            y2={(height / defaultHeight) * 91}
-            x2={(width / defaultWidth) * 119}
-            y1={(height / defaultHeight) * 10}
-            x1={(width / defaultWidth) * 119}
+            y2={(height / defaultHeight) * 315}
+            x2={(width / defaultWidth) * 208.4}
+            y1={(height / defaultHeight) * 250}
+            x1={(width / defaultWidth) * 7.6}
             stroke={strokeColor}
             fill="none"
         />
+        <!-- subwoofer -->
         <line
             stroke-width={strokeWidth}
             id="svg_4"
-            y2={(height / defaultHeight) * 91}
-            x2={(width / defaultWidth) * 93.6}
-            y1={(height / defaultHeight) * 91}
-            x1={(width / defaultWidth) * 121.4}
+            y2={(height / defaultHeight) * 80}
+            x2={(width / defaultWidth) * 40}
+            y1={(height / defaultHeight) * 50}
+            x1={(width / defaultWidth) * 7.6}
             stroke={strokeColor}
             fill="none"
         />
         <line
             id="svg_5"
-            y2={(height / defaultHeight) * 232}
-            x2={(width / defaultWidth) * 96}
-            y1={(height / defaultHeight) * 91}
-            x1={(width / defaultWidth) * 96}
+            y2={(height / defaultHeight) * 120}
+            x2={(width / defaultWidth) * 40}
+            y1={(height / defaultHeight) * 78}
+            x1={(width / defaultWidth) * 40}
             stroke-width={strokeWidth}
             stroke={strokeColor}
             fill="none"
         />
         <line
             id="svg_6"
-            y2={(height / defaultHeight) * 232}
-            x2={(width / defaultWidth) * 208.4}
-            y1={(height / defaultHeight) * 232}
-            x1={(width / defaultWidth) * 93.6}
+            y2={(height / defaultHeight) * 150}
+            x2={(width / defaultWidth) * 7.6}
+            y1={(height / defaultHeight) * 120}
+            x1={(width / defaultWidth) * 40}
             stroke-width={strokeWidth}
             stroke={strokeColor}
             fill="none"
@@ -219,14 +225,14 @@
         <line
             id="svg_7"
             y2={(height / defaultHeight) * 315}
-            x2={(width / defaultWidth) * 206}
-            y1={(height / defaultHeight) * 232}
-            x1={(width / defaultWidth) * 206}
+            x2={(width / defaultWidth) * 207}
+            y1={(height / defaultHeight) * 10}
+            x1={(width / defaultWidth) * 207}
             stroke-width={strokeWidth}
             stroke={strokeColor}
             fill="none"
         />
-        <line
+        <!-- <line
             id="svg_8"
             y2={(height / defaultHeight) * 315}
             x2={(width / defaultWidth) * 7.6}
@@ -235,13 +241,13 @@
             stroke-width={strokeWidth}
             stroke={strokeColor}
             fill="none"
-        />
+        /> -->
         <line
             id="svg_9"
             y2={(height / defaultHeight) * 10}
-            x2={(width / defaultWidth) * 10}
-            y1={(height / defaultHeight) * 315}
-            x1={(width / defaultWidth) * 10}
+            x2={(width / defaultWidth) * 7.6}
+            y1={(height / defaultHeight) * 252}
+            x1={(width / defaultWidth) * 7.6}
             stroke-width={strokeWidth}
             stroke={strokeColor}
             fill="none"

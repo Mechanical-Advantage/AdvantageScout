@@ -36,18 +36,15 @@
     }
 
     let gameLevelMap = {
-        1: "Hybrid",
-        2: "Mid",
-        3: "High",
+        1: "Amp",
+        2: "Speaker",
+        3: "HighNote",
     };
 </script>
 
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-xl"
-        >{$gameData[gameMode + gameLevelMap[level] + "Cube" + type]}</span
-    >
-    <span class="indicator-item indicator-start badge badge-secondary text-xl"
-        >{$gameData[gameMode + gameLevelMap[level] + "Cone" + type]}</span
+        >{$gameData[gameMode + gameLevelMap[level] + "Note" + type]}</span
     >
     <button
         class="btn btn-square btn-outline rounded-md w-24 h-24"

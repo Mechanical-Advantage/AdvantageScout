@@ -1,5 +1,5 @@
 <script>
-    import Community from "./Community.svelte";
+    import StartZone from "./StartZone.svelte";
     import { reversedAlliance, gameData, selectedCommunity } from "./stores";
 
     let fieldConfigurations = {
@@ -17,7 +17,7 @@
 
 <!-- {#if $gameData["StartPosition"] === 0 || $selectedCommunity == fieldConfigurations[$reversedAlliance][5] == "blue" ? 0 : 1 }  -->
 <div class="absolute left-[730px]">
-    <Community
+    <StartZone
         width="294"
         height="462"
         strokeWidth="5.5"
@@ -29,7 +29,7 @@
 </div>
 
 <!-- left side community -->
-<Community
+<StartZone
     width="294"
     height="462"
     strokeWidth="5.5"
