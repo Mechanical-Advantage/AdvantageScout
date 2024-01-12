@@ -23,6 +23,7 @@
 <label class="swap swap-rotate">
     <input type="checkbox" />
 
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <svg
         class="swap-on"
         on:click={updateGamePiece}

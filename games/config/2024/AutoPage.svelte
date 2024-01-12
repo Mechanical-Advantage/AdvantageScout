@@ -7,7 +7,7 @@
     import Undo from "./Undo.svelte";
     import Mobility from "./Mobility.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
-    import GamePiece from "../2023/GamePiece.svelte";
+    import GamePiece from "./GamePiece.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -35,17 +35,17 @@
         <Nodes level="2" type="Fail" gameMode="Auto" />
     </div>
 
-    <!-- <div class="absolute left-[765px]">
+    <div class="absolute ml-[100px]">
         <LocationSelector gameMode="Auto" />
-    </div> -->
+    </div>
 
-    <div class="flex flex-col absolute ml-[465px] mt-[20px] gap-y-[25px]">
+    <!-- <div class="flex flex-col absolute ml-[465px] mt-[20px] gap-y-[25px]">
             <GamePiece gamePiece="Note" />
             <GamePiece />
             <GamePiece />
             <GamePiece />
             <GamePiece />
-    </div>
+    </div> -->
 
     <div class="absolute top-0 right-0 m-2">
         <div class="flex flex-col gap-y-[25px]">
@@ -56,15 +56,14 @@
         </div>
     </div>
 
-    <div class="absolute left-[765px] absolute top-[350px]">
-        <div class="flex flex-row gap-x-[50px]">
+    <div class="absolute top-[250px] right-0 m-[20px]">
+        <div class="flex flex-col gap-y-[25px]">
             <div>
                 <TrashCan gameMode="Auto" />
             </div>
 
-            <div class="mt-[25px]">
                 <Undo />
-            </div>
+            
         </div>
     </div>
 </main>

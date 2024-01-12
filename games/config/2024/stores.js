@@ -3,7 +3,6 @@ import { writable } from 'svelte/store';
 export const liveGamepiece = writable(0);
 export const liveLocation = writable("Floor");
 export const floorPickup = writable(0);
-export const highConeSuccess = writable(0);
 export const gameState = writable(0)
 export const autoState = writable(0)
 export const autoDataLog = writable([])
@@ -21,7 +20,7 @@ export const gameData = writable({
     StartPosition: 0,
     StartConfig: ["Cone", "Cone", "Cone", "Cone"],
     StartGamePiece: "Cone",
-    Mobility: 0,
+    Leave: 0,
     AutoSpeakerNoteSuccess: 0,
     AutoSpeakerNoteFail: 0,
     AutoAmpNoteSuccess: 0,
@@ -30,18 +29,23 @@ export const gameData = writable({
     TeleSpeakerNoteFail: 0,
     TeleAmpNoteSuccess: 0,
     TeleAmpNoteFail: 0,
-    AutoFloorConeCollect: 0,
-    AutoFloorCubeCollect: 0,
-    TeleFloorConeCollect: 0,
-    TeleFloorCubeCollect: 0,
-    TeleSingleConeCollect: 0,
-    TeleSingleCubeCollect: 0,
-    TeleDoubleConeCollect: 0,
-    TeleDoubleCubeCollect: 0,
+    TeleTrapNoteSuccess: 0,
+    TeleTrapNoteFail: 0,
+    TeleOnstage: 0,
+    AutoFloorSpike0Collect: 0,
+    AutoFloorSpike1Collect: 0,
+    AutoFloorSpike2Collect: 0,
+    AutoFloorCenterLine0Collect: 0,
+    AutoFloorCenterLine1Collect: 0,
+    AutoFloorCenterLine2Collect: 0,
+    AutoFloorCenterLine3Collect: 0,
+    AutoFloorCenterLine4Collect: 0,
+    TeleFloorNoteCollect: 0,
+    TeleSourceNoteCollect: 0,
     AutoNoteDrop: 0,
     TeleNoteDrop: 0,
     CoopertitionBonus: 0,
-    LinkRP: 0,
+    Harmony: 0,
     PlayingDefenseDuration: 0,
     UnderDefenseDuration: 0,
     Park: 0,
@@ -49,8 +53,7 @@ export const gameData = writable({
     Penalties: 0,
     Disabled: 0,
     DriverRating: 0,
-    CubeIntakeRating: 0,
-    ConeIntakeRating: 0,
+    NoteIntakeRating: 0,
     DefenseRating: 0,
     UnderDefenseRating: 0,
     Comment: " "
