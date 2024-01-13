@@ -29,12 +29,12 @@
         1: [10, 190, 70, 140, 40, 120, 10, 150],
         2: [40, 120, 70, 140, 70, 60, 40, 80],
         3: [40, 80, 70, 60, 10, 10, 10, 50],
-        4: [10, 190, 10, 250, 100, 280, 100, 140, 70, 140],
-        5: [70, 140, 104, 140, 104, 10, 10, 10, 70, 60],
-        6: [100, 280, 210, 310, 210, 240, 100, 240],
-        7: [210, 240, 210, 165, 104, 165, 104, 240],
-        8: [210, 165, 210, 90, 104, 90, 104, 165],
-        9: [210, 90, 210, 10, 104, 10, 104, 90],
+        4: [10, 190, 10, 250, 120, 280, 120, 140, 70, 140],
+        5: [70, 140, 120, 140, 120, 10, 10, 10, 70, 60],
+        6: [120,10, 206,10, 206,75, 120,75],
+        7: [120,75, 206,75, 206,140, 120,140],
+        8: [120,140, 206,140, 206,205, 120,205],
+        9: [120,205, 206,205, 206,315, 120,290],
         10: [10, 50, 40, 80, 40, 120, 10, 150],
     };
     flippedH = flippedH == "true" ? true : false;
@@ -111,7 +111,23 @@
             (width / defaultWidth) * 7.6,
             (height / defaultHeight) * 10
         );
-        ctx.lineTo((width / defaultWidth) * 7.6, (height / defaultHeight) * 252);
+        ctx.lineTo(
+            (width / defaultWidth) * 7.6,
+            (height / defaultHeight) * 50
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 40,
+            (height / defaultHeight) * 80
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 40,
+            (height / defaultHeight) * 120
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 7.6,
+            (height / defaultHeight) * 150
+        );
+        ctx.lineTo((width / defaultWidth) * 7.6, (height / defaultHeight) * 250);
         // ctx.lineTo(
         //     (width / defaultWidth) * 208.4,
         //     (height / defaultHeight) * 232

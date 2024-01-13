@@ -11,6 +11,6 @@
 </script>
 
 
-<button class="btn {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {$gameData["TeleDock"] === 2 ? "btn-disabled" : ''}" on:click={handleClick}>Parked?</button>
+<button class="btn {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {$gameData["TeleOnstage"] === 2 ? "btn-disabled" : ''}" on:click={handleClick}>Parked?</button>
 
 

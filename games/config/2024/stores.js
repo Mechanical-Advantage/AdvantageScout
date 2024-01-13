@@ -13,13 +13,13 @@ export const displayText = writable(["x", " "]) //idek
 export const undoDisplayCondition = writable(false)
 export const uploadState = writable(0)
 export const currentTeam = writable(0)
+export const onStageButton = writable(0)
+
 
 
 export const gameData = writable({
     AllianceColor: 0,
     StartPosition: 0,
-    StartConfig: ["Cone", "Cone", "Cone", "Cone"],
-    StartGamePiece: "Cone",
     Leave: 0,
     AutoSpeakerNoteSuccess: 0,
     AutoSpeakerNoteFail: 0,
@@ -32,14 +32,16 @@ export const gameData = writable({
     TeleTrapNoteSuccess: 0,
     TeleTrapNoteFail: 0,
     TeleOnstage: 0,
-    AutoFloorSpike0Collect: 0,
-    AutoFloorSpike1Collect: 0,
-    AutoFloorSpike2Collect: 0,
-    AutoFloorCenterLine0Collect: 0,
-    AutoFloorCenterLine1Collect: 0,
-    AutoFloorCenterLine2Collect: 0,
-    AutoFloorCenterLine3Collect: 0,
-    AutoFloorCenterLine4Collect: 0,
+    AutoPreLoadedNoteCollect: 0,
+    AutoFloorSpike0NoteCollect: 0,
+    AutoFloorSpike1NoteCollect: 0,
+    AutoFloorSpike2NoteCollect: 0,
+    AutoFloorCenterline0NoteCollect: 0,
+    AutoFloorCenterline1NoteCollect: 0,
+    AutoFloorCenterline2NoteCollect: 0,
+    AutoFloorCenterline3NoteCollect: 0,
+    AutoFloorCenterline4NoteCollect: 0,
+    TelePreLoadedNoteCollect: 0,
     TeleFloorNoteCollect: 0,
     TeleSourceNoteCollect: 0,
     AutoNoteDrop: 0,

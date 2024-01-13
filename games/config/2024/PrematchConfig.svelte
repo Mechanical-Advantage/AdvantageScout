@@ -2,9 +2,12 @@
     import { autoState, gameData } from "./stores";
     import FullField from "./FullField.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
+  import { liveGamepiece, liveLocation } from "./stores";
 
     function handleClick() {
         $autoState = 1;
+        $liveGamepiece ="Note";
+        $liveLocation = "PreLoaded"
     }
 </script>
 

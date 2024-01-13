@@ -1,51 +1,31 @@
 <script>
     import { autoDataLog, teleDataLog, gameData, gameState, undoDisplayCondition } from "./stores";
 
-    let autoList = ["AutoHybridConeSuccess",
-    "AutoHybridConeFail",
-    "AutoHybridCubeSuccess",
-    "AutoHybridCubeFail",
-    "AutoMidConeSuccess",
-    "AutoMidConeFail",
-    "AutoMidCubeSuccess",
-    "AutoMidCubeFail",
-    "AutoHighConeSuccess",
-    "AutoHighConeFail",
-    "AutoHighCubeSuccess",
-    "AutoHighCubeFail",
-    "AutoDock",
-    "AutoEngage",
-    "AutoDockTraverse",
-    "AutoFloorConeCollect",
-    "AutoFloorCubeCollect",
-    "AutoConeDrop",
-    "AutoCubeDrop"]
+    let autoList = ["AutoSpeakerNoteSuccess",
+    "AutoSpeakerNoteFail",
+    "AutoAmpNoteSuccess",
+    "AutoAmpNoteFail",
+    "AutoFloorPreloadedNoteCollect",
+    "AutoFloorSpike0NoteCollect",
+    "AutoFloorSpike1NoteCollect",
+    "AutoFloorSpike2NoteCollect",
+    "AutoFloorCenterline0NoteCollect",
+    "AutoFloorCenterline1NoteCollect",
+    "AutoFloorCenterline2NoteCollect",
+    "AutoFloorCenterline3NoteCollect",
+    "AutoFloorCenterline4NoteCollect",
+    "AutoNoteDrop",
+    "TeleNoteDrop"]
 
     let tempUndoData = {}
 
-    let teleList = ["TeleHybridConeSuccess",
-    "TeleHybridConeFail",
-    "TeleHybridCubeSuccess",
-    "TeleHybridCubeFail",
-    "TeleMidConeSuccess",
-    "TeleMidConeFail",
-    "TeleMidCubeSuccess",
-    "TeleMidCubeFail",
-    "TeleHighConeSuccess",
-    "TeleHighConeFail",
-    "TeleHighCubeSuccess",
-    "TeleHighCubeFail",
-    "TeleDock",
-    "TeleEngage",
-    "TeleDockTraverse",
-    "TeleFloorConeCollect",
-    "TeleFloorCubeCollect",
-    "TeleSingleConeCollect",
-    "TeleSingleCubeCollect",
-    "TeleDoubleConeCollect",
-    "TeleDoubleCubeCollect",
-    "TeleConeDrop",
-    "TeleCubeDrop"]
+    let teleList = ["TeleSpeakerNoteSuccess",
+    "TeleSpeakerNoteFail",
+    "TeleAmpNoteSuccess",
+    "TeleAmpNoteFail",
+    "TeleFloorNoteCollect",
+    "TeleSourceNoteCollect",
+    "TeleNoteDrop"]
 
     let undoList = []
 

@@ -24,8 +24,7 @@
 
 <div class="flex flex-row gap-x-[90px] ml-[30px]">
     <Ratings name="DriverRating" />
-    <Ratings name="ConeIntakeRating" />
-    <Ratings name="CubeIntakeRating" />
+    <Ratings name="NoteIntakeRating" />
 </div>
 
 <div class="flex flex-row gap-x-[90px] mt-[20px] ml-[30px]">

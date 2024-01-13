@@ -20,7 +20,7 @@
 
     function update() {
         if ($gameState === 0) {
-            $liveLocation = "Floor"; //force pickup location to be floor in auto
+//            $liveLocation = "Floor"; //force pickup location to be floor in auto
             $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
         } else {
             $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
@@ -30,7 +30,7 @@
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
         $gameData[dataField] = $gameData[dataField] + 1;
         $gameData[locationField] = $gameData[locationField] + 1;
-        console.log($liveLocation)
+        console.log("Location "+ $liveLocation+" Location field" + locationField )
 
         $liveGamepiece = 0;
     }
@@ -38,7 +38,7 @@
     let gameLevelMap = {
         1: "Amp",
         2: "Speaker",
-        3: "HighNote",
+        3: "Trap",
     };
 </script>
 
@@ -46,12 +46,16 @@
     <span class="indicator-item badge badge-accent text-xl"
         >{$gameData[gameMode + gameLevelMap[level] + "Note" + type]}</span
     >
+    
     <button
         class="btn btn-square btn-outline rounded-md w-24 h-24"
         disabled={$liveGamepiece == 0}
         on:click={update}
     >
         {#if type === "Success"}
+        <span
+    class="indicator-item indicator-left indicator-left indicator-start badge badge-primary "
+    >{gameLevelMap[level]}</span>
             <svg
                 fill="#1bbb43"
                 viewBox="0 0 24 24"

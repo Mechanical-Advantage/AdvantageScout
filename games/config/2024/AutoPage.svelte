@@ -16,7 +16,7 @@
 
 <main>
     <!-- <CurrentTeam/> -->
-    <div class="absolute left-[350px] mt-[50px]">
+    <div class="absolute left-[425px] mt-[30px]">
         <CurrentTeam />
     </div>
 
@@ -27,11 +27,11 @@
     <div class="absolute left-[240px] top-[40px]">
         <Nodes level="1" type="Fail" gameMode="Auto" />
     </div>
-    <div class="absolute left-[20px] top-[195px]">
+    <div class="absolute left-[60px] top-[195px]">
         <Nodes level="2" type="Success" gameMode="Auto" />
     </div>
 
-    <div class="absolute left-[20px] top-[350px]">
+    <div class="absolute left-[60px] top-[350px]">
         <Nodes level="2" type="Fail" gameMode="Auto" />
     </div>
 

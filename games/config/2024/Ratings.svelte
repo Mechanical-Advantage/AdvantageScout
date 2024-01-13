@@ -5,8 +5,7 @@
     let ratingValue = $gameData[name] * 2;
     if (
         $gameData["DriverRating"] == 0 &&
-        $gameData["CubeIntakeRating"] == 0 &&
-        $gameData["ConeIntakeRating"] == 0 &&
+        $gameData["NoteIntakeRating"] == 0 &&
         $gameData["DefenseRating"] == 0 &&
         $gameData["UnderDefenseRating"] == 0 &&
         $gameData["PlayingDefenseDuration"] == 0 &&
@@ -26,8 +25,7 @@
         UnderDefenseDuration: ["range-error", "Under Defense Duration", 2],
         Disabled: ["range-primary", "Disabled/Fell"],
         DriverRating: ["range-primary", "Driver Rating", 1],
-        CubeIntakeRating: ["range-accent", "Cube Intake Rating", 1],
-        ConeIntakeRating: ["range-secondary", "Cone Intake Rating", 1],
+        NoteIntakeRating: ["range-accent", "Note Intake Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
         UnderDefenseRating: ["range-error", "Under Defense Rating", 1],
     };

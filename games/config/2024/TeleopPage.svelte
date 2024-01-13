@@ -6,31 +6,46 @@
     import Parked from "./Parked.svelte";
     import { teleDataLog } from "./stores";
     import CurrentTeam from "./CurrentTeam.svelte";
+    import OnStage from "./OnStage.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
 <div class="absolute left-[80px] top-[40px]">
-    <Nodes level="1" type="Success" gameMode="Auto" />
+    <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
+
 <div class="absolute left-[240px] top-[40px]">
-    <Nodes level="1" type="Fail" gameMode="Auto" />
+    <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[20px] top-[195px]">
-    <Nodes level="2" type="Success" gameMode="Auto" />
+<div class="absolute left-[60px] top-[195px]">
+    
+    <Nodes level="2" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[350px]">
+    <Nodes level="2" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[425px] top-[195px]">
+    <Nodes level="3" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[20px] top-[350px]">
-    <Nodes level="2" type="Fail" gameMode="Auto" />
+<div class="absolute left-[605px] top-[195px]">
+    <Nodes level="3" type="Fail" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[765px]">
+
+<div class="absolute left-[500px]">
     <LocationSelector gameMode="Tele" />
 </div>
 
 
-<div class="absolute ml-[465px] mt-[70px]">
+<div class="absolute ml-[525px] mt-[30px]">
     <div class="flex flex-col gap-y-2">
     <Parked />
+    </div>
+</div>
+<div class="absolute ml-[675px] mt-[30px]">
+    <div class="flex flex-col gap-y-2">
+    <OnStage />
     </div>
 </div>
 
@@ -43,6 +58,6 @@
             <Undo />
     </div>
 </div>
-<div class="ml-[350px] mt-[50px]">
+<div class="ml-[425px] mt-[30px]">
     <CurrentTeam />
 </div>
