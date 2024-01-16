@@ -1,19 +1,26 @@
 <script>
   import { gameState } from "./stores";
-import { liveGamepiece, liveLocation } from "./stores";
+import { liveGamepiece, liveLocation, gameData} from "./stores";
   export let gamePiece = "Note";
   export let location = "Floor";
   export let gamePieceLocation = "Floor";
+  export let btnstate = "";
+  console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
+  console.log("btnstate" + btnstate);
 
   let coneSVG = "";
   function updateGameObject() {
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
+  
+    if (gamePieceLocation.includes("Spike")||gamePieceLocation.includes("Centerline")){
+      $gameData["Leave"] = 1;
+    }
   }
 </script>
 
 <button
-  class="btn btn-square btn-outline w-[64px] h-[64px] btn-accent"
+  class="btn {btnstate} btn-=square btn-outline w-[64px] h-[64px] btn-accent"
   on:click={updateGameObject}
 >
 {#if $gameState == 0}
@@ -26,8 +33,7 @@ import { liveGamepiece, liveLocation } from "./stores";
     ><path
       d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
       fill="#fc761d"
-    /></svg
-  >
+    /></svg  >
 {/if}
 {#if $gameState == 1}
   <svg

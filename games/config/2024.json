@@ -25,7 +25,7 @@
         "AutoFloorCenterline2NoteCollect INTEGER DEFAULT 0",
         "AutoFloorCenterline3NoteCollect INTEGER DEFAULT 0",
         "AutoFloorCenterline4NoteCollect INTEGER DEFAULT 0",
-        "AutoPreLoadedNoteCollect INTEGER DEFAULT 0",
+        "TelePreLoadedNoteCollect INTEGER DEFAULT 0",
         "TeleFloorNoteCollect INTEGER DEFAULT 0",
         "TeleSourceNoteCollect INTEGER DEFAULT 0",
         "AutoNoteDrop INTEGER DEFAULT 0",
@@ -195,7 +195,7 @@
                 "binding": true
             },
             {
-                "script": "return data.AutoFloorConeCollect + data.AutoFloorCubeCollect < 12",
+                "script": "return data.AutoFloorSpike1NoteCollect + data.AutoFloorSpike0NoteCollect < 12",
                 "message": "They phyically cannot collect that much in Auto",
                 "binding": false
             },
