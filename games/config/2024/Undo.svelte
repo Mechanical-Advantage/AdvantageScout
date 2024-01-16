@@ -15,6 +15,7 @@
     "AutoFloorCenterline3NoteCollect",
     "AutoFloorCenterline4NoteCollect",
     "AutoNoteDrop",
+    "Leave",
     "TeleNoteDrop"]
 
     let tempUndoData = {}
