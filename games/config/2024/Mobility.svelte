@@ -2,6 +2,7 @@
   import { gameData, autoDataLog } from "./stores";
 
   function handleClick() {
+    console.log("Leave - " + $gameData["Leave"]);
     $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
 
     $gameData["Leave"] =
@@ -9,7 +10,7 @@
         ? ($gameData["Leave"] = 1)
         : ($gameData["Leave"] = 0);
   }
-  console.log("Leave - " + $gameData["Leave"]);
+  
 </script>
 
 <!--<style>-->

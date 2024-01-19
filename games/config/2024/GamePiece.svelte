@@ -1,10 +1,11 @@
 <script>
   import { gameState } from "./stores";
-import { liveGamepiece, liveLocation, gameData} from "./stores";
+  import { liveGamepiece, liveLocation, gameData } from "./stores";
   export let gamePiece = "Note";
   export let location = "Floor";
   export let gamePieceLocation = "Floor";
   export let btnstate = "";
+  export let gpColor = "#ff0000";
   console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
   console.log("btnstate" + btnstate);
 
@@ -12,10 +13,13 @@ import { liveGamepiece, liveLocation, gameData} from "./stores";
   function updateGameObject() {
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
-  
-    if (gamePieceLocation.includes("Spike")||gamePieceLocation.includes("Centerline")){
-      $gameData["Leave"] = 1;
-    }
+
+    // if (gamePieceLocation.includes("Spike")||gamePieceLocation.includes("Centerline")){
+    //   $gameData["Leave"] = 1;
+    // }
+    // else {
+    //     $gameData["Leave"] = 0;
+    //   }
   }
 </script>
 
@@ -23,29 +27,30 @@ import { liveGamepiece, liveLocation, gameData} from "./stores";
   class="btn {btnstate} btn-=square btn-outline w-[64px] h-[64px] btn-accent"
   on:click={updateGameObject}
 >
-{#if $gameState == 0}
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 64 64"
-    enable-background="new 0 0 64 64"
-    width="40px"
-    height="40px"
-    ><path
-      d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
-      fill="#fc761d"
-    /></svg  >
-{/if}
-{#if $gameState == 1}
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 64 64"
-    enable-background="new 0 0 64 64"
-    width="84px"
-    height="84px"
-    ><path
-      d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
-      fill="#fc761d"
-    /></svg
-  >
-{/if}
+  {#if $gameState == 0}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 64 64"
+      enable-background="new 0 0 64 64"
+      width="40px"
+      height="40px"
+      ><path
+        d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
+        fill="#fc761d"
+      /></svg
+    >
+  {/if}
+  {#if $gameState == 1}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 64 64"
+      enable-background="new 0 0 64 64"
+      width="84px"
+      height="84px"
+      ><path
+        d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
+        fill="#fc761d"
+      /></svg
+    >
+  {/if}
 </button>
