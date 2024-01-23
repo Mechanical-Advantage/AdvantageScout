@@ -2,6 +2,7 @@
   import GamePiece from "./GamePiece.svelte";
   import { gameState } from "./stores";
   export let btnstate;
+  export let btnsize
   export let location;
   export let gamePieceLocation;
 
@@ -14,6 +15,6 @@
     >{location}</span>
     {/if}
   <div class="absolute focus:animate-bounce">
-    <GamePiece btnstate={btnstate} gamePiece="Note" gamePieceLocation={location} {...location} />
+    <GamePiece btnstate={btnstate} btnsize={btnsize} gamePiece="Note" gamePieceLocation={location} {...location} />
   </div>
 </div>

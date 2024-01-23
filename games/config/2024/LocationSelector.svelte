@@ -14,8 +14,9 @@
         gamePiece="Note"
         btnstate={$gameData["AutoFloorCenterline0NoteCollect"] == 0
           ? ""
-          : "btn-disabled bg-gray-600"}
+          : "btn-disabled bg-gray-700"}
         {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -25,8 +26,9 @@
         gamePiece="Note"
         btnstate={$gameData["AutoFloorCenterline1NoteCollect"] == 0
           ? ""
-          : "btn-disabled bg-gray-600"}
+          : "btn-disabled bg-gray-700"}
         {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -36,8 +38,9 @@
         gamePiece="Note"
         btnstate={$gameData["AutoFloorCenterline2NoteCollect"] == 0
           ? ""
-          : "btn-disabled bg-gray-600"}
+          : "btn-disabled bg-gray-700"}
         {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -45,7 +48,8 @@
         location="FloorCenterline3"
         gamePiecelocation="FloorCenterline3"
         gamePiece="Note"
-        btnstate = {$gameData["AutoFloorCenterline3NoteCollect"] == 0?"": "btn-disabled bg-gray-600"} {gameMode}
+        btnstate = {$gameData["AutoFloorCenterline3NoteCollect"] == 0?"": "btn-disabled bg-gray-700"} {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -53,7 +57,8 @@
         location="FloorCenterline4"
         gamePiecelocation="FloorCenterline4"
         gamePiece="Note"
-        btnstate = {$gameData["AutoFloorCenterline4NoteCollect"] == 0?"": "btn-disabled bg-gray-600"} {gameMode}
+        btnstate = {$gameData["AutoFloorCenterline4NoteCollect"] == 0?"": "btn-disabled bg-gray-700"} {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
   </div>
@@ -64,7 +69,8 @@
         location="FloorSpike0"
         gamePiecelocation="FloorSpike0"
         gamePiece="Note"
-        btnstate = {$gameData["AutoFloorSpike0NoteCollect"] == 0?"": "btn-disabled bg-gray-600"} {gameMode}
+        btnstate = {$gameData["AutoFloorSpike0NoteCollect"] == 0?"": "btn-disabled bg-gray-700"} {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -72,7 +78,8 @@
         location="FloorSpike1"
         gamePiecelocation="FloorSpike1"
         gamePiece="Note"
-        btnstate = {$gameData["AutoFloorSpike1NoteCollect"] == 0?"": "btn-disabled bg-gray-600"} {gameMode}
+        btnstate = {$gameData["AutoFloorSpike1NoteCollect"] == 0?"": "btn-disabled bg-gray-700"} {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
     <div>
@@ -80,7 +87,8 @@
         location="FloorSpike2"
         gamePiecelocation="FloorSpike2"
         gamePiece="Note"
-        btnstate = {$gameData["AutoFloorSpike2NoteCollect"] == 0?"": "btn-disabled bg-gray-600"} {gameMode}
+        btnstate = {$gameData["AutoFloorSpike2NoteCollect"] == 0?"": "btn-disabled bg-gray-700"} {gameMode}
+        btnsize=" w-[64px] h-[64px]"
       />
     </div>
   </div>
@@ -94,6 +102,7 @@
         gamePieceLocation="Floor"
         gamePiece="Note"
         {gameMode}
+        btnsize=" w-[84px] h-[84px]"
       />
     </div>
     <div>
@@ -102,6 +111,7 @@
         gamePieceLocation="Source"
         gamePiece="Note"
         {gameMode}
+        btnsize=" w-[84px] h-[84px]"
       />
     </div>
   </div>
