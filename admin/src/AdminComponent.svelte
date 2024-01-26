@@ -9,9 +9,10 @@
     import MatchScheduleModal from "./MatchScheduleModal.svelte";
     import BlockSchedule from "./BlockSchedule.svelte";
     import CurrentMatchDisplay from "./CurrentMatchDisplay.svelte";
+  import PicklistTest from "./PicklistTest.svelte";
 </script>
 
-<div class="absolute mt-0 ml-[750px] z-5">
+<!-- <div class="absolute mt-0 ml-[750px] z-5">
     <ConfigModal />
 </div>
 
@@ -45,4 +46,14 @@
 
 <div class="absolute top-10 ml-[1250px]">
     <Devices />
+</div> -->
+<!-- <div>
+    <PicklistTest picklist = "1"/>
+</div>
+<div>
+    <PicklistTest picklist = "2"/>
+</div> -->
+<div class="flex flex-row gap-x-40 absolute top-10 ml-[20px]">
+    <PicklistTest picklist="1" />
+    <PicklistTest picklist="2" />
 </div>

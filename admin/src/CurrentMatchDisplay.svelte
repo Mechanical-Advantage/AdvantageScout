@@ -9,15 +9,18 @@
     const response = await fetch("/get_schedule", { method: "GET" });
     const data = await response.json();
     schedule = data;
-    teams = schedule["teams"]
-    scouts = schedule["scouts"]
-    ready = schedule["ready"]
-    match = schedule["match"]
+    if (schedule.length !== undefined) {
+        teams = schedule["teams"]
+        scouts = schedule["scouts"]
+        ready = schedule["ready"]
+        match = schedule["match"]
+    
+    }
 }
 setInterval(getSchedule, 500)
 
 </script>
-
+{#if match !== 0}
 <div>
     <table class="table-auto border-separate border-spacing-1 ">
         <tbody class="rounded-md table-auto">
@@ -33,7 +36,7 @@ setInterval(getSchedule, 500)
         </tbody>
     </table>
 </div>
-
+{/if}
 <style>
     .blueUploaded {
         background-color: #87C3FF;
