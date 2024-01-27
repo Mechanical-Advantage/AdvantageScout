@@ -54,11 +54,25 @@
     const dispatch = createEventDispatcher();
     const reorder = ({ from, to }) => {
       let newList = [...list];
+    //   newList = getPickList(newList, pickType);
       newList[from] = [newList[to], (newList[to] = newList[from])][0];
   
       dispatch("sort", newList);
     };
-  
+    export let pickType;
+  function getPickList(fullList, pickType) {
+    let i = 0;
+    let tempList = [];
+    console.log("fullList" + fullList)
+    while (i < fullList.length){
+      if (fullList[i]["type"] == pickType) {
+        tempList.append(fullList[i]);
+      }
+    i++;
+    }
+    console.log("correct options" + list)
+    return tempList;
+  }
     // UTILS
     const getKey = item => (key ? item[key] : item);
   
@@ -83,7 +97,7 @@
   
   {#if list && list.length}
     <ul>
-      {#each list as item, index (getKey(item))}
+      {#each list as item, index (getKey(item))} 
         <li
           data-index={index}
           data-id={JSON.stringify(getKey(item))}
@@ -97,7 +111,7 @@
           animate:flip={{ duration: 300 }}
           class:over={getKey(item) === isOver}>
           <slot {item} {index}>
-            <p>{getKey(item)} </p>
+            <p>{getKey(item)} 123</p>
           </slot>
         </li>
       {/each}

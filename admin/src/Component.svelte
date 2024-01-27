@@ -7,7 +7,11 @@
 	span{
 		background-color: #288a71d9;
 		border-radius: 4px;
+		size: 5em;
 		padding: 0 1em;
+		/* width: 60; */
+		display: inline-block;
+		justify-content: center;
 		font-size: 1.75em;
 	}
 </style>
