@@ -2,6 +2,9 @@
     import { quintOut } from "svelte/easing";
     import { crossfade } from "svelte/transition";
     import { flip } from "svelte/animate";
+    import { firstPickList, secondPickList } from "./PicklistStores.js";
+    export let pickType;
+    let tempListItem = [];
   
     // FLIP ANIMATION
     const [send, receive] = crossfade({
@@ -55,24 +58,33 @@
     const reorder = ({ from, to }) => {
       let newList = [...list];
     //   newList = getPickList(newList, pickType);
-      newList[from] = [newList[to], (newList[to] = newList[from])][0];
+    tempListItem = newList[from];
+    newList.splice(from, 1);
+    newList.splice(to, 0, tempListItem);  
+    // newList[from] = [newList[to], (newList[to] = newList[from])][0];
   
       dispatch("sort", newList);
-    };
-    export let pickType;
-  function getPickList(fullList, pickType) {
-    let i = 0;
-    let tempList = [];
-    console.log("fullList" + fullList)
-    while (i < fullList.length){
-      if (fullList[i]["type"] == pickType) {
-        tempList.append(fullList[i]);
+      console.log("newList" + newList[0])
+      if (pickType == "First") {
+        $firstPickList = newList;
+      } else {
+        $secondPickList = newList;
       }
-    i++;
-    }
-    console.log("correct options" + list)
-    return tempList;
-  }
+    };
+  //   export let pickType;
+  // function getPickList(fullList, pickType) {
+  //   let i = 0;
+  //   let tempList = [];
+  //   console.log("fullList" + fullList)
+  //   while (i < fullList.length){
+  //     if (fullList[i]["type"] == pickType) {
+  //       tempList.append(fullList[i]);
+  //     }
+  //   i++;
+  //   }
+  //   console.log("correct options" + list)
+  //   return tempList;
+  // }
     // UTILS
     const getKey = item => (key ? item[key] : item);
   
