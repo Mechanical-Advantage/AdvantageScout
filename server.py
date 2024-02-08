@@ -28,7 +28,7 @@ host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM12"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
-                     "COM8", "COM3"]  # current implementation
+                     "COM8", "COM3","COM9"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
@@ -1007,6 +1007,47 @@ document.body.innerHTML = window.localStorage.getItem(
                          [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8]})
         conn_global.close()
         return (json.dumps(data))
+    
+    @cherrypy.expose
+    def get_firstlist(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute(
+            "SELECT * FROM PickList WHERE PickType = 'First' ORDER BY PickType, PickOrder")
+        raw = cur_global.fetchall()
+        data = []
+        for i in range(len(raw)):
+            data.append({"id": raw[i][3], "name": raw[i][0], "score": raw[i][1], "type": raw[i][2]})
+        conn_global.close()
+        return (json.dumps(data))
+    
+    @cherrypy.expose
+    def get_secondlist(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute(
+            "SELECT * FROM PickList WHERE PickType = 'Second' ORDER BY PickType, PickOrder")
+        raw = cur_global.fetchall()
+        data = []
+        for i in range(len(raw)):
+            data.append({"id": raw[i][3], "name": raw[i][0], "score": raw[i][1], "type": raw[i][2]})
+        conn_global.close()
+        return (json.dumps(data))
+
+    @cherrypy.expose
+    def set_picklistorder(self, data="[]"):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        picklist_order = json.loads(data)
+        cur_global.execute("DELETE FROM PickList WHERE PickType = ?", (picklist_order[0]["type"],))
+        print(data)
+        for i in range(len(picklist_order)):
+            print(picklist_order[i]["name"])
+            cur_global.execute("INSERT INTO PickList(Team,PickScore,PickType,PickOrder) VALUES (?,?,?,?)",
+                               (picklist_order[i]["name"], picklist_order[i]["score"], picklist_order[i]["type"], i+1))
+
+        conn_global.commit()
+        conn_global.close()
 
     @cherrypy.expose
     def remove_device(self, name):
@@ -1221,6 +1262,7 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_global.commit()
         conn_global.close()
+        
 
     @cherrypy.expose
     def download(self):
@@ -1810,4 +1852,4 @@ if __name__ == "__main__":
     cherrypy.config.update(
         {'server.socket_port': port, 'server.socket_host': host})
     cherrypy.quickstart(main_server(), "/", {"/favicon.ico": {"tools.staticfile.on": True, "tools.staticfile.filename": os.getcwd() + "/static/img/favicon.ico"}, "/static": {
-                        "tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}, "/releases": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/cordova/releases"}})
+                        "tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/static"}, "/releases": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/cordova/releases"}, "/images": {"tools.staticdir.on": True, "tools.staticdir.dir": os.getcwd() + "/images"}})
