@@ -2,18 +2,7 @@
     import { onMount } from "svelte";
     import { is_function } from "svelte/internal";
 
-    // let matches = [
-    //     { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [3323, 8626, 501, 1761, 1922, 2423], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [8604, 6201, 69, 1099, 5000, 6723], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [4909, 5846, 2877, 2084, 1757, 1965], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [6933, 125, 7674, 6529, 95, 5752], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [7822, 5687, 5347, 97, 151, 6763], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [69, 5735, 5000, 5563, 3323, 6201], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [1099, 4311, 8626, 1761, 6723, 2877], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [2423, 6529, 1965, 1757, 6367, 8604], uploaded: [true, true, true, true, true, true] },
-    //     { teams: [7822, 5752, 1474, 6933, 95, 4909], uploaded: [true, true, true, true, true, true] }
-    // ];
+   
 
     let name = "";
     let matches = [];
@@ -22,7 +11,6 @@
         const data = await response.json();
         matches = data;
         matches = matches;
-        console.log(matches);
     }
     setInterval(getUploaded, 1500);
 

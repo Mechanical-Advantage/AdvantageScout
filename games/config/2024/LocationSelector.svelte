@@ -95,7 +95,7 @@
 {/if}
 
 {#if $gameState == 1}
-  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[340px]">
+  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[320px]">
     <div>
       <GamePieceLocation
         location="Source"

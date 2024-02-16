@@ -30,10 +30,6 @@
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
     $gameData[dataField] = $gameData[dataField] + 1;
     $gameData[locationField] = $gameData[locationField] + 1;
-    console.log(
-      "Location " + $liveLocation + " Location field" + locationField
-    );
-
     $liveGamepiece = 0;
   }
 
@@ -45,7 +41,7 @@
 </script>
 
 <div class="indicator">
-  <span class="indicator-item badge badge-accent text-xl"
+  <span class="indicator-item badge badge-accent text-2xl"
     >{$gameData[gameMode + gameLevelMap[level] + "Note" + type]}</span
   >
 

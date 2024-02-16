@@ -2,7 +2,6 @@
   import { gameData, autoDataLog } from "./stores";
 
   function handleClick() {
-    console.log("Leave - " + $gameData["Leave"]);
     $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
 
     $gameData["Leave"] =

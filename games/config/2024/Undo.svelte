@@ -26,14 +26,15 @@
     "TeleAmpNoteFail",
     "TeleFloorNoteCollect",
     "TeleSourceNoteCollect",
-    "TeleNoteDrop"]
+    "TeleNoteDrop",
+    "TeleTrapNoteSuccess",
+    "TeleTrapNoteFail"]
 
     let undoList = []
 
     function handleClick() {
         if ($gameState === 0 && $autoDataLog.length > 0) {
             tempUndoData = $autoDataLog.pop();
-            console.log(tempUndoData)
             UpdateLists(autoList)
         } else if ($gameState === 1 && $teleDataLog.length > 0) {
             tempUndoData = $teleDataLog.pop();

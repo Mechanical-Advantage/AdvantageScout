@@ -31,7 +31,7 @@
 
 </script>
 <div class="indicator">
-    <span class="indicator-item badge badge-accent text-xl"
+    <span class="indicator-item badge badge-accent text-2xl"
         >{$gameData[gameMode + "Note" + "Drop"]}</span
     >
   

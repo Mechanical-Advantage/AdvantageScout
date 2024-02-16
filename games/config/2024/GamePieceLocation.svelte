@@ -11,7 +11,7 @@
 <div class="indicator absolute">
     {#if $gameState==1}
     <span
-    class="indicator-item indicator-middle indicator-center indicator-start badge badge-primary "
+    class="indicator-item indicator-middle indicator-center indicator-start badge badge-primary text-xl"
     >{location}</span>
     {/if}
   <div class="absolute focus:animate-bounce">

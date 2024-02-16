@@ -10,7 +10,7 @@
     import MatchScheduleModal from "./MatchScheduleModal.svelte";
     import BlockSchedule from "./BlockSchedule.svelte";
     import CurrentMatchDisplay from "./CurrentMatchDisplay.svelte";
-    import PicklistTest from "./PicklistTest.svelte";
+    import FirstList from "./FirstList.svelte";
     import SecondList from "./SecondList.svelte";
 
       
@@ -54,6 +54,6 @@
 </div>
 
 <div class="flex flex-row gap-x-40 absolute top-450 ml-[650px]">
-    <PicklistTest picklist="1" pickType="First"/>
+    <FirstList picklist="1" pickType="First"/>
     <SecondList picklist="2" pickType="Second"/>
 </div>

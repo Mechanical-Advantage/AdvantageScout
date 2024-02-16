@@ -1,7 +1,6 @@
 <script>
     import {currentTeam} from "./stores"
 
-    console.log($currentTeam)
 
 </script>
 
