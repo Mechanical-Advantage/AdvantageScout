@@ -1,0 +1,2524 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2023.2" RunE2="T">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="114" y="174" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="36">C:\mascout\AdvantageScout\global.db|||config</File>
+          <FormatSpecificOptions>
+            <NoProgress>True</NoProgress>
+            <CacheData>False</CacheData>
+            <PreSQL />
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>global.db
+Query=config</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="key" size="1073741823" source="File: C:\mascout\AdvantageScout\global.db|||config" type="V_WString" />
+            <Field name="value" size="1073741823" source="File: C:\mascout\AdvantageScout\global.db|||config" type="V_WString" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="210" y="174" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>[key] = "event"</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[key] = "event"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="114" y="306" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="36">C:\mascout\AdvantageScout\data_2024.db|||match</File>
+          <FormatSpecificOptions>
+            <NoProgress>True</NoProgress>
+            <CacheData>False</CacheData>
+            <PreSQL />
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>data_2024.db
+Query=match</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Event" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="Team" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="Match" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="DeviceName" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="Version" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="InterfaceType" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="Time" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="UploadTime" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="ScoutName" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="AllianceColor" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="ReversedAlliance" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="StartPosition" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="StartGamePiece" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="StartConfig" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="Leave" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoSpeakerNoteSuccess" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoSpeakerNoteFail" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoAmpNoteSuccess" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoAmpNoteFail" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleSpeakerNoteSuccess" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleSpeakerNoteFail" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleAmpNoteSuccess" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleAmpNoteFail" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleTrapNoteSuccess" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleTrapNoteFail" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleOnstage" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoPreLoadedNoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorSpike0NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorSpike1NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorSpike2NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorCenterline0NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorCenterline1NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorCenterline2NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorCenterline3NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoFloorCenterline4NoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TelePreLoadedNoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleFloorNoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleSourceNoteCollect" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="AutoNoteDrop" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="TeleNoteDrop" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="CoopertitionBonus" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="Harmony" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="PlayingDefenseDuration" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="UnderDefenseDuration" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="Park" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="Points" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="Penalties" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="Disabled" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+            <Field name="DriverRating" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="NoteIntakeRating" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="DefenseRating" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="UnderDefenseRating" scale="6" size="18" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="FixedDecimal" />
+            <Field name="AutoPath" size="1073741823" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="V_WString" />
+            <Field name="Comment" source="File: C:\mascout\AdvantageScout\data_2024.db|||match" type="Int64" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AppendFields.AppendFields">
+        <Position x="366" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <CartesianMode>Allow</CartesianMode>
+          <SelectConfiguration>
+            <Configuration outputConnection="Output">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Target_key" selected="False" input="Target_" />
+                <SelectField field="Target_value" selected="True" rename="TargetEvent" input="Target_" />
+                <SelectField field="Source_Comment" selected="True" input="Source_" type="V_WString" size="2147483647" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxAppendFields" />
+    </Node>
+    <Node ToolID="5">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="462" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>[TargetEvent] = [Event]</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[TargetEvent] = [Event]</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="582" y="198" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Team" action="GroupBy" rename="Team" />
+            <SummarizeField field="Match" action="GroupBy" rename="Match" />
+            <SummarizeField field="UploadTime" action="Max" rename="Max_UploadTime" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="7">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="666" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="Team" />
+            <Field field="Match" />
+            <Field field="Max_UploadTime" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Team" />
+            <Field field="Match" />
+            <Field field="UploadTime" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Right_Team" selected="True" rename="Right_Team" input="Right_" />
+                <SelectField field="Right_Match" selected="True" rename="Right_Match" input="Right_" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="8">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="330" y="114" width="396" height="72" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Initial data cleanse and creation of new fields</Text>
+          <Font name="Arial" size="15.75" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="150" y="102" width="144" height="72" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Get current Event from global and join to data</Text>
+          <Font name="Arial" size="12" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="10">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="810" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="IF [TeleOnstage] = 2 then 1 else 0 ENDIF" field="OnStageSuccess" size="2" type="Int16" />
+            <FormulaField expression="IF [TeleOnstage] = 1 then 1 else 0 ENDIF" field="OnStageAttempt" size="2" type="Int16" />
+            <FormulaField expression="[AutoSpeakerNoteSuccess] + [AutoAmpNoteSuccess]" field="AutoNoteSuccess" size="2" type="Int16" />
+            <FormulaField expression="[AutoSpeakerNoteFail] + [AutoAmpNoteFail]" field="AutoNoteFail" size="2" type="Int16" />
+            <FormulaField expression="[TeleSpeakerNoteSuccess] + [TeleAmpNoteSuccess] + [TeleTrapNoteSuccess]" field="TeleNoteSuccess" size="2" type="Int16" />
+            <FormulaField expression="[TeleSpeakerNoteFail] + [TeleAmpNoteFail] + [TeleTrapNoteFail]" field="TeleNoteFail" size="2" type="Int16" />
+            <FormulaField expression="[AutoFloorSpike0NoteCollect] + [AutoFloorSpike1NoteCollect] + [AutoFloorSpike2NoteCollect]" field="AutoTotalFloorSpikeCollect" size="2" type="Int16" />
+            <FormulaField expression="[AutoFloorCenterline0NoteCollect] + [AutoFloorCenterline1NoteCollect] + [AutoFloorCenterline2NoteCollect] + [AutoFloorCenterline3NoteCollect] + [AutoFloorCenterline4NoteCollect]" field="AutoTotalFloorCenterlineCollect" size="2" type="Int16" />
+            <FormulaField expression="[AutoTotalFloorSpikeCollect] + [AutoTotalFloorCenterlineCollect]" field="AutoTotalFloorCollect" size="2" type="Int16" />
+            <FormulaField expression="[TeleFloorNoteCollect] + [TeleSourceNoteCollect]" field="TeleTotalCollect" size="2" type="Int16" />
+            <FormulaField expression="[AutoNoteSuccess] + [TeleNoteSuccess]" field="TotalNoteSuccess" size="2" type="Int16" />
+            <FormulaField expression="[AutoNoteFail] + [TeleNoteFail]" field="TotalNoteFail" size="2" type="Int16" />
+            <FormulaField expression="if [StartPosition] = 1 then &quot;Sub Source&quot; else &quot;&quot; endif + if [StartPosition] = 2 then &quot;Sub/Spike Mid&quot; else &quot;&quot; endif + if [StartPosition] = 3 then &quot;Sub Amp&quot; else &quot;&quot; endif + if [StartPosition] = 4 then &quot;Spike Amp&quot; else &quot;&quot; endif + if [StartPosition] = 5 then &quot;Spike Source&quot; else &quot;&quot; endif + if [StartPosition] = 6 then &quot;Source Far&quot; else &quot;&quot; endif + if [StartPosition] = 7 then &quot;Source Near&quot; else &quot;&quot; endif " field="StartZoneName" size="1073741823" type="V_WString" />
+            <FormulaField expression="[AutoNoteDrop] + [TeleNoteDrop]" field="TotalNoteDrop" size="2" type="Int16" />
+            <FormulaField expression="[TeleNoteSuccess] + [TeleNoteFail]" field="TeleTotalAttempts" size="2" type="Int16" />
+            <FormulaField expression="([TeleSpeakerNoteSuccess] + [TeleSpeakerNoteFail]) / [TeleTotalAttempts]" field="TelePercentSpeaker" size="2" type="Int16" />
+            <FormulaField expression="([TeleAmpNoteSuccess] + [TeleAmpNoteFail]) / [TeleTotalAttempts]" field="TelePercentAmp" size="2" type="Int16" />
+            <FormulaField expression="([TeleTrapNoteSuccess] + [TeleTrapNoteFail]) / [TeleTotalAttempts]" field="TelePercentTrap" size="2" type="Int16" />
+            <FormulaField expression="[Leave]*2 + [AutoSpeakerNoteSuccess]*5 + [AutoAmpNoteSuccess]*2&#xA;" field="AutoPoints" size="2" type="Int16" />
+            <FormulaField expression="[TeleSpeakerNoteSuccess]*2 + [TeleAmpNoteSuccess]*1 + [Park]*1 + [OnStageSuccess]*3 + [TeleTrapNoteSuccess]*5" field="TelePoints" size="2" type="Int16" />
+            <FormulaField expression="[AutoPoints] + [TelePoints]" field="TotalPoints" size="2" type="Int16" />
+            <FormulaField expression="if [StartPosition] = 1 then &quot;subsource&quot; else &quot;&quot; endif + if [StartPosition] = 2 then &quot;subspikemid&quot; else &quot;&quot; endif + if [StartPosition] = 3 then &quot;subamp&quot; else &quot;&quot; endif + if [StartPosition] = 4 then &quot;spikeamp&quot; else &quot;&quot; endif + if [StartPosition] = 5 then &quot;spikesource&quot; else &quot;&quot; endif + if [StartPosition] = 6 then &quot;sourcefar&quot; else &quot;&quot; endif + if [StartPosition] = 7 then &quot;sourcenear&quot; else &quot;&quot; endif " field="StartZoneNameGrafana" size="1073741823" type="V_WString" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorCenterline0NoteCollect] else [AutoFloorCenterline4NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorCenterline0NoteCollect] else [AutoFloorCenterline4NoteCollect] endif)&#xA;endif" field="Centerline0Normal" size="2" type="Int16" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorCenterline1NoteCollect] else [AutoFloorCenterline3NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorCenterline1NoteCollect] else [AutoFloorCenterline3NoteCollect] endif)&#xA;endif" field="Centerline1Normal" size="2" type="Int16" />
+            <FormulaField expression="[AutoFloorCenterline2NoteCollect]" field="Centerline2Normal" size="2" type="Int16" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorCenterline3NoteCollect] else [AutoFloorCenterline1NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorCenterline3NoteCollect] else [AutoFloorCenterline1NoteCollect] endif)&#xA;endif" field="Centerline3Normal" size="2" type="Int16" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorCenterline4NoteCollect] else [AutoFloorCenterline0NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorCenterline4NoteCollect] else [AutoFloorCenterline0NoteCollect] endif)&#xA;endif" field="Centerline4Normal" size="2" type="Int16" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorSpike0NoteCollect] else [AutoFloorSpike2NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorSpike0NoteCollect] else [AutoFloorSpike2NoteCollect] endif)&#xA;endif" field="Spike0Normal" size="2" type="Int16" />
+            <FormulaField expression="if [AllianceColor] = 0 then [AutoFloorSpike1NoteCollect] else [AutoFloorSpike1NoteCollect] endif" field="Spike1Normal" size="2" type="Int16" />
+            <FormulaField expression="if [ReversedAlliance] = 0 then&#xA;(if [AllianceColor] = 0 then [AutoFloorSpike2NoteCollect] else [AutoFloorSpike0NoteCollect] endif)&#xA; else &#xA;(if [AllianceColor] = 1 then [AutoFloorSpike2NoteCollect] else [AutoFloorSpike0NoteCollect] endif)&#xA;endif" field="Spike2Normal" size="2" type="Int16" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>OnStageSuccess = IF [TeleOnstage] = 2 then 1 else 0 ENDIF
+OnStageAttempt = IF [T...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="978" y="402" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="25">C:\mascout\AdvantageScout\InitialCalculations.xlsx|||Sheet1</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <PreserveFormat>False</PreserveFormat>
+            <UNCLocal>False</UNCLocal>
+            <SkipFieldNames>False</SkipFieldNames>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>InitialCalculations.xlsx
+Query=Sheet1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="12">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="90" y="834" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Team" action="GroupBy" rename="Team" />
+            <SummarizeField field="Team" action="Count" rename="Count" />
+            <SummarizeField field="Leave" action="Sum" rename="Sum_Leave" />
+            <SummarizeField field="AutoSpeakerNoteSuccess" action="Sum" rename="Sum_AutoSpeakerNoteSuccess" />
+            <SummarizeField field="AutoSpeakerNoteFail" action="Sum" rename="Sum_AutoSpeakerNoteFail" />
+            <SummarizeField field="AutoAmpNoteSuccess" action="Sum" rename="Sum_AutoAmpNoteSuccess" />
+            <SummarizeField field="AutoAmpNoteFail" action="Sum" rename="Sum_AutoAmpNoteFail" />
+            <SummarizeField field="TeleSpeakerNoteSuccess" action="Sum" rename="Sum_TeleSpeakerNoteSuccess" />
+            <SummarizeField field="TeleSpeakerNoteFail" action="Sum" rename="Sum_TeleSpeakerNoteFail" />
+            <SummarizeField field="TeleAmpNoteSuccess" action="Sum" rename="Sum_TeleAmpNoteSuccess" />
+            <SummarizeField field="TeleAmpNoteFail" action="Sum" rename="Sum_TeleAmpNoteFail" />
+            <SummarizeField field="TeleTrapNoteSuccess" action="Sum" rename="Sum_TeleTrapNoteSuccess" />
+            <SummarizeField field="TeleTrapNoteFail" action="Sum" rename="Sum_TeleTrapNoteFail" />
+            <SummarizeField field="AutoSpeakerNoteSuccess" action="Avg" rename="Avg_AutoSpeakerNoteSuccess" />
+            <SummarizeField field="AutoSpeakerNoteFail" action="Avg" rename="Avg_AutoSpeakerNoteFail" />
+            <SummarizeField field="AutoAmpNoteSuccess" action="Avg" rename="Avg_AutoAmpNoteSuccess" />
+            <SummarizeField field="AutoAmpNoteFail" action="Avg" rename="Avg_AutoAmpNoteFail" />
+            <SummarizeField field="TeleSpeakerNoteSuccess" action="Avg" rename="Avg_TeleSpeakerNoteSuccess" />
+            <SummarizeField field="TeleSpeakerNoteFail" action="Avg" rename="Avg_TeleSpeakerNoteFail" />
+            <SummarizeField field="TeleAmpNoteSuccess" action="Avg" rename="Avg_TeleAmpNoteSuccess" />
+            <SummarizeField field="TeleAmpNoteFail" action="Avg" rename="Avg_TeleAmpNoteFail" />
+            <SummarizeField field="TeleTrapNoteSuccess" action="Avg" rename="Avg_TeleTrapNoteSuccess" />
+            <SummarizeField field="TeleTrapNoteFail" action="Avg" rename="Avg_TeleTrapNoteFail" />
+            <SummarizeField field="AutoSpeakerNoteSuccess" action="Max" rename="Max_AutoSpeakerNoteSuccess" />
+            <SummarizeField field="AutoSpeakerNoteFail" action="Max" rename="Max_AutoSpeakerNoteFail" />
+            <SummarizeField field="AutoAmpNoteSuccess" action="Max" rename="Max_AutoAmpNoteSuccess" />
+            <SummarizeField field="AutoAmpNoteFail" action="Max" rename="Max_AutoAmpNoteFail" />
+            <SummarizeField field="TeleSpeakerNoteSuccess" action="Max" rename="Max_TeleSpeakerNoteSuccess" />
+            <SummarizeField field="TeleSpeakerNoteFail" action="Max" rename="Max_TeleSpeakerNoteFail" />
+            <SummarizeField field="TeleAmpNoteSuccess" action="Max" rename="Max_TeleAmpNoteSuccess" />
+            <SummarizeField field="TeleAmpNoteFail" action="Max" rename="Max_TeleAmpNoteFail" />
+            <SummarizeField field="TeleTrapNoteSuccess" action="Max" rename="Max_TeleTrapNoteSuccess" />
+            <SummarizeField field="TeleTrapNoteFail" action="Max" rename="Max_TeleTrapNoteFail" />
+            <SummarizeField field="AutoFloorSpike0NoteCollect" action="Sum" rename="Sum_AutoFloorSpike0NoteCollect" />
+            <SummarizeField field="AutoFloorSpike1NoteCollect" action="Sum" rename="Sum_AutoFloorSpike1NoteCollect" />
+            <SummarizeField field="AutoFloorSpike2NoteCollect" action="Sum" rename="Sum_AutoFloorSpike2NoteCollect" />
+            <SummarizeField field="AutoFloorCenterline0NoteCollect" action="Sum" rename="Sum_AutoFloorCenterline0NoteCollect" />
+            <SummarizeField field="AutoFloorCenterline1NoteCollect" action="Sum" rename="Sum_AutoFloorCenterline1NoteCollect" />
+            <SummarizeField field="AutoFloorCenterline2NoteCollect" action="Sum" rename="Sum_AutoFloorCenterline2NoteCollect" />
+            <SummarizeField field="AutoFloorCenterline3NoteCollect" action="Sum" rename="Sum_AutoFloorCenterline3NoteCollect" />
+            <SummarizeField field="AutoFloorCenterline4NoteCollect" action="Sum" rename="Sum_AutoFloorCenterline4NoteCollect" />
+            <SummarizeField field="TeleFloorNoteCollect" action="Sum" rename="Sum_TeleFloorNoteCollect" />
+            <SummarizeField field="TeleSourceNoteCollect" action="Sum" rename="Sum_TeleSourceNoteCollect" />
+            <SummarizeField field="AutoNoteDrop" action="Sum" rename="Sum_AutoNoteDrop" />
+            <SummarizeField field="TeleNoteDrop" action="Sum" rename="Sum_TeleNoteDrop" />
+            <SummarizeField field="TeleFloorNoteCollect" action="Avg" rename="Avg_TeleFloorNoteCollect" />
+            <SummarizeField field="TeleSourceNoteCollect" action="Avg" rename="Avg_TeleSourceNoteCollect" />
+            <SummarizeField field="AutoNoteDrop" action="Avg" rename="Avg_AutoNoteDrop" />
+            <SummarizeField field="TeleNoteDrop" action="Avg" rename="Avg_TeleNoteDrop" />
+            <SummarizeField field="TeleFloorNoteCollect" action="Max" rename="Max_TeleFloorNoteCollect" />
+            <SummarizeField field="TeleSourceNoteCollect" action="Max" rename="Max_TeleSourceNoteCollect" />
+            <SummarizeField field="AutoNoteDrop" action="Max" rename="Max_AutoNoteDrop" />
+            <SummarizeField field="TeleNoteDrop" action="Max" rename="Max_TeleNoteDrop" />
+            <SummarizeField field="PlayingDefenseDuration" action="AvgNo0" rename="AvgNo0_PlayingDefenseDuration" />
+            <SummarizeField field="UnderDefenseDuration" action="AvgNo0" rename="AvgNo0_UnderDefenseDuration" />
+            <SummarizeField field="Park" action="Sum" rename="Sum_Park" />
+            <SummarizeField field="Penalties" action="Sum" rename="Sum_Penalties" />
+            <SummarizeField field="Disabled" action="Sum" rename="Sum_Disabled" />
+            <SummarizeField field="DriverRating" action="AvgNo0" rename="AvgNo0_DriverRating" />
+            <SummarizeField field="NoteIntakeRating" action="AvgNo0" rename="AvgNo0_NoteIntakeRating" />
+            <SummarizeField field="DefenseRating" action="AvgNo0" rename="AvgNo0_DefenseRating" />
+            <SummarizeField field="UnderDefenseRating" action="AvgNo0" rename="AvgNo0_UnderDefenseRating" />
+            <SummarizeField field="Comment" action="Concat" rename="Concat_Comment">
+              <Concat_Start />
+              <Separator>,</Separator>
+              <Concat_End />
+            </SummarizeField>
+            <SummarizeField field="OnStageSuccess" action="Sum" rename="Sum_OnStageSuccess" />
+            <SummarizeField field="OnStageAttempt" action="Sum" rename="Sum_OnStageAttempt" />
+            <SummarizeField field="AutoNoteSuccess" action="Sum" rename="Sum_AutoNoteSuccess" />
+            <SummarizeField field="AutoNoteFail" action="Sum" rename="Sum_AutoNoteFail" />
+            <SummarizeField field="TeleNoteSuccess" action="Sum" rename="Sum_TeleNoteSuccess" />
+            <SummarizeField field="TeleNoteFail" action="Sum" rename="Sum_TeleNoteFail" />
+            <SummarizeField field="AutoNoteSuccess" action="Avg" rename="Avg_AutoNoteSuccess" />
+            <SummarizeField field="AutoNoteFail" action="Avg" rename="Avg_AutoNoteFail" />
+            <SummarizeField field="TeleNoteSuccess" action="Avg" rename="Avg_TeleNoteSuccess" />
+            <SummarizeField field="TeleNoteFail" action="Avg" rename="Avg_TeleNoteFail" />
+            <SummarizeField field="AutoNoteSuccess" action="Max" rename="Max_AutoNoteSuccess" />
+            <SummarizeField field="AutoNoteFail" action="Max" rename="Max_AutoNoteFail" />
+            <SummarizeField field="TeleNoteSuccess" action="Max" rename="Max_TeleNoteSuccess" />
+            <SummarizeField field="TeleNoteFail" action="Max" rename="Max_TeleNoteFail" />
+            <SummarizeField field="AutoTotalFloorSpikeCollect" action="Sum" rename="Sum_AutoTotalFloorSpikeCollect" />
+            <SummarizeField field="AutoTotalFloorCenterlineCollect" action="Sum" rename="Sum_AutoTotalFloorCenterlineCollect" />
+            <SummarizeField field="AutoTotalFloorCollect" action="Sum" rename="Sum_AutoTotalFloorCollect" />
+            <SummarizeField field="TeleTotalCollect" action="Sum" rename="Sum_TeleTotalCollect" />
+            <SummarizeField field="AutoTotalFloorSpikeCollect" action="Avg" rename="Avg_AutoTotalFloorSpikeCollect" />
+            <SummarizeField field="AutoTotalFloorCenterlineCollect" action="Avg" rename="Avg_AutoTotalFloorCenterlineCollect" />
+            <SummarizeField field="AutoTotalFloorCollect" action="Avg" rename="Avg_AutoTotalFloorCollect" />
+            <SummarizeField field="TeleTotalCollect" action="Avg" rename="Avg_TeleTotalCollect" />
+            <SummarizeField field="AutoTotalFloorSpikeCollect" action="Max" rename="Max_AutoTotalFloorSpikeCollect" />
+            <SummarizeField field="AutoTotalFloorCenterlineCollect" action="Max" rename="Max_AutoTotalFloorCenterlineCollect" />
+            <SummarizeField field="AutoTotalFloorCollect" action="Max" rename="Max_AutoTotalFloorCollect" />
+            <SummarizeField field="TeleTotalCollect" action="Max" rename="Max_TeleTotalCollect" />
+            <SummarizeField field="TotalNoteSuccess" action="Sum" rename="Sum_TotalNoteSuccess" />
+            <SummarizeField field="TotalNoteFail" action="Sum" rename="Sum_TotalNoteFail" />
+            <SummarizeField field="TotalNoteSuccess" action="Avg" rename="Avg_TotalNoteSuccess" />
+            <SummarizeField field="TotalNoteFail" action="Avg" rename="Avg_TotalNoteFail" />
+            <SummarizeField field="TotalNoteSuccess" action="Max" rename="Max_TotalNoteSuccess" />
+            <SummarizeField field="TotalNoteFail" action="Max" rename="Max_TotalNoteFail" />
+            <SummarizeField field="TotalNoteDrop" action="Sum" rename="Sum_TotalNoteDrop" />
+            <SummarizeField field="TeleTotalAttempts" action="Sum" rename="Sum_TeleTotalAttempts" />
+            <SummarizeField field="TotalNoteDrop" action="Avg" rename="Avg_TotalNoteDrop" />
+            <SummarizeField field="TeleTotalAttempts" action="Avg" rename="Avg_TeleTotalAttempts" />
+            <SummarizeField field="TotalNoteDrop" action="Max" rename="Max_TotalNoteDrop" />
+            <SummarizeField field="TeleTotalAttempts" action="Max" rename="Max_TeleTotalAttempts" />
+            <SummarizeField field="AutoPoints" action="Sum" rename="Sum_AutoPoints" />
+            <SummarizeField field="TelePoints" action="Sum" rename="Sum_TelePoints" />
+            <SummarizeField field="TotalPoints" action="Sum" rename="Sum_TotalPoints" />
+            <SummarizeField field="Centerline0Normal" action="Sum" rename="Sum_Centerline0Normal" />
+            <SummarizeField field="Centerline1Normal" action="Sum" rename="Sum_Centerline1Normal" />
+            <SummarizeField field="Centerline2Normal" action="Sum" rename="Sum_Centerline2Normal" />
+            <SummarizeField field="Centerline3Normal" action="Sum" rename="Sum_Centerline3Normal" />
+            <SummarizeField field="Centerline4Normal" action="Sum" rename="Sum_Centerline4Normal" />
+            <SummarizeField field="Spike0Normal" action="Sum" rename="Sum_Spike0Normal" />
+            <SummarizeField field="Spike1Normal" action="Sum" rename="Sum_Spike1Normal" />
+            <SummarizeField field="Spike2Normal" action="Sum" rename="Sum_Spike2Normal" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="13">
+      <GuiSettings>
+        <Position x="414" y="822" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="Drop Down (18)">Sum_TeleSpeakerNoteSuccess</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="..\..\Users\mascout\Downloads\Percentile\Percentile.yxmc" />
+    </Node>
+    <Node ToolID="15">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="606" y="822" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Count" selected="True" />
+            <SelectField field="Sum_Leave" selected="True" />
+            <SelectField field="Sum_AutoSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Sum_AutoSpeakerNoteFail" selected="True" />
+            <SelectField field="Sum_AutoAmpNoteSuccess" selected="True" />
+            <SelectField field="Sum_AutoAmpNoteFail" selected="True" />
+            <SelectField field="Sum_TeleSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Sum_TeleSpeakerNoteFail" selected="True" />
+            <SelectField field="Sum_TeleAmpNoteSuccess" selected="True" />
+            <SelectField field="Sum_TeleAmpNoteFail" selected="True" />
+            <SelectField field="Sum_TeleTrapNoteSuccess" selected="True" />
+            <SelectField field="Sum_TeleTrapNoteFail" selected="True" />
+            <SelectField field="Avg_AutoSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Avg_AutoSpeakerNoteFail" selected="True" />
+            <SelectField field="Avg_AutoAmpNoteSuccess" selected="True" />
+            <SelectField field="Avg_AutoAmpNoteFail" selected="True" />
+            <SelectField field="Avg_TeleSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleSpeakerNoteFail" selected="True" />
+            <SelectField field="Avg_TeleAmpNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleAmpNoteFail" selected="True" />
+            <SelectField field="Avg_TeleTrapNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleTrapNoteFail" selected="True" />
+            <SelectField field="Max_AutoSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Max_AutoSpeakerNoteFail" selected="True" />
+            <SelectField field="Max_AutoAmpNoteSuccess" selected="True" />
+            <SelectField field="Max_AutoAmpNoteFail" selected="True" />
+            <SelectField field="Max_TeleSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Max_TeleSpeakerNoteFail" selected="True" />
+            <SelectField field="Max_TeleAmpNoteSuccess" selected="True" />
+            <SelectField field="Max_TeleAmpNoteFail" selected="True" />
+            <SelectField field="Max_TeleTrapNoteSuccess" selected="True" />
+            <SelectField field="Max_TeleTrapNoteFail" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike0NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike1NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike2NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline0NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline1NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline2NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline3NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline4NoteCollect" selected="True" />
+            <SelectField field="Sum_TeleFloorNoteCollect" selected="True" />
+            <SelectField field="Sum_TeleSourceNoteCollect" selected="True" />
+            <SelectField field="Sum_AutoNoteDrop" selected="True" />
+            <SelectField field="Sum_TeleNoteDrop" selected="True" />
+            <SelectField field="Avg_TeleFloorNoteCollect" selected="True" />
+            <SelectField field="Avg_TeleSourceNoteCollect" selected="True" />
+            <SelectField field="Avg_AutoNoteDrop" selected="True" />
+            <SelectField field="Avg_TeleNoteDrop" selected="True" />
+            <SelectField field="Max_TeleFloorNoteCollect" selected="True" />
+            <SelectField field="Max_TeleSourceNoteCollect" selected="True" />
+            <SelectField field="Max_AutoNoteDrop" selected="True" />
+            <SelectField field="Max_TeleNoteDrop" selected="True" />
+            <SelectField field="AvgNo0_PlayingDefenseDuration" selected="True" />
+            <SelectField field="AvgNo0_UnderDefenseDuration" selected="True" />
+            <SelectField field="Sum_Park" selected="True" />
+            <SelectField field="Sum_Penalties" selected="True" />
+            <SelectField field="Sum_Disabled" selected="True" />
+            <SelectField field="AvgNo0_DriverRating" selected="True" />
+            <SelectField field="AvgNo0_NoteIntakeRating" selected="True" />
+            <SelectField field="AvgNo0_DefenseRating" selected="True" />
+            <SelectField field="AvgNo0_UnderDefenseRating" selected="True" />
+            <SelectField field="Concat_Comment" selected="True" />
+            <SelectField field="Sum_OnStageSuccess" selected="True" />
+            <SelectField field="Sum_OnStageAttempt" selected="True" />
+            <SelectField field="Sum_AutoNoteSuccess" selected="True" />
+            <SelectField field="Sum_AutoNoteFail" selected="True" />
+            <SelectField field="Sum_TeleNoteSuccess" selected="True" />
+            <SelectField field="Sum_TeleNoteFail" selected="True" />
+            <SelectField field="Avg_AutoNoteSuccess" selected="True" />
+            <SelectField field="Avg_AutoNoteFail" selected="True" />
+            <SelectField field="Avg_TeleNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleNoteFail" selected="True" />
+            <SelectField field="Max_AutoNoteSuccess" selected="True" />
+            <SelectField field="Max_AutoNoteFail" selected="True" />
+            <SelectField field="Max_TeleNoteSuccess" selected="True" />
+            <SelectField field="Max_TeleNoteFail" selected="True" />
+            <SelectField field="Sum_AutoTotalFloorSpikeCollect" selected="True" />
+            <SelectField field="Sum_AutoTotalFloorCenterlineCollect" selected="True" />
+            <SelectField field="Sum_AutoTotalFloorCollect" selected="True" />
+            <SelectField field="Sum_TeleTotalCollect" selected="True" />
+            <SelectField field="Avg_AutoTotalFloorSpikeCollect" selected="True" />
+            <SelectField field="Avg_AutoTotalFloorCenterlineCollect" selected="True" />
+            <SelectField field="Avg_AutoTotalFloorCollect" selected="True" />
+            <SelectField field="Avg_TeleTotalCollect" selected="True" />
+            <SelectField field="Max_AutoTotalFloorSpikeCollect" selected="True" />
+            <SelectField field="Max_AutoTotalFloorCenterlineCollect" selected="True" />
+            <SelectField field="Max_AutoTotalFloorCollect" selected="True" />
+            <SelectField field="Max_TeleTotalCollect" selected="True" />
+            <SelectField field="Sum_TotalNoteSuccess" selected="True" />
+            <SelectField field="Sum_TotalNoteFail" selected="True" />
+            <SelectField field="Avg_TotalNoteSuccess" selected="True" />
+            <SelectField field="Avg_TotalNoteFail" selected="True" />
+            <SelectField field="Max_TotalNoteSuccess" selected="True" />
+            <SelectField field="Max_TotalNoteFail" selected="True" />
+            <SelectField field="Sum_TotalNoteDrop" selected="True" />
+            <SelectField field="Sum_TeleTotalAttempts" selected="True" />
+            <SelectField field="Avg_TotalNoteDrop" selected="True" />
+            <SelectField field="Avg_TeleTotalAttempts" selected="True" />
+            <SelectField field="Max_TotalNoteDrop" selected="True" />
+            <SelectField field="Max_TeleTotalAttempts" selected="True" />
+            <SelectField field="Sum_AutoPoints" selected="True" />
+            <SelectField field="Sum_TelePoints" selected="True" />
+            <SelectField field="Sum_TotalPoints" selected="True" />
+            <SelectField field="Sum_Centerline0Normal" selected="True" />
+            <SelectField field="Sum_Centerline1Normal" selected="True" />
+            <SelectField field="Sum_Centerline2Normal" selected="True" />
+            <SelectField field="Sum_Centerline3Normal" selected="True" />
+            <SelectField field="Sum_Centerline4Normal" selected="True" />
+            <SelectField field="Sum_Spike0Normal" selected="True" />
+            <SelectField field="Sum_Spike1Normal" selected="True" />
+            <SelectField field="Sum_Spike2Normal" selected="True" />
+            <SelectField field="Right_Team" selected="True" />
+            <SelectField field="SoureFar" selected="True" />
+            <SelectField field="SourceNear" selected="True" />
+            <SelectField field="Percentile" selected="True" rename="TeleSpeakerNoteSucessPercentile" />
+            <SelectField field="TextLeave" selected="True" />
+            <SelectField field="TextPark" selected="True" />
+            <SelectField field="TextOnstage" selected="True" />
+            <SelectField field="AmpNear" selected="True" />
+            <SelectField field="SpikeLeft" selected="True" />
+            <SelectField field="SpikeMid" selected="True" />
+            <SelectField field="SpikeRight" selected="True" />
+            <SelectField field="SubLeft" selected="True" />
+            <SelectField field="SubMid" selected="True" />
+            <SelectField field="SubRight" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="16">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="702" y="822" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_eb0602081c9fbd469227cf05443e2a5b~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="18">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.MultiRowFormula.MultiRowFormula">
+        <Position x="1038" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <UpdateField value="False" />
+          <UpdateField_Name>TargetEvent</UpdateField_Name>
+          <CreateField_Name>matchIndex</CreateField_Name>
+          <CreateField_Type>Int64</CreateField_Type>
+          <CreateField_Size>8</CreateField_Size>
+          <OtherRows>Empty</OtherRows>
+          <NumRows value="1" />
+          <Expression>[Row-1:matchIndex]+1</Expression>
+          <GroupByFields>
+            <Field field="Team" />
+          </GroupByFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[Row-1:matchIndex]+1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMultiRowFormula" />
+    </Node>
+    <Node ToolID="19">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="942" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="Team" order="Ascending" />
+            <Field field="Match" order="Ascending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Team - Ascending
+Match - Ascending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="20">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1362" y="366" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_d04a616e8137ff428343ebfe60adb73b~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="21">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2358" y="138" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="23">odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||MatchData</File>
+          <Passwords>4AB0D8F118E67599FEA52FF383F2373BB</Passwords>
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <TransactionMessages>False</TransactionMessages>
+            <Projection />
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <SpatialObjSize>8000</SpatialObjSize>
+            <OutputOption>Overwrite</OutputOption>
+            <PostSQL />
+            <TransactionSize>0</TransactionSize>
+            <TableStyle>Quoted</TableStyle>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=PostgreSQL30
+Query=MatchData</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="22">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="690" y="1026" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="23">odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||summary</File>
+          <Passwords>4AB0D8F118E67599FEA52FF383F2373BB</Passwords>
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <TransactionMessages>False</TransactionMessages>
+            <Projection />
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <SpatialObjSize>8000</SpatialObjSize>
+            <OutputOption>Overwrite</OutputOption>
+            <PostSQL />
+            <TransactionSize>0</TransactionSize>
+            <TableStyle>Quoted</TableStyle>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=PostgreSQL30
+Query=summary</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="23">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="1278" y="306" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Match" action="GroupBy" rename="Match" />
+            <SummarizeField field="AllianceColor" action="GroupBy" rename="AllianceColor" />
+            <SummarizeField field="AutoPoints" action="Sum" rename="Sum_AutoPoints" />
+            <SummarizeField field="TelePoints" action="Sum" rename="Sum_TelePoints" />
+            <SummarizeField field="TotalPoints" action="Sum" rename="Sum_TotalPoints" />
+            <SummarizeField field="TotalNoteSuccess" action="Sum" rename="Sum_TotalNoteSuccess" />
+            <SummarizeField field="AutoNoteSuccess" action="Sum" rename="Sum_AutoNoteSuccess" />
+            <SummarizeField field="TeleNoteSuccess" action="Sum" rename="Sum_TeleNoteSuccess" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="24">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="1386" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="Match" />
+            <Field field="AllianceColor" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Match" />
+            <Field field="AllianceColor" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Left_Right_Team" selected="True" rename="Left_Right_Team" input="Left_" />
+                <SelectField field="Left_Right_Match" selected="True" rename="Left_Right_Match" input="Left_" />
+                <SelectField field="Right_Match" selected="True" rename="Right_Match" input="Right_" />
+                <SelectField field="Right_AllianceColor" selected="True" rename="Right_AllianceColor" input="Right_" />
+                <SelectField field="Right_Team" selected="True" rename="Right_Team" input="Right_" />
+                <SelectField field="Right_Right_Team" selected="True" rename="Right_Right_Team" input="Right_" />
+                <SelectField field="Right_Right_Match" selected="True" rename="Right_Right_Match" input="Right_" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="26">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="282" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="36">C:\mascout\AdvantageScout\grafana-output\TeamList.sqlite|||TeamList</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <TransactionSize>0</TransactionSize>
+            <PostSQL />
+            <PreSQL />
+            <TransactionMessages>False</TransactionMessages>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>TeamList.sqlite
+Query=TeamList</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="28">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="186" y="894" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" type="V_String" size="2147483647" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="29">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="2190" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" type="V_String" size="2147483647" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="30">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="606" y="966" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" type="V_String" size="2147483647" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="35">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="1578" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="([AutoPoints]/[AllianceAutoPoints])*100" field="AutoPointsContribution" size="8" type="Double" />
+            <FormulaField expression="([TelePoints]/[AllianceTelePoints])*100" field="TelePointsContribution" size="8" type="Double" />
+            <FormulaField expression="([TotalPoints]/[AllianceTotalPoints])*100" field="TotalPointsContribution" size="8" type="Double" />
+            <FormulaField expression="([AutoNoteSuccess]/[AllianceTotalNoteSuccess])*100" field="TotalAutoNoteContribution" size="8" type="Double" />
+            <FormulaField expression="([TeleNoteSuccess]/[AllianceTotalNoteSuccess])*100" field="TotalTeleNoteContribution" size="8" type="Double" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>AutoPointsContribution = ([AutoPoints]/[AllianceAutoPoints])*100
+TelePointsContr...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="36">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1482" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Right_Team" selected="False" />
+            <SelectField field="Right_Match2" selected="False" />
+            <SelectField field="Sum_AutoPoints" selected="True" rename="AllianceAutoPoints" />
+            <SelectField field="Sum_TelePoints" selected="True" rename="AllianceTelePoints" />
+            <SelectField field="Sum_TotalPoints" selected="True" rename="AllianceTotalPoints" />
+            <SelectField field="Sum_TotalNoteSuccess" selected="True" rename="AllianceTotalNoteSuccess" />
+            <SelectField field="Sum_AutoNoteSuccess" selected="True" rename="AllianceAutoNoteSuccess" />
+            <SelectField field="Sum_TeleNoteSuccess" selected="True" rename="AllianceTeleNoteSuccess" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="37">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="114" y="510" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Team" action="GroupBy" rename="Team" />
+            <SummarizeField field="StartZoneName" action="GroupBy" rename="StartZoneName" />
+            <SummarizeField field="StartZoneName" action="Count" rename="Count" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="38">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="270" y="510" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_ea5f015ed16fbb46bc4b9e321af3b2a6~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="40">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.CrossTab.CrossTab">
+        <Position x="306" y="582" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields>
+            <Field field="Team" />
+          </GroupFields>
+          <HeaderField field="StartZoneName" />
+          <DataField field="Count" />
+          <Methods>
+            <Method method="CountWithNulls" />
+            <Method method="First" />
+          </Methods>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Team" source="CrossTab:Group:CountWithNulls:First:" type="Int64" />
+            <Field name="CountWithNulls__Empty_" source="CrossTab:Header:StartZoneName:[Empty]:CountWithNulls:" type="Double" />
+            <Field name="First__Empty_" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Source_Far" source="CrossTab:Header:StartZoneName:Source Far:CountWithNulls:" type="Double" />
+            <Field name="First_Source_Far" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Source_Near" source="CrossTab:Header:StartZoneName:Source Near:CountWithNulls:" type="Double" />
+            <Field name="First_Source_Near" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Spike_Amp" source="CrossTab:Header:StartZoneName:Spike Amp:CountWithNulls:" type="Double" />
+            <Field name="First_Spike_Amp" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Spike_Source" source="CrossTab:Header:StartZoneName:Spike Source:CountWithNulls:" type="Double" />
+            <Field name="First_Spike_Source" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Sub_Amp" source="CrossTab:Header:StartZoneName:Sub Amp:CountWithNulls:" type="Double" />
+            <Field name="First_Sub_Amp" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Sub_Source" source="CrossTab:Header:StartZoneName:Sub Source:CountWithNulls:" type="Double" />
+            <Field name="First_Sub_Source" source="Summarize: Count - Team" type="Int64" />
+            <Field name="CountWithNulls_Sub_Spike_Mid" source="CrossTab:Header:StartZoneName:Sub/Spike Mid:CountWithNulls:" type="Double" />
+            <Field name="First_Sub_Spike_Mid" source="Summarize: Count - Team" type="Int64" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxCrossTab" />
+    </Node>
+    <Node ToolID="41">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="786" y="582" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_3a1b56901449c34894444c3f489e15b7~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="42">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="198" y="582" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="Team" order="Ascending" />
+            <Field field="StartZoneName" order="Ascending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Team - Ascending
+StartZoneName - Ascending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="43">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="462" y="582" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="CountWithNulls_Amp_Near" selected="False" />
+            <SelectField field="First_Amp_Near" selected="True" rename="AmpNear" />
+            <SelectField field="CountWithNulls_Source_Far" selected="False" />
+            <SelectField field="First_Source_Far" selected="True" rename="SoureFar" />
+            <SelectField field="CountWithNulls_Source_Near" selected="False" />
+            <SelectField field="First_Source_Near" selected="True" rename="SourceNear" />
+            <SelectField field="CountWithNulls_Spike_Left" selected="False" />
+            <SelectField field="First_Spike_Left" selected="True" rename="SpikeLeft" />
+            <SelectField field="CountWithNulls_Spike_Mid" selected="False" />
+            <SelectField field="First_Spike_Mid" selected="True" rename="SpikeMid" />
+            <SelectField field="CountWithNulls_SpikeRight" selected="False" />
+            <SelectField field="First_SpikeRight" selected="True" rename="SpikeRight" />
+            <SelectField field="CountWithNulls_Sub_Left" selected="False" />
+            <SelectField field="First_Sub_Left" selected="True" rename="SubLeft" />
+            <SelectField field="CountWithNulls_Sub_Mid" selected="False" />
+            <SelectField field="First_Sub_Mid" selected="True" rename="SubMid" />
+            <SelectField field="CountWithNulls_Sub_Right" selected="False" />
+            <SelectField field="First_Sub_Right" selected="True" rename="SubRight" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="44">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="294" y="894" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_777038134164b343938c694f25c5396f~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="45">
+      <GuiSettings>
+        <Position x="630" y="582" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="Check Box (135)">False</Value>
+          <Value name="Check Box (136)">False</Value>
+          <Value name="List Box (11)">"AmpNear","SoureFar","SourceNear","SpikeLeft","SpikeMid","SpikeRight","SubLeft","SubMid","SubRight"</Value>
+          <Value name="Check Box (84)">False</Value>
+          <Value name="Check Box (117)">True</Value>
+          <Value name="Check Box (15)">True</Value>
+          <Value name="Check Box (109)">False</Value>
+          <Value name="Check Box (122)">False</Value>
+          <Value name="Check Box (53)">False</Value>
+          <Value name="Check Box (58)">False</Value>
+          <Value name="Check Box (70)">False</Value>
+          <Value name="Check Box (77)">False</Value>
+          <Value name="Drop Down (81)">upper</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Cleanse.yxmc" />
+    </Node>
+    <Node ToolID="46">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="234" y="822" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="Team" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Team" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Right_Team" selected="True" rename="Right_Team" input="Right_" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="47">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2298" y="270" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_ade119293310514ab970f689de0e0fe9~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="53">
+      <GuiSettings Plugin="GoogleDriveOutput_1_3_0">
+        <Position x="1986" y="306" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ClientId>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD091000000000800000050005700440000001066000000010000200000009410921C332FA0438AA4FAA55E560738AD5B123DAC5DA517E1637876944C74EF000000000E8000000002000020000000F4FD116BA259C49061FD42355976FAFA3B5ED15EF0A59E5CEB03DCEF69F7B4B8000600004EEC5E34B379BEC678416DE708EC666178DF30CCED643B7D3DA836CA3ED49BD2151FB2D4D613C7AA12DCAA24013FE7925D38F4C491232025A1281BFF1AAD6AB69A9C7DB211C1EBF7D01587C2380DE0A8DD562612E0834D0631368945CDDDC6C9E8EC48421046DC4E2E09A9EEA093A9F8A26EFC7E11E7628B791A35C630C394E614BFE4DCCE2B3706858A31F04987E4DC3D95EAF3DBEEECCA1B4827E4CE3CD273D5D0BB1B0971887E4660694930ADF20E9A954AD9D5BDD05B083D1210915DE8F331B9D04EF7D54B38A6E0FC20DC9E7338CD7D8BC932BBC492E202AF00D93120C3716149DC9B46BEF3E2E21F60F1066AF567D4F4406A212B59C271D3B81CD57AC123D156DF5574491867B69E4533B0C8C1645110638FE9BF183D7E1CCB1178E7A01AC7A12C058C8D719323EAE0934183A628698A514DDE5EB8CE46863410FDE291D7F3810F0F864543E00A3B2606135C43197B282C4922B35C66306FA27EACAC3C34C162C486C287BB6D1EDFB45F5C2551470508398D5D98C2475ADEFF5E721280D83249042D982B6305B1EB511AB046EFE0F3863ACAE4818B9AC835C0DF9DD11D594D7F9074866C26582D389EDB182DC15087FF1C33B7B3D5C3A845B1A67D1C47BD64D8BFF3D6D53B87E966042677A1F4CCA3B9ABB01055D42E8048291230B67D717D51B9F4C693CF02C290E01D6A32F4A0FD96A27C6EA3634EE0A1B302DF1D3FCC6DCBB112D11563E30E395963960F5846F48B0A739A093E24F2C13C23A6FFC3E768150FCAEEDBB04DF40F686002BB3E59C261438C7E8A892D8EA51FFBD00542105395F7B01920864CC590BE5CD2B675DED89D0971B071DCA58B044931700177DBC5734D785EFA7B9BA82A44EEECF907430F8487214BD31CD05D78105AE553D8C4A9BA879EB5406202DF66B7733B1A97EF0167DC81587421A5EDD67D4E61729781339EB87E72F82E8BA43BECA072E80BF4ED23CAD9A3BE4A42DC7B0CCF94C393A276147CD15E3BDB3E82BA60C70C047D2DED0A26EF36AAE90EB0753315FEE3C484036FF15F6E41DB4942C30EB6B89B1B0F4AE2D9E0CF9D1A0C1A4BD355F7E00C7D0D6CECAEC1053020B3C58FDB3BBFFD965A099748F70ACE71BF41889CB645E476A17E4B8EAD68A96E34210E07B61C7A4B8C677251965F98667271D693A25AA5C0F22E61187A5CB01CD13D22B682159D87E26B4B4F52705D9CA36C460874DCAACCCCD2B01571CBB2F8045F51CEEDF8AA46D8E2FB944E2A9FD1AB4C33D5939D8F39BF1028D35E5401322ADEEDC4CBB22238C89F953D2EB22D90C82CA02D130A84E0F43B43AEDD30289BDAF8B128B704ECC37F43C3ED6FEC3739D47F03A42C51161C68BB216D330CB4AFDF03820119D3AAA670D45BA75314236FB1064EDB589368FADE48A4AE5FD0D8512C1C5B0C6F007C6EF94C8BD15B454837328EA8E0BB22D24CAF55F1AC805EC8716A16A5C09F86844EE5823C9E3D8B3FF13B3D6093892DBF916DA84AA49A9F5CCB294853C70A4AA1DDCA9309E4EDEB52ADE9C4BB0C86B886C3485F0B34D44A08241A0A14621A96E5AEC3D9F1EC23DF873709F9CF411A15F32AF45FC96ACDB2ED242C5879723FE7FDD4E81408B5FCC1DBF6CB64ECB616A82B88FDC2072D688AA1C2FBA47983B11E8EC3459A03A8B3C8D94219046F8EF49D7AD0D388E1A6ED3338C8B77D1AD53D56F26D60F4C19CC1FAF028354D6E645B829D671E85F2658653C97C74BA75B17485022A3FFC4F14EB3E2FA71B5325B697B351C322C3DCAF62BFA962B306B1CF8AA4D4678294D2DE543E44892F989CA2A9D1BC6D0668F6EBD1F0C46DEF2D98EA120FD1305096EFA0FA161AB88D6D57E731AE160DF384D339D679EA1885BCE3ADDECA91863141CB3AFE99245729D5983CE97E71FBCC988ED252D177D26E65DE40BDE69E7EDC8BD292FBBEA223A335132AD738D5648D9DA7A97133067DD0A8CB92DB38182F224C850584190F3C558B4B0B19E002ED80CECD3808E619509A4B11ABD4D1D36CB3ECBF51D1CE3F4BDD7C0C43DA4080A0669E8075B81C93E4059995533A4C2EBDEDAFB7FE32D6D90588BC81AFB178771644F374033C4CA59F7ADDA4A5DBDDA73F8DD3ECE64018E91752487A6BCF13B983D8A4C05BEC266EB59496B1EC583B47E27F5E6E9D92DE104C2036060DAB27F140000000D626675F41953C8673BFBCC2B4D6096CA18E7513512C0046A1CEB4FE4E0B20E832B4C3F4B4352B2D04109525DB0A8DE31173C414E9B62B1DC58F70B5202F30FB</ClientId>
+          <ClientSecret>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD0910000000008000000500057004400000010660000000100002000000027FBE4E9D0526E1FB9AA678EB115206D564212B2FEDCADCBF1B2B0DF89703D8F000000000E80000000020000200000003CA4C4057BC9015D9AA1A69AC5497DA96ECC2F536DABBB3505F02C362C1300528004000076D5EDF2CD1FBA2189773089055F65A7A6AF33895F52C8249D8B988D175D2B4D500ABCC5C2A5E9C193FAA721D2CF592DF9904A3D3AF1E53235AE05B3D80FF9074B2D25B550F37336C98119E519D7BE02F38244EAA670DBFCC927961CB5D373676884EE2EEAC1103773B83A76174220201A57086D958C7EDC12DFA555080C7E27831174BD1E09158FB64008CB1B91AFAAD71A3157BD5E2602ABEAA943394416E60DAB955F848BCBBB148B044A428766D4A846E1AFB11C32F182CCE96B1E801555BA9EA9331EF23C08FEDE981464EB476F0347542C70DAAE5F49D24A112C02E41EE98EBA9E171442F8ADE8DA9B3B2948CFAFA092BA2C81DA42A38FBBD78044ACAC93A143D58A8546B43086E5B1F600C1DFD47098A3538F4F182C9713384708B8924207F25ACEE370E3B820D75A946218DC736D12BE2F3E6CBCC745BBC83C1239A37EBCA1AD5D8CA963DC95C79581336BD9936A9C0D2FB7875F742E4AF8E90A296E39B1397A0F98B0BA65A8F9BB6FFC82D340FE1C5F219CF1D42613481FB7ECDBAE9EA94AE142CD36D6CB5E473997461580EC5C00CE675A79627750F7914B02823C777E9673436192207092F71CC392C869FF8DD433001B5B44D1FD29D65A4EDE47911ABD5510F67F313F4F94B1596C93BAB26542B157D81CBF946DB587B04DCFD72CDFA4DBE61B1254E2F1AC1448AE427E05252182B1B223DF0DF298951D68362CDD2F68EF472DB67A06388B94A8F5A49CADA732407C051716D7D35785A9A08101838F2EB8CBF0D37ADF1CEF48E392CF7EFC6F3CDFFF0E2135A45D5D58C5168A035F7B13970702E9C89CF6D39F18BF8566D9D98002305CDE14DB705C8855DC5683BF61ED8A229D2EBC55D0A01BDB6BA26CC7C938AA2BC0E5A81512A1C3E998AA0F71B5CA0B2F75E945B8D0889D933F7F0769E4EA330E93C4C32135BFF93D4D110E88761DA1187227D8553DA0107891E521C13D67C6F26A1334417252B2AEEEDEDF8CED11A14B7C19ACE16CAD4313AF70E6D0246E7A182B93B7127E77CDF96D024A6727170153E0CFC1FF1DA8FC602022AE6C6CC1EF3610D4C553DFFFBDB9D33BC850F4FC5065E7ECCECD2A6BCCCAD64AC1CA8DEA9E1CFF555043F12E72641D4A129657DB5A0C5C50E1A34A56E38F98BB044C18FB1184690202441FCDA580E292A4A4A41FF67B5E0BF1855766A289C76E1F766F63127E6F09A444AFC6726792CA5F2085B3CB854BA6608676D7241F33D8800222360525C8F39FEA696DD0C9D4E54DC205E839039207001537903969F5F11AA417CBB2AEBA7844BCBD836FE5E86E4E67801FCE8E1233F9335AD24EEF7C7A95B77708AB49F61D5B7463D2E7DE404DA028C34C41DAD84FCE468533C8F4A33ED8776FD25DAFB5D0B9DF16D982924E8C94CD0B962BF6C4C5B77EE24738EA662FE20485A5C49CDC55CFD102F3EB46FA16EB1468613CF21DCB47EB3DD8CB9F18B425C01D913EC82E4E0B62D298CF08373CD8A4C7A153154BB2DA04C210AC025A57267E1558C164092B7A5FB5F8E5F1584190FAEA339EB5E7784DF7F4270EBAF7F5A8EDA5BE0F82597CF8EDB7DE8E7DB6D1C6006F8B833E27BAEDD7A986C77BD0857C17ADA3649A8A55AE546E1B3AB0E1EB5A40000000D3F21187033981D86A4E959B646E1C5099ADF663D5DCC0B16A9B381C724E92C7D8D6F7E450EEBDC60DEEA2B0BF32459217B4A1B101011BF0F1B261FB93AA9C16</ClientSecret>
+          <AuthenticationMethod>Basic</AuthenticationMethod>
+          <ExpiresIn>1707356069609</ExpiresIn>
+          <Type>GoogleDrive</Type>
+          <ConnectionName>
+          </ConnectionName>
+          <DriveName>Google Drive</DriveName>
+          <SiteName>4</SiteName>
+          <SearchKey>
+          </SearchKey>
+          <AccessToken>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD09100000000080000005000570044000000106600000001000020000000DE6C856F551F588028F12F4D523F17D4605A9F1E1A0A7B80B549B29EA1EE7393000000000E8000000002000020000000BF15D6238E6CFDE546418EC1864C3A75C4B2AEBC974E21332E44D07A3E6FD03F800A0000A347CBF938914C1FEB1CD14652573AF59B9E24156799A3105C844EC1B080D841CB3F03A672B257AF2D3B41D41D4CB26CA6C16D98A1BD8BF27A050BC05E3B542FC7678FCD278CBAF27E01667F8E121C494CEE321FAA03AA10E54D1499A2DD85347F8FC4ADE0D607CBD48153D94AF985B48B35FF66E03F2ACE586066E2FDB7748E0AD6B0E1E018379BB1B6FDDF8EC81C83D037BE680544E69BF0A14227FE1FE21EFD460CBA816EBF400002906A8C5209DAD9195AD002101610384093989D48651C911C01A17A862AA59EABA78E17C81944E57A68C9E9DD4417990357BB64ACD12808D4FA5F43F2687CDEFF0FB6A8666D1D6A3CE0056A2B599BF5A515A1A3C4D0C9040D3A88D9AEDDA4A3C7B3FFCDBD6AD34D28A1D1C27E5280D02A8E5E672C4252C196EAFCDEBF162D2E8107C6C8AA7BA24445FA88D527B7A1CD0D68D575E265DB41A24E24357FFE700E025B2E149CD43EA095C1352359C3B321F6C110D8B8E8D7881BDBA7A46DF7592C7E112DD1E800F93351FE8CCF8633038DB4C849039E9D526E0169090B3489EF4651311246C9D803733BB631F05513455452FD248980BB83FB3DB2E87FD4FDB2952DB047EC2A41E016B1AD486900F9C05B846A4BB6CD6DA29DA25647EFE2F7A82F513F8B6C4ACA8D5EDEE4D992ABA4778DD5891D23AD38F98E672603593520398F5263EBDEA60A2EF98886C9F3BE7B229E67BFEA7CB7AA4D773D371E38E059F809F3B8D4E86F3989D3B763F92AD9F59D30A568810FF0DC212C0103089FE3D5D5D6B5A443B8548034212A06A8249E456842ED0D08BDD10E700139E53BF9789619EAE81A441CAFA0DE8B16D214AE38EB2B277BF07EE875955A39472BE8B2DC5E1E6D5DBB69E4754F3E7A3BE4F0A39FD576AA93E640B38EDA9FE547832A87127B6AECED83978018B75A3A6899002C5DB397DEE2A9DEAE04D9FF3170551221EFE52F4EF1C7DBC65EE5E3FBCA50688DFC9BAE9F748E00899F5460ACAA06D8742B427F37734767B746BEABB51BE29FD788164DA4C417A1E817805238917DE970AC3A271C7288BD739F8ABA4BD55DF65081A4BA33BAC55E54DB93C15510C2938CF83EED36C1E46BCBC95F2B95CD7C61D43BBD4D84F8F92D335581828EA91A253B5C30358481E3B91E15F69F4D90C6623DDFD675BFEB613B776CC434B13BBB979132E1BCC3EFE5D9766963C4BB5C392DCEED260A40CBF9D5F00C7F0166EA97EF48DAC0B7BE62582FAD321F1EF40FE21982AC457C14B19E5577D4D2C67C243DE775CD912CFF05A317CDF298DB1A0F5E578FCBC8F49FA1078B2B183EBE03AFB3B7CE86D0A98279CBBC35CCC7F07B8D5461CFD50E16A223165DCD92D8E5E2C9E93CEEF0AA38E58D7CAAE7F1A2839AB2016440EF5F2402C47B71CDEC29587E1E0DAC326001096B7E47CE2D8BB480273A18822B0E3191F55821193862E2D837A5C0E7050B3B7B52687FC7B8DB25D2ABAD4835A0FF6521E412032C274AE48477F3CDFB795143507A3C912C095E5794E5648613D2D26F6CA8ACF6651E7E87E66A2B5CCBF99F27CE4E051F7A9A8A657E0C30A3DA28E1DEC9283EBD99E2936F49DE1CE0EA5EB6AC6C2D454A3AFD992792495022A717938CC226BA06591D473FE367C046F00B4F4047AE8011F68FC0B619F59922C42C0A5404416C73147E4001E9D33B3D2FE4163589DAE02EB2B7462CCA166FD5C34EA3B73FC6036B9F8F230173BCC79C3E5CD783DDDF3B93BC6757D8E751565B27C5376DF3E0746DA11E847D9AD9FBA6DA5C90848F3E9EC31051AFD3A3A81F997E7DE55880D5BFD1BC7F7AED331F3E4FD692785C77F4F2453DC9CA042A8A92B1B9B572B40B752EBA0AF83C912792F7BC58C93D8DF5F08ADD187906A7FCAE6F1CB33A970EDED305AB722DAA72BFCACB3970F5F64BFA03A4E76C0F395E193761BA2DAA983069DDF3D4DDC80674F9AB46E1588E34012107D10475722FC79587AD8D324F1CDA9EE8FC0AE902DC69F466A08ACF51A14CAC7AD59516021AC4C29CB75062CB5BCA8006253565936A7805F29B401EBA4EC0D09050641F59D73D028E1D3C9797DAFABC34F0F30CB8DC66C68DFF5DA373C93C34412BAC7B558C24DB8C24F4E3C5772E801DEF61C2B93AAEA07C273D8F89F88E796D0D82AD98F3E3B9924870CA31F31B9F3728CD3CD94EAE9F3946D3C6A000F5116D58DA2044AD2FE9F98D307687E3CF7826EB42F4985AD166E46B94F6510A2F3E5BCEA63622B0EACF68A947DB9BB0FD56D1C42318290C2D73FD581BCAE423B001C6B57C3AFF8A5D344E790FA08C87914C0FD37EB16C40FFC821A876CE41BAE23EF6C665A8952B0035AE0208639A27AA299AA73B5445321B1AC15074724A41B1998F577C35C4EA69D50BA441ED80767E6546A74A47C318C5C7D86CA30DF921BE753F78869582D70D45BA2040B988772FC1255B2F46C96B6B1626A5051BDD220E2E38A3C0A6C8C32E0F5FFDF5298516D9DEDA11745E6B69C2D5D554BEBD02EFF9DBA9E8CA43DACC6A92CEC666437E0D7DD3FB1087F395720A0EE846703482843EF93A662E3885C7974FEC4623D8F337E6D9F3BF316BAE3ADE9FF21055F4A564FE8B2FD4032E874A54A90407E3FDAD0F54565D7A255EC3E64DE666140FCA473F78A8F1BBF99FC197A0A349653C1B03974F5DF01C3A896AFD27CBACFB65329C9516BB398A091DBA4CC989FE449E271156FB46BCB28D5CFA3218225396507D40FC5D42718A5242218E13D83D7EBAFFCED0A9F857E81719883D3D2D3DD1779F74DF8B33E4EE8B06B7ABE4F106C55D4680B675E7C64BECDF72C82C2807AD0148F62020BC9E7F3FF852F2BD9D1967F3CE2CF7DB43960215266EC0DABE057D485CFED1BFB3FC60E92820FC91659E9ABEBC1759C59C877832AA280C3A7C81176FDBB25E9DC6A9848A82144AE453249B855C992321B12C4639DD3DDCA4849F4D91B943957CBC458B0BCC80A17EFAF33E1726996FA94ECB6FC2A505D6CCBDAB95A78D93C79212DE785BBA6045C692567653F332B3E518AECCFA36AC8F1EAC6EB465C2DFAC963D3F1E8B4E9005355431A43E4314BC143AD517EA8AEC1BD1DE5B69102DEC69B7FA9B049723408083645EA13801B9FC5ED2D8EEEC74B7F98E622C9013A1AD19E5E50DE8EE60A48267C2CC8DE60B48127B6986027BB66FFA07B7D410D51A0A01E5C037BF644A553D707022954B009985ACE2C24E30F6C63E6EDCB0E97DC065C9A82B66D9BF95EEC98E046E0B457D72C2165B2F8C81B12595D08CC4CC60FFDE97E7C56452DA6734A1AD7396FD5AC559736B03F1D15084CA15A4133664D4A13789AC960E6D13F37D9674A5238B505DF0C493DA02B1B52514581FBEC70B8DBC4AD1A864C7AC09C51993386143598FDBE65505710BE73010376EC760A04E7D223E65FB64F543284AFC3A4820AD868A6DFEA1C3FF61963772658B2A9747E4CC13C3A6BC726E0484101942062FD2B313C33E450B063433225238FF48CD76C8497D7E0680FEA6F20D4BBAE99B251A9BCE9F87F32E0FF78997AE45F1F26F55E62EC0DFB8176C4FFF87FE7F1F04A1E30C15F374706B74451FD955111F02506B972C92B953AC0B66391A6FA8A492221D0D58C7A54252A862835D3FB537DCED5C630FF389A60879D23851385BF1633E7B2D5614D95EBD0BCFF977EE3ED267FA0997B2F3248FC248DDCEA4EDC4AB1A663030D37C1AA95DABC0C4583D1BABB7F27C7A0FCE660AB24A51C8FB871DB0B1CBAA4AA8203F3369A086B2A78267709A91CE3F9F00145CE18A80C3994774DCB3869435A030E29D9590F59E344DB3C4717C400000003E1FD6ECB38D42E9C254A1C3CE53610333F7BCBF8E987240962B23C0F36A51DFF31C79223400A3385B7E4C8C8BE8EC0C6406FB6841B82FF795527270F9FB6AD5</AccessToken>
+          <RefreshToken>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD09100000000080000005000570044000000106600000001000020000000F4407534CF996C6328953FCF218CD07A1F1BD85391D31409AEEB994F002507AC000000000E80000000020000200000005468149A33DE5F2091CB7D7616850D7018EC2663D6B21FE03E3EE71084AD6543000700008C025E242C6B53F0EFF5C26050D14C20F712FE5051A4E3F526D5E78714050A592D9A555AF627F9718AA32E52BD9BF28873D98ACBDD45C98AF2818AF94AEDB0A1A9E0534A7B567D5670DAC6C12F78FDAE950802782F31D4950898D3131935F811AE5BA69824661FB428AE5CC3211234E3428D841C9F45C85E5AC4928686888567502985B16079175A50A03833FD554C2E43D4AC3D18CA078E0F661E66261E0A18992012E2473E5428770AADE90A2C58AB8C63AAF682E16C7A6DDE25A7674165527240AA62E72D499E494540C0279E7D56E38C5C19915DE372517ED537B6A6C547FDD8DAC678041DC55B8264725A6523D57904D82BD1C919DF3681593D2249B82D1CC015BE73826352B4480249BFA4A81CC4FA8F75251369550E9A1F3EA9BFD35C86B749218315FF027C86355EDEC46406848E76A0728AB36F8A51A96651310FCBE3FA515B495F15AD682732ECA3D47FE82B2FC2B00CEA02F1BF9C5CE186C61EDC742FDF9FBC6F54C0B96FB1B20288F31314B955FACEA47C1FBCBB761333CC0F132791E1D4B2CCE3FE3D85C167AAF9CBD591395D84E3E4BCFEEF81CA2F42C5586D5ECA6D89DEB9449ECC55A578763EE5BD494E234C69E3934CA684A3BEF9315AD2ADEF53F2DC020DB74B3346E56AF865FD040C21BDF312E2E389DCEFCC0DA1CAB7772E63E11C055252F46298C5BFB7E545BF1373887912B96DD6640796052590C46919A6EAE69443C1B29102BC60D88D6B9AFED511E28A51181F7950201F2A9B68E55CA7D689214689A808DA49B66F3CED0EE4B7D76A922E9386B0C284FC39F6C611ABDC1AE8A124605088B32FF18CFE134B2FCADDBEBC8ECCF2E4A7384139A4EB9AFBE58B750EC53D53C4A53A9B1B7DF67E99A4BBD7BDC4CE789C67943B54B894E3E237B4955BF38664A2C56A79E573CE4415043F4E1600F6461C640B166EEEA7219B2633BDDAEC0F1CF4EA42640989E93B94DD5FA253A699B80F82CEC58DCE3E18130BBCD8CA4436FE5E6BEEE790A62FDB3575429E7D3DC7C7B13457FD9FB4EA6AE4FACA07D6F4AFFBF26388EFE606B25661C5CE4CBFCC5774A7CAEE33A2FE1DEA390EF54102BBDB2BE6118E093C7CBE0E0114F9AC8226CFB840DADFF6EE57039E3DC115393C3ADF6DFF34BFE0F4D9202FF35FF5EEF348B59738B202904B7A509DC217979B706F5D57D61F49D0017335A6D735F710C5253906159056296AF246418244E0926C60F134E7947840E95ADE99E026A0ECDFA22B741EDBE407DC13B6B1EE9CE118E25D3A0721AF7D8D018C098D59320AA3A209D1B41E7366C71570D81B6E6D143C487E7FF31F573B5C87EF2EF16BF1D6B8B38AA618DCD0A9E02B01F9B358F3284591B37BC0E5F3198A09500799BC28CC33640DF04C419687705C3061528C6FB599D0E6C2C6EFD6A741633DCF4E6F830376346EE866EC27A26D88EBB1A50422988CA0C7EE80668D3B3EA30B682FCA276BE1B7145AF05C9FBC4322F1BFADF57AE9550260E37B1B0EF7916A94365A1B7734E3635F036D318C7F8A971F30DA24CA5C3B7D40105EE556C0E34AAD381D03D237FE5F3DC9BD3639EB9431837B9015FE5BC66CCE03BAFC64B91244DD1DD3C0FFE9E806D39DD5B3F099E5413D6D7B33B43B4345735F50FF8A9FD91957BCE7375DD5FFFA726F8AE1C8573601924EBEB6B8A31FA9B69609D55FBC5EF0C1B369434E1978911354327713977466624A8429ECB18985E92A6E590BF1ACBDBABF83AC43AFDC0695619CA370E6D6932CDB20B2E073C520D3693C65A0EF9D62755C21145C0340292805A931E0E67AABBA8EBC8DA24B81FAF8173056B8C1699A73786E9369D4BEDAAA814EA3D16448C89A700BB46F0ADE095685A91F30BF6944A1D4F20EF4CAC0AB035E68A66FCA6A5F8BDDD9F743EDAB5D4FEBD3C9D096C86F1141C462307F4BED34B688D3CBFA806C6A578602CED0FB1C85E609040682B2A02A7F34D2B43EED4A73582838D327F3DB0729DC46388BAF517D3A1578BF758730715A9D91070E98FAB3A045F41CAA9FE1ADEFF5A4921F6ABC87CD0CD7ABD44569836434378E90774A6FEEDEEF21A8703C623D3E823D93C703186ADF6E3A3334866340F4B65A1EC0A36DA8313378721C5C1DD4066658436A7973A774874BB34C9B9632F80AEFA945DE64715A7E29D5B82CFAF13B19236C334B9BCB07F6E979CC22034859284A47C170258D124A2EEDDE4E980D905AA1532A901602790779F6DE4616FB1D1DB2E04E133D3D11B134CD592B450DAA75393EB548F3BCFB3D2BB515E492ED7BF408B47E4E1A06E9DA3D8CBC5981664C1E32847B466B44ACA39B3B729982157193A51798ABA4DD9924832F47DAF2B426FD11A6C33B01EABA0219D6E68F132E6FC28D8E9CA0CDCE462CF94BDCAED671B41581CD0ED682248847B090A2D561F792E01BF8F7D262EDDA418BB1B1F4DCEFD68776AEDB898F4CA7E642978467B96B52573B5E86117137360886733D74104FF7DE1A1E8F40AA4E849F460C0AC6B2764F98A2981471203094BED53B64C5A6DA40000000806D369C1495E3AD24CF17696D7238C593F0C33F6A2E145C3CAAE26AE1C89E9C724223CECF8F1FDCD5E6B3FF979F32A2B91F537A3D41CB31E68EDA186E87BD28</RefreshToken>
+          <IsSaveConnectionToDcm>false</IsSaveConnectionToDcm>
+          <Path>/FRC/Scouting/Strategy/ScoutingData2024/matchdatafileds.gsheet</Path>
+          <FolderPath>/FRC/Scouting/Strategy/ScoutingData2024/</FolderPath>
+          <IsIncorrectPath>false</IsIncorrectPath>
+          <IsServicePrincipal>false</IsServicePrincipal>
+          <FolderId>1GA92fcINQk1vvzVbgsjSBX1ZTOrHzu0p</FolderId>
+          <SelectedIndex>10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM</SelectedIndex>
+          <DriveId>0APulzfURD2TPUk9PVA</DriveId>
+          <IsExistingDCMSelected>false</IsExistingDCMSelected>
+          <isUserLoggedIn>true</isUserLoggedIn>
+          <IsInputConnector>false</IsInputConnector>
+          <Extension>GSHEET</Extension>
+          <CustomCredentials>false</CustomCredentials>
+          <FilterApplied>
+          </FilterApplied>
+          <IsURLInValid>false</IsURLInValid>
+          <KeepField>false</KeepField>
+          <SheetName>
+          </SheetName>
+          <FIPSMode>false</FIPSMode>
+          <Secrets />
+          <isSharedDriveSelected>true</isSharedDriveSelected>
+          <SearchLabel>false</SearchLabel>
+          <AtDriveRoot>false</AtDriveRoot>
+          <SearchScope>folder</SearchScope>
+          <IsFilePathIncorrect>false</IsFilePathIncorrect>
+          <FolderName>ScoutingData2024</FolderName>
+          <FileName>matchdatafileds.gsheet</FileName>
+          <ItemType>file</ItemType>
+          <RefPath>
+          </RefPath>
+          <NewFolderByField>
+          </NewFolderByField>
+          <NewFileName>
+          </NewFileName>
+          <FileNameByField>
+          </FileNameByField>
+          <DownloadURI>
+          </DownloadURI>
+          <IsSharedLink>false</IsSharedLink>
+          <IsSharedLinkError>false</IsSharedLinkError>
+          <URI>false</URI>
+          <DataSelectionType>ByDataRangeSheetName</DataSelectionType>
+          <DataRangeSheetName>Sheet1</DataRangeSheetName>
+          <DataRangeFieldName>
+          </DataRangeFieldName>
+          <StartsFromCell>
+          </StartsFromCell>
+          <MaxFieldLength>
+          </MaxFieldLength>
+          <FieldDelimiter>
+          </FieldDelimiter>
+          <CustomDelimiter>
+          </CustomDelimiter>
+          <AsciiCustomDelimiter>
+          </AsciiCustomDelimiter>
+          <Header>true</Header>
+          <SkipRows>
+          </SkipRows>
+          <QuoteCharacter>
+          </QuoteCharacter>
+          <CustomQuoteCharacter>
+          </CustomQuoteCharacter>
+          <AsciiCustomQuoteCharacter>
+          </AsciiCustomQuoteCharacter>
+          <CodePage>utf_8</CodePage>
+          <FileOperation>overwrite_sheet</FileOperation>
+          <AddFileMethod>false</AddFileMethod>
+          <IsAddFileByFieldSelected>false</IsAddFileByFieldSelected>
+          <EnteredFilePathValid>true</EnteredFilePathValid>
+          <SharedDriveId>0AE1FRrDFPzsjUk9PVA</SharedDriveId>
+          <SearchDriveKey>
+          </SearchDriveKey>
+          <NewFolderPath>
+          </NewFolderPath>
+          <FolderByField>
+          </FolderByField>
+          <FileNameForMultiplefolder>
+          </FileNameForMultiplefolder>
+          <SearchedLastFolderId>
+          </SearchedLastFolderId>
+          <IsOnEnterSearch>false</IsOnEnterSearch>
+          <IsCreateNewFile>false</IsCreateNewFile>
+          <FolderIdsArr>[{"name":"FRC","id":"0AE1FRrDFPzsjUk9PVA"},{"name":"Scouting/Strategy","id":"1rTkM6y6rjste8NsLCU6TOAfYtX2Nu6Ba"},{"name":"ScoutingData2024","id":"1GA92fcINQk1vvzVbgsjSBX1ZTOrHzu0p"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"},{"name":"summarydatafields.gsheet","id":"1oQDr8Aqu5MkAnpI3-Q_XMD_X1EnIYgg8wj9PjelHy7M"},{"name":"2024-Fields","id":"1N8hALcTPhw9Zthyo1hkcUQ1EeDpY0SD-3vNSVvVDJik"},{"name":"matchdatafileds.gsheet","id":"10jMYtYZt2AeO32Hwqvc2zjtt9Pngq0U9vcmldDApboM"}]</FolderIdsArr>
+          <SearchInput>
+          </SearchInput>
+          <StartDataOnLine>
+          </StartDataOnLine>
+          <ShowOptionTabError>false</ShowOptionTabError>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <SdkSettings Manifest="True" Language="Python" PluginDir="GoogleDriveOutput_1_3_0" Transport="arrow">
+          <CustomParameters>
+            <Version Value="2.1.0" />
+            <ToolVersion Value="1.3.0" />
+          </CustomParameters>
+          <InputConnections>
+            <Connection AllowMultiple="False" Label="" Name="Input" Optional="False" Type="Connection" />
+          </InputConnections>
+          <OutputConnections />
+        </SdkSettings>
+      </Properties>
+      <EngineSettings EngineDll="SdkEnginePlugin.dll" EngineDllEntryPoint="SdkEnginePlugin" />
+    </Node>
+    <Node ToolID="54">
+      <GuiSettings Plugin="GoogleDriveOutput_1_3_0">
+        <Position x="702" y="702" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ClientId>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD0910000000008000000500057004400000010660000000100002000000043C6A43656527D08F9A91F452F888C9DF29ED0BA8AE97A3AD373E595D2809C89000000000E80000000020000200000000603FD1BEAD9B087306B42DFF4DA647403484AB79E7E569CCD01B32768E9780D000600009B96A50FFFAB5508EA025C0658C9FAD70CCFBFF7ED82356367CC9F19EEB81FDF41ADD1DCAB88764B0C25FFE6FCE1A9F693919CEC3979900A4AB2A70285B68D303A078EC37B9BCAEFD9D5FEB45584DF183AB5EF44A7FA72F6B16C239BD9E1B5F9BD740E4944BDC43838B6261DBC1E3BB2479601CAA9308362F8302F8A8FE7C6581B0662A2D1F0E180151985E5743F4F2B53A68B8BC694102043B61ADA76457360219253FAA15FA436742C421E8E00809C5BA3BB3360DD2A15746F2130B01D8F3E28E98BEB2BE6B7911318BD307E7A4A4548C855C864AE8B5CBC9FEE1E665E914AF2D8757C726BAFEB99E8CD4B1248BE305E26536288E1AB926339C8D9AA8968F56CDBBE49E390DABB29E1758F0CDD2DCB88A1CAB13A0FCC7AF958A2BC5C6D474E5CB467D201325D74178F7201FB2EAA1F49962170D17BDA5D7BBD437131F96D4830A8E2CF321291EFCBCDB8715F8FCF7B2F221B9334677B292EC8E8BE3A42C162C677CD71AF74E2B3B74A668C7741D5C5B7B95E8862CCABE894E17D5A6D9B6E9E935A681662D879FDFE0B6BAA7C42114BCE3F046CD17FADD91C6189E07F9F9D415C18AB66C35579878C9EA10DF6E1F77EEDC88D856584BB393035F2DEC8E63511B4C6B47D6F359F133361809AADF7A61AB36931A883A51AB315AE637CCE78C50FB2A8C0BB35208FD476BF8ADAABFA86F3C638A7A4D2F0F2A47500528720C736EA38261B0ADA46BE483A834694573DA87C38C152D48577542F3C2F3F0F7EAA2411A5649CB966B456D192AADFC3A223E8844A4426ED3450962D1BB58F5F4B85B5056F680B766C98AD9380E5C9E8919F20B68D1409E12B8B5E9DCFCD4BE610693FECB0C86C4237C001F8C66DA413D97784F93171D20E2D18F28AAC272E755D055479A48BFFDC47E71F107204668AA7AED1F547740F1D091613769ED4529EFB4B18756DF1E9B655EE1E10327C0FE2C7B3ED38207C115283D59622F7B487C332CED1219E4A7B55C4CE802AE0D116A404AB0315530D57C102E20B2DF997697BBE3E24856C94B9073847C24F18FCC0F5A22BC87BA275BD8528A1D7C1714456581E80B638977E09C176FDCD812A70039E1FF6A799C29E6F1447567E0E2032D009F5B02D239A909614CBE0808F5A80329D93DE6B470BFB8F169DE21662C12E92D04E29A681EC6B61C5BBFCBC6B6B41A907AE00D1A73DB1BB04634F36009DC0BBF2343DC1E58A6D7CD695EBE17627D1700868F4951DA5D371AF06556B2EFF131A7EA78B9425604C36ACC0FF8511A19690068BDBC6559B95F21894FF4830319AE572B967CA977BA1BF6ABF046B1E457BC17969CC70A3CFE4B04C07173DA976FE0D834241A976F057D115D70BCBACDFDF17ADF491B1603BF31212CA5099FDE201462C8911B3A016BE40C040FCE28DA88668C39AB12FFD862637D7469B9438DCB607F6D9A3FAE625F306E47AC657B4DE5E934BED0836C261133DDE3766D43B5333B3C7DE8BC15884F6439B73BAA30C0966C2FEF5EE13405C1D0641C8644D1A12F9EBD436DD1414EC0D54D9D5B96747A73AB84D4DF7CBE11BA0325D6783D81DB288B2139400C2D84887C777A39AB06AFDF8AE056176F138AD32E21C328E4BD593DDB5C7C2A458763654C1862A914C118816128D67ED6FE55B991F3227BEFDC695817C3F0FE078BD8D2C6AC22CA1C41D249B09DDB685A3E6CF37BE382332D8F99CE0D58FBC957F38325CDADDE7D8ABCD27960D67A65AA748E2DD1AC54FEA7CF32DE5A2FE5EC5D29DE8DE217E1C8B2AF233DC4C83AA4057009CD5308D98FC163C775D4C94B76B6E647C0DC0D59CF88B1A307317A04150B16BECB49BBB4C934574DCBF2B25B2E96AFA0A360E1FD459C0C5D5F6251426853AA467CB1B256F53FB9595EC9ED92DDD3B8D3DE8E03BD1C6F333C1D9E33273BCE70C9B41781C35ABCFF5DE476A22CEB2C282A27469B73FBF528C7A97A7B8239334DCDFB46FFBAC32F046787DD5A2D93A85B40A8697229C17F37BD8814BD5AEDDCCE4F4D39AA99FD2D4BB040220C6527FDD3C7EE56587B00027B32EC3167B07CFE60547DC03E6376A8718DFFDCDF0019FCBC3524283CE1CBE44BF678B89024833F69CC94E9CB39B088D48AA492F7E4E89FA0AD4F06C3EB2C9209A09441460249AF412A4829C58C70C83FAD749167DD142FA4E4000000038A23714736998EE4FBE796C5DA23FF9868AE7CDFB3A65F598AC042538813B4B449A73C313EE0A6032E4E55C91458D0FF855A304D7EA24403908216E0D209BC5</ClientId>
+          <ClientSecret>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD09100000000080000005000570044000000106600000001000020000000F9FF06F7A03EA4663EB3871F4C46EAEABE7CFA5301384065B3BAB92E8A682A48000000000E8000000002000020000000CD5D69C9E94D5877A944FB7EB83BDFD4D83DE5C02D9555BCFBC4F35C73BAAA4F800400004B77A50B188B67A8BCB752B7EC5AD6ADC5ED72BA4AE6AB66D22323FE88C800B736A812C6062DBBBC1D63D02787867CFC6F265CFFE7E4E9A7EC70D3AAD05802516561596CFE963AA002508A07167B76B6970156AB4EC16FDFF52CA5E4C33456549C267A29397FD3019FEC3E73BB1540F7D8E43430BEA91AA7906986189D895F360FFA8A1C0D06D2995FBF58B2981C713CEC7E11934823DA4BCAA11722A2A24C9726F14BE3518FCE4833B18F218C73CA8C416100801060361ED41BCF91F59D63AD718AE89818414C83849918ABDAB6BB272FE198736D3FB9373514D2F78834A4B05311173725633AE75502262B0B0BEAAC72B5151100D515A7320FFA5BB28D1F62BA1469EB2DB63A5D5EE8460A59F2EC92B4C969252BDA42F1E6C2CC05284F5FB821A47683B726538B142BCE2905F62C5EED1DA27AF4092B6BF5267CBF799A5717C82C959E747B7A585C5EA7A3F6078045170F3287C48E9EC58D2D4D855C46E4B179165654852D3E88DFCE6997B800C941AB1B542A5DBABFBD3C0902BFAB307AB9EEF9842A26F912E93A38A64A2E9E5EACAEB52ABD78C90D057F13354FA83FDF973B1B0A24DAF4885C43BBCD7DCB3816D1E2EDBC9E3CE2B00116617D1364A4BFD708E2A132557DDA39683EE602E88AE9A98ABD088E4629FC52ABC80E064FA1370BECE935D7EF18D8D4D27CF20AEABDBEDEF0FBA9DB23CDBC581F8D1EED369C3C17693DAE9533F48E78AEEFB484CC233FA18C7C6487C15E073B5187224FB38C20456C71394F23B9C76C95D9EC33CD0C93DAFF637F015361D8C7F248E23632931CE0C3227842BF93A5D92A60C88114FCF66451C9890A82DC5A7481439858102769D9592307B261F83178675CC2998B5438EC096AEDEE4B91B4E0FE49DB910610F8A9BAC75CDE256EA112D625B803AC568B94A4B98BA523A55F239BD220723B5F97C1EA5307246D685A794A212521D0C48BEE723991264E2FDE1C8DAAEC281F0397C363225FF1F757D86FE03126A51171EB586BF276B8FAF7B9117A04C131DB3A61776094998A313DB86A318FC518FD7BA3C03BE3380293C6F710975E6F2459BB128C1D5A56204005BD1C15F0AE1D3B75C19D5BCF3D21C483D1B5B796CED457CCEBC8CAB7DF8B90DEB0B1B29454912F0687D43DD635101488C8DF0CCE4B3E9DB086A600F6DDD3D17DD3FC811FF88BE69074F54941DBA81FBCD33D14E72FC1D48C4B7D01A11C10FA833336188FCB4A1097EA59EAC3D8F208AF236C0BF19CAECBC43C2F179EB53BAA68DCFB4282A82EA659EF2FF5A2C2EEDBC4C7F8DBA9C60B4AE12CD485D1EF59959516E10B86B70758E6A8365950F73FD72F9A3227E1B4CFFD87EAA9DA7F673B4312DE5FDA7C3BDE687E46C462BF61F4D562583F439ACC82A749C3E4144B5F4EC80573808B07E877DD8BBFB9AFD08BBFA5723ADD7CDF9107FC50639030243ACC53C225AC0C7E778B7BABE3A6040759E18193750802899F84E1F69973E30BC2B616868428F842F4C6EF03146C6AC321EBD20562311DA6FFFAE02E37E77216CEF7CEC24E0CEF5FA1692535658A60FDB473ADEC39F3550650903FC609F43B65F4C7FB2A78B53C1F38CAB0C4DD628B96711F67E1201D22FCD40826AE27FF400000001295816E0862D0700632D019AE54B33E7AE8C973DE2353D455ED94357D7B8F2C083D75BFB5ACF38648B028FA5859EA538A0B294F1704D030694FBA74FEC0F527</ClientSecret>
+          <AuthenticationMethod>Basic</AuthenticationMethod>
+          <ExpiresIn>1705628546074</ExpiresIn>
+          <Type>GoogleDrive</Type>
+          <ConnectionName>
+          </ConnectionName>
+          <DriveName>Google Drive</DriveName>
+          <SiteName>4</SiteName>
+          <SearchKey>
+          </SearchKey>
+          <AccessToken>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD091000000000800000050005700440000001066000000010000200000004A07AABCD4DF30D686BF7A605B286F33E50FD439FEFAC95BC69558F4C7F7D493000000000E80000000020000200000008105A63ACC388FC6507968589FE1EFEC1C9ABDBE1BD4D2311B41822F15D14547800A00003FA06EA6DDD4053DB5C26E1160E4A790D4F93B36E39FFCA2EF749CEF7EF385C55E3AB378660C1585D7F2EA85315D82C06C7469B9F8049A79170339E47C28D466FC428A4E4FEB48103A3601788017A7A91551353E9A8C1B428A18C66FB03E4275B0ECACF954311ADD1263CE263E3B012B4980C2C5FFE3E62B201A2CF8A34B73A085E2BF62A50C0D9775BDB7A5E8F63205EDF55BA5E055609B7CC5FA0763959792CE6B2A7A0EDA29702E70E17F80E8EC6B45B564372FF58B0413A8976D5B62818821E68B91A3BF06B6ADC7418619F563C6E677EE0D9EF337D926EB1876FC6636F1F9D9A2FF134C18668AA77F615F79BA0906E6CB61AADF9B583C403C532BD889EF896CDFD4410AFB0D4C54F083AC8462BC7C0A8FA4AE92559793AA4D2BE8D47B6B29006675C04D15EB6786EDABCFD19A38C5D3EE19022E9B06E3633C217F9FE79152B9C2B9F3F1D48D492F330F5D6DFAE51178214465AFE37FB4302594A729A972A46F573F1CF08D7DAFB234DCDD85664E72BED4936A35CCAB09EC4946F17082727C38CB1420B74CD17438B1A9AA55E904BEE31887C652F54463EDF0BED70A465C8B8CBDDA7BC19E4DF108BB4B0D7DD8699691148B59E66C2848B5242A0B7E18FE2F92474AA76EE4C2AA3C2B1F1313C821EB6720B5942067CAE040EDAB824FDAEBF3A4279517FEFB087179B748868C77B280418BB981A3B80B241B886230CDA94342640B307E7773F732B8234E4F1DE2F6C255A13087F7B76CEAD8383DEFC5C1FFB8BD80172844D5AC7B7F62A675D5B91218D96E8277C6742D8318BC5EC473A078894D819845A135B4B24245FF2CFF2C1412B9C52CEAB436079B89A83289622CFEF187E12CE0E53D0B4C3A03DD90DFF67A070763E2BE06C2BC51D822613C17CB0DCE4D5E3CD77DAC1A5026E60FCED252063DBDD0937CFD5EDA9A45967DB38A63A486E6CFA379BAE6F0F81EAA7B16C560D73C638CAE4768DB6AE8BE653174F397B50C27938267FC7954816D658CCC4A8841EB75A49E6078B5FC763E6088F960CA5AA8E5B670F0DA697069A1D0B6AB3650DA193D476F017889097412EE13B6C7E5FE1FF0E08E84AF42CBE9A51B3713177E1F697F553B69D17E7597F8795EAEA7A43F714AF22D9295666E18133E7B9D6FD12DCEA817D38614D15AC286F765D45569F18E0AD401DF81C7998950C5B52375339A7FB6B8E306F98BE7EA5AB82C1F80AA2425CD1189287241D81D4BDF072DBE8738B30CDF8EE51FAEB1978EB27868EB300BFD2068B20BBCA6FAED03564B5BE53DB39CC472C907F139D248F5089E69CB387FE276897D2E3021B2FE9CC59007124E04917F90434D410B1AF350244BB1E54CE6A01ABE450312E5C47853AD9A4B5351894823F5F4CDC99142EDCF68F632E4E7BF43320FC8BDC8BE633AAC61F60D661FFE37B198CC03A2068F92C0E504D4A34A8BB9F457BA383C326950F1C3BE364AC25149FC90B3869ED32445FECAB638BEED51420B64AB01A7F678CFB47B79C5952F82D8B0AAACE4D45CC3FB1747342A3474F6F86A721DFE5DA5C2E97771EEB3A18E8815348DE81E79960EEDD7123D1F0C52F3BB90EC0B0E64D51FE1F89EFD493EA5CB09054AC8D3610C8D4756D64D3CD7FE8C590BE0071117795F28D0A9227C2D4A438B404053F6ABCC85A80B7C596040DB2B636ED51B96E99C4B754C4A5E12DF2C487230851587DC5BA5EF570C0BCBBAEDA43DF23931BDB4A244B2BF9790976C36EF3EBA54DD9016684B8AF8105C5733976B9A1F38D6B8A504E7422D985E162695226679E786C2CF955821A15845C769210ACCA39FBAFFC5D846758E5075D048EDE26994498B2E5196DD5E186F014EE1AD5CF418B069E2C27DDEE717F86E6B6AA80674BB39A1E4C2902621618B4A40F66E567194B4AA3628242018894B36BD75ED395120E7AA2CEEC2EAAA51E87E79D4E424EB301B4D9BD4C40B94F6F5AECD9901CA21092B082707B15F85F17D124C8B6B89B2960606DDDA6251D0DFE157D97223DE7B426681E1745C09549C4BEBD49D03056DA2D6D0C8A465B9DA807A58DA8F3D4B90D019DC44D8E58E0F46F7DFA8F57AD421A3F758D73CEB938C94DF107D6F6902FFD64DC70B06C80728DBE05FCC01EA68D783A1C535C14B6B5575A25F525CCC7A8FEBFC79C473D4E46C04F2494BC1C2BCE058EBC4117C48D9B990648E241273511BD9C652D0A74235EE0069BF0F779D806615ABFF907CAC5EA3F8E4A18041511D3C9B7204B9B4E0A8A7D1B260F67D1AF8B7A32B3BF22A6D86DC11F8BF4A187933A0D4B6944AB84C1E5A358F4F60E3406925F10C36E7F2A15DB18E49D1409EBB260791DE7580138B73B10A62257D8B4474F5F8CD8E3D5D6172E0542B7706542C7C018095BFF00A11801E4C64EF279AD991DC5F7A186E97A5D3D03B100DC1B6008E07DD38E691ECD7CEFF8D25AFCC7A1990D7C7C7074223578593FF281F71A2B17C0AD54099A189E71DD87CE3E2D0FCE2D244759725B4A19A28673BC563FD3E24B1BBA7CD322C76FD367E429B12CC686AF75D227DE1EF532355EF0DD2B2FEA7A3B0D5376DCD381FE0284801B45FE6DE4DD0F7259840721FAB049770DC87AE121938D78E768E2DA61BA33FBF6C78D040A2749132A32BAFB00AEAAD20293691F3261F67E4784F74ABE905C2753AEA3F2794C7774AADC874F4E8C41391D5A66BA5C7BEDB0055E9FAB02DD06EE4FFFB09F6FF9D14D75F3D37DF0954EE633913086995A5A697958146A454067C75D601A508F2FDFBF811F495A91A78502315A9DA74A6486931C57DC377746AED365AF188184200E93DD904A6F8D8D82D9B5C31CB10B8E13E298D2E0984CC20652CDFF5545576FED0D64FA2A0A8E00C93DA0C4DB6DA6572E96F9BC90615007601229708B8E4A47A5C4292A896EE05F54419A71F9759B07BBA9D71886E5F85768DF02377B0790E5178BFC3E1D4A0FA049401F9A1DCA980DDB982E5CC6BE71AD3478C160AB36088EF07DB59CD6DC620958AA948B60FD44C3637F39A7A3FDF8FB1DB6972D16DE807414FCA9DE6A02EBEBEBF55B0F9B5CF2A4802EB61C361B598B823CF6304A61DA6E57BA63F23BB30F0672E5276A63ADD0AAB87792ABD9CA2E0DAC55706A3F9C05C19BE302BB770FB8385F1AFE2CB6916FE2AA0895CA1B8E1A220E33C4E6CCB832B2CBDFB324491D7C62C8B0583AEB70246156D0AC4CE43F48617E22E48DC74538FDFA6D0631A2449798F5D9F5F1620F06BC255C901EFA03E19A5896BF7B5FA248EE113B92164718D1DA4F4A8E64C7126544E43FEC3BBBAF44DBB26548761837421753EA3315F87698440206AD8954C62676B19EB5B9FD1EB679FB0186B9586AFFF85431778C7F1DB5C7E649F8F01FB1E4DC1E75617248539433E6DE195501BAD5CC942D2C7BA71395C77B6F9957E52E4212520DC72AE2F2B6F822A27ADD1C091D3D8EB163A2ADCC64728185CD82207DAEC85FF082CB7F1183583EAD4294950A8FE10213EB576D7DDE0B48F443BEF9908A206DB5C81485CB90A5315E279981B776A0BF40371461781D1F5EDDFB42BDC0A1969A04FACF7438497C42E9E8BE3D95387BE91677F9460CC4116D7F3ACD5C221F33A332447A00AF5F64983F0B08967E9267F98421D661AE3AEE73F49F80200140FD95DFA5F6E6571FF0125CE459D8D72C9D6C643B5A96AABED74FDA182EA406713EC06C20A1494A62BCA08537D61F35A148C28DC1D0EE0541707FD7CD51668AFB7A83CD3881375CD2982D86C80B013C22D5B7F6D28CEFBFA1A47C9747826E356322E003F71C85E4F9F2C96D6FD743576FC9A400000005B8341E4469C7CA386B9BBE18E44FE87F1696FC9EAD89B8B43EAF14345DB73FD4679732C9CE1CCE0C7D726E9BE650237F34BEC1B1C4AAE014BC58CE4B995ED0E</AccessToken>
+          <RefreshToken>301000000D08C9DDF0115D1118C7A00C04FC297EB01000000458483DA40BA0E488DF0CF6DFEFFD09100000000080000005000570044000000106600000001000020000000FC686EBFC7FB833ED6A7F1378DDA9B7227EDD28780D00081799F247730CA3F65000000000E8000000002000020000000C7A90C81913961A1638FA138307322E68989F49297A31B47DFF7F906C2B5ACD6000700000E3812394FFE0A14962C02D7361A84903D264386537E5079B6A099C2DC4B1D4A232D86D71DCB554B26E5061AF396C6E7BF2796B84CBBF2B25FAECC6C0421EAFC4CCE27B9C2E6FC517F66EB326C8732E33D9874F470C49A29873808F1CD25C1D24CA36E329E17DA74B292E0D6720BE8A2425D498E8E08436B85F36CD6A0345E827273A667A39D91E4BFC761EA5AB30D43F0CAB0CABBE17AD1D900FA1559A51411B62F97A5F7D31E27DEB61CF038AE0BEA2BD22F16B21DB33D018494F6BD62A6164B2086E4773AE6C9769140E28B38F0BBF84BB2703C3A1C9BE1A90F95C555B4883242E1387ADCAB2DF122AA3D0E37EAEC8C59369E61EF473AC262A35B03F25CB65F8535E65A720C63091D579792869EB54425EE0667E919BA57C4A7C5251C064E5F6EB721FCC70335C5A70C8AF4E2D1F384906A4EB8A99A738A7D9B276CDBB4FC188A100D765F3655D7D4D81F53C7AF47938689E373CB4B68CAFAF48D05C809457F7C94458A05380632D30558E8AF56438FE7D439BCBCE95D9805DEFE0E7ECA7467B17A7AA277CC474384B4DCE01A892226821291748038D1BBF7AA8D750FB0AC4149DAEC7C84BF8667BB82DFFFD4BBD8C18C4330BD87309015ED915A256BFB59668F6B163A08A8680579AF32C0F9D0857904B9F82A0EF42D8120F9B3F80E2D4D7D9AD82858E0004E8079172DF9E66B8271CA2EA7DA6C5653E03410D6B8A17734D0C8614D1E6031869C623BF485825F6C9288D91D3D845689227ADE638C4C1A6B76811D492C5119DCE2DEE9738CA2315BB622BFB92BA578B5F6CF442DE125D39AB3ADA424F9B92909EE5115EB62C06E8B888816D0D7CE82C91D2F6FB5210332F6D818A4BF87B45E92B04D11C0FB7136BF7166699CE8C8395412F05D696EE580A4D006E69F9DB88E6D07B2646FA4FEA9CBA4117D93F29C5217C4C26F4DF1068A9FC7F4A6632AE42195338281D9F662E2F22E23031D3A7B8DD9275153046655552E6EC2A4548262F09A5463A06681585041BB00893DBDFFDD179F2904F469290C54AEFD238C13D0517A679EB99A7603D00B24E2117F8716A316C96580A44CF8A58583FD17CF5990FF37BB99CFDB0D69171EBB9036FCF390813AB8B12824423F1D62AA6437E8782B0CF53D9827617A4F92A53BB1AA7D0B9120971F6BEA3CDB4AA9842A789C28BBEE434F34E31BA3753600B25AEE431C868073594BF8493DED5E7453F2A8ABA8B21349CE928942C3B2EA82BA2E448C8AD00604BDB14C06B709377E01DABB4F2CBFA8B009A80C648F5AEC453B17721DC3CB926180D35DA6FADF3F844B98A9E214C7977C243BF4302F7E1082B4471489E076713C512B81927674997C2E432114662A72A0EEC6C383897B63603439BE811B05D9EE5540C0C940E4A4AD0CA69D6F49D6F09F6AA7CC660C27A566656E2C4FACABE2421619CD3A85D7707C6600D35596AB87D7A6220AAE35351A65F6B3EB3F8803FB3F399297E245EB4CC54142B488DDE6463E6310C953D976AE8F86155D1AD215DDFC385C3AFA98BE4EB58E2D1549663F3BC4B3A83DA20C558697D0B44B09ECD458C60C182192973D2352EC171EDC9A78FA50FE187417372EDBE3B4A162ABA3E78E6B0F8BAD54B4280051EE647D3AD25EA7D200C3089CF827D7B703BF9D7D407560CB17D6AEC52372B24D4642E3D6192260449EE75F6ED639512D083E11B1F99F6AD68EB9D42706302846DBCEF970F86840B6A1D79D844A6F2AAFBD0F1465779CE60C8997A89F232C2764F7487D3477AB43755ED88B03C8B5A3C896FC563EF31E3A3C323C90DFBE8C006AE41FC80D73E89234835D5C46F03000C0830A16E7538CCFAF392BAA5A6517E03430F47D44C9630F3E5BC8B4F42E697AA5BC7045524BBE39C291527A663736B13D9E1D5FF0138F23F0FBF69CB795AC9DEA55C22817CA86C814A9596D702FC468BE6822E1308003BC6A9E469CDFA04213B7CCE855D95953742BB745B118070ACD67CC63B4259A08D6AB75A8B9990E7FF92A04F6D557E6E2510F1E7FE0904D881A9B8A830B5A28E3F959C7D6976537725F029B8AA96716A4EE909D2A44A2C6BB22CF4F55CE025D50629276E59688B6599A2A5828003D6A779A8E37DF55E717D7A388C591718426E663E6DDA42450E1762FBB2E1C91292688CDBC59AC19F82CBEF45E037ED6A384A4B9DD4EE2F24494665F378E08D82AE811DABB69669213C48EC2282BB5F2370AA6ECDEC3B777977A2012F5530CF952362292EFBC2E405EE6118D2803E1BF6DDBDE65B1659D126407CCA8EB609449F9575172EB8C5E6A0CA9D3B27C03350DDB2A1D5E0AAB2CC5202F19B5ECD100C80000442C45165A2CBE579DB07FF415E4B0507702EBA7D9A6B4C7D4C6D76953E77218EEBB62B6BCF5DEE4A16A7BDBCDC670E6DBC1C6C95169CCFAB7F4F7AF4546AD04FE77ABD9F9A817C38541F16FB12A0B2F76CEDF390B9184563F870E67872764739744445CD30D9EDF615AEF3E1DC7BA075EA3F70DB59BBAF125310FBFF8E68FE8082A673C222EEB6AB31C153A400000004AACC0D45F8329066A3E8F7005862CCD727E42B4534E09F2DBFB927A69E902932882CB41DF44166531DB00FAD221319530E4DE23424D7924CB66E686147BE1C1</RefreshToken>
+          <IsSaveConnectionToDcm>false</IsSaveConnectionToDcm>
+          <Path>/FRC/Scouting/Strategy/ScoutingData2024/summarydatafields.gsheet</Path>
+          <FolderPath>/FRC/Scouting/Strategy/ScoutingData2024/</FolderPath>
+          <IsIncorrectPath>false</IsIncorrectPath>
+          <IsServicePrincipal>false</IsServicePrincipal>
+          <FolderId>1GA92fcINQk1vvzVbgsjSBX1ZTOrHzu0p</FolderId>
+          <SelectedIndex>-1</SelectedIndex>
+          <DriveId>0APulzfURD2TPUk9PVA</DriveId>
+          <IsExistingDCMSelected>false</IsExistingDCMSelected>
+          <isUserLoggedIn>true</isUserLoggedIn>
+          <IsInputConnector>false</IsInputConnector>
+          <Extension>GSHEET</Extension>
+          <CustomCredentials>false</CustomCredentials>
+          <FilterApplied>
+          </FilterApplied>
+          <IsURLInValid>false</IsURLInValid>
+          <KeepField>false</KeepField>
+          <SheetName>
+          </SheetName>
+          <FIPSMode>false</FIPSMode>
+          <Secrets />
+          <isSharedDriveSelected>true</isSharedDriveSelected>
+          <SearchLabel>false</SearchLabel>
+          <AtDriveRoot>false</AtDriveRoot>
+          <SearchScope>folder</SearchScope>
+          <IsFilePathIncorrect>false</IsFilePathIncorrect>
+          <FolderName>ScoutingData2024</FolderName>
+          <FileName>summarydatafields.gsheet</FileName>
+          <ItemType>file</ItemType>
+          <RefPath>
+          </RefPath>
+          <NewFolderByField>
+          </NewFolderByField>
+          <NewFileName>
+          </NewFileName>
+          <FileNameByField>
+          </FileNameByField>
+          <DownloadURI>
+          </DownloadURI>
+          <IsSharedLink>false</IsSharedLink>
+          <IsSharedLinkError>false</IsSharedLinkError>
+          <URI>false</URI>
+          <DataSelectionType>ByDataRangeSheetName</DataSelectionType>
+          <DataRangeSheetName>Sheet1</DataRangeSheetName>
+          <DataRangeFieldName>
+          </DataRangeFieldName>
+          <StartsFromCell>
+          </StartsFromCell>
+          <MaxFieldLength>
+          </MaxFieldLength>
+          <FieldDelimiter>
+          </FieldDelimiter>
+          <CustomDelimiter>
+          </CustomDelimiter>
+          <AsciiCustomDelimiter>
+          </AsciiCustomDelimiter>
+          <Header>true</Header>
+          <SkipRows>
+          </SkipRows>
+          <QuoteCharacter>
+          </QuoteCharacter>
+          <CustomQuoteCharacter>
+          </CustomQuoteCharacter>
+          <AsciiCustomQuoteCharacter>
+          </AsciiCustomQuoteCharacter>
+          <CodePage>utf_8</CodePage>
+          <FileOperation>overwrite_sheet</FileOperation>
+          <AddFileMethod>false</AddFileMethod>
+          <IsAddFileByFieldSelected>false</IsAddFileByFieldSelected>
+          <EnteredFilePathValid>true</EnteredFilePathValid>
+          <SharedDriveId>0AE1FRrDFPzsjUk9PVA</SharedDriveId>
+          <SearchDriveKey>
+          </SearchDriveKey>
+          <NewFolderPath>
+          </NewFolderPath>
+          <FolderByField>
+          </FolderByField>
+          <FileNameForMultiplefolder>
+          </FileNameForMultiplefolder>
+          <FolderIdsArr>[{"name":"FRC","id":"0AE1FRrDFPzsjUk9PVA"},{"name":"Scouting/Strategy","id":"1rTkM6y6rjste8NsLCU6TOAfYtX2Nu6Ba"},{"name":"ScoutingData2024","id":"1GA92fcINQk1vvzVbgsjSBX1ZTOrHzu0p"},{"name":"summarydatafields.gsheet","id":"1oQDr8Aqu5MkAnpI3-Q_XMD_X1EnIYgg8wj9PjelHy7M"},{"name":"summarydatafields.gsheet","id":"1oQDr8Aqu5MkAnpI3-Q_XMD_X1EnIYgg8wj9PjelHy7M"}]</FolderIdsArr>
+          <SearchInput>
+          </SearchInput>
+          <SearchedLastFolderId>
+          </SearchedLastFolderId>
+          <IsOnEnterSearch>false</IsOnEnterSearch>
+          <StartDataOnLine>
+          </StartDataOnLine>
+          <ShowOptionTabError>false</ShowOptionTabError>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <SdkSettings Manifest="True" Language="Python" PluginDir="GoogleDriveOutput_1_3_0" Transport="arrow">
+          <CustomParameters>
+            <Version Value="2.1.0" />
+            <ToolVersion Value="1.3.0" />
+          </CustomParameters>
+          <InputConnections>
+            <Connection AllowMultiple="False" Label="" Name="Input" Optional="False" Type="Connection" />
+          </InputConnections>
+          <OutputConnections />
+        </SdkSettings>
+      </Properties>
+      <EngineSettings EngineDll="SdkEnginePlugin.dll" EngineDllEntryPoint="SdkEnginePlugin" />
+    </Node>
+    <Node ToolID="55">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="510" y="822" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="ToString([Sum_Leave], 0) + &quot;/&quot; + ToString([Count], 0) " field="TextLeave" size="64" type="WString" />
+            <FormulaField expression="ToString([Sum_Park], 0) + &quot;/&quot; + ToString([Count], 0) " field="TextPark" size="1073741823" type="V_WString" />
+            <FormulaField expression="ToString([Sum_OnStageSuccess], 0) + &quot;/&quot; + ToString([Sum_OnStageSuccess] + [Sum_OnStageAttempt], 0)" field="TextOnstage" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>TextLeave = ToString([Sum_Leave], 0) + "/" + ToString([Count], 0) 
+TextPark = To...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="56">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="930" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike0NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike1NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorSpike2NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline0NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline1NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline2NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline3NoteCollect" selected="True" />
+            <SelectField field="Sum_AutoFloorCenterline4NoteCollect" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="57">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Transpose.Transpose">
+        <Position x="1050" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ErrorWarn>Warn</ErrorWarn>
+          <KeyFields>
+            <Field field="Team" />
+          </KeyFields>
+          <DataFields>
+            <Field field="Team" selected="False" />
+            <Field field="Sum_AutoFloorSpike0NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorSpike1NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorSpike2NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorCenterline0NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorCenterline1NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorCenterline2NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorCenterline3NoteCollect" selected="True" />
+            <Field field="Sum_AutoFloorCenterline4NoteCollect" selected="True" />
+            <Field field="*Unknown" selected="True" />
+          </DataFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTranspose" />
+    </Node>
+    <Node ToolID="58">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1518" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_3ad23e52467bbd4f88101f6f526aae69~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="59">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="1146" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="IF [Name] = &quot;Sum_AutoFloorSpike0NoteCollect&quot; THEN 5 ELSE 0 ENDIF + if [Name] = &quot;Sum_AutoFloorSpike1NoteCollect&quot; then 4 else 0 endif + if [Name] = &quot;Sum_AutoFloorSpike2NoteCollect&quot; then 3 else 0 endif + if [Name] = &quot;Sum_AutoFloorCenterline0NoteCollect&quot; then 5 else 0 endif + if [Name] = &quot;Sum_AutoFloorCenterline1NoteCollect&quot; then 4 else 0 endif + if [Name] = &quot;Sum_AutoFloorCenterline2NoteCollect&quot; then 3 else 0 endif + if [Name] = &quot;Sum_AutoFloorCenterline3NoteCollect&quot; then 2 else 0 endif + if [Name] = &quot;Sum_AutoFloorCenterline4NoteCollect&quot; then 1 else 0 endif" field="AutoPieceY" size="2" type="Int16" />
+            <FormulaField expression="if Contains([Name], &quot;Spike&quot;) then 2 else 4 endif" field="AutoPieceX" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>AutoPieceY = IF [Name] = "Sum_AutoFloorSpike0NoteCollect" THEN 5 ELSE 0 ENDIF + ...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="60">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1350" y="954" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="True" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Name" selected="False" />
+            <SelectField field="AutoPieceX" selected="True" />
+            <SelectField field="AutoPieceY" selected="True" />
+            <SelectField field="Value" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="62">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1422" y="978" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File />
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions UseDcm="true" MaxRecords="" Format="23">
+            <SpatialObjSize>8000</SpatialObjSize>
+            <TableStyle>Quoted</TableStyle>
+            <TransactionMessages>False</TransactionMessages>
+            <Table>AutoCollect</Table>
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <OutputOption>Delete</OutputOption>
+            <Connection DcmType="ConnectionId">771d5654-b741-41e3-9944-b48cf84edc22</Connection>
+            <Projection />
+            <PostSQL />
+            <TransactionSize>10000</TransactionSize>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>dcm:PostgresGrafana — PostGreSQL
+Table=AutoCollect</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="63">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.FieldInfo.FieldInfo">
+        <Position x="2298" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration />
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFieldInfo" />
+    </Node>
+    <Node ToolID="64">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="2370" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Name" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="65">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2754" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_d2019c291daccd45aea8a61b6c8de014~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="66">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="2562" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>[RecordID] &gt;2 and [RecordID] &lt; 16</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[RecordID] &gt;2 and [RecordID] &lt; 16</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="67">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RecordID.RecordID">
+        <Position x="2466" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FieldName>RecordID</FieldName>
+          <StartValue>1</StartValue>
+          <FieldType>Int32</FieldType>
+          <FieldSize>6</FieldSize>
+          <Position>0</Position>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRecordID" />
+    </Node>
+    <Node ToolID="68">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="2658" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Name" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="69">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2754" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File />
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions UseDcm="true" MaxRecords="" Format="23">
+            <SpatialObjSize>8000</SpatialObjSize>
+            <TableStyle>Quoted</TableStyle>
+            <TransactionMessages>False</TransactionMessages>
+            <Table>MatchDataDictionary</Table>
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <OutputOption>Delete</OutputOption>
+            <Connection DcmType="ConnectionId">771d5654-b741-41e3-9944-b48cf84edc22</Connection>
+            <Projection />
+            <PostSQL />
+            <TransactionSize>10000</TransactionSize>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>dcm:PostgresGrafana — PostGreSQL
+Table=MatchDataDictionary</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="71">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.FieldInfo.FieldInfo">
+        <Position x="726" y="1194" />
+      </GuiSettings>
+      <Properties>
+        <Configuration />
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFieldInfo" />
+    </Node>
+    <Node ToolID="72">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="798" y="1194" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Name" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="73">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1182" y="1194" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_66dde15c9bb69444bba9482dd7236dd0~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="75">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RecordID.RecordID">
+        <Position x="894" y="1194" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FieldName>RecordID</FieldName>
+          <StartValue>1</StartValue>
+          <FieldType>Int32</FieldType>
+          <FieldSize>6</FieldSize>
+          <Position>0</Position>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRecordID" />
+    </Node>
+    <Node ToolID="76">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1086" y="1194" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Name" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="77">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1314" y="1206" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File />
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions UseDcm="true" MaxRecords="" Format="23">
+            <SpatialObjSize>8000</SpatialObjSize>
+            <TableStyle>Quoted</TableStyle>
+            <TransactionMessages>False</TransactionMessages>
+            <Table>SummaryDataDictionary</Table>
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <OutputOption>Delete</OutputOption>
+            <Connection DcmType="ConnectionId">771d5654-b741-41e3-9944-b48cf84edc22</Connection>
+            <Projection />
+            <PostSQL />
+            <TransactionSize>10000</TransactionSize>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>dcm:PostgresGrafana — PostGreSQL
+Table=SummaryDataDictionary</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="78">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="54" y="894" width="100" height="40" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Summary Output</Text>
+          <Font name="Arial" size="8.25" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="98">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="1170" y="1146" width="100" height="40" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Summary Table Data Dictionary</Text>
+          <Font name="Arial" size="8.25" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="99">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1134" y="294" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Match" selected="True" />
+            <SelectField field="AllianceColor" selected="True" />
+            <SelectField field="ReversedAlliance" selected="True" />
+            <SelectField field="AutoPath" selected="True" />
+            <SelectField field="Centerline0Normal" selected="True" />
+            <SelectField field="Centerline1Normal" selected="True" />
+            <SelectField field="Centerline2Normal" selected="True" />
+            <SelectField field="Centerline3Normal" selected="True" />
+            <SelectField field="Centerline4Normal" selected="True" />
+            <SelectField field="Spike0Normal" selected="True" />
+            <SelectField field="Spike1Normal" selected="True" />
+            <SelectField field="Spike2Normal" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="100">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
+        <Position x="1206" y="354" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Field>AutoPath</Field>
+          <ErrorHandling>Last</ErrorHandling>
+          <RootName>AutoPath</RootName>
+          <Delimeters value="," />
+          <NumFields value="3" />
+          <Flags value="0" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextToColumns" />
+    </Node>
+    <Node ToolID="101">
+      <GuiSettings Plugin="JupyterCode">
+        <Position x="1926" y="402" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <WorkflowName>c:\mascout\advantagescout\2024_main_v4.yxmd</WorkflowName>
+          <JupyterProduction>false</JupyterProduction>
+          <vEnvName>designerbasetools_venv</vEnvName>
+          <DefaultVenv>1</DefaultVenv>
+          <productionModeScript>#################################
+# List all non-standard packages to be imported by your 
+# script here (only missing packages will be installed)
+from ayx import Package
+
+#Package.installPackages(['pandas','numpy'])
+
+
+#################################
+from ayx import Alteryx
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+</productionModeScript>
+          <Port>64929</Port>
+          <JupyterGuidDir>e1284479c91cfa08fd48540a88c8f099</JupyterGuidDir>
+          <JupyterGuidCopy />
+          <LastExecutedByEngineVersion>2023.2.1.51</LastExecutedByEngineVersion>
+          <Notebook><![CDATA[{"cells":[{"cell_type":"markdown","metadata":{"ayx":{"cell_css":"border: 3px solid #357; margin: 4px; background: #fbffff","contents_keyword":"Alteryx.help()","label":"info"}},"source":["Run `Alteryx.help()` for info about useful functions.  \n","i.e., `Alteryx.read(\"#1\")`, `Alteryx.write(df,1)`, `Alteryx.getWorkflowConstant(\"Engine.WorkflowDirectory\")`"]},{"cell_type":"code","execution_count":1,"metadata":{"ayx":{"cell_css":"border: 1px solid #58a; margin: 2px;","contents_keyword":"installPackages","label":"deps"}},"outputs":[],"source":["# List all non-standard packages to be imported by your \n","# script here (only missing packages will be installed)\n","from ayx import Package\n","import pandas as pd\n","import json as json\n","import ast\n","#Package.installPackages(['pandas','numpy'])\n","#Package.installPackages(['vaderSentiment'])"]},{"cell_type":"code","execution_count":2,"metadata":{"scrolled":true},"outputs":[],"source":["from ayx import Alteryx\n","data=Alteryx.read(\"#1\")\n","output_data = []\n","\n","pickupCoordinates={\n","    \"sz1\": [42,199],\n","    \"sz2\": [140,115],\n","    \"sz3\": [42,30],\n","    \"sz4\": [140,30],\n","    \"sz5\": [140,199],\n","    \"sz6\": [140,260],\n","    \"sz7\": [42,246],\n","    \"AutoFloorSpike0NoteCollect\":[220,30],\n","    \"AutoFloorSpike1NoteCollect\":[220,115],\n","    \"AutoFloorSpike2NoteCollect\":[220,184],\n","    \"AutoFloorCenterline0NoteCollect\":[320,30],\n","    \"AutoFloorCenterline1NoteCollect\":[320,115],\n","    \"AutoFloorCenterline2NoteCollect\":[320,184],\n","    \"AutoFloorCenterline3NoteCollect\":[320,250],\n","    \"AutoFloorCenterline4NoteCollect\":[320,315]\n","}\n","\n","markLineCoords=[]\n","for i in range(len(data)):\n","    table_row=[]\n","    markLineCoords=[]\n","#     print(data.loc[i, 'Team'],data.loc[i, 'Match'])\n","    pathdata = ast.literal_eval(data.loc[i, 'AutoPath'])\n","#     print(pathdata[0])\n","#     print(type(pathdata))\n","    if (len(pathdata)==1):\n","        pathdata.append(pathdata[0])\n","    if (len(pathdata)!=0):\n","        for x in range(0, len(pathdata)-1):\n","            markLine=[]\n","            startCoord=pickupCoordinates[pathdata[x]]\n","            endCoord=pickupCoordinates[pathdata[x+1]]\n","            markLine.append(startCoord)\n","            markLine.append(endCoord)\n","            markLineCoords.append(markLine)\n","    table_row.extend((data.loc[i,'Team'], data.loc[i,'Match'], markLineCoords))\n","    print(table_row)\n","    output_data.append(table_row)\n","\n","\n","\n","df = pd.DataFrame(output_data, columns=['Team', 'Match', 'MarklineCoords'])\n","#df = pd.DataFrame(output_data, columns=['MarklineCoordinates'])\n","\n","Alteryx.write(df,1)"]},{"cell_type":"code","execution_count":10,"metadata":{"scrolled":true},"outputs":[],"source":[]},{"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":[]},{"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":[]},{"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":[]}],"metadata":{"kernelspec":{"display_name":"designerbasetools_venv","language":"python","name":"designerbasetools_venv"},"language_info":{"codemirror_mode":{"name":"ipython","version":3},"file_extension":".py","mimetype":"text/x-python","name":"python","nbconvert_exporter":"python","pygments_lexer":"ipython3","version":"3.8.16"}},"nbformat":4,"nbformat_minor":2}]]></Notebook>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output1">
+          <RecordInfo>
+            <Field name="Team" source="PythonTool:" type="Int64" />
+            <Field name="Match" source="PythonTool:" type="Int64" />
+            <Field name="MarklineCoords" size="1073741823" source="PythonTool:" type="V_WString" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxJupyterPluginEngine.dll" EngineDllEntryPoint="AlteryxJupyter" />
+    </Node>
+    <Node ToolID="102">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1722" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Match" selected="True" />
+            <SelectField field="AutoPath" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="103">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2070" y="354" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_8020_9dd1c65198fa36449a0ca00515c7f97d_\Engine_8020_8645c3cf93afe54582cfee7dcac2dff8~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="2" Connection="True" />
+      <Destination ToolID="4" Connection="Targets" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="4" Connection="Source" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="5" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="5" Connection="True" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="5" Connection="True" />
+      <Destination ToolID="7" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="7" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Join" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection Wireless="True">
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="19" Connection="Input" />
+    </Connection>
+    <Connection Wireless="True">
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="37" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="11" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="28" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="46" Connection="Left" />
+    </Connection>
+    <Connection Wireless="True">
+      <Origin ToolID="45" Connection="Output26" />
+      <Destination ToolID="46" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="13" Connection="Output" />
+      <Destination ToolID="55" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="16" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="30" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="56" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output" />
+      <Destination ToolID="23" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output" />
+      <Destination ToolID="24" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="23" Connection="Output" />
+      <Destination ToolID="24" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output" />
+      <Destination ToolID="99" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="19" Connection="Output" />
+      <Destination ToolID="18" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="24" Connection="Join" />
+      <Destination ToolID="36" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="28" Connection="Output" />
+      <Destination ToolID="26" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="28" Connection="Output" />
+      <Destination ToolID="44" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="21" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="47" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="63" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="30" Connection="Output" />
+      <Destination ToolID="22" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="30" Connection="Output" />
+      <Destination ToolID="71" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="35" Connection="Output" />
+      <Destination ToolID="29" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="35" Connection="Output" />
+      <Destination ToolID="102" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="36" Connection="Output" />
+      <Destination ToolID="35" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="37" Connection="Output" />
+      <Destination ToolID="38" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="37" Connection="Output" />
+      <Destination ToolID="42" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="40" Connection="Output" />
+      <Destination ToolID="43" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="42" Connection="Output" />
+      <Destination ToolID="40" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="43" Connection="Output" />
+      <Destination ToolID="45" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="45" Connection="Output26" />
+      <Destination ToolID="41" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="46" Connection="Join" />
+      <Destination ToolID="13" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="55" Connection="Output" />
+      <Destination ToolID="15" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="56" Connection="Output" />
+      <Destination ToolID="57" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="57" Connection="Output" />
+      <Destination ToolID="59" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="59" Connection="Output" />
+      <Destination ToolID="60" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="60" Connection="Output" />
+      <Destination ToolID="58" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="60" Connection="Output" />
+      <Destination ToolID="62" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="63" Connection="Output" />
+      <Destination ToolID="64" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="64" Connection="Output" />
+      <Destination ToolID="67" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="66" Connection="False" />
+      <Destination ToolID="68" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="67" Connection="Output" />
+      <Destination ToolID="66" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="68" Connection="Output" />
+      <Destination ToolID="65" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="68" Connection="Output" />
+      <Destination ToolID="69" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="71" Connection="Output" />
+      <Destination ToolID="72" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="72" Connection="Output" />
+      <Destination ToolID="75" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="75" Connection="Output" />
+      <Destination ToolID="76" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="76" Connection="Output" />
+      <Destination ToolID="73" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="76" Connection="Output" />
+      <Destination ToolID="77" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="99" Connection="Output" />
+      <Destination ToolID="100" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="100" Connection="Output" />
+      <Destination ToolID="20" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="101" Connection="Output1" />
+      <Destination ToolID="103" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="102" Connection="Output" />
+      <Destination ToolID="101" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <RunWithE2 value="True" />
+    <PredictiveToolsCodePage value="1252" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>2024_main_V5</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+      <WorkflowId value="3bd6787d-3e9b-4fa1-9dce-5d94d6714ce0" />
+      <Telemetry>
+        <PreviousWorkflowId value="4b6823b2-aa02-4434-9b64-a8e383e68c87" />
+        <OriginWorkflowId value="ed1f09ae-d6e7-4ab7-b8bd-9bdf7049f15d" />
+      </Telemetry>
+      <PlatformWorkflowId value="" />
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

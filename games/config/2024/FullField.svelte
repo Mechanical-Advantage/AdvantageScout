@@ -7,7 +7,7 @@
         1: ["false", "true", "true", "true", "red", "blue"],
     };
     
-
+    $gameData["ReversedAlliance"] = $reversedAlliance;
 
 
     // console.log("Reversed from full field", $reversedAlliance);

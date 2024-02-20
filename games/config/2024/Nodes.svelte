@@ -31,6 +31,9 @@
     $gameData[dataField] = $gameData[dataField] + 1;
     $gameData[locationField] = $gameData[locationField] + 1;
     $liveGamepiece = 0;
+    if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
+      $gameData["AutoPath"].push(locationField);
+    } 
   }
 
   let gameLevelMap = {

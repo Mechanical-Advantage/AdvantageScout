@@ -3,7 +3,14 @@
     import FullField from "./FullField.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
     import AutoSpikeSVG from "./AutoSpikeSVG.svelte";
-    import { liveGamepiece, liveLocation } from "./stores";
+    import { reversedAlliance, liveGamepiece, liveLocation } from "./stores";
+    let topMargin = "top-[42px]";
+if ($reversedAlliance === 0) {
+    topMargin = "top-[42px]";
+
+} else {
+    topMargin = "top-[210px]";
+}
 
     function handleClick() {
         $autoState = 1;
@@ -14,7 +21,7 @@
 
 <FullField />
 
-<div class="flex flex-col absolute left-[300px] top-[42px] gap-y-[45px]">
+<div class="flex flex-col absolute left-[300px] {topMargin} gap-y-[45px]">
     <div> <AutoSpikeSVG/>
     </div>
 
@@ -25,7 +32,7 @@
     </div>
     </div>
 
-    <div class="flex flex-col absolute left-[685px] top-[42px] gap-y-[45px]">
+    <div class="flex flex-col absolute left-[685px] {topMargin} gap-y-[45px]">
         <div> <AutoSpikeSVG/>
         </div>
     
