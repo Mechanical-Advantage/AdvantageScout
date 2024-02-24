@@ -19,6 +19,7 @@ export const onStageButton = writable(0)
 
 export const gameData = writable({
     AllianceColor: 0,
+    ReversedAlliance: 0,
     StartPosition: 0,
     Leave: 0,
     AutoSpeakerNoteSuccess: 0,
@@ -58,5 +59,6 @@ export const gameData = writable({
     NoteIntakeRating: 0,
     DefenseRating: 0,
     UnderDefenseRating: 0,
+    AutoPath: ["sz1"], 
     Comment: " "
 })

@@ -1,6 +1,7 @@
 {
     "fields": [
         "AllianceColor INTEGER DEFAULT 0",
+        "ReversedAlliance INTEGER DEFAULT 0",
         "StartPosition INTEGER DEFAULT 0",
         "StartGamePiece TEXT DEFAULT ''",
         "StartConfig TEXT DEFAULT ''",
@@ -42,6 +43,7 @@
         "NoteIntakeRating NUMERIC DEFAULT 0",
         "DefenseRating NUMERIC DEFAULT 0",
         "UnderDefenseRating NUMERIC DEFAULT 0",
+        "AutoPath TEXT DEFAULT ''",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [

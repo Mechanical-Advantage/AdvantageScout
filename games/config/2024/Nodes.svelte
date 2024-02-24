@@ -25,7 +25,16 @@
     } else {
       $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
     }
-
+    if (gameMode === "Tele" && ($liveLocation.includes("Spike") || $liveLocation.includes("Centerline"))){
+      dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
+      $gameData[dataField] = $gameData[dataField] + 1;
+      dataField = "TeleFloorNoteCollect";
+      $gameData[dataField] = $gameData[dataField] - 1;
+      $liveLocation = "Floor"; 
+    }
+    console.log("LiveGamePiece" + $liveGamepiece);
+    console.log("LiveLocation" + $liveLocation);
+    console.log("GameMode" + gameMode);
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
     $gameData[dataField] = $gameData[dataField] + 1;

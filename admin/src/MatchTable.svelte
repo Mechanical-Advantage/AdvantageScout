@@ -30,15 +30,15 @@
 
 <div class="relative overflow-y-auto">
     <table class="table-auto border-separate border-spacing-1 ">
-        <thead class="border-slate-700">
+        <thead class="border-slate-900">
             <tr>
-                <th class="bg-gray-700 text-white">match</th>
-                <th class="bg-red-700">R1</th>
-                <th class="bg-red-700">R2</th>
-                <th class="bg-red-700">R3</th>
+                <th class="bg-zinc-500 text-white">match</th>
                 <th class="bg-blue-700">B1</th>
                 <th class="bg-blue-700">B2</th>
                 <th class="bg-blue-700">B3</th>
+                <th class="bg-red-700">R1</th>
+                <th class="bg-red-700">R2</th>
+                <th class="bg-red-700">R3</th>
             </tr>
         </thead>
 
@@ -47,8 +47,8 @@
                 <tr />
                 <td
                     class={match.teams.includes(6328)
-                        ? " bg-gray-600 text-yellow-500 font-bold"
-                        : "bg-gray-600 text-white font-bold"}>match {i + 1}</td
+                        ? " bg-gray-700 text-yellow-500 font-bold"
+                        : "bg-gray-700 text-white font-bold"}>match {i + 1}</td
                 >
                 {#each match.teams as team, i}
                     <!-- <td
@@ -66,8 +66,8 @@
                             ? team == match.teams[0] ||
                               team == match.teams[1] ||
                               team == match.teams[2]
-                                ? 'bg-red-400 text-black'
-                                : 'bg-blue-300 text-black'
+                                ? 'bg-blue-300 text-black'
+                                : 'bg-red-400 text-black'
                             : 'text-black'} text-center">{team}</td
                     >
 
