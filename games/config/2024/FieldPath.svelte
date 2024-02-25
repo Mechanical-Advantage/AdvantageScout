@@ -100,9 +100,14 @@
       }
   
       class PickupEvent extends GameEvent {
-        constructor(pos)
+        constructor(pos, id = undefined)
         {
           super(pos, GameEventType.pickup)
+          this.noteId = id
+        }
+
+        setId(id){
+            this.noteId=id
         }
       }
   
@@ -173,7 +178,7 @@
         }
   
         /**
-         * Add point to the event queue
+         * Add point to the event queue (TODO: refactor to handler class with callbacks)
          * @param  {[GameEventType] e }
          */
         function addGameEvent(e) {
@@ -185,7 +190,7 @@
             
             let history_len= $gameData.AutoEventList.length;
             if(history_len>0)
-            e.prevEvent = $gameData.AutoEventList[history_len-1];
+                e.prevEvent = $gameData.AutoEventList[history_len-1];
 
             $gameData.AutoEventList.push(e)
             $gameData=$gameData
@@ -197,8 +202,34 @@
     
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
+           
+            
+            updateField(e) 
             updatePoints(e)
             renderEvents()
+        }
+
+        function updateField(event, undo=false){
+          console
+            if(event.name=="pickup") {
+                if(!undo){
+                  let item = gameField.select(event.pos);
+                  console.log("item: " + item)
+
+                  if (item && item.type == "note"){
+                      console.log("Disabling note: " + item.id)
+                      gameField.disable(item.id)
+                      event.setId(item.id)
+                    
+                  }
+                }
+                else {
+                  if(event.noteId!==undefined)
+                    gameField.enable(event.noteId)
+                }
+
+            }
+
         }
 
         /**
@@ -247,6 +278,7 @@
          */
         function undo() {
             updatePoints(currEvent, true)
+            updateField(currEvent, true)
             $gameData.AutoEventList= $gameData.AutoEventList.slice(0, -1);
             $gameData=$gameData
  
@@ -266,10 +298,16 @@
     //-----------------------------
     //  Game elements
     //-----------------------------
+        const FieldElementTypes = {
+          note:"note"
+        }
+
         class FieldElement {
-            constructor(){
-                this.path = new Path2D;
-                this.enabled = true;
+            constructor(type, id, enabled=true){
+                this.type = type;
+                this.path = new Path2D();
+                this.enabled = enabled;
+                this.id = id;
             }
 
             disable(){
@@ -283,42 +321,74 @@
 
         }
         class Note extends FieldElement {
-            constructor(pos, size){
-                super();
+            constructor(id, pos, size){
+                super(FieldElementTypes.note, id);
                 this.path.rect(pos.x, pos.y,size, size);
-                
                 this.color = Colors.orange
             }
         }
 
 
         class GameField {
+
             constructor(width, height){
                 this.items = []
-                let size = height/14 
+                this.active = {}
+                let size = height/10
 
                 //Setup notes
-                this.items.push(new Note({x: width*0.30, y: height/2 - size/2}, size));    
-                this.items.push(new Note({x: width*0.30, y: height/2 - height/6 - size/2}, size));
-                this.items.push(new Note({x: width*0.30, y: height/2 - 2*height/6 - size/2}, size));   
+                this.items[0]=new Note(0,{x: width*0.30, y: height/2 - size/2}, size);    
+                this.items[1]=new Note(1,{x: width*0.30, y: height/2 - height/6 - size/2}, size);
+                this.items[2]=new Note(2,{x: width*0.30, y: height/2 - 2*height/6 - size/2}, size);   
                 
-                this.items.push(new Note({x: width*0.85, y: height/2 - size/2}, size));    
-                this.items.push(new Note({x: width*0.85, y: height/2 - height/6 - size/2}, size));
-                this.items.push(new Note({x: width*0.85, y: height/2 - 2.1*height/6 - size/2}, size));
-                this.items.push(new Note({x: width*0.85, y: height/2 + height/6 - size/2}, size));     
-                this.items.push(new Note({x: width*0.85, y: height/2 + 2.1*height/6 - size/2}, size));   
+                this.items[3]=new Note(3,{x: width*0.85, y: height/2 - size/2}, size);    
+                this.items[4]=new Note(4,{x: width*0.85, y: height/2 - height/6 - size/2}, size);
+                this.items[5]=new Note(5,{x: width*0.85, y: height/2 - 2.1*height/6 - size/2}, size);
+                this.items[6]=new Note(6,{x: width*0.85, y: height/2 + height/6 - size/2}, size);     
+                this.items[7]=new Note(7,{x: width*0.85, y: height/2 + 2.1*height/6 - size/2}, size);   
 
+                for(let i=0; i<this.items.length; i++){
+                    this.active[i] = this.items[i]
+                }  
+                console.log("active")              
+                console.log(this.active)
             }
 
+            select(pos){
+                for(let item in this.active)
+                {
+                    if(ctx.isPointInPath( this.active[item].path, pos.x, pos.y))
+                    {
+                        console.log("Intersecting with item! ")
+                        console.log(this.active[item])
+                        return {type: this.active[item].type, id: this.active[item].id}
+                    }        
+                }
+
+                return null
+            }
+
+            disable(id){
+                delete this.active[id]
+            }
+
+            enable(id){
+                if(id in this.items) {
+                    this.active[id]=this.items[id]
+                }
+                else{
+                    console.log("Unable to find item")
+                }
+            }
 
             draw(){
-                for(let i=0; i<this.items.length; i++)
+                for(let i in this.active)
                 {
                     ctx.beginPath();
-                    ctx.fillStyle = this.items[i].color
-                    ctx.fill(this.items[i].path);
+                    ctx.fillStyle = this.active[i].color
+                    ctx.fill(this.active[i].path);
                     ctx.strokeStyle = Colors.white;
-                    ctx.stroke(this.items[i].path);
+                    ctx.stroke(this.active[i].path);
                 }
             }
         }
@@ -670,7 +740,9 @@
         width: 100%;
         height: 100%;
         color: greenyellow;
+        font-size: 30px;
     }
+
     button:disabled,
     button[disabled]{
     border: 1px solid #999999;
