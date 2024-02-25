@@ -4,6 +4,7 @@
     import { autoState, gameState } from "./stores";
     import PrematchConfig from "./PrematchConfig.svelte";
     import PostGame from "./PostGame.svelte";
+    import FieldPath from "./FieldPath.svelte";
 </script>
 
 
@@ -14,7 +15,7 @@
     <AutoPage />
 {/if}
 {:else if $gameState === 1}
-<TeleopPage/>
+<FieldPath />
 {:else if $gameState === 2}
     <PostGame />
 {/if}

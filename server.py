@@ -28,7 +28,7 @@ host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM12"]  # not current, only for app versions < 1.4.0
 bt_ports_outgoing = ["COM4", "COM5", "COM6", "COM7",
-                     "COM8", "COM3","COM9"]  # current implementation
+                     "COM8", "COM3","COM23"]  # current implementation
 bt_showheartbeats = True
 tba = tbapy.TBA(
     "KDjqaOWmGYkyTSgPCQ7N0XSezbIBk1qzbuxz8s5WfdNtd6k34yL46vU73VnELIrP")
