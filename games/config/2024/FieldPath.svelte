@@ -201,11 +201,15 @@
             renderEvents()
         }
 
+        /**
+         * Needs refactored to remove if/else structure
+         * @param event
+         * @param undo
+         */
         function updatePoints(event, undo=false) {
             console.log("Updating events: " + event)
 
             if (event.name=="scoreAmp"){
-                console.log("Amp score")
                 if(undo)
                     $gameData.AutoAmpNoteSuccess--;
                 else
@@ -213,11 +217,24 @@
 
             }        
             else if (event.name=="scoreSpeaker"){
-                console.log("Speaker score")
                 if(undo)
                     $gameData.AutoSpeakerNoteSuccess--;
                 else
                     $gameData.AutoSpeakerNoteSuccess++;
+
+            }
+            else if (event.name=="missSpeaker"){
+                if(undo)
+                    $gameData.AutoSpeakerNoteFail--;
+                else
+                    $gameData.AutoSpeakerNoteFail++;
+
+            }
+            else if (event.name=="missAmp"){
+                if(undo)
+                    $gameData.AutoAmpNoteFail--;
+                else
+                    $gameData.AutoAmpNoteFail++;
 
             }
 
