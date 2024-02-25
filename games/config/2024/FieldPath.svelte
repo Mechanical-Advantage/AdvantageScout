@@ -4,10 +4,16 @@
     import { gameData } from "./stores"
     import Nodes  from "./Nodes.svelte";
 
+    const AllianceColor = {
+          red:"red",
+          blue:"blue"
+        }
+
     //-- Component-specific variables
       let canvas;
       let ctx;
       let gameField;
+      let aliance = AllianceColor.red;
   
     //-- Component state
       let currEvent = ($gameData.AutoEventList.length>0) ? $gameData.AutoEventList.slice(-1): null
@@ -27,7 +33,7 @@
         canvas.addEventListener("touchmove", touchMoveHandler);   
         canvas.addEventListener("touchend", touchEndHandler);   
 
-        gameField = new GameField(canvas.width, canvas.height)
+        gameField = new GameField(canvas.width, canvas.height, aliance)
         renderEvents()
       });
   
@@ -347,22 +353,31 @@
              * Constuctor
              * @param {int} width Width of the canvas element 
              * @param {int] height Height of the canvas element
+             * @param {AllianceColor} aliance "red" or "blue"
              */
-            constructor(width, height){
+            constructor(width, height, aliance){
                 this.items = []
                 this.active = {}
                 let size = height/10
 
+                let rel_row_loc = 0.30;
+                let rel_center_loc = 0.86;
+
+                if(aliance==AllianceColor.red){
+                  rel_row_loc = 0.65;
+                  rel_center_loc = 0.10;
+                }
+
                 //-- Add notes to the game field at the corresponding locations and size
-                this.items[0]=new Note(0,{x: width*0.30, y: height/2 - size/2}, size);    
-                this.items[1]=new Note(1,{x: width*0.30, y: height/2 - height/6 - size/2}, size);
-                this.items[2]=new Note(2,{x: width*0.30, y: height/2 - 2*height/6 - size/2}, size);   
+                this.items[0]=new Note(0,{x: width*rel_row_loc, y: height/2 - size/2}, size);    
+                this.items[1]=new Note(1,{x: width*rel_row_loc, y: height/2 - height/6 - size/2}, size);
+                this.items[2]=new Note(2,{x: width*rel_row_loc, y: height/2 - 2*height/6 - size/2}, size);   
                 
-                this.items[3]=new Note(3,{x: width*0.85, y: height/2 - size/2}, size);    
-                this.items[4]=new Note(4,{x: width*0.85, y: height/2 - height/6 - size/2}, size);
-                this.items[5]=new Note(5,{x: width*0.85, y: height/2 - 2.1*height/6 - size/2}, size);
-                this.items[6]=new Note(6,{x: width*0.85, y: height/2 + height/6 - size/2}, size);     
-                this.items[7]=new Note(7,{x: width*0.85, y: height/2 + 2.1*height/6 - size/2}, size);   
+                this.items[3]=new Note(3,{x: width*rel_center_loc, y: height/2 - size/2}, size);    
+                this.items[4]=new Note(4,{x: width*rel_center_loc, y: height/2 - height/6 - size/2}, size);
+                this.items[5]=new Note(5,{x: width*rel_center_loc, y: height/2 - 2.1*height/6 - size/2}, size);
+                this.items[6]=new Note(6,{x: width*rel_center_loc, y: height/2 + height/6 - size/2}, size);     
+                this.items[7]=new Note(7,{x: width*rel_center_loc, y: height/2 + 2.1*height/6 - size/2}, size);   
 
                 //-- Add all items to the active element list
                 for(let i=0; i<this.items.length; i++){
@@ -414,6 +429,10 @@
                 }
             }
 
+            /**
+             * Draw all of the field elements
+             * NOTE:  May need to be refactored outside of this class
+             */
             draw(){
                 for(let i in this.active)
                 {
@@ -765,7 +784,6 @@
   <style>
     canvas {
       border: 1px solid white;
-      background: url('/images/2024-field-blue.png');
       background-size: 100% 100%;
     }
 
@@ -784,6 +802,7 @@
     background-color: gray;
     color: #666666;
     }
+
   
     .sidebar button {
         height: 20;
@@ -815,6 +834,7 @@
         <div class="col-span-3">
             <canvas 
             bind:this={canvas}
+            style='background: url("/images/2024-field-{aliance}.png"); background-size: 100% 100%;'
             width="610"
             height="470"
             />
