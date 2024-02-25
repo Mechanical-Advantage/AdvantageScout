@@ -209,6 +209,12 @@
             renderEvents()
         }
 
+        /**
+         * Update field elements based on event
+         * NOTE: Needs refactored to remove if/else structure
+         * @param {GameEventType} event Most recent event
+         * @param {bool} undo Flag indicating that this is an undo operation
+         */
         function updateField(event, undo=false){
           console
             if(event.name=="pickup") {
@@ -233,7 +239,8 @@
         }
 
         /**
-         * Needs refactored to remove if/else structure
+         * Function to update game scoring based on game event
+         * NOTE: Needs refactored to remove if/else structure
          * @param event
          * @param undo
          */
@@ -330,14 +337,23 @@
         }
 
 
+        /**
+         * Object to capture field state.  Composed of all of game elements and their 
+         * corresponding state
+         */
         class GameField {
 
+            /**
+             * Constuctor
+             * @param {int} width Width of the canvas element 
+             * @param {int] height Height of the canvas element
+             */
             constructor(width, height){
                 this.items = []
                 this.active = {}
                 let size = height/10
 
-                //Setup notes
+                //-- Add notes to the game field at the corresponding locations and size
                 this.items[0]=new Note(0,{x: width*0.30, y: height/2 - size/2}, size);    
                 this.items[1]=new Note(1,{x: width*0.30, y: height/2 - height/6 - size/2}, size);
                 this.items[2]=new Note(2,{x: width*0.30, y: height/2 - 2*height/6 - size/2}, size);   
@@ -348,6 +364,7 @@
                 this.items[6]=new Note(6,{x: width*0.85, y: height/2 + height/6 - size/2}, size);     
                 this.items[7]=new Note(7,{x: width*0.85, y: height/2 + 2.1*height/6 - size/2}, size);   
 
+                //-- Add all items to the active element list
                 for(let i=0; i<this.items.length; i++){
                     this.active[i] = this.items[i]
                 }  
@@ -355,13 +372,15 @@
                 console.log(this.active)
             }
 
+            /**
+             * Check if an item is under the given position
+             * @param pos x,y position
+             */
             select(pos){
                 for(let item in this.active)
                 {
                     if(ctx.isPointInPath( this.active[item].path, pos.x, pos.y))
                     {
-                        console.log("Intersecting with item! ")
-                        console.log(this.active[item])
                         return {type: this.active[item].type, id: this.active[item].id}
                     }        
                 }
@@ -369,16 +388,29 @@
                 return null
             }
 
+            /**
+             * Disable field element with a given id
+             * @param id
+             */
             disable(id){
-                delete this.active[id]
+                if(id in this.active) {
+                  delete this.active[id]
+                }
+                else{
+                    console.warn("Unable to find item")
+                }
             }
 
+            /**
+             * Enable element with a given id
+             * @param id
+             */
             enable(id){
                 if(id in this.items) {
                     this.active[id]=this.items[id]
                 }
                 else{
-                    console.log("Unable to find item")
+                    console.warn("Unable to find item")
                 }
             }
 
