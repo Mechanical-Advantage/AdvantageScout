@@ -320,6 +320,7 @@
             }
 
         }
+
         class Note extends FieldElement {
             constructor(id, pos, size){
                 super(FieldElementTypes.note, id);
@@ -387,7 +388,8 @@
                     ctx.beginPath();
                     ctx.fillStyle = this.active[i].color
                     ctx.fill(this.active[i].path);
-                    ctx.strokeStyle = Colors.white;
+                    ctx.strokeStyle = Colors.black;
+                    ctx.lineWidth = 5
                     ctx.stroke(this.active[i].path);
                 }
             }
@@ -670,6 +672,7 @@
         "move" : (e) => {
                     ctx.beginPath();
                     ctx.strokeStyle = Colors.white
+                    ctx.lineWidth = 2
                     ctx.moveTo(e.prevEvent.pos.x, e.prevEvent.pos.y);
                     ctx.lineTo(e.pos.x, e.pos.y);
                     ctx.stroke();
