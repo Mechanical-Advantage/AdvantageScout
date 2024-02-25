@@ -2,7 +2,7 @@
     import { writable } from "svelte/store";
     import { onMount } from "svelte";
     import { gameData } from "./stores"
-    // import { Nodes } from "./Nodes.svelte";
+    import Nodes  from "./Nodes.svelte";
 
     //-- Component-specific variables
       let canvas;
@@ -10,9 +10,8 @@
       let gameField;
   
     //-- Component state
-      const gameEvents = writable([]);
-      let currEvent = null
-      let currPos = null
+      let currEvent = ($gameData.AutoEventList.length>0) ? $gameData.AutoEventList.slice(-1): null
+      let currPos = (currEvent) ? currEvent.pos : null
       let contextMenu = null;
       let mouseDown = false;
  
@@ -163,16 +162,14 @@
         function addMoveEvent(pos) {
             // Update position
             if(currPos==null){
-            const init = new InitEvent(pos) 
-            addGameEvent(init);
+                const init = new InitEvent(pos) 
+                addGameEvent(init);
             }
             else{
-            currPos = pos;
-    
-            const m = new MoveEvent(currPos) 
-            addGameEvent(m);
+                currPos = pos;
+                const m = new MoveEvent(currPos) 
+                addGameEvent(m);
             }
-    
         }
   
         /**
@@ -200,7 +197,30 @@
     
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
+            updatePoints(e)
             renderEvents()
+        }
+
+        function updatePoints(event, undo=false) {
+            console.log("Updating events: " + event)
+
+            if (event.name=="scoreAmp"){
+                console.log("Amp score")
+                if(undo)
+                    $gameData.AutoAmpNoteSuccess--;
+                else
+                    $gameData.AutoAmpNoteSuccess++;
+
+            }        
+            else if (event.name=="scoreSpeaker"){
+                console.log("Speaker score")
+                if(undo)
+                    $gameData.AutoSpeakerNoteSuccess--;
+                else
+                    $gameData.AutoSpeakerNoteSuccess++;
+
+            }
+
         }
   
         /**
@@ -209,6 +229,7 @@
          * all of the robot state to work correctly
          */
         function undo() {
+            updatePoints(currEvent, true)
             $gameData.AutoEventList= $gameData.AutoEventList.slice(0, -1);
             $gameData=$gameData
  
@@ -640,15 +661,32 @@
     color: #666666;
     }
   
+    .sidebar button {
+        height: 20;
+        width: 20;
+    }
+
   </style>
   
 <main>
+   
   <div class="grid grid-cols-5 gap-3 ">
         <div class="col-span-1">
-            <!-- <div class="absolute left-[60px] top-[350px]">
-                <Nodes level="2" type="Fail" gameMode="Auto" />
-            </div> -->
+            <div class="sidebar w-20">
+                <div class="inline">
+                    <Nodes level="2" type="Success" gameMode="Auto" />
+                </div>
             
+                <div class="inline">
+                    <Nodes level="2" type="Fail" gameMode="Auto" />
+                </div>
+                <div class="inline">
+                    <Nodes level="1" type="Success" gameMode="Auto" />
+                </div>
+                <div class="inline">
+                    <Nodes level="1" type="Fail" gameMode="Auto" />
+                </div>
+            </div>
         </div>
         <div class="col-span-3">
             <canvas 
