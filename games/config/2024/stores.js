@@ -14,6 +14,7 @@ export const undoDisplayCondition = writable(false)
 export const uploadState = writable(0)
 export const currentTeam = writable(0)
 export const onStageButton = writable(0)
+export const autoEventList = writable([])
 
 
 

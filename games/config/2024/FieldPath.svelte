@@ -1,23 +1,22 @@
 <script>
     import { writable } from "svelte/store";
     import { onMount } from "svelte";
-    import { gameData } from "./stores"
-    import Nodes  from "./Nodes.svelte";
-
+    import { autoEventList, gameData } from "./stores"
    
-    const AllianceColor = {
-          red:"red",
-          blue:"blue"
-        }
+    //-- Properties
+      export const AllianceColor = {
+            red:"red",
+            blue:"blue"
+          }
+      export let alliance = AllianceColor.blue
 
     //-- Component-specific variables
       let canvas;
       let ctx;
       let gameField;
-      let aliance =  $gameData["AllianceColor"]==0 ? AllianceColor.blue : AllianceColor.red;
-  
+      
     //-- Component state
-      let currEvent = ($gameData.AutoEventList.length>0) ? $gameData.AutoEventList.slice(-1): null
+      let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1) : null
       let currPos = (currEvent) ? currEvent.pos : null
       let contextMenu = null;
       let mouseDown = false;
@@ -34,7 +33,7 @@
         canvas.addEventListener("touchmove", touchMoveHandler);   
         canvas.addEventListener("touchend", touchEndHandler);   
 
-        gameField = new GameField(canvas.width, canvas.height, aliance)
+        gameField = new GameField(canvas.width, canvas.height, alliance)
         renderEvents()
       });
   
@@ -45,6 +44,7 @@
       const Colors = {
           black : "rgb(0,0,0)", 
           red : "rgb(255,0,0)", 
+          burgundy :"rgb(128,0,32)",
           white : "rgb(255,255,255)", 
           blue : "rgb(0,0,255)",
           purple :  "rgb(128,0,128)",
@@ -125,28 +125,28 @@
         }
       }
   
-      class SpeakerScore extends GameEvent {
+      class SpeakerScoreEvent extends GameEvent {
         constructor(pos)
         {
           super(pos, GameEventType.scoreSpeaker)
         }
       }
   
-      class SpeakerMiss extends GameEvent {
+      class SpeakerMissEvent extends GameEvent {
         constructor(pos)
         {
           super(pos, GameEventType.missSpeaker)
         }
       }
 
-      class AmpScore extends GameEvent {
+      class AmpScoreEvent extends GameEvent {
         constructor(pos)
         {
           super(pos, GameEventType.scoreAmp)
         }
       }
       
-      class AmpMiss extends GameEvent {
+      class AmpMissEvent extends GameEvent {
         constructor(pos)
         {
           super(pos, GameEventType.missAmp)
@@ -195,13 +195,21 @@
                 return
             }
             
-            let history_len= $gameData.AutoEventList.length;
+            let history_len = $autoEventList.length;
             if(history_len>0)
-                e.prevEvent = $gameData.AutoEventList[history_len-1];
+                e.prevEvent = $autoEventList[history_len-1];
 
-            $gameData.AutoEventList.push(e)
-            $gameData=$gameData
-            console.log($gameData)
+            $autoEventList.push(e)
+            $autoEventList=$autoEventList
+            console.log(JSON.stringify($autoEventList, 
+                                      (k, v) => {
+                                                  if(k=="prevEvent") 
+                                                    return undefined; 
+                                                  else 
+                                                    return v;
+                                                }
+                                      )
+                        )
     
             //-- Update states
             currEvent = e
@@ -290,15 +298,15 @@
          * NOTE: This function must be able to unroll
          * all of the robot state to work correctly
          */
-        function undo() {
+        export function undo() {
             updatePoints(currEvent, true)
             updateField(currEvent, true)
-            $gameData.AutoEventList= $gameData.AutoEventList.slice(0, -1);
-            $gameData=$gameData
+            $autoEventList= $autoEventList.slice(0, -1);
+            $autoEventList=$autoEventList
  
-            let history_len= $gameData.AutoEventList.length;
+            let history_len= $autoEventList.length;
             if(history_len>0){
-                currEvent = $gameData.AutoEventList[history_len-1];
+                currEvent = $autoEventList[history_len-1];
                 currPos = currEvent.pos
             }
             else{
@@ -633,10 +641,11 @@
         let nitems=5
         contextMenu = new ContextMenu(pos, nitems)
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new PickupEvent(pos))}, Colors.darkorange))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScore(pos))}, Colors.green))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMiss(pos))}, Colors.red))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScore(pos))}, Colors.blue))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMiss(pos))}, Colors.purple))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMissEvent(pos))}, Colors.burgundy))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new DropEvent(pos))}, Colors.black))
   
         addMoveEvent(pos); 
       }
@@ -745,7 +754,7 @@
                       drawCircle(e.pos, Colors.blue, 10);
                   },
         "missAmp" : (e)=> {
-                      drawCircle(e.pos, Colors.purple, 10);
+                      drawCircle(e.pos, Colors.burgundy, 10);
                   },
         "init" : (e)=> {
                       drawCircle(e.pos, Colors.cyan, 10);
@@ -765,8 +774,8 @@
   
         gameField.draw()
 
-        console.log($gameData.AutoEventList)
-        $gameData.AutoEventList.forEach(
+        console.log($autoEventList)
+        $autoEventList.forEach(
             el => {
                 drawFun[el.name](el)
                 i++;
@@ -787,62 +796,16 @@
       border: 1px solid white;
       background-size: 100% 100%;
     }
-
-    button {
-        border: 1px solid green;
-        background-color: black;
-        width: 100%;
-        height: 100%;
-        color: greenyellow;
-        font-size: 30px;
-    }
-
-    button:disabled,
-    button[disabled]{
-    border: 1px solid #999999;
-    background-color: gray;
-    color: #666666;
-    }
-
-  
-    .sidebar button {
-        height: 20;
-        width: 20;
-    }
-
   </style>
   
 <main>
-   
-  <div class="grid grid-cols-5 gap-3 ">
-        <div class="col-span-1">
-            <div class="sidebar w-20">
-                <div class="inline">
-                    <Nodes level="2" type="Success" gameMode="Auto" />
-                </div>
-            
-                <div class="inline">
-                    <Nodes level="2" type="Fail" gameMode="Auto" />
-                </div>
-                <div class="inline">
-                    <Nodes level="1" type="Success" gameMode="Auto" />
-                </div>
-                <div class="inline">
-                    <Nodes level="1" type="Fail" gameMode="Auto" />
-                </div>
-            </div>
-        </div>
-        <div class="col-span-3">
-            <canvas 
-            bind:this={canvas}
-            style='background: url("/images/2024-field-{aliance}.png"); background-size: 100% 100%;'
-            width="610"
-            height="470"
-            />
-        </div>
-        <div class="col-span-1">
-            <button on:click="{undo}" disabled="{$gameData.AutoEventList.length === 0}">Undo</button>
-        </div>
+    <div>
+        <canvas 
+        bind:this={canvas}
+        style='background: url("/images/2024-field-{alliance}.png"); background-size: 100% 100%;'
+        width="610"
+        height="470"
+        />
     </div>
 </main>
   
