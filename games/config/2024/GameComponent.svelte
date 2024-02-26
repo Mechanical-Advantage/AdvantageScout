@@ -9,13 +9,14 @@
 
 
 {#if $gameState === 0}
- <!--   {#if $autoState === 0}
+   {#if $autoState === 0}
     <PrematchConfig />
 {:else}
-    <AutoPage />
-{/if}
--->
+    <!-- <AutoPage /> -->
     <FieldPath />
+{/if}
+
+ 
 
 {:else if $gameState === 1}
     <TeleopPage />

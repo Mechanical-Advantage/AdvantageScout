@@ -4,6 +4,7 @@
     import { gameData } from "./stores"
     import Nodes  from "./Nodes.svelte";
 
+   
     const AllianceColor = {
           red:"red",
           blue:"blue"
@@ -13,7 +14,7 @@
       let canvas;
       let ctx;
       let gameField;
-      let aliance = AllianceColor.red;
+      let aliance =  $gameData["AllianceColor"]==0 ? AllianceColor.blue : AllianceColor.red;
   
     //-- Component state
       let currEvent = ($gameData.AutoEventList.length>0) ? $gameData.AutoEventList.slice(-1): null
