@@ -61,6 +61,6 @@ export const gameData = writable({
     DefenseRating: 0,
     UnderDefenseRating: 0,
     AutoPath: ["sz1"], 
-    AutoEventList: [],
+    AutoEventList: "",
     Comment: " "
 })

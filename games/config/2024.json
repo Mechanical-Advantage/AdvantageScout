@@ -44,6 +44,7 @@
         "DefenseRating NUMERIC DEFAULT 0",
         "UnderDefenseRating NUMERIC DEFAULT 0",
         "AutoPath TEXT DEFAULT ''",
+        "AutoEventList TEXT DEFAULT ''",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [
