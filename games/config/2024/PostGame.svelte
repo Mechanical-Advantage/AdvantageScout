@@ -19,7 +19,7 @@
         $gameData["Penalties"] =
             $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
 
-        $gameData["autoEventList"] = JSON.stringify($autoEventList, 
+        $gameData["AutoEventList"] = JSON.stringify($autoEventList, 
                                       (k, v) => {
                                                   if(k=="prevEvent") 
                                                     return undefined; 
