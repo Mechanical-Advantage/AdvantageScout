@@ -14,7 +14,28 @@
       let canvas;
       let ctx;
       let gameField;
+      let canvasSize={w:610, h:470}
       
+    //-- Compute field-width in pixels (based on background image geometry)
+      let topCorner;
+      let centerPos;
+      let posOffset;
+      if(alliance==AllianceColor.blue){
+        //Location of field markers
+        topCorner={x:11.6, y:24}
+        centerPos={x:535.6, y:235.3}
+        posOffset={x:11.6, y:24}
+      }
+      else {
+        //Location of field markers
+        topCorner={x:600, y:24}
+        centerPos={x:76.6, y:235.6}
+        posOffset={x:-(topCorner.x-2*(centerPos.x)), y:24}
+      }
+      
+      let virtualFieldSizePx = {w: Math.abs(topCorner.x-centerPos.x)*2, h: Math.abs(topCorner.y-centerPos.y)*2 }
+      let virtualFieldOffsetPx = posOffset;
+
     //-- Component state
       let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1) : null
       let currPos = (currEvent) ? currEvent.pos : null
@@ -89,6 +110,21 @@
           this.pos = pos
           this.name = name
           this.prevEvent = null
+          this.npos = {
+                       x: (pos.x-virtualFieldOffsetPx.x)/virtualFieldSizePx.w,
+                       y: (pos.y-virtualFieldOffsetPx.y)/virtualFieldSizePx.h
+                      } //Normalized position on a full field
+                
+              //Sanitize
+                if(this.npos.x<0)
+                  this.npos.x=0.0;
+                else if(this.npos.x>1.0)
+                  this.npos.x=1.0;
+
+                if(this.npos.y<0)
+                  this.npos.y=0;
+                else if(this.npos.y>1.0)
+                  this.npos.y=1.0;
         }
       }
   
@@ -367,6 +403,9 @@
             constructor(width, height, aliance){
                 this.items = []
                 this.active = {}
+                this.width = width
+                this.height = height;
+
                 let size = height/10
 
                 let rel_row_loc = 0.30;
@@ -803,8 +842,8 @@
         <canvas 
         bind:this={canvas}
         style='background: url("/images/2024-field-{alliance}.png"); background-size: 100% 100%;'
-        width="610"
-        height="470"
+        width={canvasSize.w}
+        height={canvasSize.h}
         />
     </div>
 </main>

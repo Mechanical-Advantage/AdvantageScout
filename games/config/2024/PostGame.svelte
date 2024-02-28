@@ -21,7 +21,7 @@
 
         $gameData["AutoEventList"] = JSON.stringify($autoEventList, 
                                       (k, v) => {
-                                                  if(k=="prevEvent") 
+                                                  if(k=="prevEvent" || k=="pos" ) 
                                                     return undefined; 
                                                   else 
                                                     return v;
