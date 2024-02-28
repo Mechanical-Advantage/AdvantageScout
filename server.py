@@ -577,13 +577,14 @@ document.body.innerHTML = window.localStorage.getItem(
         cur_game = conn_game.cursor()
         prefs = json.loads(quickread("games" + os.path.sep + "config" +
                                      os.path.sep + str(game_result["name"]) + ".json"))
-        print(prefs)
+        #print(prefs)
         result = {"success": False, "count": 0}
         try:
             data = json.loads(data)
         except:
             return (json.dumps(result))
         result["count"] = len(data)
+        print(data)
 
         for i in range(len(data)):
             if "InterfaceType" not in data[i]:
@@ -633,6 +634,7 @@ document.body.innerHTML = window.localStorage.getItem(
                 table = "match"
             cur_game.execute("INSERT INTO " + table + " (" + ",".join(fields) +
                              ") VALUES (" + ",".join(["?"] * len(fields)) + ")", tuple(values))
+            
         conn_game.commit()
         conn_game.close()
         result["success"] = True
