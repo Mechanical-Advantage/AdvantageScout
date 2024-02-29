@@ -89,7 +89,6 @@
           y: evt.clientY - rect.top
         };
       }
-    
   
     //-----------------------------
     //  Game Events
@@ -380,9 +379,9 @@
         }
 
         class Note extends FieldElement {
-            constructor(id, pos, size){
+            constructor(id, centerPos, size){
                 super(FieldElementTypes.note, id);
-                this.path.rect(pos.x, pos.y,size, size);
+                this.path.rect(centerPos.x-size/2, centerPos.y-size/2,size, size);
                 this.color = Colors.orange
             }
         }
@@ -416,17 +415,20 @@
                   rel_center_loc = 0.10;
                 }
 
-                //-- Add notes to the game field at the corresponding locations and size
-                this.items[0]=new Note(0,{x: width*rel_row_loc, y: height/2 - size/2}, size);    
-                this.items[1]=new Note(1,{x: width*rel_row_loc, y: height/2 - height/6 - size/2}, size);
-                this.items[2]=new Note(2,{x: width*rel_row_loc, y: height/2 - 2*height/6 - size/2}, size);   
-                
-                this.items[3]=new Note(3,{x: width*rel_center_loc, y: height/2 - size/2}, size);    
-                this.items[4]=new Note(4,{x: width*rel_center_loc, y: height/2 - height/6 - size/2}, size);
-                this.items[5]=new Note(5,{x: width*rel_center_loc, y: height/2 - 2.1*height/6 - size/2}, size);
-                this.items[6]=new Note(6,{x: width*rel_center_loc, y: height/2 + height/6 - size/2}, size);     
-                this.items[7]=new Note(7,{x: width*rel_center_loc, y: height/2 + 2.1*height/6 - size/2}, size);   
+                let notePos = [{x: width*rel_row_loc, y: height/2},    
+                      {x: width*rel_row_loc, y: height/2 - height/6},
+                      {x: width*rel_row_loc, y: height/2 - 2*height/6},
+                      {x: width*rel_center_loc, y: height/2},   
+                      {x: width*rel_center_loc, y: height/2 - height/6},
+                      {x: width*rel_center_loc, y: height/2 - 2.1*height/6},
+                      {x: width*rel_center_loc, y: height/2 + height/6},     
+                      {x: width*rel_center_loc, y: height/2 + 2.1*height/6 }]
 
+
+                //-- Add notes to the game field at the corresponding locations and size
+                for(let i=0; i<8; i++)    
+                  this.items[i]=new Note(i, notePos[i], size);    
+   
                 //-- Add all items to the active element list
                 for(let i=0; i<this.items.length; i++){
                     this.active[i] = this.items[i]
