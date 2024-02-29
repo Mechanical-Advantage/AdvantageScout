@@ -405,7 +405,7 @@
                 this.width = width
                 this.height = height;
 
-                let size = height/10
+                let size = height/8.5;
 
                 let rel_row_loc = 0.30;
                 let rel_center_loc = 0.86;
@@ -500,7 +500,14 @@
     //-----------------------------
     //  Context menu
     //-----------------------------
-  
+      /**
+       * 
+      */
+      const MenuItemShape = {
+        circ : "circ",
+        rect : "rect"
+      }
+
       /**
        * Object representing an item on the context menus
        */
@@ -511,10 +518,15 @@
          * @param action Function pointer to execute when item is executed
          * @param color Color of the menu item (can be replaced with icon in the future)
          */
-        constructor(action, color){
-          this.action = action
-          this.color = color
+        constructor(action, color, decorator_color=null, shape=MenuItemShape.rect){
+          this.action = action;
+          this.color = color;
+          if(decorator_color==null)
+            decorator_color=color
+          this.decorator_color = decorator_color;
           this.path = new Path2D;
+          this.decorator = new Path2D;
+          this.shape=shape
         }
   
         /** 
@@ -523,14 +535,65 @@
          * @param {int} size : Size of rectangle in pixels
          */
         setPos(pos, size) {
-          this.path.rect(pos.x, pos.y, size, size);
+          if (this.shape==MenuItemShape.circ){
+            this.path.arc(pos.x, pos.y, size/2, 0, Math.PI*2);
+            this.decorator.arc(pos.x, pos.y, size/4, 0, Math.PI*2);
+          }
+          else{
+            this.path.rect(pos.x-size/2, pos.y-size/2, size, size);
+            this.decorator.rect(pos.x-size/2+size/4, pos.y-size/2+size/4, size/2, size/2);
+          }
         }
   
+        draw(){   
+          ctx.beginPath();
+          ctx.fillStyle = this.color
+          ctx.fill(this.path);
+          
+          ctx.beginPath();
+          ctx.fillStyle = this.decorator_color
+          ctx.fill(this.decorator);          
+        }
+
         /**
          * Run action for menu item
          */
         run(){
           this.action()
+        }
+      }
+
+      /**
+       * ContextMenu Item Layout object for multi-row layout
+       */
+      class CircleLayout {
+        /**
+         * Constructor
+         * @param center : {x: x-location, y: y-locations} center postion of menu
+         * @param {int} nitems : Maximum number of items
+         * @param {int} radius : center of elements
+         */
+        constructor(center, nitems, radius){
+          this.coord = {}
+          let startAngle = 0;
+          let angle = 2*Math.PI/nitems;
+          
+          for(let i=0; i<nitems; i++){
+              this.coord[i] = {x: center.x - radius*Math.cos(startAngle + angle*i), 
+                            y: center.y - radius*Math.sin(startAngle + angle*i)}
+          }
+        }
+
+        /**
+         * Get center of element at specific index
+         * @param idx Index of 
+         */
+        getCoord(idx){
+          console.error("Index out of bounds.  Please allocate more items. ")
+          if(idx in this.coord)
+            return this.coord[idx];
+          else
+            return {}
         }
       }
 
@@ -556,16 +619,16 @@
             this.item_distance = this.size + this.hsep
             this.row_distance = this.size + this.vsep
             this.nitems = nitems
-            this.hoffset = (this.item_distance * this.items_p_row)/2
+            this.hoffset = (this.item_distance * this.items_p_row)/2 - this.row_distance/2
             let center_vdist = 15
             
-            this.voffset = +(this.nrows_half)*(this.row_distance) + center_vdist
+            this.voffset = +(this.nrows_half)*(this.row_distance) + center_vdist - this.size/2
             let item_idx = 0;
             this.coord = {}
             for(let i=this.nrows_half-1; i>=0; i--){
                 for(let j=0; j<this.items_p_row; j++){
                     this.coord[item_idx] = {x:center.x - this.hoffset + j*this.item_distance, 
-                                     y:center.y - this.voffset - i*this.row_distance}
+                                            y:center.y - this.voffset - i*this.row_distance}
                     item_idx++;
                 }
             }
@@ -573,11 +636,29 @@
             for(let i=0; i<this.nrows_half; i++){
                 for(let j=0; j<this.items_p_row; j++){
                     this.coord[item_idx] = {x:center.x - this.hoffset + j*this.item_distance,
-                                            y:center.y + center_vdist + i*this.row_distance}
+                                            y:center.y + center_vdist + this.vsep + this.size/2 + i*this.row_distance}
                     item_idx++;
                 }
             }
 
+            this.bounds = []
+            for(let i=0; i<this.nrows; i++){
+              if(i==0){
+                this.bounds = [this.coord[i].x-this.size/2, 
+                               this.coord[i].x+this.size/2, 
+                               this.coord[i].y-this.size/2, 
+                               this.coord[i].y+this.size/2 ]
+              }
+              if(this.coord[i].x-this.size/2 < this.bounds[0])
+                this.bounds[0] = this.coord[i].x-this.size/2 
+              if(this.coord[i].x+this.size/2 > this.bounds[1])
+                this.bounds[1] = this.coord[i].x+this.size/2 
+              if(this.coord[i].y-this.size/2 < this.bounds[2])
+                this.bounds[2] = this.coord[i].y-this.size/2 
+              if(this.coord[i].y+this.size/2 > this.bounds[3])
+                this.bounds[3] = this.coord[i].y+this.size/2 
+
+            }
         }
         /**
          * Get top left corner of element at specific index
@@ -585,6 +666,10 @@
          */
         getCoord(idx){
             return this.coord[idx];
+        }
+
+        getRect(){
+          return this.bounds
         }
 
       }
@@ -599,19 +684,28 @@
          * @param center Center point of menu (or click location)
          * @param { int } nitems Max number of items expected in the menu
          */
-        constructor(center, nitems=3){       
-            this.size = 60
+        constructor(center, nitems=3, shape=MenuItemShape.circ){       
+            this.size = 50
             this.item_distance = this.size + 3
             this.nitems = nitems
             this.hoffset = (this.item_distance * this.nitems)/2
             this.voffset = this.size + 15
     
-            //this.top_corner = {x:center.x - this.hoffset, y:center.y - this.voffset}
-            let nrows = 2
-            this.layout = new RowLayout(center, nitems, nrows, this.size)
+            if (shape==MenuItemShape.circ){
+              this.layout = new CircleLayout(center, nitems, 70)
+              this.background = new Path2D();
+              this.background.arc(center.x, center.y, 120, 0, Math.PI*2 )
+            }
+            else {
+              this.layout = new RowLayout(center, nitems, 2, this.size)
+              this.background = new Path2D();
+              this.background.rect(center.x-125, center.y-90, 250, 170)
+            }
             this.items = []
             this.selected = null;
             this.nextId = 0;
+           
+            
         }
         
         /**
@@ -621,6 +715,7 @@
          */
         addItem(item){  
             let pos = this.layout.getCoord(this.nextId);
+            
             item.setPos(pos, this.size)
             this.items.push(item)
             this.nextId++;
@@ -630,10 +725,17 @@
          * Draw all of the menu items
          */
         draw(){
+
+          ctx.globalAlpha = 0.45;
+          ctx.beginPath();
+          ctx.fillStyle = "rgb(200,200,200)"
+          ctx.fill(this.background);
+          ctx.strokeStyle = "rgb(100,100,100)"
+          ctx.stroke(this.background);
+          ctx.globalAlpha = 1.0;
+
           for(let i=0; i<this.items.length; i++){
-            ctx.beginPath();
-            ctx.fillStyle = this.items[i].color
-            ctx.fill(this.items[i].path);
+            this.items[i].draw()
           }
         }
   
@@ -679,14 +781,28 @@
        */
       function downEvent(pos){
         mouseDown = true;
-        let nitems=5
+        let nitems=7
+        let shape = MenuItemShape.circ
         contextMenu = new ContextMenu(pos, nitems)
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new PickupEvent(pos))}, Colors.darkorange))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMissEvent(pos))}, Colors.burgundy))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new DropEvent(pos))}, Colors.black))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green, null, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new PickupEvent(pos))}, Colors.darkorange, null, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red, null, shape))
+       
+        contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new PickupEvent(pos)); 
+                                                        addGameEvent(new SpeakerScoreEvent(pos))}, 
+                                                Colors.green, 
+                                                Colors.darkorange, shape))
+        contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new PickupEvent(pos)); 
+                                                        addGameEvent(new SpeakerMissEvent(pos))}, 
+                                                Colors.red, 
+                                                Colors.darkorange, shape))
+
+
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue, null, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMissEvent(pos))}, Colors.burgundy, null, shape))
+
+       
+
   
         addMoveEvent(pos); 
       }
