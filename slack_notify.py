@@ -8,7 +8,7 @@ import time
 load_dotenv()
 
 db_global = "global.db"
-test_users = ['Keith White', 'Aysuh Kulkarni']
+test_users = ['Areen Panda']
 
 slack_token = os.getenv('SLACK_TOKEN')
 client = WebClient(token=slack_token)
@@ -31,6 +31,7 @@ while (True):
     except:
         offBreakScouts = []
     breakStart = 0
+    #offBreakScouts=test_users
     for scoutOnBreak in offBreakScouts:
         slackUid = ""
 
@@ -42,10 +43,10 @@ while (True):
             slackUid = "none"
         print("Sending end of break message to ", scoutOnBreak, slackUid)
         msgText = "Match " + \
-            str(nextMatch) + " is next. You have a break is ending in 2 matches. Please return to the stands "
+        str(nextMatch) + " is next. You have a break is ending in 2 matches. Please return to the stands "
         response = client.chat_postMessage(
-            channel=slackUid,
-            text=msgText
+        channel=slackUid,
+        text=msgText
         )
     if len(offBreakScouts) > 0:
         result = cur_global.execute(

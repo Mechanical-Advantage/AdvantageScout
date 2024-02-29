@@ -31,10 +31,15 @@ conn_grafana.commit()
 for row in TeamImage:
     print(row[0])
     img_name = row[1]
-    with open(img_name, "rb") as image_file:
-        data = base64.b64encode(image_file.read()).decode('utf-8')
-        cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
-                               (event, row[0], data))
+    if os.path.isfile(img_name):
+        with open(img_name, "rb") as image_file:
+            data = base64.b64encode(image_file.read()).decode('utf-8')
+            sql_text = ' INSERT INTO "Images" ("Event", "Team", "Image") VALUES (%s,%s,%s)'
+            sql_data = (event, row[0], data,)
+            # cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
+            #                     (event, row[0], data))
+            cur_grafana.execute(sql_text, sql_data)
+            conn_grafana.commit()
 
 
 # with open("images/img_00000.jpg", "rb") as image_file:
