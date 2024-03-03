@@ -9,12 +9,13 @@
             blue:"blue"
           }
       export let alliance = AllianceColor.blue
+      export let canvasSize={w:610, h:470}
 
     //-- Component-specific variables
       let canvas;
       let ctx;
       let gameField;
-      let canvasSize={w:610, h:470}
+ 
       
     //-- Compute field-width in pixels (based on background image geometry)
       let topCorner;
@@ -547,8 +548,11 @@
   
         draw(){   
           ctx.beginPath();
+
           ctx.fillStyle = this.color
           ctx.fill(this.path);
+          ctx.strokeStyle = Colors.black
+          ctx.stroke(this.path)
           
           ctx.beginPath();
           ctx.fillStyle = this.decorator_color
