@@ -4,7 +4,7 @@
     import { autoState, gameState } from "./stores";
     import PrematchConfig from "./PrematchConfig.svelte";
     import PostGame from "./PostGame.svelte";
-    import AutoPageAlt from "./AutoPageAlt.svelte";
+    import AutoPageAlt2 from "./AutoPageAlt2.svelte";
 </script>
 
 
@@ -13,7 +13,7 @@
     <PrematchConfig />
 {:else}
     <!-- <AutoPage /> -->
-    <AutoPageAlt />
+    <AutoPageAlt2 />
 {/if}
 
  

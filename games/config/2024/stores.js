@@ -15,7 +15,7 @@ export const uploadState = writable(0)
 export const currentTeam = writable(0)
 export const onStageButton = writable(0)
 export const autoEventList = writable([])
-
+export const autoVideoBase64 = writable("")
 
 
 export const gameData = writable({
