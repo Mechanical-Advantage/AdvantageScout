@@ -437,7 +437,7 @@
 
                 if(aliance==AllianceColor.red){
                   rel_row_loc = 0.65;
-                  rel_center_loc = 0.10;
+                  rel_center_loc = 0.15;
                 }
 
                 let notePos = [{x: width*rel_row_loc, y: height/2},    
@@ -810,12 +810,12 @@
        */
       function downEvent(pos){
         mouseDown = true;
-        let nitems=7
+        let nitems=8
         let shape = MenuItemShape.circ
         contextMenu = new ContextMenu(pos, nitems)
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new PickupEvent(pos))}, Colors.darkorange, null, shape))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red, null, shape))
-       
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green, null, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new PickupEvent(pos)); 
                                                         addGameEvent(new SpeakerScoreEvent(pos))}, 
                                                 Colors.green, 
@@ -824,14 +824,11 @@
                                                         addGameEvent(new SpeakerMissEvent(pos))}, 
                                                 Colors.red, 
                                                 Colors.darkorange, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new DropEvent(pos))}, Colors.black, null, shape))
 
-
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMissEvent(pos))}, Colors.burgundy, null, shape))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green, null, shape))
-       
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red, null, shape))
 
-  
         addMoveEvent(pos); 
       }
   
