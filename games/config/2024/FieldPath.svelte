@@ -21,27 +21,28 @@
       let topCorner;
       let centerPos;
       let posOffset;
-      if(alliance==AllianceColor.blue){
-        //Location of field markers
-        topCorner={x:11.6, y:24}
-        centerPos={x:535.6, y:235.3}
-        posOffset={x:11.6, y:24}
-      }
-      else {
-        //Location of field markers
-        topCorner={x:600, y:24}
-        centerPos={x:76.6, y:235.6}
-        posOffset={x:-(topCorner.x-2*(centerPos.x)), y:24}
-      }
+      // if(alliance==AllianceColor.blue){
+      //   //Location of field markers
+      //   topCorner={x:11.6, y:24}
+      //   centerPos={x:535.6, y:235.3}
+      //   posOffset={x:11.6, y:24}
+      // }
+      // else {
+      //   //Location of field markers
+      //   topCorner={x:600, y:24}
+      //   centerPos={x:76.6, y:235.6}
+      //   posOffset={x:-(topCorner.x-2*(centerPos.x)), y:24}
+      // }
       
-      let virtualFieldSizePx = {w: Math.abs(topCorner.x-centerPos.x)*2, h: Math.abs(topCorner.y-centerPos.y)*2 }
-      let virtualFieldOffsetPx = posOffset;
+      let virtualFieldSizePx;
+      let virtualFieldOffsetPx;
 
     //-- Component state
       let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1) : null
       let currPos = (currEvent) ? currEvent.pos : null
       let contextMenu = null;
       let mouseDown = false;
+      let loaded=false;
  
   
     //-- Setup event handlers
@@ -55,11 +56,34 @@
         canvas.addEventListener("touchmove", touchMoveHandler);   
         canvas.addEventListener("touchend", touchEndHandler);   
 
-        gameField = new GameField(canvas.width, canvas.height, alliance)
-        renderEvents()
+        loaded=true;
       });
   
-    
+
+    $: {
+        if(loaded===true){
+          gameField = new GameField(canvas.width, canvas.height, alliance)
+
+          if(alliance==AllianceColor.blue){
+            //Location of field markers
+            topCorner={x:11.6, y:24}
+            centerPos={x:535.6, y:235.3}
+            posOffset={x:11.6, y:24}
+          }
+          else {
+            //Location of field markers
+            topCorner={x:600, y:24}
+            centerPos={x:76.6, y:235.6}
+            posOffset={x:-(topCorner.x-2*(centerPos.x)), y:24}
+          }
+
+          virtualFieldSizePx = {w: Math.abs(topCorner.x-centerPos.x)*2, h: Math.abs(topCorner.y-centerPos.y)*2 }
+          virtualFieldOffsetPx = posOffset; 
+          renderEvents()
+        }
+    }
+
+
     //-----------------------------
     //  Helpers
     //------------------------------
@@ -593,10 +617,10 @@
          * @param idx Index of 
          */
         getCoord(idx){
-          console.error("Index out of bounds.  Please allocate more items. ")
           if(idx in this.coord)
             return this.coord[idx];
           else
+            console.error("Index out of bounds.  Please allocate more items. ")
             return {}
         }
       }
@@ -756,6 +780,7 @@
                 ctx.strokeStyle=Colors.white
                 ctx.stroke(this.items[i].path)
                 this.selected=i
+                console.log("Selected item: " + i)
               }
               else{
                 ctx.strokeStyle=Colors.black
@@ -788,7 +813,6 @@
         let nitems=7
         let shape = MenuItemShape.circ
         contextMenu = new ContextMenu(pos, nitems)
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new PickupEvent(pos))}, Colors.darkorange, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerMissEvent(pos))}, Colors.red, null, shape))
        
@@ -804,7 +828,7 @@
 
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpScoreEvent(pos))}, Colors.blue, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new AmpMissEvent(pos))}, Colors.burgundy, null, shape))
-
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new SpeakerScoreEvent(pos))}, Colors.green, null, shape))
        
 
   
@@ -830,6 +854,7 @@
        */
       function moveEvent(pos){
         if(contextMenu!=null) {   
+          console.log("Move position:" + pos)
           contextMenu.highlight(pos)   
         }  
       }
@@ -933,21 +958,23 @@
         let i=0;
         ctx.clearRect(0, 0, canvas.width, canvas.height)
   
-        gameField.draw()
+        if (gameField!==undefined)
+        {
+          gameField.draw()
 
-        console.log($autoEventList)
-        $autoEventList.forEach(
-            el => {
-                drawFun[el.name](el)
-                i++;
-            }
-        )
-  
-        if(contextMenu!=null){
-          console.log("Drawing menu")
-          contextMenu.draw()
+          console.log($autoEventList)
+          $autoEventList.forEach(
+              el => {
+                  drawFun[el.name](el)
+                  i++;
+              }
+          )
+    
+          if(contextMenu!=null){
+            console.log("Drawing menu")
+            contextMenu.draw()
+          }
         }
-  
       }
   
   </script>
@@ -955,15 +982,26 @@
   <style>
     canvas {
       border: 1px solid white;
+    }
+
+    .red_bg {
+      background: url("/images/2024-field-red.png");
       background-size: 100% 100%;
     }
+
+    .blue_bg {
+      background: url("/images/2024-field-blue.png");
+      background-size: 100% 100%;
+    }
+
   </style>
   
 <main>
     <div>
         <canvas 
         bind:this={canvas}
-        style='background: url("/images/2024-field-{alliance}.png"); background-size: 100% 100%;'
+        class:blue_bg={alliance === "blue"}
+        class:red_bg={alliance === "red"}
         width={canvasSize.w}
         height={canvasSize.h}
         />

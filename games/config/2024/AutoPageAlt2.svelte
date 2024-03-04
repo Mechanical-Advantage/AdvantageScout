@@ -1,16 +1,16 @@
 <script>
     import FieldPath from "./FieldPath.svelte";
     import VideoRecord3 from "./VideoRecord3.svelte"
-    import { gameData, autoState,autoEventList } from "./stores"
+    import { gameData, autoState, autoEventList } from "./stores"
   
     let fieldPath;
-    let alliance = $gameData.AllianceColor == 0? "blue" : "red";
-
+    let alliance;
+    $: alliance = $gameData.AllianceColor == 0? "blue" : "red";
 </script>
 
 <style>
 
-    button {
+    /* button {
         border: 1px solid green;
         background-color: black;
         width: 100%;
@@ -24,21 +24,35 @@
         border: 1px solid #999999;
         background-color: gray;
         color: #666666;
+    } */
+
+    .inactive {
+        background-color: #999999;
+        color: #555555;
     }
 </style>
 
 
 <div class="min-h-screen flex">
     <div class="flex-1 bg-slate-800 border-r-2 border-slate-800 p-4">
+        <div class="grid grid-cols-2">
+            <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2"
+                on:click={()=>{$gameData.AllianceColor=1}}
+                class:inactive="{alliance === "blue"}"
+                >RED</button
+            >
+            <button class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2"
+                on:click={()=>{$gameData.AllianceColor=0}}
+                class:inactive="{alliance === "red"}"
+                >BLUE</button
+            >
+        </div>
         <VideoRecord3 />
     </div>
     <div class="flex-1 bg-black p-4">
         <FieldPath  bind:this={fieldPath} alliance={alliance} canvasSize={{w:480, h:410}}/>
-        <div class="grid grid-cols-2">
-            <button class="btn btn-primary" on:click={() => ($autoState = 0)}
-                >Back</button
-            >
-            <button class="btn btn-primary"
+        <div class="grid grid-cols-1">
+            <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-500"
                 on:click={fieldPath.undo()}
                 disabled={$autoEventList.length === 0}>Undo</button
             >

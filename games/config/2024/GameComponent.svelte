@@ -9,12 +9,12 @@
 
 
 {#if $gameState === 0}
-   {#if $autoState === 0}
-    <PrematchConfig />
-{:else}
-    <!-- <AutoPage /> -->
-    <AutoPageAlt2 />
-{/if}
+    <!-- {#if $autoState === 0}
+        <PrematchConfig />
+    {:else} -->
+        <!-- <AutoPage /> -->
+        <AutoPageAlt2 />
+    <!-- {/if} -->
 
  
 
