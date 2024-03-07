@@ -49,6 +49,7 @@ export const gameData = writable({
     TeleNoteDrop: 0,
     CoopertitionBonus: 0,
     Harmony: 0,
+    TeleFerryNoteSuccess: 0,
     PlayingDefenseDuration: 0,
     UnderDefenseDuration: 0,
     Park: 0,

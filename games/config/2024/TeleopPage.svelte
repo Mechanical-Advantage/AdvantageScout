@@ -32,6 +32,9 @@
     <Nodes level="3" type="Fail" gameMode="Tele" />
 </div>
 
+<div class="absolute left-[425px] top-[350px]">
+    <Nodes level="4" type="Success" gameMode="Tele" />
+</div>
 
 <div class="absolute left-[500px]">
     <LocationSelector gameMode="Tele" />
@@ -49,14 +52,19 @@
     </div>
 </div>
 
-<div class="flex flex-row gap-x-[50px] absolute left-[415px] top-[350px]">
+<div>
+    <div class="flex flex-row gap-x-[50px] absolute left-[905px] top-[217px]">
+        <Undo />
+</div> 
+</div>
+
+
+<div class="flex flex-row gap-x-[50px] absolute left-[605px] top-[350px]"> 
     <div>
         <TrashCan gameMode="Tele" />
     </div>
 
-    <div class="mt-[25px]">
-            <Undo />
-    </div>
+
 </div>
 <div class="ml-[425px] mt-[30px]">
     <CurrentTeam />

@@ -16,6 +16,7 @@
         "TeleAmpNoteFail INTEGER DEFAULT 0",
         "TeleTrapNoteSuccess INTEGER DEFAULT 0",
         "TeleTrapNoteFail INTEGER DEFAULT 0",
+        "TeleFerryNoteSuccess INTEGER DEFAULT 0",
         "TeleOnstage INTEGER DEFAULT 0",
         "AutoPreLoadedNoteCollect INTEGER DEFAULT 0",
         "AutoFloorSpike0NoteCollect INTEGER DEFAULT 0",
