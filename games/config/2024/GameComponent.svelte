@@ -1,10 +1,12 @@
 <script>
     import AutoPage from "./AutoPage.svelte";
-    import TeleopPage from "./TeleopPage.svelte";
+    import TeleopPageAlt from "./TeleopPageAlt.svelte";
     import { autoState, gameState } from "./stores";
     import PrematchConfig from "./PrematchConfig.svelte";
     import PostGame from "./PostGame.svelte";
     import AutoPageAlt2 from "./AutoPageAlt2.svelte";
+    import FieldPathTeleop from "./FieldPathTeleop.svelte";
+
 </script>
 
 
@@ -19,7 +21,8 @@
  
 
 {:else if $gameState === 1}
-    <TeleopPage />
+    <!-- <TeleopPage /> -->
+    <TeleopPageAlt />
 {:else if $gameState === 2}
     <PostGame />
 {/if}
