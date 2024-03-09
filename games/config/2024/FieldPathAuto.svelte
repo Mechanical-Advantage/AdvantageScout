@@ -24,7 +24,7 @@
 
 
     //-- Component state
-      let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1) : null
+      let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1)[0] : null
       let currPos = (currEvent) ? currEvent.pos : null
       let contextMenu = null;
       let mouseDown = false;
@@ -43,6 +43,7 @@
         canvas.addEventListener("touchend", touchEndHandler);
         loaded = true
       });
+      
     
 
     $: if(alliance && loaded===true) setAlliance(alliance)

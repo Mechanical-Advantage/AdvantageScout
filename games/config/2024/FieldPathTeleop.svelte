@@ -14,8 +14,14 @@
  
 
     //-- Component state
-      let currEvent = ($teleEventList.length>0) ? $teleEventList.slice(-1) : null
-      let currPos = (currEvent) ? currEvent.pos : null
+      let currPos;
+      let currEvent;
+      
+      $: {
+            currEvent = ($teleEventList.length>0) ? $teleEventList.slice(-1)[0] : null
+            currPos = (currEvent) ? currEvent.pos : null
+      }
+
       let contextMenu = null;
       let mouseDown = false;
       let loaded=false;
@@ -33,6 +39,7 @@
         canvas.addEventListener("touchend", touchEndHandler);   
 
         loaded=true;
+        renderEvents()
       });
   
 
@@ -51,8 +58,7 @@
                 addGameEvent(init);
             }
             else{
-                currPos = pos;
-                const m = new events.MoveEvent(currPos) 
+                const m = new events.MoveEvent(pos) 
                 addGameEvent(m);
             }
         }
@@ -74,10 +80,6 @@
 
             $teleEventList.push(e)
             $teleEventList=$teleEventList
-    
-            //-- Update states
-            currEvent = e
-            currPos = e.pos
     
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
@@ -135,18 +137,7 @@
         export function undo() {
             updatePoints(currEvent, true)
             $teleEventList= $teleEventList.slice(0, -1);
-            $teleEventList=$teleEventList
- 
-            let history_len= $teleEventList.length;
-            if(history_len>0){
-                currEvent = $teleEventList[history_len-1];
-                currPos = currEvent.pos
-            }
-            else{
-                currEvent=null;
-                currPos=null;
-            }
-            
+            $teleEventList=$teleEventList           
             renderEvents()
         }
 
@@ -327,13 +318,14 @@
   
   <style>
     canvas {
-      background: url("/images/2024_Field_gray.png");
+      background: url("images/2024_Field_gray.png");
       background-size: 100% 100%;
       border: 1px solid white;
     }
 
   </style>
   
+
 
 <div>
     <canvas 
