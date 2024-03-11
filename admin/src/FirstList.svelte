@@ -8,7 +8,7 @@
   export let pickType = "";
   onMount(() => {
     promise = (async () => {
-      const response = await fetch("/get_firstlist", { method: "GET" });
+      const response = await fetch("/get_firstlistpg", { method: "GET" });
       const data = await response.json();
       list = data;
     })();
@@ -25,7 +25,7 @@
   }
 
   function handleClick() {
-    updateList($firstPickList, "/set_picklistorder");
+    updateList($firstPickList, "/set_picklistorderpg");
   }
 
   const sortList = (ev) => {

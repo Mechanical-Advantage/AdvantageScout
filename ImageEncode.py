@@ -31,6 +31,7 @@ conn_grafana.commit()
 for row in TeamImage:
     print(row[0])
     img_name = row[1]
+    print(img_name)
     if os.path.isfile(img_name):
         with open(img_name, "rb") as image_file:
             data = base64.b64encode(image_file.read()).decode('utf-8')

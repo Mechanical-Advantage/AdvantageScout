@@ -22,7 +22,7 @@
   //   });
   onMount(() => {
     promise2 = (async () => {
-      const response = await fetch("/get_secondlist", { method: "GET" });
+      const response = await fetch("/get_secondlistpg", { method: "GET" });
       const data = await response.json();
       list = data;
     })();
@@ -38,7 +38,7 @@
   }
 
   function handleClick() {
-    updateList($secondPickList, "/set_picklistorder");
+    updateList($secondPickList, "/set_picklistorderpg");
   }
   console.log("await" + list);
   //   function getPickList(fullList, pickType) {
@@ -59,6 +59,8 @@
     list = ev.detail;
     console.log("sort list" + list);
   };
+
+
 </script>
 
 <div class="flex flex-col gap-x-40">

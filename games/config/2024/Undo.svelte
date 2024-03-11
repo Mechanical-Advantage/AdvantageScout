@@ -28,7 +28,8 @@
     "TeleSourceNoteCollect",
     "TeleNoteDrop",
     "TeleTrapNoteSuccess",
-    "TeleTrapNoteFail"]
+    "TeleTrapNoteFail",
+    "TeleFerryNoteSuccess"]
 
     let undoList = []
 
