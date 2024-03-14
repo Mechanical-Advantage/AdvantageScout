@@ -206,7 +206,7 @@ export class ContextMenu {
         this.voffset = this.size + 15
 
         if (shape == MenuItemShape.circ) {
-            let radius = 65
+            let radius = 68
             this.layout = new CircleLayout(center, nitems, radius)
             this.background = new Path2D();
             this.background.arc(center.x, center.y, 120, 0, Math.PI * 2)
@@ -345,7 +345,7 @@ export class ContextMenu {
             this.width = width
             this.height = height;
 
-            let size = height / 8.5;
+            let size = height / 8;
 
             let rel_row_loc = 0.30;
             let rel_center_loc = 0.86;

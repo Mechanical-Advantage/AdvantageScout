@@ -16,7 +16,7 @@
 </style>
 
 
-<div class="min-h-screen flex">
+<div class="flex">
     <div class="flex-1 bg-slate-800 border-r-2 border-slate-800 p-4">
         <div class="grid grid-cols-2">
             <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2"
@@ -33,10 +33,10 @@
         <VideoRecord3 />
     </div>
     <div class="flex-1 bg-black p-4">
-        <FieldPathAuto  bind:this={fieldPath} alliance={alliance} canvasSize={{w:480, h:410}}/>
+        <FieldPathAuto  bind:this={fieldPath} alliance={alliance} canvasSize={{w:510, h:380}}/>
 
         <div class="grid grid-cols-1">
-            <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-500"
+            <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-500 h-full w-full"
                 on:click={fieldPath.undo()}
                 disabled={$autoEventList.length === 0}>Undo</button
             >
