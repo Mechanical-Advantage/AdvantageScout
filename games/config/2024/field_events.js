@@ -1,6 +1,6 @@
 //-----------------------------
 //  Game Events
-//------------------------------
+//-----------------------------
     export const GameEventType = {
             init: "init",
             pickup: "pickup",

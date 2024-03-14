@@ -27,7 +27,6 @@
       let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1)[0] : null
       let currPos = (currEvent) ? currEvent.pos : null
       let contextMenu = null;
-      let mouseDown = false;
       let loaded = writable();
       loaded = false;
   
@@ -241,7 +240,7 @@
        * @param pos Location of event
        */
       function downEvent(pos){
-        mouseDown = true;
+
         let nitems=8
         let shape = MenuItemShape.circ
         contextMenu = new ContextMenu(ctx, pos, nitems)
@@ -273,7 +272,6 @@
           contextMenu.run()
   
         contextMenu = null;
-        mouseDown = false;
         renderEvents();
       }
 
