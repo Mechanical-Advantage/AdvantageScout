@@ -501,10 +501,10 @@ export class ContextMenu {
             let y = this.yCoordNormFactor * (img_y - this.activeArea.topleft.y) + this.view.topleft.y
 
             //-- Sanitize
-                if(x<-1.0)      x=-1.0
+                if(x<0)      x=0
                 else if (x>1.0) x=1.0
                 
-                if(y<-1.0)      y=-1.0
+                if(y<0)      y=0
                 else if (y>1.0) y=1.0
 
             return new Position(x,y)
@@ -527,8 +527,8 @@ export class ContextMenu {
             activeArea : {topleft: {x:31.5, y:79.5},
                         bottomright : {x:1638, y:1476}
                         },
-            view       :  {topleft: {x:-1.0, y:1.0},
-                        bottomright : {x:0.1402, y:-1.0}
+            view       :  {topleft: {x:0.0, y:0.0},
+                        bottomright : {x:0.5701, y:1.0}
                         },
             })
 
@@ -539,8 +539,8 @@ export class ContextMenu {
             activeArea : {topleft: {x:0.0, y:79.5},
                           bottomright : {x:1611, y:1476}
                           },
-            view       :  {topleft: {x:-0.1462, y:1.0},
-                          bottomright : {x:1.0, y:-1.0}
+            view       :  {topleft: {x:0.4269, y:0.0},
+                          bottomright : {x:1.0, y:1.0}
                           },
             })
    
@@ -551,8 +551,8 @@ export class ContextMenu {
                 activeArea : {topleft: {x:57, y:56},
                               bottomright : {x:1024, y:539}
                               },
-                view       :  {topleft: {x:-1.0, y:1.0},
-                              bottomright : {x:1.0, y:-1.0}
+                view       :  {topleft: {x:0.0, y:0.0},
+                              bottomright : {x:1.0, y:1.0}
                               },
                 })
 
