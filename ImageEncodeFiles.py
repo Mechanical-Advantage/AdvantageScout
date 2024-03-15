@@ -50,6 +50,10 @@ for row in eventImages:
     img_name = "images//" + row
     if currentTeam != SplitRow[1]:
         count = 0
+        sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
+        sql_data = (event, currentTeam,)
+        cur_grafana.execute(sql_text, sql_data)
+        conn_grafana.commit()
         sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
         sql_data = (event, currentTeam, data[0],data[1],data[2],)
         currentTeam = SplitRow[1]
@@ -67,7 +71,11 @@ for row in eventImages:
             tempData = base64.b64encode(image_file.read()).decode('utf-8')
             print ("Processing image")
             print(count)
-            data[count] = tempData           
+            data[count] = tempData     
+sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
+sql_data = (event, currentTeam,)
+cur_grafana.execute(sql_text, sql_data)
+conn_grafana.commit()      
 sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
 sql_data = (event, currentTeam, data[0],data[1],data[2],)
 currentTeam = SplitRow[1]

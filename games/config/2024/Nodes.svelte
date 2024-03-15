@@ -27,15 +27,22 @@
     }
     if (
       gameMode === "Tele" &&
-      ($liveLocation.includes("Spike") || $liveLocation.includes("Centerline"))
+      ($liveLocation.includes("Spike") || $liveLocation.includes("Centerline") || $liveLocation.includes("PreLoaded"))
     ) {
-      dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
+      if (level <3){
+        dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
+      } else {
+        dataField = "Tele" + gameLevelMap[level] + $liveGamepiece + type;
+      }
+      console.log("Datafiled " + dataField);
       locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
       console.log("LocationField" + locationField);
       $gameData["AutoPath"].push(locationField);
-      $gameData[dataField] = $gameData[dataField] + 1;
-      dataField = "TeleFloorNoteCollect";
-      $gameData[dataField] = $gameData[dataField] - 1;
+      if (level <3){
+        //$gameData[dataField] = $gameData[dataField] + 1;
+        dataField = "TeleFloorNoteCollect";
+        $gameData[dataField] = $gameData[dataField] - 1;
+      }
       $liveLocation = "Floor";
     }
     console.log("LiveGamePiece" + $liveGamepiece);
