@@ -17,23 +17,11 @@
             this.pos = pos
             this.name = name
             this.prevEvent = null
-            this.npos = {x:0, y:0}
-            // this.npos = 
-            // {
-            //     x: (pos.x - virtualFieldOffsetPx.x) / virtualFieldSizePx.w,
-            //     y: (pos.y - virtualFieldOffsetPx.y) / virtualFieldSizePx.h
-            // } //Normalized position on a full field
+            this.npos = null 
+        }
 
-            //Sanitize
-            if (this.npos.x < 0)
-                this.npos.x = 0.0;
-            else if (this.npos.x > 1.0)
-                this.npos.x = 1.0;
-
-            if (this.npos.y < 0)
-                this.npos.y = 0;
-            else if (this.npos.y > 1.0)
-                this.npos.y = 1.0;
+        setNormPos(pos){
+            this.npos = pos
         }
     }
 

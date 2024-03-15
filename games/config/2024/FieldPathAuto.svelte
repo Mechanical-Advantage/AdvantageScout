@@ -2,7 +2,7 @@
     import { writable } from "svelte/store";
     import { onMount } from "svelte";
     import { autoEventList, gameData } from "./stores"
-    import { ContextMenu, ContextMenuItem, MenuItemShape, GameField } from "./field"
+    import { ContextMenu, ContextMenuItem, MenuItemShape, GameField, FieldImageConfig, config_blue_2024, config_red_2024} from "./field"
     import { getMousePos, drawCircle, Colors, AllianceColor } from "./field_utils"
     import * as events from "./field_events"
 
@@ -13,14 +13,7 @@
       let canvas;
       let ctx;
       let gameField;
- 
-      
-    //-- Compute field-width in pixels (based on background image geometry)
-      let topCorner;
-      let centerPos;
-      let posOffset;      
-      let virtualFieldSizePx;
-      let virtualFieldOffsetPx;
+      let fieldConfig;
 
 
     //-- Component state
@@ -48,24 +41,20 @@
     $: if(alliance && loaded===true) setAlliance(alliance)
 
     function setAlliance(alliance){
+
       if(ctx){
         gameField = new GameField(ctx, canvas.width, canvas.height, alliance)
 
+
         if(alliance==AllianceColor.blue){
-          //Location of field markers
-          topCorner={x:11.6, y:24}
-          centerPos={x:535.6, y:235.3}
-          posOffset={x:11.6, y:24}
+          fieldConfig = FieldImageConfig.from(config_blue_2024)
         }
         else {
-          //Location of field markers
-          topCorner={x:600, y:24}
-          centerPos={x:76.6, y:235.6}
-          posOffset={x:-(topCorner.x-2*(centerPos.x)), y:24}
+          fieldConfig = FieldImageConfig.from(config_red_2024)
         }
 
-        virtualFieldSizePx = {w: Math.abs(topCorner.x-centerPos.x)*2, h: Math.abs(topCorner.y-centerPos.y)*2 }
-        virtualFieldOffsetPx = posOffset; 
+        fieldConfig.setDims(canvas.width, canvas.height)
+        console.log(fieldConfig)
         renderEvents()
       }
     }
@@ -129,11 +118,15 @@
             //-- Update states
             currEvent = e
             currPos = e.pos
-    
+
+            //Update normalized coordinates (refactor to be done in event factory?)
+            e.setNormPos(fieldConfig.getNormCoord(e.pos.x, e.pos.y))
+
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
            
-            
+
+
             updateField(e) 
             updatePoints(e)
             renderEvents()

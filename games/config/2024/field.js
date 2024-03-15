@@ -432,3 +432,127 @@ export class ContextMenu {
             }
         }
     }
+
+    class Position {
+        constructor(x, y){
+            this.x = x;
+            this.y = y;
+        }
+
+        scale(percx, percy){
+           this.x = this.x * percx;
+           this.y = this.y * percy;
+        }
+
+        static from(other){
+            return new Position(other.x, other.y)
+        }
+    }
+
+    class Rectangle {
+        constructor(topleft, bottomright){
+            this.topleft = topleft
+            this.bottomright = bottomright
+        }
+
+        scale(percx, percy){
+            this.topleft.scale(percx, percy)
+            this.bottomright.scale(percx, percy)
+        }
+
+        static from(other){
+            return new Rectangle(Position.from(other.topleft), Position.from(other.bottomright))
+        }
+    }
+
+    export class FieldImageConfig {
+        constructor({img_path, w, h, activeArea, view}={}){
+            this.img_path = img_path
+            this.w = w
+            this.h = h
+            this.activeArea = activeArea
+            this.view = view
+            this.xCoordNormFactor = 0.0
+            this.yCoordNormFactor = 0.0
+            this.computeNormFactors();
+        }
+
+        setDims(w, h){
+            let scalex = w/this.w;
+            let scaley = h/this.h;
+            this.w = w;
+            this.h = h;
+
+            this.activeArea.scale(scalex, scaley);
+            this.computeNormFactors();
+        }
+
+        computeNormFactors(){
+            this.xCoordNormFactor = (this.view.bottomright.x - this.view.topleft.x) /
+            (this.activeArea.bottomright.x - this.activeArea.topleft.x);
+
+            this.yCoordNormFactor = (this.view.bottomright.y - this.view.topleft.y) /
+            (this.activeArea.bottomright.y - this.activeArea.topleft.y);
+        }
+
+        getNormCoord(img_x, img_y){
+            console.log(this)
+            let x = this.xCoordNormFactor * (img_x - this.activeArea.topleft.x) + this.view.topleft.x
+            let y = this.yCoordNormFactor * (img_y - this.activeArea.topleft.y) + this.view.topleft.y
+
+            //-- Sanitize
+                if(x<-1.0)      x=-1.0
+                else if (x>1.0) x=1.0
+                
+                if(y<-1.0)      y=-1.0
+                else if (y>1.0) y=1.0
+
+            return new Position(x,y)
+        }
+  
+        static from(other){
+            return new FieldImageConfig({img_path:other.img_path, 
+                                        w : other.w, 
+                                        h : other.h, 
+                                        activeArea : Rectangle.from(other.activeArea), 
+                                        view : Rectangle.from(other.view)})
+        }
+
+    }
+
+    export const config_blue_2024 = new FieldImageConfig({
+            img_path : "images/2024-field-blue.png",
+            w: 1638,
+            h: 1556,
+            activeArea : {topleft: {x:31.5, y:79.5},
+                        bottomright : {x:1638, y:1476}
+                        },
+            view       :  {topleft: {x:-1.0, y:1.0},
+                        bottomright : {x:0.1402, y:-1.0}
+                        },
+            })
+
+    export const config_red_2024 = new FieldImageConfig({
+            img_path : "images/2024-field-red.png",
+            w: 1638,
+            h: 1556,
+            activeArea : {topleft: {x:0.0, y:79.5},
+                          bottomright : {x:1611, y:1476}
+                          },
+            view       :  {topleft: {x:-0.1462, y:1.0},
+                          bottomright : {x:1.0, y:-1.0}
+                          },
+            })
+   
+    export const config_full_2024 = new FieldImageConfig({
+                img_path : "images/2024_Field_gray.png",
+                w: 1085,
+                h: 599,
+                activeArea : {topleft: {x:57, y:56},
+                              bottomright : {x:1024, y:539}
+                              },
+                view       :  {topleft: {x:-1.0, y:1.0},
+                              bottomright : {x:1.0, y:-1.0}
+                              },
+                })
+

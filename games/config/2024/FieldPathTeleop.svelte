@@ -2,16 +2,17 @@
     import { writable } from "svelte/store";
     import { onMount } from "svelte";
     import { teleEventList, gameData } from "./stores"
-    import { ContextMenu, ContextMenuItem, MenuItemShape } from "./field"
+    import { ContextMenu, ContextMenuItem, MenuItemShape, FieldImageConfig, config_full_2024 } from "./field"
     import { getMousePos, drawCircle, Colors, AllianceColor } from "./field_utils"
     import * as events from "./field_events"
 
     export let canvasSize={w:910, h:470}
+    export let alliance = AllianceColor.blue
 
     //-- Component-specific variables
       let canvas;
       let ctx;
- 
+      let fieldConfig = FieldImageConfig.from(config_full_2024)
 
     //-- Component state
       let currPos;
@@ -25,7 +26,7 @@
       let contextMenu = null;
       let mouseDown = false;
       let loaded=false;
- 
+    
   
     //-- Setup event handlers
       onMount(() => {
@@ -37,6 +38,9 @@
         canvas.addEventListener("touchstart", touchStartHandler);   
         canvas.addEventListener("touchmove", touchMoveHandler);   
         canvas.addEventListener("touchend", touchEndHandler);   
+
+        fieldConfig.setDims(canvas.width, canvas.height)
+        console.log(fieldConfig)
 
         loaded=true;
         renderEvents()
@@ -81,6 +85,9 @@
             $teleEventList.push(e)
             $teleEventList=$teleEventList
     
+            //Update normalized coordinates (refactor to be done in event factory?)
+            e.setNormPos(fieldConfig.getNormCoord(e.pos.x, e.pos.y))
+
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
             updatePoints(e)
