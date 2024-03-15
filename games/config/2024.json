@@ -45,6 +45,7 @@
         "UnderDefenseRating NUMERIC DEFAULT 0",
         "AutoPath TEXT DEFAULT ''",
         "AutoEventList TEXT DEFAULT ''",
+        "TeleEventList TEXT DEFAULT ''",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [

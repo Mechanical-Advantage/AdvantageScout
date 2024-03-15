@@ -1,6 +1,6 @@
 <script>
     import Ratings from "./Ratings.svelte";
-    import { autoEventList, gameData, uploadState } from "./stores";
+    import { autoEventList, gameData, uploadState, teleEventList } from "./stores";
 
     let buttonColor = "btn-primary";
     function handleClick() {
@@ -27,6 +27,15 @@
                                                     return v;
                                                 }
                                       )
+        $gameData["TeleEventList"] = JSON.stringify($teleEventList, 
+                                      (k, v) => {
+                                                  if(k=="prevEvent" || k=="pos" ) 
+                                                    return undefined; 
+                                                  else 
+                                                    return v;
+                                                }
+                                      )
+        
         $uploadState += 1;
     }
 </script>

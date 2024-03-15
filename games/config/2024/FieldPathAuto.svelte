@@ -121,6 +121,11 @@
 
             //Update normalized coordinates (refactor to be done in event factory?)
             e.setNormPos(fieldConfig.getNormCoord(e.pos.x, e.pos.y))
+            if(e.name==events.GameEventType.init){
+                //Divide height into 7 equal zones and assign starting zone position based on location
+                //NOTE: Might make sense to store the x,y instead
+                $gameData.StartPosition = (e.npos.y+1)/2 * 7
+            }
 
             console.log("Added  event [e: "+ e + "]");
             console.log(e)
