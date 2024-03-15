@@ -7,6 +7,7 @@ import string
 import sys
 import threading
 import time
+import psycopg2
 from enum import Enum
 from pathlib import Path
 
@@ -1019,6 +1020,27 @@ document.body.innerHTML = window.localStorage.getItem(
         for i in range(len(raw)):
             data.append({"id": raw[i][3], "name": raw[i][0], "score": raw[i][1], "type": raw[i][2]})
         conn_global.close()
+        print(data)
+        return (json.dumps(data))
+    
+    @cherrypy.expose
+    def get_firstlistpg(self):
+        conn_grafana = psycopg2.connect(database="Grafana-Output",
+                        host="127.0.0.1",
+                        user="postgres",
+                        password="MA6328",
+                        port="5432")
+        cur_grafana = conn_grafana.cursor()
+        sql_text = 'SELECT * FROM "PickList" WHERE "PickType" = %s ORDER BY "PickType", "PickOrder"'
+        PickType = "First"
+        cur_grafana.execute(sql_text, (PickType,))
+        raw = cur_grafana.fetchall()
+        print(raw)
+        data = []
+        for row in raw:
+            data.append({"id": row[3], "name": row[0], "score": row[1], "type": row[2]})
+        conn_grafana.close()
+        print(data)
         return (json.dumps(data))
     
     @cherrypy.expose
@@ -1032,6 +1054,26 @@ document.body.innerHTML = window.localStorage.getItem(
         for i in range(len(raw)):
             data.append({"id": raw[i][3], "name": raw[i][0], "score": raw[i][1], "type": raw[i][2]})
         conn_global.close()
+        return (json.dumps(data))
+    
+    @cherrypy.expose
+    def get_secondlistpg(self):
+        conn_grafana = psycopg2.connect(database="Grafana-Output",
+                        host="127.0.0.1",
+                        user="postgres",
+                        password="MA6328",
+                        port="5432")
+        cur_grafana = conn_grafana.cursor()
+        sql_text = 'SELECT * FROM "PickList" WHERE "PickType" = %s ORDER BY "PickType", "PickOrder"'
+        PickType = "Second"
+        cur_grafana.execute(sql_text, (PickType,))
+        raw = cur_grafana.fetchall()
+        print(raw)
+        data = []
+        for row in raw:
+            data.append({"id": row[3], "name": row[0], "score": row[1], "type": row[2]})
+        conn_grafana.close()
+        print(data)
         return (json.dumps(data))
 
     @cherrypy.expose
@@ -1048,6 +1090,28 @@ document.body.innerHTML = window.localStorage.getItem(
 
         conn_global.commit()
         conn_global.close()
+
+    @cherrypy.expose
+    def set_picklistorderpg(self, data="[]"):
+        conn_grafana = psycopg2.connect(database="Grafana-Output",
+                        host="127.0.0.1",
+                        user="postgres",
+                        password="MA6328",
+                        port="5432")
+        cur_grafana = conn_grafana.cursor()
+        sql_text = 'DELETE FROM "PickList" WHERE "PickType" = %s;'
+        picklist_order = json.loads(data)
+        cur_grafana.execute(sql_text, (picklist_order[0]["type"],))
+        print(data)
+        for i in range(len(picklist_order)):
+            print(picklist_order[i]["name"])
+            # cur_grafana.execute("INSERT INTO PickList(Team,PickScore,PickType,PickOrder) VALUES (?,?,?,?)"
+            cur_grafana.execute('INSERT INTO "PickList" ("Team","PickScore","PickType","PickOrder") VALUES (%s,%s,%s,%s)',
+                               (picklist_order[i]["name"], picklist_order[i]["score"], picklist_order[i]["type"], i+1))
+
+        conn_grafana.commit()
+        conn_grafana.close()
+
 
     @cherrypy.expose
     def remove_device(self, name):

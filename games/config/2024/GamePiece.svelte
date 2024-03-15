@@ -15,12 +15,7 @@
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
 
-    // if (gamePieceLocation.includes("Spike")||gamePieceLocation.includes("Centerline")){
-    //   $gameData["Leave"] = 1;
-    // }
-    // else {
-    //     $gameData["Leave"] = 0;
-    //   }
+    
   }
 </script>
 

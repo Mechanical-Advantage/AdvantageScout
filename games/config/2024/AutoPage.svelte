@@ -39,13 +39,6 @@
         <LocationSelector gameMode="Auto" />
     </div>
 
-    <!-- <div class="flex flex-col absolute ml-[465px] mt-[20px] gap-y-[25px]">
-            <GamePiece gamePiece="Note" />
-            <GamePiece />
-            <GamePiece />
-            <GamePiece />
-            <GamePiece />
-    </div> -->
 
     <div class="absolute top-0 right-0 m-2">
         <div class="flex flex-col gap-y-[25px]">

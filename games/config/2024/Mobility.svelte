@@ -12,20 +12,6 @@
   
 </script>
 
-<!--<style>-->
-<!--button {-->
-<!--        position: relative;-->
-<!--        left: 70px;-->
-<!--        transition: left 0.5s ease-in-out;-->
-<!--}-->
-
-<!--button:active {-->
-<!--        left: 0px;-->
-<!--        transform: rotate(30deg);-->
-<!--    opacity: 0;-->
-<!--    transition: opacity 0.5s ease-in-out;-->
-<!--}-->
-<!--</style>-->
 
 <button class="btn btn-square w-24 h-24" on:click={handleClick}>
   {#if $gameData["Leave"] == 0}
