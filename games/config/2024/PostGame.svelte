@@ -1,6 +1,23 @@
 <script>
     import Ratings from "./Ratings.svelte";
     import { gameData, uploadState } from "./stores";
+    import Radio from './Radio.svelte'
+
+
+    const options = [{
+		value: 0,
+		label: 'No Issues',
+	},
+{
+		value: 1,
+		label: 'Fell Over',
+	}, {
+		value: 2,
+		label: 'Brown Outs',
+	}, {
+		value: 3,
+		label: 'Lost Comms',
+	}]
 
     let buttonColor = "btn-primary";
     function handleClick() {
@@ -61,7 +78,7 @@
         <li><a>Inoperable</a></li>
         </ul>
     
-
+        <!-- <Radio {options} fontSize={16} legend='InOP Issues' bind:userSelected={$gameData["Inoperable"]}/> -->
 
     <div class="flex">
         <span
