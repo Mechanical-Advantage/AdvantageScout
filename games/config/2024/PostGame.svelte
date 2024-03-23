@@ -67,16 +67,18 @@
     />
 </div>
 
-<!-- <div class="flex flex-row gap-x-[50px] ml-[30px] mt-[30px]">
+<div class="flex flex-row gap-x-[50px] ml-[30px] mt-[30px]">
     <button class="btn {buttonColor}" on:click={handleClick}>
         Disabled/Fell</button
-    > -->
-<div class = "dropdown dropdown-bottom flex flex-row gap-x-[50px] ml-[30px] mt-[30px]">
+    >
+<!-- <div class = "dropdown dropdown-bottom flex flex-row gap-x-[50px] ml-[30px] mt-[30px]">
     <button class="btn {$gameData["Disabled"] === 0 ? "btn " : "btn-success"} {$gameData["Inoperable"] === 2 ? "btn" : ""}" on:click={handleClick}>Dis/Inop</button>
     <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-52">
         <li><a>Disabled/Fell</a></li>
         <li><a>Inoperable</a></li>
-        </ul>
+        </ul> -->
+
+        
     
         <!-- <Radio {options} fontSize={16} legend='InOP Issues' bind:userSelected={$gameData["Inoperable"]}/> -->
 
