@@ -23,7 +23,7 @@
             2,
         ],
         UnderDefenseDuration: ["range-error", "Under Defense Duration", 2],
-        Disabled: ["range-primary", "Disabled/Fell"],
+        BotState: ["range-primary", "Disabled", "Inoperable", "No Issue", 2],
         DriverRating: ["range-primary", "Driver Rating", 1],
         NoteIntakeRating: ["range-accent", "Note Intake Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
