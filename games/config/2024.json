@@ -45,6 +45,7 @@
         "DefenseRating NUMERIC DEFAULT 0",
         "UnderDefenseRating NUMERIC DEFAULT 0",
         "AutoPath TEXT DEFAULT ''",
+        "BotState NUMERIC DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
     "pitFields": [

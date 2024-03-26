@@ -56,6 +56,7 @@ export const gameData = writable({
     Points: 0,
     Penalties: 0,
     BotState: 0,
+    Disabled: 0,
     DriverRating: 0,
     NoteIntakeRating: 0,
     DefenseRating: 0,
