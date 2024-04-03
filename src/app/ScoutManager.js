@@ -129,7 +129,7 @@ function ScoutManager(appManager) {
 
     // Update match dropdown based on match type
     this.updateMatchType = function () {
-        var isPlayoffs = document.getElementById("matchtype").value == "Playoffs"
+        var isPlayoffs = document.getElementById("matchtype").value == "Eliminations"
         document.getElementById("match").hidden = isPlayoffs
         document.getElementById("playoffmatch").hidden = !isPlayoffs
     }

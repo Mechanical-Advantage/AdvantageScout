@@ -71,6 +71,7 @@ for row in eventImages:
             tempData = base64.b64encode(image_file.read()).decode('utf-8')
             print ("Processing image")
             print(count)
+            print(currentTeam)
             data[count] = tempData     
 sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
 sql_data = (event, currentTeam,)

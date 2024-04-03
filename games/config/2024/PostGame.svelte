@@ -67,7 +67,7 @@
       <Ratings name="DefenseRating" />
       <Ratings name="UnderDefenseRating" />
     </div>
-    <div class="  h-full">
+    <div class=" mt-[25px] h-full">
       <label for="message" class="block mb-2 text-sm font-bold text-white"
         >Comment</label
       >
@@ -83,7 +83,7 @@
           type="radio"
           name="Bot State"
           class="radio checked:bg-green-500"
-          value="0"
+          value="1"
           on:change={handleClick}
         />
         <span class="label-text">No Issues</span>
@@ -91,7 +91,7 @@
           type="radio"
           name="Bot State"
           class="p-2.5 ml-[22px] radio checked:bg-yellow-500"
-          value="1"
+          value="2"
           on:change={handleClick}
         />
         <span class="label-text">Comms Issue</span>
@@ -103,7 +103,7 @@
           type="radio"
           name="Bot State"
           class="radio checked:bg-yellow-500"
-          value="2"
+          value="3"
           on:change={handleClick}
         />
         <span class="label-text">Power Issues</span>
@@ -111,25 +111,25 @@
           type="radio"
           name="Bot State"
           class="p-2.5 radio checked:bg-yellow-500"
-          value="3"
+          value="4"
           on:change={handleClick}
         />
         <span class=" label-text">Major Malfunction</span>
       </div>
-      <div class="flex flex-row gap-x-[10px] ml-[35px] mt-[30px]">
+      <div class="flex flex-row gap-x-[10px] ml-[30px] mt-[30px]">
         <input
           type="radio"
           name="Bot State"
           class="p-2.5 radio checked:bg-red-500"
-          value="4"
+          value="5"
           on:change={handleClick}
         />
         <span class="label-text">Fell Over</span>
         <input
           type="radio"
           name="Bot State"
-          class="p-2.5 ml-[22px] radio checked:bg-red-500"
-          value="5" 
+          class="p-2.5 ml-[27px] radio checked:bg-red-500"
+          value="6" 
           on:change={handleClick}
         />
         <span class="label-text">Did Not Show</span>

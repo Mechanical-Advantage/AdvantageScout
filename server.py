@@ -266,7 +266,7 @@ class main_server(object):
                 Type:
                 <select id="matchtype" onchange="javascript:appManager.scoutManager.updateMatchType()">
                     <option>Qualifications</option>
-                    <option>Elimations</option>
+                    <option>Eliminations</option>
                 </select>
                 <br>
                 Team:

@@ -17,10 +17,10 @@ conn_global.close()
 # cur_game = conn_game.cursor()
 # TeamImage = cur_game.execute("SELECT Team, Image FROM pit WHERE Event=?", (event,)).fetchall()
 conn_grafana = psycopg2.connect(database="Grafana-Output",
-                        host="127.0.0.1",
+                        host="0.tcp.ngrok.io",
                         user="postgres",
                         password="MA6328",
-                        port="5432")
+                        port="12535")
 cur_grafana = conn_grafana.cursor()
 print(event)
 path = "c://mascout//advantagescout//images//"
