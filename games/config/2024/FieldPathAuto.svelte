@@ -4,7 +4,9 @@
     import { autoEventList, gameData } from "./stores"
     import { ContextMenu, ContextMenuItem, MenuItemShape, GameField, FieldImageConfig, config_blue_2024, config_red_2024} from "./field"
     import { getMousePos, drawCircle, Colors, AllianceColor } from "./field_utils"
+    import { createEventDispatcher } from 'svelte'
     import * as events from "./field_events"
+
 
     export let alliance = AllianceColor.blue
     export let canvasSize={w:610, h:470}
@@ -15,6 +17,8 @@
       let gameField;
       let fieldConfig;
 
+    //-- External events
+      const distpatch = createEventDispatcher();
 
     //-- Component state
       let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1)[0] : null
