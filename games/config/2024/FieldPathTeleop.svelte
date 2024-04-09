@@ -133,6 +133,13 @@
                     $gameData.TeleAmpNoteFail++;
 
             }
+            else if (event.name=="pickup"){
+                if(undo)
+                    $gameData.TeleFloorNoteCollect--;
+                else
+                    $gameData.TeleFloorNoteCollect++;
+
+            }
 
         }
   
@@ -334,11 +341,33 @@
   
 
 
-<div>
+<div class="flex flex-row">
     <canvas 
     bind:this={canvas}
     width={canvasSize.w}
     height={canvasSize.h}
     />
+
+  <div class="grid grid-cols-2 grid-flow-row gap-4 p-4 h-200">
+    <div class="h-30"><p style="color:orange">Pickup: </p></div>
+    <div> {$gameData['TeleFloorNoteCollect']}</div>
+    <div class="h-30"><p style="color:green">Speaker: </p></div>
+    <div> {$gameData['TeleSpeakerNoteSuccess']}</div>
+    <div class="h-30"><p style="color:red">Speaker: </p></div>
+    <div> {$gameData['TeleSpeakerNoteFail']}</div>
+    <div class="h-30"><p style="color:green">Amp:</p></div>
+    <div>{$gameData['TeleAmpNoteSuccess']}</div>
+    <div class="h-30"><p style="color:red">Amp:</p></div>
+    <div> {$gameData['TeleAmpNoteFail']}</div>
+  </div>
+  <!-- <table>
+    <tr>
+      <td colspan=2 class="text-green-100">Speaker:</td>
+    </tr>
+    <tr>
+      <td>{$gameData['TeleSpeakerNoteSuccess']}</td>
+      <td>{$gameData['TeleSpeakerNoteFail']}</td>
+    </tr>
+  </table> -->
 </div>
   
