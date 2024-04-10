@@ -1,17 +1,14 @@
 <script>
     import { onMount } from "svelte";
-    import {autoVideoBase64} from "./stores"
+    import {autoVideoBase64, gameState} from "./stores"
 
+    export let currTime = null
     let controlButton;
     let playbackRateSelect;
     let videoLive;
     let videoRecorded
     let recording=false
     let viewing=true
-
-    //-- Temp
-    let eventButton
-    //--
 
     var mediaRecorder;
 
@@ -29,17 +26,64 @@
         });
     }
 
+    export function nudgeVideo(step)
+    {
+        videoRecorded.currentTime = videoRecorded.currentTime + step; 
+        console.log("nudge: currTime: " + videoRecorded.currentTime)
+    }
+
+    export function pausePlay()
+    {
+        videoRecorded.pause(); 
+        console.log("pause: curTime: " + videoRecorded.currentTime)
+    }
+
+    export function continuePlay()
+    {
+        if(!videoRecorded.ended) 
+            videoRecorded.play()
+    }
+
+    export function getCurrTime()
+    {
+        return videoRecorded.currentTime
+    }
+
+    function handleKeys(event) 
+    {
+        console.log("GAME_STATE: " + $gameState)
+        if($gameState==0){
+            let step=1.0
+            switch (event.key) 
+            {
+                case "a":
+                    step=-0.1
+                    nudgeVideo(step);
+                    break;
+                case "d":
+                    step=0.1
+                    nudgeVideo(step);
+                    break;
+                case "s":
+                    step=-0.2
+                    nudgeVideo(step);
+                    break;
+                case "w":
+                    step=0.2
+                    nudgeVideo(step);
+                    break;
+
+            }
+        }
+    }
 
     function register () {
-
-        eventButton.addEventListener('mousedown',  (event) => {videoRecorded.pause(); console.log("curTime: " + videoRecorded.currentTime)} )
-        eventButton.addEventListener('mouseup',  (event) => {if(!videoRecorded.ended) videoRecorded.play()} )
 
         controlButton.addEventListener('click', async () => {
             if(viewing==true){
                 const stream = await navigator.mediaDevices.getUserMedia({ 
-                                video: { frameRate: { ideal: 10, max: 15 } },
-                                audio: false,
+                                video: { frameRate: { ideal: 10 } },
+                                audio: true,
                                 })
         
                 videoLive.srcObject = stream
@@ -64,9 +108,10 @@
                         $autoVideoBase64 = reader.result;
                     }       
                     
-                    if (event.data.size>0)
+                    if (event.data.size>0) {
                         console.info("size: " + event.data.size)
                         videoRecorded.src = URL.createObjectURL(event.data) 
+                    }
                     videoRecorded.playbackRate=playbackRateSelect.value
                 })
 
@@ -78,9 +123,7 @@
                 stopBothVideoAndAudio(videoLive.srcObject)
                 mediaRecorder.stop()
             }
-            })
-
-    
+            }) 
         
     }
 
@@ -88,7 +131,11 @@
             if ($autoVideoBase64.length>0) {
                 loadVideo($autoVideoBase64)
             }
+            else {
+                videoRecorded.src = "images/match.mp4"
+            }
 
+            videoRecorded.playbackRate = 0.5
             register()
         }
     )
@@ -99,11 +146,11 @@
 
 
    
-<div class="h-auto w-auto flex flex-col rounded-lg overflow-hidden bg-black shadow">
+<div class="h-fit w-auto flex flex-col rounded-lg overflow-hidden bg-black shadow">
     <!-- card cover -->
     <!-- <img class="h-56 w-full object-cover" src="https://images.unsplash.com/photo-1514897575457-c4db467cf78e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=384" alt="" /> -->
-    <video class="object-cover"  muted playsinline bind:this={videoLive} class:viewing></video>
-    <video class="object-cover" controls playsinline bind:this={videoRecorded} class:recording></video>
+    <video class="object-cover"  muted bind:this={videoLive}  class:viewing></video>
+    <video class="object-cover" controls  bind:this={videoRecorded} bind:currentTime={currTime} class:recording></video>
     <!-- end card cover -->
 
     <!-- card footer -->
@@ -111,16 +158,15 @@
         <div class="col-span-3">
             Playback Speed
         </div>
-        <div class="col-span-1">
+        <div class="col-span-2">
             <select  bind:this={playbackRateSelect} on:change={()=>{videoRecorded.playbackRate=playbackRateSelect.value}}>
-            <option value="0.5">0.5x</option>
+            <option value="0.5"  selected="selected">0.5x</option>
             <option value="1.0">1.0x</option>
-            <option value="1.5"  selected="selected">1.5x</option>
+            <option value="1.5">1.5x</option>
             <option value="2.0">2.0x</option>
             </select>
         </div>
-        <div class="col-span-2">
-            <button  bind:this={eventButton}>Event</button>
+        <div class="col-span-1">
             <button type="button" class="bg-blue-600 hover:bg-blue-700 py-2 px-2 text-sm font-medium text-white border border-transparent rounded-lg focus:outline-none" bind:this={controlButton}>
                 {#if viewing==true}
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
@@ -138,6 +184,8 @@
     <!-- end card footer -->
     </div>
 </div>
+
+<svelte:window on:keydown={handleKeys}/>
 
 
 

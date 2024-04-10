@@ -1,11 +1,24 @@
 <script>
-    import FieldPathAuto from "./FieldPathAuto.svelte";
+    import FieldPathAuto from "./FieldPathAuto.svelte"
     import VideoRecord4 from "./VideoRecord4.svelte"
-    import { gameData, autoEventList } from "./stores"
+    import { gameData, autoEventList, videoMatch } from "./stores"
+    import { onMount } from "svelte";
   
-    let fieldPath;
-    let alliance;
-    $: alliance = $gameData.AllianceColor == 0? "blue" : "red";
+    let fieldPath
+    let videoPlayer
+    let alliance
+    let timeFn
+    let time
+    let startTime="n/a"
+
+    $: startTime = ($videoMatch.StartTime == null) ? "n/a" : $videoMatch.StartTime
+    $: alliance = $gameData.AllianceColor == 0? "blue" : "red"
+
+    onMount(() => {
+            timeFn = videoPlayer.getCurrTime
+        }
+    )
+
 </script>
 
 <style>
@@ -30,10 +43,11 @@
                 >BLUE</button
             >
         </div>
-        <VideoRecord4 />
+        <VideoRecord4 bind:this={videoPlayer} bind:currTime={time}/>
     </div>
     <div class="flex-1 bg-black p-4">
-        <FieldPathAuto  bind:this={fieldPath} alliance={alliance} canvasSize={{w:510, h:380}}/>
+        <span class="text-center w-full"> <b>time: </b> [start: {startTime}, cur: {(time==null) ? "n/a" : time}]</span>
+        <FieldPathAuto  bind:this={fieldPath} bind:timeFn={timeFn} alliance={alliance} canvasSize={{w:510, h:380}}/>
 
         <div class="grid grid-cols-1">
             <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-500 h-full w-full"

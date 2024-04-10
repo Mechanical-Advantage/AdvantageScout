@@ -1,7 +1,7 @@
 <script>
     import { writable } from "svelte/store";
     import { onMount } from "svelte";
-    import { autoEventList, gameData } from "./stores"
+    import { autoEventList, gameData, videoMatch} from "./stores"
     import { ContextMenu, ContextMenuItem, MenuItemShape, GameField, FieldImageConfig, config_blue_2024, config_red_2024} from "./field"
     import { getMousePos, drawCircle, Colors, AllianceColor } from "./field_utils"
     import { createEventDispatcher } from 'svelte'
@@ -10,6 +10,7 @@
 
     export let alliance = AllianceColor.blue
     export let canvasSize={w:610, h:470}
+    export let timeFn = () => null
 
     //-- Component-specific variables
       let canvas;
@@ -17,8 +18,9 @@
       let gameField;
       let fieldConfig;
 
+
     //-- External events
-      const distpatch = createEventDispatcher();
+      const dispatch = createEventDispatcher();
 
     //-- Component state
       let currEvent = ($autoEventList.length>0) ? $autoEventList.slice(-1)[0] : null
@@ -98,15 +100,31 @@
          */
         function addGameEvent(e) {
             
+            let currTime =  timeFn() 
+            let startTime = $videoMatch.StartTime
+
             if(currEvent==null && e.name!=events.GameEventType.init){
                 console.log("Robot has not been placed on the field")
                 return
             }
-            
+
+            if(startTime==null && e.name!=events.GameEventType.init){
+                console.error("Unexpected: Start time has not been initialized")
+                return
+            }
+
             let history_len = $autoEventList.length;
             if(history_len>0)
                 e.prevEvent = $autoEventList[history_len-1];
+            
 
+            if(e.name==events.GameEventType.init)
+            {
+              $videoMatch.StartTime = currTime
+            }
+
+            console.log("time: " + timeFn() + "rel_time: " + (currTime - $videoMatch.StartTime))
+            e.time = currTime - $videoMatch.StartTime
             $autoEventList.push(e)
             $autoEventList=$autoEventList
             console.log(JSON.stringify($autoEventList, 
@@ -229,6 +247,7 @@
             else{
                 currEvent=null;
                 currPos=null;
+                $videoMatch.StartTime=null;
             }
             
             renderEvents()
@@ -242,6 +261,8 @@
        * @param pos Location of event
        */
       function downEvent(pos){
+
+        dispatch("fieldEventPos", pos)
 
         let nitems=8
         let shape = MenuItemShape.circ
@@ -271,7 +292,9 @@
        */
       function upEvent(pos){
         if(contextMenu!=null)
+        {
           contextMenu.run()
+        }
   
         contextMenu = null;
         renderEvents();

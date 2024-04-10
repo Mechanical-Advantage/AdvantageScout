@@ -17,7 +17,10 @@ export const onStageButton = writable(0)
 export const autoEventList = writable([])
 export const teleEventList = writable([])
 export const autoVideoBase64 = writable("")
-
+export const videoMatch = writable({
+                StartTime : null
+                }
+            )
 
 export const gameData = writable({
     AllianceColor: 0,
