@@ -1,41 +1,8 @@
 <script>
   import Ratings from "./Ratings.svelte";
   import { gameData, uploadState } from "./stores";
-  // import { Radio } from 'flowbite-svelte';
-  // import Radio from './Radio.svelte'
-
-  //     function myFunction() {
-  //   document.getElementById({handleClick}).classList.toggle("show");
-  // }
-
-  // // Close the dropdown menu if the user clicks outside of it
-  // window.onclick = function(event) {
-  //   if (!event.target.matches({handleClick})) {
-  //     var dropdowns = document.getElementsByClassName("dropdown-top");
-  //     var i;
-  //     for (i = 0; i < dropdowns.length; i++) {
-  //       var openDropdown = dropdowns[i];
-  //       if (openDropdown.classList.contains('show')) {
-  //         openDropdown.classList.remove('show');
-  //       }
-  //     }
-  //   }
-  // }
-
-  //     const options = [{
-  // 		value: 0,
-  // 		label: 'No Issues',
-  // 	},
-  // {
-  // 		value: 1,
-  // 		label: 'Fell Over',
-  // 	}, {
-  // 		value: 2,
-  // 		label: 'Brown Outs',
-  // 	}, {
-  // 		value: 3,
-  // 		label: 'Lost Comms',
-  // 	}]
+ console.log("Bot State", $gameData["BotState"])
+ console.log($gameData["BotState"] == 2)
 
   let buttonColor = "btn-primary";
   function handleClick(event) {
@@ -92,6 +59,7 @@
           name="Bot State"
           class="p-2.5 ml-[22px] radio checked:bg-yellow-500"
           value="2"
+          checked={$gameData["BotState"] === 2}
           on:change={handleClick}
         />
         <span class="label-text">Comms Issue</span>

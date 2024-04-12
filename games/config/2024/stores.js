@@ -55,12 +55,13 @@ export const gameData = writable({
     Park: 0,
     Points: 0,
     Penalties: 0,
-    BotState: 0,
+    BotState: 1,
     Disabled: 0,
     DriverRating: 0,
     NoteIntakeRating: 0,
     DefenseRating: 0,
     UnderDefenseRating: 0,
     AutoPath: ["sz1"], 
+    AutoPathWithResult: ["sz1"],
     Comment: " "
 })

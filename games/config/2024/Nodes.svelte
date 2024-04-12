@@ -34,9 +34,9 @@
       } else {
         dataField = "Tele" + gameLevelMap[level] + $liveGamepiece + type;
       }
-      console.log("Datafiled " + dataField);
+      console.log("Datafield " + dataField);
       locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
-      console.log("LocationField" + locationField);
+      console.log("LocationField " + locationField);
       $gameData["AutoPath"].push(locationField);
       if (level <3){
         //$gameData[dataField] = $gameData[dataField] + 1;
@@ -45,8 +45,9 @@
       }
       $liveLocation = "Floor";
     }
-    console.log("LiveGamePiece" + $liveGamepiece);
-    console.log("LiveLocation" + $liveLocation);
+    console.log("Datafield " + dataField);
+    console.log("LiveGamePiece " + $liveGamepiece);
+    console.log("LiveLocation " + $liveLocation);
     console.log("GameMode" + gameMode);
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";

@@ -45,6 +45,7 @@
         "DefenseRating NUMERIC DEFAULT 0",
         "UnderDefenseRating NUMERIC DEFAULT 0",
         "AutoPath TEXT DEFAULT ''",
+        "AutoPathWithResult TEXT DEFAULT ''",
         "BotState NUMERIC DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
@@ -57,7 +58,8 @@
         "Image TEXT DEFAULT ''",
         "BuildQuality INTEGER DEFAULT 0",
         "ProgrammingLanguage TEXT DEFAULT ''",
-        "BumperQuality INTEGER DEFAULT 0"
+        "BumperQuality INTEGER DEFAULT 0",
+        "CanClimb INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -289,6 +291,11 @@
             },
             {
                 "type": "break"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanClimb",
+                "label": "Can Climb?"
             },
             {
                 "type": "text",
