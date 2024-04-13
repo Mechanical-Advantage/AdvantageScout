@@ -38,6 +38,9 @@
       locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
       console.log("LocationField " + locationField);
       $gameData["AutoPath"].push(locationField);
+      // $gameData["AutoPathWithResult"].push(locationField);
+      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+      $gameData["AutoPathWithResult"].push(locationField+";"+(type === "Success" ? "2" : "1")+"-1");
       if (level <3){
         //$gameData[dataField] = $gameData[dataField] + 1;
         dataField = "TeleFloorNoteCollect";
@@ -56,6 +59,13 @@
     $liveGamepiece = 0;
     if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
       $gameData["AutoPath"].push(locationField);
+      $gameData["AutoPathWithResult"].push(locationField+";"+(type === "Success" ? "2" : "1")+"-1");
+      // $gameData["AutoPathWithResult"].push(locationField);
+      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+    }
+    if ($gameState === 0 && locationField == "AutoPreLoadedNoteCollect") {
+      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+      $gameData["AutoPathWithResult"][0]=$gameData["AutoPathWithResult"][0]+";"+(type === "Success" ? "2" : "1"+"-1");
     }
   }
 

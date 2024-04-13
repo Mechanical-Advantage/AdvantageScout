@@ -97,6 +97,7 @@
         );
         console.log("Start zone in data", $gameData["StartPosition"]);
         $gameData["AutoPath"][0]="sz" + ($gameData["StartPosition"]).toString();
+        $gameData["AutoPathWithResult"][0]="sz" + ($gameData["StartPosition"]).toString();
     }
 
     function isPointInSvg(x, y, ctx) {
