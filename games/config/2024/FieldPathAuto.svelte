@@ -166,7 +166,7 @@
          * @param {bool} undo Flag indicating that this is an undo operation
          */
         function updateField(event, undo=false){
-          console
+            console.log("Updating field: " + event)
             if(event.name=="pickup") {
                 if(!undo){
                   let item = gameField.select(event.pos);
@@ -267,9 +267,27 @@
         let nitems=8
         let shape = MenuItemShape.circ
         contextMenu = new ContextMenu(ctx, pos, nitems)
+        //--Original
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.PickupEvent(pos))}, Colors.darkorange, null, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.SpeakerScoreEvent(pos))}, Colors.green, null, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.AmpScoreEvent(pos))}, Colors.blue, null, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new events.PickupEvent(pos)); 
+        //                                                 addGameEvent(new events.SpeakerScoreEvent(pos))}, 
+        //                                         Colors.green, 
+        //                                         Colors.darkorange, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new events.PickupEvent(pos)); 
+        //                                                 addGameEvent(new events.SpeakerMissEvent(pos))}, 
+        //                                         Colors.red, 
+        //                                         Colors.darkorange, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.DropEvent(pos))}, Colors.black, null, shape))
+
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.AmpMissEvent(pos))}, Colors.burgundy, null, shape))
+        // contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.SpeakerMissEvent(pos))}, Colors.red, null, shape))
+
+        //-- Proposed
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.PickupEvent(pos))}, Colors.darkorange, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.SpeakerScoreEvent(pos))}, Colors.green, null, shape))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.AmpScoreEvent(pos))}, Colors.blue, null, shape))
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.DropEvent(pos))}, Colors.black, null, shape))
         contextMenu.addItem(new ContextMenuItem(() => { addGameEvent(new events.PickupEvent(pos)); 
                                                         addGameEvent(new events.SpeakerScoreEvent(pos))}, 
                                                 Colors.green, 
@@ -278,11 +296,12 @@
                                                         addGameEvent(new events.SpeakerMissEvent(pos))}, 
                                                 Colors.red, 
                                                 Colors.darkorange, shape))
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.DropEvent(pos))}, Colors.black, null, shape))
-
-        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.AmpMissEvent(pos))}, Colors.burgundy, null, shape))
+        
+        contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.PickupFailEvent(pos))}, Colors.black, Colors.orange, shape))
         contextMenu.addItem(new ContextMenuItem(() => {addGameEvent(new events.SpeakerMissEvent(pos))}, Colors.red, null, shape))
 
+
+        
         addMoveEvent(pos); 
       }
   

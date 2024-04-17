@@ -4,6 +4,7 @@
     export const GameEventType = {
             init: "init",
             pickup: "pickup",
+            failPickup: "failPickup",
             drop: "drop",
             scoreSpeaker: "scoreSpeaker",
             missSpeaker: "missSpeaker",
@@ -16,6 +17,7 @@
         constructor(pos, name) {
             this.pos = pos
             this.name = name
+            this.time = null
             this.prevEvent = null
             this.npos = null 
         }
@@ -75,5 +77,16 @@
     export class AmpMissEvent extends GameEvent {
         constructor(pos) {
             super(pos, GameEventType.missAmp)
+        }
+    }
+
+    export class PickupFailEvent extends GameEvent {
+        constructor(pos, id = undefined) {
+            super(pos, GameEventType.failPickup)
+            this.noteId = id
+        }
+
+        setId(id) {
+            this.noteId = id
         }
     }

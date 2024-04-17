@@ -51,7 +51,6 @@
 
     function handleKeys(event) 
     {
-        console.log("GAME_STATE: " + $gameState)
         if($gameState==0){
             let step=1.0
             switch (event.key) 
