@@ -14,7 +14,7 @@
 
 <!-- right side community -->
 
-<!-- {#if $gameData["StartPosition"] === 0 || $selectedCommunity == fieldConfigurations[$reversedAlliance][5] == "blue" ? 0 : 1 }  -->
+
 <div class="absolute left-[730px]">
     <StartZone
         width="294"
@@ -36,4 +36,4 @@
     flippedV={fieldConfigurations[$reversedAlliance][1]}
     AllianceColor={fieldConfigurations[$reversedAlliance][4]}
 />
-<!-- {/if} -->
+

@@ -9,18 +9,17 @@
   export let btnsize;
   console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
   console.log("btnstate" + btnstate);
+  console.log("gamePieceLocation" + gamePieceLocation);
 
   let coneSVG = "";
   function updateGameObject() {
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
-
-    
   }
 </script>
 
 <button
-  class="btn {btnstate} btn-=square btn-outline {btnsize} btn-accent" 
+  class="btn {btnstate} btn-=square btn-outline {btnsize} btn-accent"
   on:click={updateGameObject}
 >
   {#if $gameState == 0}

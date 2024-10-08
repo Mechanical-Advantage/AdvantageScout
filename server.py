@@ -1099,15 +1099,30 @@ document.body.innerHTML = window.localStorage.getItem(
                         password="MA6328",
                         port="5432")
         cur_grafana = conn_grafana.cursor()
+
+        conn_grafanaext = psycopg2.connect(database="Grafana-Output",
+                        host="2.tcp.ngrok.io",
+                        user="postgres",
+                        password="MA6328",
+                        port="12826")
+        
+        cur_grafanaext = conn_grafanaext.cursor()
         sql_text = 'DELETE FROM "PickList" WHERE "PickType" = %s;'
         picklist_order = json.loads(data)
         cur_grafana.execute(sql_text, (picklist_order[0]["type"],))
+        cur_grafanaext.execute(sql_text, (picklist_order[0]["type"],))
         print(data)
         for i in range(len(picklist_order)):
             print(picklist_order[i]["name"])
             # cur_grafana.execute("INSERT INTO PickList(Team,PickScore,PickType,PickOrder) VALUES (?,?,?,?)"
             cur_grafana.execute('INSERT INTO "PickList" ("Team","PickScore","PickType","PickOrder") VALUES (%s,%s,%s,%s)',
                                (picklist_order[i]["name"], picklist_order[i]["score"], picklist_order[i]["type"], i+1))
+
+            cur_grafanaext.execute('INSERT INTO "PickList" ("Team","PickScore","PickType","PickOrder") VALUES (%s,%s,%s,%s)',
+                               (picklist_order[i]["name"], picklist_order[i]["score"], picklist_order[i]["type"], i+1))
+
+        conn_grafanaext.commit()
+        conn_grafanaext.close()
 
         conn_grafana.commit()
         conn_grafana.close()

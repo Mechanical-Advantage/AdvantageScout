@@ -95,11 +95,20 @@
 {/if}
 
 {#if $gameState == 1}
-  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[320px]">
+  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[160px]">
     <div>
       <GamePieceLocation
         location="Source"
         gamePieceLocation="Floor"
+        gamePiece="Note"
+        {gameMode}
+        btnsize=" w-[84px] h-[84px]"
+      />
+    </div>
+    <div>
+      <GamePieceLocation
+        location="Ferry"
+        gamePieceLocation="Ferry"
         gamePiece="Note"
         {gameMode}
         btnsize=" w-[84px] h-[84px]"

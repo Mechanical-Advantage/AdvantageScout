@@ -45,6 +45,7 @@ export const gameData = writable({
     TelePreLoadedNoteCollect: 0,
     TeleFloorNoteCollect: 0,
     TeleSourceNoteCollect: 0,
+    TeleFerryNoteCollect: 0,
     AutoNoteDrop: 0,
     TeleNoteDrop: 0,
     CoopertitionBonus: 0,

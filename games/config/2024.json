@@ -30,6 +30,7 @@
         "TelePreLoadedNoteCollect INTEGER DEFAULT 0",
         "TeleFloorNoteCollect INTEGER DEFAULT 0",
         "TeleSourceNoteCollect INTEGER DEFAULT 0",
+        "TeleFerryNoteCollect INTEGER DEFAULT 0",
         "AutoNoteDrop INTEGER DEFAULT 0",
         "TeleNoteDrop INTEGER DEFAULT 0",
         "CoopertitionBonus INTEGER DEFAULT 0",

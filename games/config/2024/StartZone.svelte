@@ -130,19 +130,7 @@
             (height / defaultHeight) * 175
         );
         ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
-        // ctx.lineTo(
-        //     (width / defaultWidth) * 208.4,
-        //     (height / defaultHeight) * 232
-        // );
-        // ctx.lineTo(
-        //     (width / defaultWidth) * 206,
-        //     (height / defaultHeight) * 315
-        // );
-        // ctx.lineTo(
-        //     (width / defaultWidth) * 7.6,
-        //     (height / defaultHeight) * 315
-        // );
-        // ctx.lineTo((width / defaultWidth) * 10, (height / defaultHeight) * 10);
+
         ctx.closePath();
         return ctx.isPointInPath(x, y); //checks if the point is within the drawn canvas shape
     }
