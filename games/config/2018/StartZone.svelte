@@ -26,13 +26,13 @@
     $gameData["AllianceColor"] = $gameData["AllianceColor"];
 
     let zones = {
-        1: [90, 145, 5, 175, 5, 223, 90, 223],
-        2: [190, 85, 190, 145, 90, 145, 90, 85],
-        3: [90, 10, 90, 85, 5, 55, 5, 10],
-        4: [190, 10, 190, 85, 90, 85, 90, 10],
-        5: [190, 145, 190, 223, 90, 223, 90, 145],
-        6: [190, 223, 190, 315, 90, 296, 90, 223 ],
-        7: [90, 223, 90, 296, 5, 270, 5, 223]
+        1: [10, 25, 30, 25, 30, 80, 10, 80],
+        2: [10, 80, 30, 80, 30, 137, 10, 137],
+        3: [10, 137, 30, 137, 30, 210, 10, 195]
+        // 4: [190, 10, 190, 85, 90, 85, 90, 10],
+        // 5: [190, 145, 190, 223, 90, 223, 90, 145],
+        // 6: [190, 223, 190, 315, 90, 296, 90, 223 ],
+        // 7: [90, 223, 90, 296, 5, 270, 5, 223]
         // 8: [120, 140, 206, 140, 206,205, 120,205],
         // 9: [120,205, 206,205, 206,315, 120,290],
         // 10: [10, 50, 40, 80, 40, 120, 10, 150],
@@ -103,33 +103,33 @@
     function isPointInSvg(x, y, ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath(); //draws the shape of the svg on a 2d canvas
-        ctx.moveTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
+        ctx.moveTo((width / defaultWidth) * 25, (height / defaultHeight) * 10);
         ctx.lineTo(   
-            (width / defaultWidth) * 190,
-            (height / defaultHeight) * 315
-        );
-        ctx.lineTo((width / defaultWidth) * 190, (height / defaultHeight) * 10);
-        ctx.lineTo(
-            (width / defaultWidth) * 5,
+            (width / defaultWidth) * 30,
             (height / defaultHeight) * 10
         );
+        ctx.lineTo((width / defaultWidth) * 30, (height / defaultHeight) * 210);
         ctx.lineTo(
-            (width / defaultWidth) * 5,
-            (height / defaultHeight) * 55
+            (width / defaultWidth) * 25,
+            (height / defaultHeight) * 210
         );
         ctx.lineTo(
-            (width / defaultWidth) * 90,
-            (height / defaultHeight) * 85
+            (width / defaultWidth) * 10,
+            (height / defaultHeight) * 95
         );
         ctx.lineTo(
-            (width / defaultWidth) * 90,
-            (height / defaultHeight) * 145
+            (width / defaultWidth) * 10,
+            (height / defaultHeight) * 25
         );
         ctx.lineTo(
-            (width / defaultWidth) * 5,
-            (height / defaultHeight) * 175
+            (width / defaultWidth) * 25,
+            (height / defaultHeight) * 10
         );
-        ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
+        // ctx.lineTo(
+        //     (width / defaultWidth) * 5,
+        //     (height / defaultHeight) * 175
+        // );
+        // ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
 
         ctx.closePath();
         return ctx.isPointInPath(x, y); //checks if the point is within the drawn canvas shape

@@ -23,29 +23,25 @@
   on:click={updateGameObject}
 >
   {#if $gameState == 0}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
-      enable-background="new 0 0 64 64"
-      width="40px"
-      height="40px"
-      ><path
-        d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
-        fill="#fc761d"
-      /></svg
-    >
+  <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" width="96px" height="96px"  fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff20">
+
+    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+    
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <g id="SVGRepo_iconCarrier"> <path d="M4 7.5L11.6078 3.22062C11.7509 3.14014 11.8224 3.09991 11.8982 3.08414C11.9654 3.07019 12.0346 3.07019 12.1018 3.08414C12.1776 3.09991 12.2491 3.14014 12.3922 3.22062L20 7.5M4 7.5V16.0321C4 16.2025 4 16.2876 4.02499 16.3637C4.04711 16.431 4.08326 16.4928 4.13106 16.545C4.1851 16.6041 4.25933 16.6459 4.40779 16.7294L12 21M4 7.5L12 11.5M12 21L19.5922 16.7294C19.7407 16.6459 19.8149 16.6041 19.8689 16.545C19.9167 16.4928 19.9529 16.431 19.975 16.3637C20 16.2876 20 16.2025 20 16.0321V7.5M12 21V11.5M20 7.5L12 11.5" stroke="#ffff20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+    
+    </svg>
   {/if}
   {#if $gameState == 1}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
-      enable-background="new 0 0 64 64"
-      width="96px"
-      height="96px"
-      ><path
-        d="m32 2c-16.568 0-30 13.432-30 30 0 16.569 13.432 30 30 30s30-13.431 30-30c0-16.568-13.432-30-30-30m0 45c-8.283 0-15-6.716-15-15s6.717-15 15-15c8.285 0 15 6.716 15 15s-6.715 15-15 15"
-        fill="#fc761d"
-      /></svg
-    >
+  <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20"width="96px" height="96px"  fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff20">
+
+    <g id="SVG Repo_bgCarrier" stroke-width="0"/>
+    
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <g id="SVGRepo_iconCarrier"> <path d="M4 7.5L11.6078 3.22062C11.7509 3.14014 11.8224 3.09991 11.8982 3.08414C11.9654 3.07019 12.0346 3.07019 12.1018 3.08414C12.1776 3.09991 12.2491 3.14014 12.3922 3.22062L20 7.5M4 7.5V16.0321C4 16.2025 4 16.2876 4.02499 16.3637C4.04711 16.431 4.08326 16.4928 4.13106 16.545C4.1851 16.6041 4.25933 16.6459 4.40779 16.7294L12 21M4 7.5L12 11.5M12 21L19.5922 16.7294C19.7407 16.6459 19.8149 16.6041 19.8689 16.545C19.9167 16.4928 19.9529 16.431 19.975 16.3637C20 16.2876 20 16.2025 20 16.0321V7.5M12 21V11.5M20 7.5L12 11.5" stroke="#ffff20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+    
+    </svg>
   {/if}
 </button>

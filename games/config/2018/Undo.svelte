@@ -1,35 +1,27 @@
 <script>
     import { autoDataLog, teleDataLog, gameData, gameState, undoDisplayCondition } from "./stores";
 
-    let autoList = ["AutoSpeakerNoteSuccess",
-    "AutoSpeakerNoteFail",
-    "AutoAmpNoteSuccess",
-    "AutoAmpNoteFail",
-    "AutoFloorPreloadedNoteCollect",
-    "AutoFloorSpike0NoteCollect",
-    "AutoFloorSpike1NoteCollect",
-    "AutoFloorSpike2NoteCollect",
-    "AutoFloorCenterline0NoteCollect",
-    "AutoFloorCenterline1NoteCollect",
-    "AutoFloorCenterline2NoteCollect",
-    "AutoFloorCenterline3NoteCollect",
-    "AutoFloorCenterline4NoteCollect",
-    "AutoNoteDrop",
-    "Leave",
-    "TeleNoteDrop"]
+    let autoList = ["AutoSwitchCubeSuccess",
+    "AutoScaleCubeSuccess",
+    "AutoSwitchCubeFail",
+    "AutoScaleCubeFail",
+    "AutoPreloadedCubeCollect",
+    "AutoFloorCubeCollect",
+    "AutoCubeDrop",
+    "Leave"]
 
     let tempUndoData = {}
 
-    let teleList = ["TeleSpeakerNoteSuccess",
-    "TeleSpeakerNoteFail",
-    "TeleAmpNoteSuccess",
-    "TeleAmpNoteFail",
-    "TeleFloorNoteCollect",
-    "TeleSourceNoteCollect",
-    "TeleNoteDrop",
-    "TeleTrapNoteSuccess",
-    "TeleTrapNoteFail",
-    "TeleFerryNoteSuccess"]
+    let teleList = ["TeleScaleCubeSuccess",
+    "TeleScaleCubeFail",
+    "TeleSwitchCubeSuccess",
+    "TeleSwitchCubeFail",
+    "TeleExchangeCubeSuccess",
+    "TeleFloorCubeCollect",
+    "TelePortalCubeCollect",
+    "TeleExchangeCubeCollect",
+    "TeleCubeDrop"
+]
 
     let undoList = [1,2,3,4]
 
