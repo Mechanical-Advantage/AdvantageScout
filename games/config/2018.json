@@ -23,6 +23,7 @@
         "TelePortalCubeCollect INTEGER DEFAULT 0",
         "TeleExchangeCubeCollect INTEGER DEFAULT 0",
         "TeleExchangeCubeSuccess INTEGER DEFAULT 0",
+        "TeleExchangeCubeFail INTEGER DEFAULT 0",
         "AutoCubeDrop INTEGER DEFAULT 0",
         "TeleCubeDrop INTEGER DEFAULT 0",
         "PlayingDefenseDuration NUMERIC DEFAULT 0",

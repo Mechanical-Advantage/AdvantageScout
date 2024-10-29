@@ -36,7 +36,7 @@
 </script>
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-2xl"
-        >{$gameData[gameMode + "Note" + "Drop"]}</span
+        >{$gameData[gameMode + "Cube" + "Drop"]}</span
     >
   
 <button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update} disabled={$liveGamepiece == 0}>

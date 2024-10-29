@@ -15,6 +15,6 @@
     >{location}</span>
     {/if}
   <div class="absolute focus:animate-bounce">
-    <GamePiece btnstate={btnstate} btnsize={btnsize} gamePiece="Note" gamePieceLocation={location} {...location} />
+    <GamePiece btnstate={btnstate} btnsize={btnsize} gamePiece="Cube" gamePieceLocation={location} {...location} />
   </div>
 </div>

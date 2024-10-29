@@ -1,5 +1,5 @@
 <script>
-  import GamePiece from "../2023/GamePiece.svelte";
+  import GamePiece from "./GamePiece.svelte";
   import GamePieceLocation from "./GamePieceLocation.svelte";
   import { gameState, gameData } from "./stores";
   export let gameMode = "Auto";
@@ -12,9 +12,6 @@
         location="Floor"
         gamePiecelocation="Floor"
         gamePiece="Cube"
-        btnstate={$gameData["AutoFloorCubeCollect"] == 0
-          ? ""
-          : "btn-disabled bg-gray-700"}
         {gameMode}
         btnsize=" w-[84px] h-[84px]"
       />

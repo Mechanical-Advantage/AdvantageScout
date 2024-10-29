@@ -1,13 +1,12 @@
 <script>
   import { gameState } from "./stores";
   import { liveGamepiece, liveLocation, gameData } from "./stores";
-  export let gamePiece = "Note";
+  export let gamePiece = "Cube";
   export let location = "Floor";
   export let gamePieceLocation = "Floor";
   export let btnstate = "";
   export let gpColor = "#ff0000";
   export let btnsize;
-  console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
   console.log("btnstate" + btnstate);
   console.log("gamePieceLocation" + gamePieceLocation);
 

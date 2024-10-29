@@ -10,30 +10,30 @@
 </script>
 
 <!-- <ScoringGrid /> -->
-<div class="absolute left-[80px] top-[40px]">
+<div class="absolute left-[60px] top-[40px]">
   <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[240px] top-[40px]">
+<div class="absolute left-[220px] top-[40px]">
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
 <div class="absolute left-[60px] top-[195px]">
   <Nodes level="2" type="Success" gameMode="Tele" />
 </div>
-<div class="absolute left-[60px] top-[350px]">
+<div class="absolute left-[220px] top-[195px]">
   <Nodes level="2" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[425px] top-[195px]">
+<div class="absolute left-[60px] top-[350px]">
   <Nodes level="3" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[605px] top-[195px]">
+<div class="absolute left-[220px] top-[350px]">
   <Nodes level="3" type="Fail" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[425px] top-[350px]">
+<!-- <div class="absolute left-[425px] top-[350px]">
   <Nodes level="4" type="Success" gameMode="Tele" />
-</div>
+</div> -->
 
 <div class="absolute left-[500px]">
   <LocationSelector gameMode="Tele" />
