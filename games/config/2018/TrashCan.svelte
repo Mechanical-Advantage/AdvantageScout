@@ -21,10 +21,10 @@
         
         dataField = gameMode + $liveGamepiece + "Drop" 
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
-        $gameData["AutoPath"].push(locationField);
-        // $gameData["AutoPathWithResult"].push(locationField);
-        // $gameData["AutoPathWithResult"].push("0");
-        $gameData["AutoPathWithResult"].push(locationField+";3;-1");
+        // $gameData["AutoPath"].push(locationField);
+        // // $gameData["AutoPathWithResult"].push(locationField);
+        // // $gameData["AutoPathWithResult"].push("0");
+        // $gameData["AutoPathWithResult"].push(locationField+";3;-1");
         $gameData[dataField] = $gameData[dataField] + 1  
         $gameData[locationField] = $gameData[locationField] + 1;
           

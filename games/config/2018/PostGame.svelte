@@ -30,7 +30,7 @@
       <Ratings name="UnderDefenseDuration" />
     </div>
     <div class="  h-full">
-      <Ratings name="NoteIntakeRating" />
+      <Ratings name="CubeIntakeRating" />
       <Ratings name="DefenseRating" />
       <Ratings name="UnderDefenseRating" />
     </div>
@@ -111,7 +111,7 @@
   </div>
   <div class="p-2.5 w-full h-[200px]">
 
-    <div class="inline-flex bg-gray-700">
+    <!-- <div class="inline-flex bg-gray-700">
       <span
         class="inline-flex p-2.5 items-center text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
       >
@@ -123,7 +123,7 @@
         bind:value={$gameData["Points"]}
         min="0"
       />
-    </div>
+    </div> -->
     <div class="inline-flex bg-gray-700">
       <span
         class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"

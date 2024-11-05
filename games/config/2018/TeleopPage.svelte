@@ -6,7 +6,9 @@
   import Parked from "./Parked.svelte";
   import { teleDataLog } from "./stores";
   import CurrentTeam from "./CurrentTeam.svelte";
-  import OnStage from "./OnStage.svelte";
+  import Climb from "./Climb.svelte";
+  import AssistedClimb from "./AssistedClimb.svelte";
+  import LiftedClimb from "./LiftedClimb.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -46,16 +48,25 @@
 </div>
 <div class="absolute ml-[675px] mt-[30px]">
   <div class="flex flex-col gap-y-2">
-    <OnStage />
+    <Climb />
   </div>
 </div>
 
+<div class="absolute ml-[675px] mt-[130px]">
+  <div class="flex flex-col gap-y-2">
+    <AssistedClimb />
+  </div>
+</div>
 <div>
   <div class="flex flex-row gap-x-[50px] absolute left-[750px] top-[375px]">
     <Undo />
   </div>
 </div>
-
+<div class="absolute ml-[525px] mt-[130px]">
+  <div class="flex flex-col gap-y-2">
+    <LiftedClimb />
+  </div>
+</div>
 <div class="flex flex-row gap-x-[50px] absolute left-[605px] top-[350px]">
   <div>
     <TrashCan gameMode="Tele" />

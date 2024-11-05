@@ -32,6 +32,7 @@ export const gameData = writable({
     TeleSwitchCubeFail: 0,
     TeleClimb: 0,
     TeleAssistedClimb: 0,
+    TeleLiftedClimb: 0,
     AutoPreLoadedCubeCollect: 0,
     AutoFloorCubeCollect: 0,
     TelePreLoadedCubeCollect: 0,

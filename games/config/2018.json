@@ -16,6 +16,7 @@
         "TeleSwitchCubeFail INTEGER DEFAULT 0",
         "TeleClimb INTEGER DEFAULT 0",
         "TeleAssistedClimb INTEGER DEFAULT 0",
+        "TeleLiftedClimb INTEGER DEFAULT 0",
         "AutoPreLoadedCubeCollect INTEGER DEFAULT 0",
         "AutoFloorCubeCollect INTEGER DEFAULT 0",
         "TelePreLoadedCubeCollect INTEGER DEFAULT 0",
