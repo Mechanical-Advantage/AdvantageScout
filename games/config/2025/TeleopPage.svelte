@@ -10,18 +10,30 @@
 </script>
 
 <!-- <ScoringGrid /> -->
-<div class="absolute left-[80px] top-[40px]">
+<div class="absolute left-[60px] top-[40px]">
   <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[240px] top-[40px]">
+<div class="absolute left-[200px] top-[40px]">
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[60px] top-[195px]">
-  <Nodes level="2" type="Success" gameMode="Tele" />
+<div class="absolute left-[60px] top-[140px]">
+  <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
-<div class="absolute left-[60px] top-[350px]">
-  <Nodes level="2" type="Fail" gameMode="Tele" />
+<div class="absolute left-[200px] top-[140px]">
+  <Nodes level="1" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[240px]">
+  <Nodes level="1" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[200px] top-[240px]">
+  <Nodes level="1" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[340px]">
+  <Nodes level="1" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[200px] top-[340px]">
+  <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
 <div class="absolute left-[425px] top-[195px]">
   <Nodes level="3" type="Success" gameMode="Tele" />

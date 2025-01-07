@@ -83,7 +83,7 @@
   >
 
   <button
-    class="btn btn-square btn-outline rounded-md w-24 h-24"
+    class="btn btn-square btn-outline rounded-md w-20 h-20"
     disabled={$liveGamepiece == 0}
     on:click={update}
   >
@@ -94,8 +94,8 @@
       >
       {#if level == 1}
         <svg
-          width="96px"
-          height="96px"
+          width="64px"
+          height="64px"
           viewBox="0 0 64 64"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -258,8 +258,8 @@
   
       {#if level == 1}
         <svg
-          width="96px"
-          height="96px"
+          width="64px"
+          height="64px"
           viewBox="0 0 64 64"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
