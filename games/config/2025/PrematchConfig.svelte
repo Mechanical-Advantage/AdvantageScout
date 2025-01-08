@@ -21,7 +21,7 @@ if ($reversedAlliance === 0) {
 
 <FullField />
 
-<div class="flex flex-col absolute left-[300px] {topMargin} gap-y-[45px]">
+<!-- <div class="flex flex-col absolute left-[300px] {topMargin} gap-y-[45px]">
     <div> <AutoSpikeSVG/>
     </div>
 
@@ -41,7 +41,7 @@ if ($reversedAlliance === 0) {
     
         <div> <AutoSpikeSVG/>
         </div>
-        </div>
+        </div> -->
 
 <div class="absolute left-[350px] -mt-[450px]">
     <CurrentTeam />
