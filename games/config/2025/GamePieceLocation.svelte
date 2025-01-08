@@ -5,6 +5,7 @@
   export let btnsize
   export let location;
   export let gamePieceLocation;
+  export let gamePiece;
 
 </script>
 
@@ -15,6 +16,6 @@
     >{location}</span>
     {/if}
   <div class="absolute focus:animate-bounce">
-    <GamePiece btnstate={btnstate} btnsize={btnsize} gamePiece="Note" gamePieceLocation={location} {...location} />
+    <GamePiece btnstate={btnstate} btnsize={btnsize} gamePiece={gamePiece} {location} {...location} />
   </div>
 </div>

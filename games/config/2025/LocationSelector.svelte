@@ -100,7 +100,7 @@
       <GamePieceLocation
         location="Source"
         gamePieceLocation="Floor"
-        gamePiece="Note"
+        gamePiece="Coral"
         {gameMode}
         btnsize=" w-[84px] h-[84px]"
       />
@@ -109,16 +109,16 @@
       <GamePieceLocation
         location="Ferry"
         gamePieceLocation="Ferry"
-        gamePiece="Note"
+        gamePiece="Coral"
         {gameMode}
         btnsize=" w-[84px] h-[84px]"
       />
     </div>
     <div>
       <GamePieceLocation
-        location="Floor"
-        gamePieceLocation="Source"
-        gamePiece="Note"
+        location="Ferry"
+        gamePieceLocation="Ferry"
+        gamePiece="Algae"
         {gameMode}
         btnsize=" w-[84px] h-[84px]"
       />

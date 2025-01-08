@@ -29,29 +29,37 @@
 <div class="absolute left-[200px] top-[240px]">
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[60px] top-[340px]">
+<div class="absolute left-[60px] top-[350px]">
   <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
-<div class="absolute left-[200px] top-[340px]">
+<div class="absolute left-[200px] top-[350px]">
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[425px] top-[195px]">
+<div class="absolute left-[425px] top-[215px]">
   <Nodes level="3" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[605px] top-[195px]">
+<div class="absolute left-[605px] top-[215px]">
   <Nodes level="3" type="Fail" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[425px] top-[350px]">
-  <Nodes level="4" type="Success" gameMode="Tele" />
+<div class="absolute left-[425px] top-[80px]">
+  <Nodes level="5" type="Success" gameMode="Tele" />
 </div>
+
+<div class="absolute left-[605px] top-[80px]">
+  <Nodes level="5" type="Fail" gameMode="Tele" />
+</div>
+
+<!-- <div class="absolute left-[425px] top-[350px]">
+  <Nodes level="4" type="Success" gameMode="Tele" />
+</div> -->
 
 <div class="absolute left-[500px]">
   <LocationSelector gameMode="Tele" />
 </div>
 
-<div class="absolute ml-[525px] mt-[30px]">
+<!-- <div class="absolute ml-[525px] mt-[30px]">
   <div class="flex flex-col gap-y-2">
     <Parked />
   </div>
@@ -60,7 +68,7 @@
   <div class="flex flex-col gap-y-2">
     <OnStage />
   </div>
-</div>
+</div> -->
 
 <div>
   <div class="flex flex-row gap-x-[50px] absolute left-[750px] top-[375px]">
@@ -68,11 +76,16 @@
   </div>
 </div>
 
+<div class="flex flex-row gap-x-[50px] absolute left-[425px] top-[350px]">
+  <div>
+    <TrashCan gameMode="Tele" />
+  </div>
+</div>
 <div class="flex flex-row gap-x-[50px] absolute left-[605px] top-[350px]">
   <div>
     <TrashCan gameMode="Tele" />
   </div>
 </div>
-<div class="ml-[425px] mt-[30px]">
+<div class="ml-[775px] mt-[30px]">
   <CurrentTeam />
 </div>
