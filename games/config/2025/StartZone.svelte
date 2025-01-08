@@ -26,13 +26,13 @@
     $gameData["AllianceColor"] = $gameData["AllianceColor"];
 
     let zones = {
-        1: [90, 145, 5, 175, 5, 223, 90, 223],
-        2: [190, 85, 190, 145, 90, 145, 90, 85],
-        3: [90, 10, 90, 85, 5, 55, 5, 10],
-        4: [190, 10, 190, 85, 90, 85, 90, 10],
-        5: [190, 145, 190, 223, 90, 223, 90, 145],
-        6: [190, 223, 190, 315, 90, 296, 90, 223 ],
-        7: [90, 223, 90, 296, 5, 270, 5, 223]
+        1: [160, 10, 210, 10, 210, 87, 160, 87],
+        2: [160, 87, 210, 87, 210, 164, 160, 164],
+        3: [160, 164, 210, 164, 210, 241, 160, 241],
+        4: [160, 241, 210, 241, 210, 320, 160, 320]
+        // 5: [190, 145, 190, 223, 90, 223, 90, 145],
+        // 6: [190, 223, 190, 315, 90, 296, 90, 223 ],
+        // 7: [90, 223, 90, 296, 5, 270, 5, 223]
         // 8: [120, 140, 206, 140, 206,205, 120,205],
         // 9: [120,205, 206,205, 206,315, 120,290],
         // 10: [10, 50, 40, 80, 40, 120, 10, 150],
@@ -103,33 +103,33 @@
     function isPointInSvg(x, y, ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath(); //draws the shape of the svg on a 2d canvas
-        ctx.moveTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
+        ctx.moveTo((width / defaultWidth) * 160, (height / defaultHeight) * 10);
         ctx.lineTo(   
-            (width / defaultWidth) * 190,
-            (height / defaultHeight) * 315
-        );
-        ctx.lineTo((width / defaultWidth) * 190, (height / defaultHeight) * 10);
-        ctx.lineTo(
-            (width / defaultWidth) * 5,
+            (width / defaultWidth) * 210,
             (height / defaultHeight) * 10
         );
+        ctx.lineTo((width / defaultWidth) * 210, (height / defaultHeight) * 320);
         ctx.lineTo(
-            (width / defaultWidth) * 5,
-            (height / defaultHeight) * 55
+            (width / defaultWidth) * 160,
+            (height / defaultHeight) * 320
         );
         ctx.lineTo(
-            (width / defaultWidth) * 90,
-            (height / defaultHeight) * 85
+            (width / defaultWidth) * 160,
+            (height / defaultHeight) * 10
         );
-        ctx.lineTo(
-            (width / defaultWidth) * 90,
-            (height / defaultHeight) * 145
-        );
-        ctx.lineTo(
-            (width / defaultWidth) * 5,
-            (height / defaultHeight) * 175
-        );
-        ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
+        // ctx.lineTo(
+        //     (width / defaultWidth) * 200,
+        //     (height / defaultHeight) * 10
+        // );
+        // ctx.lineTo(
+        //     (width / defaultWidth) * 90,
+        //     (height / defaultHeight) * 145
+        // );
+        // ctx.lineTo(
+        //     (width / defaultWidth) * 5,
+        //     (height / defaultHeight) * 175
+        // );
+        // ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
 
         ctx.closePath();
         return ctx.isPointInPath(x, y); //checks if the point is within the drawn canvas shape
@@ -180,89 +180,119 @@
 <g>
     <title>Layer 1</title>
     <!-- start zone -->
-    <line
+     <line
         stroke-width={strokeWidth}
         id="svg_2"
-        y2={(height / defaultHeight) * 10}
-        x2={(width / defaultWidth) * 190}
-        y1={(height / defaultHeight) * 10}
-        x1={(width / defaultWidth) * 5}
+        x1={(height / defaultHeight) * 10}
+        y1={(width / defaultWidth) * 10}
+        x2={(height / defaultHeight) * 210}
+        y2={(width / defaultWidth) * 10}
         stroke={strokeColor}
         fill="none"
-    />
+    /> 
     <!-- start zone -->
     <line
         stroke-width={strokeWidth}
         id="svg_3"
-        y2={(height / defaultHeight) * 315}
-        x2={(width / defaultWidth) * 190}
-        y1={(height / defaultHeight) * 270}
-        x1={(width / defaultWidth) * 5}
+        x1={(height / defaultHeight) * 210}
+        y1={(width / defaultWidth) * 10}
+        x2={(height / defaultHeight) * 210}
+        y2={(width / defaultWidth) * 320}
         stroke={strokeColor}
         fill="none"
     />
     <!-- subwoofer -->
-    <line
+     <line
         stroke-width={strokeWidth}
         id="svg_4"
-        y2={(height / defaultHeight) * 85}
-        x2={(width / defaultWidth) * 90}
-        y1={(height / defaultHeight) * 55}
-        x1={(width / defaultWidth) * 5}
+        x1={(height / defaultHeight) * 210}
+        y1={(width / defaultWidth) * 320}
+        x2={(height / defaultHeight) * 15}
+        y2={(width / defaultWidth) * 320}
         stroke={strokeColor}
         fill="none"
     />
     <line
         id="svg_5"
-        y2={(height / defaultHeight) * 145}
-        x2={(width / defaultWidth) * 90}
-        y1={(height / defaultHeight) * 85}
-        x1={(width / defaultWidth) * 90}
+        x1={(height / defaultHeight) * 15}
+        y1={(width / defaultWidth) * 320}
+        x2={(height / defaultHeight) * 10}
+        y2={(width / defaultWidth) * 10}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
     />
     <line
         id="svg_6"
-        y2={(height / defaultHeight) * 175}
-        x2={(width / defaultWidth) * 5}
-        y1={(height / defaultHeight) * 145}
-        x1={(width / defaultWidth) * 90}
+        x1={(height / defaultHeight) * 60}
+        y1={(width / defaultWidth) * 105}
+        x2={(height / defaultHeight) * 100}
+        y2={(width / defaultWidth) * 130}
         stroke-width={strokeWidth}
         stroke={strokeColor}
-        fill="none"
-    />
-    <line
+        fill="none" 
+    /> 
+     <line
         id="svg_7"
-        y2={(height / defaultHeight) * 315}
-        x2={(width / defaultWidth) * 190}
-        y1={(height / defaultHeight) * 10}
-        x1={(width / defaultWidth) * 190}
+        x1={(height / defaultHeight) * 100}
+        y1={(width / defaultWidth) * 130}
+        x2={(height / defaultHeight) * 100}
+        y2={(width / defaultWidth) * 170}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
-    />
-    <!-- <line
+    /> 
+     <line
         id="svg_8"
-        y2={(height / defaultHeight) * 315}
-        x2={(width / defaultWidth) * 7.6}
-        y1={(height / defaultHeight) * 315}
-        x1={(width / defaultWidth) * 208.4}
+        x1={(height / defaultHeight) * 100}
+        y1={(width / defaultWidth) * 170}
+        x2={(height / defaultHeight) * 60}
+        y2={(width / defaultWidth) * 190}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
-    /> -->
+    /> 
     <line
         id="svg_9"
-        y2={(height / defaultHeight) * 10}
-        x2={(width / defaultWidth) * 5}
-        y1={(height / defaultHeight) * 270}
-        x1={(width / defaultWidth) * 5}
+        x1={(height / defaultHeight) * 60}
+        y1={(width / defaultWidth) * 190}
+        x2={(height / defaultHeight) * 20}
+        y2={(width / defaultWidth) * 170}
+        stroke-width={strokeWidth}
+        stroke={strokeColor}
+        fill="none"
+    /> 
+    <line 
+        id ="svg_10"
+        x1={(height / defaultHeight) * 20}
+        y1={(width / defaultWidth) * 170}
+        x2={(height / defaultHeight) * 20}
+        y2={(width / defaultWidth) * 130}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
     />
-</g>
+    <line 
+    id ="svg_11"
+    x1={(height / defaultHeight) * 20}
+    y1={(width / defaultWidth) * 130}
+    x2={(height / defaultHeight) * 60}
+    y2={(width / defaultWidth) * 105}
+    stroke-width={strokeWidth}
+    stroke={strokeColor}
+    fill="none"
+    />
+    <line 
+    id ="svg_12"
+    x1={(height / defaultHeight) * 180}
+    y1={(width / defaultWidth) * 10}
+    x2={(height / defaultHeight) * 180}
+    y2={(width / defaultWidth) * 320}
+    stroke-width={strokeWidth}
+    stroke="#808080"
+    fill="none"
+    />
+    /g>
     <text
         x={robotX}
         y={robotY}
