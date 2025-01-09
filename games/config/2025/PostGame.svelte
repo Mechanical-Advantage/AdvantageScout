@@ -1,6 +1,12 @@
 <script>
   import Ratings from "./Ratings.svelte";
   import { gameData, uploadState } from "./stores";
+  import Nodes from "./Nodes.svelte";
+  import Parked from "./Parked.svelte";
+  import TeleDeepClimb from "./DeepClimb.svelte";
+  import DeepClimb from "./DeepClimb.svelte";
+
+
  console.log("Bot State", $gameData["BotState"])
  console.log($gameData["BotState"] == 2)
 
@@ -28,9 +34,20 @@
       <Ratings name="DriverRating" />
       <Ratings name="PlayingDefenseDuration" />
       <Ratings name="UnderDefenseDuration" />
+      <div class="absolute ml-[50px] mt-[30px]">
+  <div class="flex flex-col gap-y-2">
+    <Parked />
+  </div>
+</div>
+<div class="absolute ml-[300px] mt-[30px]">
+  <div class="flex flex-col gap-y-2">
+    <DeepClimb />
+  </div>
+</div>
     </div>
     <div class="  h-full">
-      <Ratings name="NoteIntakeRating" />
+      <Ratings name="CoralIntakeRating" />
+      <Ratings name="AlgaeIntakeRating" />
       <Ratings name="DefenseRating" />
       <Ratings name="UnderDefenseRating" />
     </div>
