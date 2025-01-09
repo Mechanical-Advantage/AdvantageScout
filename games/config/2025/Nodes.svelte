@@ -90,12 +90,18 @@
 </script>
 
 <div class="indicator">
+
+  {#if level == 1 || level==3 || level==2 || level==4}
+ 
   <span class="indicator-item badge badge-accent text-2xl"
     >{$gameData[gameMode + gameLevelMap[level] + "Coral" + type]}</span
   >
-  <span class="indicator-item indicator-start badge badge-secondary text-xl"
+  {/if}
+ {#if level==5 || level==6}
+ <span class="indicator-item indicator-start badge badge-secondary text-xl"
   >{$gameData[gameMode + gameLevelMap[level] + "Algae" + type]}</span
 >
+{/if}
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"
     disabled={$liveGamepiece == 0}
