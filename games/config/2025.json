@@ -28,6 +28,8 @@
 		"AutoProcessorAlgaeFailure INTEGER DEFAULT 0",
 		"TeleClimbShallow INTEGER DEFAULT 0",
 		"TeleClimbDeep INTEGER DEFAULT 0",
+        "AutoClimbShallow INTEGER DEFAULT 0",
+		"AutoClimbDeep INTEGER DEFAULT 0",
 		"AutoAlgaeDrop INTEGER DEFAULT 0",
         "TeleAlgaeDrop INTEGER DEFAULT 0",
 		"AutoCoralDrop INTEGER DEFAULT 0",

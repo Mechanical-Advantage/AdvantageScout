@@ -48,6 +48,8 @@ export const gameData = writable({
 	AutoNetAlgaeFailure: 0,
 	TeleClimbShallow: 0,
 	TeleClimbDeep: 0,
+    AutoClimbShallow: 0,
+	AutoClimbDeep: 0,
 	AutoAlgaeDrop: 0,
     TeleAlgaeDrop: 0,
 	AutoCoralDrop: 0,

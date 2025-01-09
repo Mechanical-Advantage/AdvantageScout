@@ -1,5 +1,6 @@
 <script>
     import { gameData } from "./stores";
+    let fontSize = 10;
 
     function handleClick(){
 
@@ -11,6 +12,6 @@
 </script>
 
 
-<button class="btn {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {$gameData["TeleOnstage"] === 2 ? "btn-disabled" : ''}" on:click={handleClick}>Parked?</button>
+<button class="btn w-10 h-10 {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {$gameData["TeleOnstage"] === 2 ? "btn-disabled" : ''}" on:click={handleClick}>Parked?</button>
 
 

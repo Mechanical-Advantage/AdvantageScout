@@ -3,9 +3,9 @@
 
     let dockButton = "";
     if ($gameState === 0) {
-        dockButton = "AutoOnstage";
+        dockButton = "AutoClimbDeep";
     } else {
-        dockButton = "TeleOnstage";
+        dockButton = "TeleClimbDeep";
     }
 
     function handleClick() {
@@ -21,8 +21,8 @@
     
 </script>
 
-<button class="btn {$gameData[dockButton] === 0
+<button class="btn w-10 h-10 {$gameData[dockButton] === 0
                 ? "btn-primary"
                 : $gameData[dockButton] === 1
                 ? "btn-secondary"
-                : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : ""}" on:click={handleClick}>On Stage?</button>
+                : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : ""}" on:click={handleClick}>Deep Climb?</button>
