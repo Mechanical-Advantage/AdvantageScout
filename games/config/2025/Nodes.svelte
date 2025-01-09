@@ -45,11 +45,11 @@
       $gameData["AutoPathWithResult"].push(
         locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
       );
-      if (level < 3) {
-        //$gameData[dataField] = $gameData[dataField] + 1;
-        dataField = "TeleFloorNoteCollect";
-        $gameData[dataField] = $gameData[dataField] - 1;
-      }
+      // if (level < 3) {
+      //   //$gameData[dataField] = $gameData[dataField] + 1;
+      //   dataField = "TeleFloorNoteCollect";
+      //   $gameData[dataField] = $gameData[dataField] - 1;
+      // }
       $liveLocation = "Floor";
     }
     console.log("Datafield " + dataField);
@@ -61,36 +61,41 @@
     $gameData[dataField] = $gameData[dataField] + 1;
     $gameData[locationField] = $gameData[locationField] + 1;
     $liveGamepiece = 0;
-    if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
-      $gameData["AutoPath"].push(locationField);
-      $gameData["AutoPathWithResult"].push(
-        locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
-      );
+    // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
+    //   $gameData["AutoPath"].push(locationField);
+    //   $gameData["AutoPathWithResult"].push(
+    //     locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
+    //   );
       // $gameData["AutoPathWithResult"].push(locationField);
       // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+   // }
+  //   if ($gameState === 0 && locationField == "AutoPreLoadedNoteCollect") {
+  //     // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+  //     $gameData["AutoPathWithResult"][0] =
+  //       $gameData["AutoPathWithResult"][0] +
+  //       ";" +
+  //       (type === "Success" ? "2" : "1" + ";-1");
+  //   }
+  // 
     }
-    if ($gameState === 0 && locationField == "AutoPreLoadedNoteCollect") {
-      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
-      $gameData["AutoPathWithResult"][0] =
-        $gameData["AutoPathWithResult"][0] +
-        ";" +
-        (type === "Success" ? "2" : "1" + ";-1");
-    }
-  }
 
   let gameLevelMap = {
-    1: "Amp",
-    2: "Speaker",
-    3: "Trap",
-    4: "Ferry",
+    1: "L1",
+    2: "L2",
+    3: "L3",
+    4: "L4",
+    5: "Processor",
+    6: "Net"
   };
 </script>
 
 <div class="indicator">
   <span class="indicator-item badge badge-accent text-2xl"
-    >{$gameData[gameMode + gameLevelMap[level] + "Note" + type]}</span
+    >{$gameData[gameMode + gameLevelMap[level] + "Coral" + type]}</span
   >
-
+  <span class="indicator-item indicator-start badge badge-secondary text-xl"
+  >{$gameData[gameMode + gameLevelMap[level] + "Algae" + type]}</span
+>
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"
     disabled={$liveGamepiece == 0}
@@ -101,7 +106,7 @@
         class="indicator-item indicator-left indicator-left indicator-start badge badge-primary"
         >{gameLevelMap[level]}</span
       >
-      {#if level == 1}
+      {#if level == 1 || level==3 || level==2 || level==4}
         <svg
           fill="#00ff00"
           height="75px"
@@ -161,7 +166,7 @@
           </g></svg
         >
       {/if}
-      {#if level == 2}
+      <!-- {#if level == 2}
         <svg
           width="96px"
           height="96px"
@@ -222,73 +227,43 @@
             </g>
           </g></svg
         >
-      {/if}
-      {#if level == 4}
-        <svg
-          version="1.1"
-          id="_x32_"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 512 512"
-          xml:space="preserve"
-          width="96px"
-          height="96px"
-          fill="#000000"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0" />
-
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-          <g id="SVGRepo_iconCarrier">
-            <style type="text/css">
-              .st0 {
-                fill: #00ff00;
-              }
-            </style>
-            <g>
-              <rect
-                x="168.256"
-                y="213.47"
-                class="st0"
-                width="28.074"
-                height="28.066"
-              />
-              <rect
-                x="231.627"
-                y="213.47"
-                class="st0"
-                width="28.074"
-                height="28.066"
-              />
-              <rect
-                x="295.006"
-                y="213.47"
-                class="st0"
-                width="28.074"
-                height="28.066"
-              />
-              <rect
-                x="358.378"
-                y="213.47"
-                class="st0"
-                width="28.074"
-                height="28.066"
-              />
-              <path
-                class="st0"
-                d="M77.866,357.45l3.073-1.849c3.975-2.334,9.273-5.252,15.936-7.672c9.335-3.419,19.778-5.167,30.977-5.167 c12.785,0,24.284,2.164,34.566,6.447c6.847,2.842,12.123,6.046,15.974,8.394l2.511,1.51c1.994,1.171,3.196,1.779,4.228,2.157 c0.8,0.284,2.464,0.886,6.916,0.893c4.683-0.015,6.324-0.686,7.41-1.124c1.417-0.578,3.62-1.91,6.408-3.589l3.072-1.849 c3.974-2.334,9.274-5.252,15.935-7.672c9.335-3.419,19.78-5.167,30.978-5.167c12.777,0,24.268,2.164,34.558,6.439 c6.832,2.842,12.092,6.038,15.935,8.38l2.542,1.524c2.018,1.186,3.212,1.795,4.244,2.172c0.778,0.278,2.449,0.879,6.909,0.886 c4.674-0.015,6.315-0.686,7.401-1.124c1.417-0.578,3.62-1.91,6.408-3.589l3.074-1.849c3.974-2.334,9.273-5.252,15.935-7.672 c9.334-3.419,19.778-5.167,30.977-5.167c12.785,0,24.276,2.164,34.566,6.439c6.839,2.842,12.108,6.046,15.951,8.38l2.534,1.524 c2.01,1.179,3.203,1.787,4.251,2.172c0.778,0.278,2.45,0.879,6.917,0.886c4.675-0.015,6.316-0.686,7.402-1.124 c1.424-0.578,3.612-1.903,6.384-3.574l3.096-1.864c3.466-2.033,7.987-4.49,13.478-6.693l11.229-79.984H471.18l4.498-0.924 l-11.152-54.283h-34.266l-15.774-47.32h-36.052v-63.88H314.16l-10.066,63.88h-50.81l13.802-55.208h-42.283l-31.547,55.208h-41.121 L85.252,268.924H22.35l54.669,89.027C77.32,357.773,77.551,357.642,77.866,357.45z M160.708,182.169h41.698l31.547-55.207h12.939 l-13.809,55.207h170.034l15.774,47.321h32.772l8.103,39.434H104.468L160.708,182.169z M60.137,300.317H469.3l-2.072,14.788H69.217 L60.137,300.317z"
-              />
-              <path
-                class="st0"
-                d="M488.956,370.165c-4.713,1.71-8.618,3.828-11.937,5.776c-5.007,2.973-8.665,5.391-12.693,7.032 c-4.036,1.632-8.641,2.818-16.328,2.849c-6.824-0.015-11.245-0.986-14.965-2.318c-2.788-1.017-5.261-2.311-8.034-3.944 c-4.136-2.403-8.988-5.73-15.68-8.51c-6.694-2.781-15.019-4.66-25.339-4.629c-9.173-0.016-16.76,1.44-23.044,3.743 c-4.706,1.71-8.611,3.828-11.93,5.776c-5.007,2.973-8.672,5.391-12.693,7.032c-4.036,1.632-8.649,2.818-16.328,2.849 c-6.824-0.015-11.237-0.986-14.957-2.318c-2.788-1.017-5.252-2.311-8.025-3.944c-4.136-2.403-8.98-5.73-15.673-8.51 c-6.694-2.781-15.012-4.66-25.332-4.629c-9.172-0.016-16.759,1.44-23.044,3.743c-4.706,1.71-8.61,3.828-11.93,5.776 c-5.007,2.973-8.672,5.391-12.693,7.032c-4.036,1.632-8.649,2.818-16.336,2.849c-6.824-0.015-11.237-0.986-14.95-2.318 c-2.796-1.017-5.26-2.311-8.04-3.944c-4.129-2.403-8.973-5.73-15.674-8.51c-6.686-2.781-15.012-4.66-25.332-4.629 c-9.172-0.016-16.76,1.44-23.044,3.743c-4.706,1.71-8.611,3.828-11.93,5.776c-5.006,2.973-8.672,5.391-12.693,7.032 c-4.036,1.632-8.65,2.818-16.328,2.849c-6.824-0.015-11.237-0.986-14.957-2.318c-2.796-1.017-5.26-2.311-8.034-3.944 c-4.136-2.403-8.98-5.73-15.68-8.51c-6.694-2.781-15.019-4.66-25.332-4.629v23.66c6.824,0.015,11.237,0.986,14.956,2.318 c2.789,1.017,5.26,2.311,8.034,3.944c4.136,2.395,8.981,5.73,15.681,8.51c6.685,2.781,15.011,4.66,25.332,4.629 c9.181,0.016,16.759-1.44,23.044-3.743c4.705-1.718,8.611-3.827,11.93-5.776c5.006-2.974,8.672-5.392,12.692-7.032 c4.036-1.632,8.649-2.819,16.328-2.85c6.824,0.015,11.238,0.986,14.957,2.318c2.788,1.017,5.26,2.311,8.034,3.944 c4.136,2.395,8.98,5.73,15.673,8.51c6.693,2.781,15.019,4.66,25.332,4.629c9.181,0.016,16.767-1.44,23.052-3.743 c4.705-1.71,8.611-3.827,11.93-5.776c5.006-2.974,8.672-5.392,12.692-7.032c4.036-1.632,8.65-2.819,16.328-2.85 c6.824,0.015,11.237,0.986,14.95,2.318c2.789,1.017,5.26,2.311,8.033,3.944c4.136,2.395,8.981,5.73,15.674,8.51 c6.686,2.781,15.011,4.66,25.331,4.629c9.173,0.016,16.76-1.44,23.044-3.743c4.706-1.718,8.611-3.827,11.93-5.776 c5.006-2.974,8.664-5.392,12.693-7.032c4.036-1.632,8.649-2.819,16.328-2.85c6.823,0.015,11.245,0.986,14.964,2.318 c2.789,1.017,5.26,2.311,8.034,3.944c4.136,2.403,8.981,5.738,15.681,8.51c6.693,2.781,15.019,4.66,25.339,4.629 c9.18,0.016,16.76-1.44,23.044-3.743c4.706-1.718,8.618-3.827,11.93-5.776c5.014-2.974,8.672-5.392,12.701-7.032 c4.028-1.632,8.642-2.819,16.328-2.85v-23.66C502.819,366.407,495.241,367.863,488.956,370.165z"
-              />
-            </g>
-          </g>
-        </svg>
+      {/if} -->
+      {#if level == 6}
+      <svg
+      width="64px"
+      height="64px"
+      version="1.1"
+      id="Icons"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 32 32"
+      xml:space="preserve"
+      fill="#00ff00"
+      ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g><g id="SVGRepo_iconCarrier">
+        <style type="text/css">
+          .st0 {
+            fill: none;
+            stroke: #000000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-miterlimit: 10;
+          }
+        </style>
+        <g>
+          <path
+            d="M29,12H3c-1.1,0-2,0.9-2,2v8.5V23v6c0,0.6,0.4,1,1,1s1-0.4,1-1v-5h26v5c0,0.6,0.4,1,1,1s1-0.4,1-1v-6v-0.5V14 C31,12.9,30.1,12,29,12z M15,17h-5v-3h5V17z M17,14h5v3h-5V14z M15,19v3h-5v-3H15z M17,19h5v3h-5V19z M24,19h5v3h-5V19z M29,17h-5 v-3h5V17z M8,14v3H3v-3H8z M3,19h5v3H3V19z"
+          ></path>
+          <path
+            d="M22,10c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S19.8,10,22,10z"
+          ></path>
+        </g>
+      </g>
+    </svg>
       {/if}
       {#if level == 5}
         <svg
@@ -326,7 +301,7 @@
         >
       {/if}
     {:else}
-      {#if level == 1}
+      {#if level == 1 || level==2 || level==3 || level==4}
       <svg
       fill="#ff0000"
       height="75px"
@@ -386,7 +361,7 @@
       </g></svg
     >
       {/if}
-      {#if level == 2}
+      <!-- {#if level == 2}
         <svg
           width="96px"
           height="96px"
@@ -412,8 +387,8 @@
             />
           </g>
         </svg>
-      {/if}
-      {#if level == 3}
+      {/if} -->
+      {#if level == 6}
         <svg
           width="64px"
           height="64px"
