@@ -21,38 +21,77 @@
     </div>
 
     <!-- <ScoringGrid /> -->
-    <div class="absolute left-[80px] top-[40px]">
-        <Nodes level="1" type="Success" gameMode="Auto" />
-    </div>
-    <div class="absolute left-[240px] top-[40px]">
-        <Nodes level="1" type="Fail" gameMode="Auto" />
-    </div>
-    <div class="absolute left-[60px] top-[195px]">
-        <Nodes level="2" type="Success" gameMode="Auto" />
-    </div>
+<div class="absolute left-[60px] top-[40px]">
+  <Nodes level="4" type="Success" gameMode="Tele" />
+</div>
 
-    <div class="absolute left-[60px] top-[350px]">
-        <Nodes level="2" type="Fail" gameMode="Auto" />
-    </div>
+<div class="absolute left-[200px] top-[40px]">
+  <Nodes level="4" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[140px]">
+  <Nodes level="3" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[200px] top-[140px]">
+  <Nodes level="3" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[240px]">
+  <Nodes level="2" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[200px] top-[240px]">
+  <Nodes level="2" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[60px] top-[350px]">
+  <Nodes level="1" type="Success" gameMode="Tele" />
+</div>
+<div class="absolute left-[200px] top-[350px]">
+  <Nodes level="1" type="Fail" gameMode="Tele" />
+</div>
+<div class="absolute left-[425px] top-[215px]">
+  <Nodes level="5" type="Success" gameMode="Tele" />
+</div>
 
-    <div class="absolute ml-[100px]">
-        <LocationSelector gameMode="Auto" />
-    </div>
+<div class="absolute left-[605px] top-[215px]">
+  <Nodes level="5" type="Fail" gameMode="Tele" />
+</div>
+
+<div class="absolute left-[425px] top-[100px]">
+  <Nodes level="6" type="Success" gameMode="Tele" />
+</div>
+
+<div class="absolute left-[605px] top-[100px]">
+  <Nodes level="6" type="Fail" gameMode="Tele" />
+</div>
+
+<!-- <div class="absolute left-[425px] top-[350px]">
+  <Nodes level="4" type="Success" gameMode="Tele" />
+</div> -->
+
+<div class="absolute left-[500px]">
+  <LocationSelector gameMode="Tele" />
+</div>
 
 
-    <div class="absolute top-0 right-0 m-2">
+    <div class="absolute top-[10px] left-[607px]">
         <div class="flex flex-col gap-y-[25px]">
             <button class="btn btn-primary" on:click={handleClick}>Back</button>
-            <div class="ml-[6px]">
-                <Mobility />
-            </div>
+           
         </div>
     </div>
 
-    <div class="absolute top-[250px] right-0 m-[20px]">
+    <div class="absolute top-[350px] left-[425px]">
         <div class="flex flex-col gap-y-[25px]">
             <div>
                 <TrashCan gameMode="Auto" />
+            </div>
+
+                <Undo />
+            
+        </div>
+    </div>
+     <div class="absolute top-[350px] left-[605px]">
+        <div class="flex flex-col gap-y-[25px]">
+            <div>
+                <Mobility />
             </div>
 
                 <Undo />

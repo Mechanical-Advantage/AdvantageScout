@@ -9,7 +9,16 @@
 <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[160px]">
   <div>
     <GamePieceLocation
-      location="Source"
+      location="Station"
+      gamePieceLocation="Station"
+      gamePiece="Coral"
+      {gameMode}
+      btnsize=" w-[84px] h-[84px]"
+    />
+  </div>
+  <div>
+    <GamePieceLocation
+      location="Floor"
       gamePieceLocation="Floor"
       gamePiece="Coral"
       {gameMode}
@@ -18,17 +27,8 @@
   </div>
   <div>
     <GamePieceLocation
-      location="Ferry"
-      gamePieceLocation="Ferry"
-      gamePiece="Coral"
-      {gameMode}
-      btnsize=" w-[84px] h-[84px]"
-    />
-  </div>
-  <div>
-    <GamePieceLocation
-      location="Ferry"
-      gamePieceLocation="Ferry"
+      location="Floor"
+      gamePieceLocation="Floor"
       gamePiece="Algae"
       {gameMode}
       btnsize=" w-[84px] h-[84px]"
@@ -41,7 +41,16 @@
   <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[160px]">
     <div>
       <GamePieceLocation
-        location="Source"
+        location="Station"
+        gamePieceLocation="Station"
+        gamePiece="Coral"
+        {gameMode}
+        btnsize=" w-[84px] h-[84px]"
+      />
+    </div>
+    <div>
+      <GamePieceLocation
+        location="Floor"
         gamePieceLocation="Floor"
         gamePiece="Coral"
         {gameMode}
@@ -50,17 +59,8 @@
     </div>
     <div>
       <GamePieceLocation
-        location="Ferry"
-        gamePieceLocation="Ferry"
-        gamePiece="Coral"
-        {gameMode}
-        btnsize=" w-[84px] h-[84px]"
-      />
-    </div>
-    <div>
-      <GamePieceLocation
-        location="Ferry"
-        gamePieceLocation="Ferry"
+        location="Floor"
+        gamePieceLocation="Floor"
         gamePiece="Algae"
         {gameMode}
         btnsize=" w-[84px] h-[84px]"
