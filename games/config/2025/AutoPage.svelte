@@ -84,18 +84,20 @@
                 <TrashCan gameMode="Auto" />
             </div>
 
-                <Undo />
+                
             
         </div>
     </div>
-     <div class="absolute top-[350px] left-[605px]">
-        <div class="flex flex-col gap-y-[25px]">
+     <div class="absolute top-[350px] left-[600px]">
             <div>
                 <Mobility />
             </div>
+      </div>
+      <div class="absolute top-[375px] left-[750px]">
 
                 <Undo />
             
         </div>
-    </div>
+    
 </main>
+
