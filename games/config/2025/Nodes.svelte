@@ -25,42 +25,43 @@
     } else {
       $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
     }
-    if (
-      gameMode === "Tele" &&
-      ($liveLocation.includes("Spike") ||
-        $liveLocation.includes("Centerline") ||
-        $liveLocation.includes("PreLoaded"))
-    ) {
-      if (level < 3) {
-        dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
-      } else {
-        dataField = "Tele" + gameLevelMap[level] + $liveGamepiece + type;
-      }
-      console.log("Datafield " + dataField);
-      locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
-      console.log("LocationField " + locationField);
-      $gameData["AutoPath"].push(locationField);
-      // $gameData["AutoPathWithResult"].push(locationField);
-      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
-      $gameData["AutoPathWithResult"].push(
-        locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
-      );
-      // if (level < 3) {
-      //   //$gameData[dataField] = $gameData[dataField] + 1;
-      //   dataField = "TeleFloorNoteCollect";
-      //   $gameData[dataField] = $gameData[dataField] - 1;
-      // }
-      $liveLocation = "Floor";
-    }
-    console.log("Datafield " + dataField);
-    console.log("LiveGamePiece " + $liveGamepiece);
-    console.log("LiveLocation " + $liveLocation);
-    console.log("GameMode" + gameMode);
+    // if (
+    //   gameMode === "Tele" &&
+    //   ($liveLocation.includes("Spike") ||
+    //     $liveLocation.includes("Centerline") ||
+    //     $liveLocation.includes("PreLoaded"))
+    // ) {
+    //   if (level < 3) {
+    //     dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
+    //   } else {
+    //     dataField = "Tele" + gameLevelMap[level] + $liveGamepiece + type;
+    //   }
+    //   console.log("Datafield " + dataField);
+    //   locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
+    //   console.log("LocationField " + locationField);
+    //   $gameData["AutoPath"].push(locationField);
+    //   // $gameData["AutoPathWithResult"].push(locationField);
+    //   // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
+    //   $gameData["AutoPathWithResult"].push(
+    //     locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
+    //   );
+    //   // if (level < 3) {
+    //   //   //$gameData[dataField] = $gameData[dataField] + 1;
+    //   //   dataField = "TeleFloorNoteCollect";
+    //   //   $gameData[dataField] = $gameData[dataField] - 1;
+    //   // }
+    //   $liveLocation = "Floor";
+    // }
+
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
     $gameData[dataField] = $gameData[dataField] + 1;
     $gameData[locationField] = $gameData[locationField] + 1;
     $liveGamepiece = 0;
+    console.log("Datafield " + dataField);
+    console.log("LiveGamePiece " + $liveGamepiece);
+    console.log("LiveLocation " + $liveLocation);
+    console.log("GameMode" + gameMode);
     // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
     //   $gameData["AutoPath"].push(locationField);
     //   $gameData["AutoPathWithResult"].push(
@@ -98,7 +99,7 @@
   >
   {/if}
  {#if level==5 || level==6}
- <span class="indicator-item indicator-start badge badge-secondary text-xl"
+ <span class="indicator-item indicator-item badge badge-secondary text-xl"
   >{$gameData[gameMode + gameLevelMap[level] + "Algae" + type]}</span
 >
 {/if}

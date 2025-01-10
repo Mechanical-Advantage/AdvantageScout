@@ -80,11 +80,7 @@
     <TrashCan gameMode="Tele" />
   </div>
 </div>
-<div class="flex flex-row gap-x-[50px] absolute left-[605px] top-[350px]">
-  <div>
-    <TrashCan gameMode="Tele" />
-  </div>
-</div>
+
 <div class="ml-[775px] mt-[30px]">
   <CurrentTeam />
 </div>
