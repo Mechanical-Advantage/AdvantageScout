@@ -3,8 +3,8 @@
   import { gameData, uploadState } from "./stores";
   import Nodes from "./Nodes.svelte";
   import Parked from "./Parked.svelte";
-  import TeleDeepClimb from "./DeepClimb.svelte";
-  import DeepClimb from "./DeepClimb.svelte";
+  import TeleClimbShallow from "./ShallowClimb.svelte";
+  import TeleClimbDeep from "./DeepClimb.svelte";
 
 
  console.log("Bot State", $gameData["BotState"])
@@ -39,9 +39,14 @@
     <Parked />
   </div>
 </div>
-<div class="absolute ml-[300px] mt-[30px]">
+<div class="absolute ml-[125px] mt-[30px]">
   <div class="flex flex-col gap-y-2">
-    <DeepClimb />
+    <TeleClimbDeep/>
+  </div>
+</div>
+<div class="absolute ml-[200px] mt-[30px]">
+  <div class="flex flex-col gap-y-2">
+    <TeleClimbShallow/>
   </div>
 </div>
     </div>

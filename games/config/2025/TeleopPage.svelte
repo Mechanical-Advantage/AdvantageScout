@@ -6,7 +6,6 @@
   import Parked from "./Parked.svelte";
   import { teleDataLog } from "./stores";
   import CurrentTeam from "./CurrentTeam.svelte";
-  import OnStage from "./DeepClimb.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
