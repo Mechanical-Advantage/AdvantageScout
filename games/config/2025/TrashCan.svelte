@@ -21,10 +21,10 @@
         
         dataField = gameMode + $liveGamepiece + "Drop" 
         locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
-        $gameData["AutoPath"].push(locationField);
+       // $gameData["AutoPath"].push(locationField);
         // $gameData["AutoPathWithResult"].push(locationField);
         // $gameData["AutoPathWithResult"].push("0");
-        $gameData["AutoPathWithResult"].push(locationField+";3;-1");
+        //$gameData["AutoPathWithResult"].push(locationField+";3;-1");
         $gameData[dataField] = $gameData[dataField] + 1  
         $gameData[locationField] = $gameData[locationField] + 1;
           
@@ -36,7 +36,7 @@
 </script>
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-2xl"
-        >{$gameData[gameMode + "Note" + "Drop"]}</span
+        >{$gameData[gameMode + "Coral" + "Algae" + "Drop"]}</span
     >
   
 <button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update} disabled={$liveGamepiece == 0}>

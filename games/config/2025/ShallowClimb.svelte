@@ -25,4 +25,4 @@
                 ? "btn-primary"
                 : $gameData[dockButton] === 1
                 ? "btn-secondary"
-                : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : ""}" on:click={handleClick}>Shallow Climb?</button>
+                : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : "" || $gameData["TeleClimbDeep"] === 2 ? "btn-disabled" : "" }" on:click={handleClick}>Shallow Climb?</button>
