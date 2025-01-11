@@ -6,9 +6,8 @@
   import TeleClimbShallow from "./ShallowClimb.svelte";
   import TeleClimbDeep from "./DeepClimb.svelte";
 
-
- console.log("Bot State", $gameData["BotState"])
- console.log($gameData["BotState"] == 2)
+  console.log("Bot State", $gameData["BotState"]);
+  console.log($gameData["BotState"] == 2);
 
   let buttonColor = "btn-primary";
   function handleClick(event) {
@@ -34,21 +33,23 @@
       <Ratings name="DriverRating" />
       <Ratings name="PlayingDefenseDuration" />
       <Ratings name="UnderDefenseDuration" />
-      <div class="absolute ml-[50px] mt-[30px]">
-  <div class="flex flex-col gap-y-2">
-    <Parked />
-  </div>
-</div>
-<div class="absolute ml-[125px] mt-[30px]">
-  <div class="flex flex-col gap-y-2">
-    <TeleClimbDeep/>
-  </div>
-</div>
-<div class="absolute ml-[200px] mt-[30px]">
-  <div class="flex flex-col gap-y-2">
-    <TeleClimbShallow/>
-  </div>
-</div>
+      <div class="absolute ml-[10px] mt-[30px]">
+        <div class="flex flex-row gap-x-3">
+          <Parked />
+          <TeleClimbDeep />
+          <TeleClimbShallow />
+        </div>
+      </div>
+      <!-- <div class="absolute ml-[125px] mt-[30px]">
+        <div class="flex flex-col gap-y-2">
+          <TeleClimbDeep />
+        </div>
+      </div>
+      <div class="absolute ml-[200px] mt-[30px]">
+        <div class="flex flex-col gap-y-2">
+          <TeleClimbShallow />
+        </div>
+      </div> -->
     </div>
     <div class="  h-full">
       <Ratings name="CoralIntakeRating" />
@@ -86,10 +87,8 @@
           on:change={handleClick}
         />
         <span class="label-text">Comms Issue</span>
-
       </div>
       <div class="flex flex-row gap-x-[10px] ml-[30px] mt-[30px]">
-      
         <input
           type="radio"
           name="Bot State"
@@ -123,7 +122,7 @@
           type="radio"
           name="Bot State"
           class="p-2.5 ml-[27px] radio checked:bg-red-500"
-          value="6" 
+          value="6"
           checked={$gameData["BotState"] == 6}
           on:change={handleClick}
         />
@@ -132,7 +131,6 @@
     </div>
   </div>
   <div class="p-2.5 w-full h-[200px]">
-
     <!-- <div class="inline-flex bg-gray-700">
       <span
         class="inline-flex p-2.5 items-center text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"

@@ -6,7 +6,7 @@
 </script>
 
 {#if $gameState == 0}
-<div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[160px]">
+<div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[150px]">
   <div>
     <GamePieceLocation
       location="Station"
@@ -38,7 +38,7 @@
 {/if}
 
 {#if $gameState == 1}
-  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[160px]">
+  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[150px]">
     <div>
       <GamePieceLocation
         location="Station"

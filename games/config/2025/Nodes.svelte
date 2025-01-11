@@ -19,6 +19,9 @@
   let displayCubeValue = 0;
 
   function update() {
+    if ((level < 5 && $liveGamepiece == "Coral") || (level >= 5 && $liveGamepiece == "Algae")) {
+
+    
     if ($gameState === 0) {
       //            $liveLocation = "Floor"; //force pickup location to be floor in auto
       $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
@@ -56,12 +59,14 @@
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
     $gameData[dataField] = $gameData[dataField] + 1;
+    console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
     $liveGamepiece = 0;
     console.log("Datafield " + dataField);
     console.log("LiveGamePiece " + $liveGamepiece);
     console.log("LiveLocation " + $liveLocation);
     console.log("GameMode" + gameMode);
+    console.log("GameData" + $gameData)
     // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
     //   $gameData["AutoPath"].push(locationField);
     //   $gameData["AutoPathWithResult"].push(
@@ -79,6 +84,7 @@
   //   }
   // 
     }
+  }
 
   let gameLevelMap = {
     1: "L1",

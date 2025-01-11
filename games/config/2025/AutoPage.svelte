@@ -22,44 +22,44 @@
 
     <!-- <ScoringGrid /> -->
 <div class="absolute left-[60px] top-[40px]">
-  <Nodes level="4" type="Success" gameMode="Tele" />
+  <Nodes level="4" type="Success" gameMode="Auto" />
 </div>
 
 <div class="absolute left-[200px] top-[40px]">
-  <Nodes level="4" type="Fail" gameMode="Tele" />
+  <Nodes level="4" type="Fail" gameMode="Auto" />
 </div>
 <div class="absolute left-[60px] top-[140px]">
-  <Nodes level="3" type="Success" gameMode="Tele" />
+  <Nodes level="3" type="Success" gameMode="Auto" />
 </div>
 <div class="absolute left-[200px] top-[140px]">
-  <Nodes level="3" type="Fail" gameMode="Tele" />
+  <Nodes level="3" type="Fail" gameMode="Auto" />
 </div>
 <div class="absolute left-[60px] top-[240px]">
-  <Nodes level="2" type="Success" gameMode="Tele" />
+  <Nodes level="2" type="Success" gameMode="Auto" />
 </div>
 <div class="absolute left-[200px] top-[240px]">
-  <Nodes level="2" type="Fail" gameMode="Tele" />
+  <Nodes level="2" type="Fail" gameMode="Auto" />
 </div>
 <div class="absolute left-[60px] top-[350px]">
-  <Nodes level="1" type="Success" gameMode="Tele" />
+  <Nodes level="1" type="Success" gameMode="Auto" />
 </div>
 <div class="absolute left-[200px] top-[350px]">
-  <Nodes level="1" type="Fail" gameMode="Tele" />
+  <Nodes level="1" type="Fail" gameMode="Auto" />
 </div>
 <div class="absolute left-[425px] top-[215px]">
-  <Nodes level="5" type="Success" gameMode="Tele" />
+  <Nodes level="5" type="Success" gameMode="Auto" />
 </div>
 
 <div class="absolute left-[605px] top-[215px]">
-  <Nodes level="5" type="Fail" gameMode="Tele" />
+  <Nodes level="5" type="Fail" gameMode="Auto" />
 </div>
 
 <div class="absolute left-[425px] top-[100px]">
-  <Nodes level="6" type="Success" gameMode="Tele" />
+  <Nodes level="6" type="Success" gameMode="Auto" />
 </div>
 
 <div class="absolute left-[605px] top-[100px]">
-  <Nodes level="6" type="Fail" gameMode="Tele" />
+  <Nodes level="6" type="Fail" gameMode="Auto" />
 </div>
 
 <!-- <div class="absolute left-[425px] top-[350px]">
@@ -67,7 +67,7 @@
 </div> -->
 
 <div class="absolute left-[500px]">
-  <LocationSelector gameMode="Tele" />
+  <LocationSelector gameMode="Auto" />
 </div>
 
 

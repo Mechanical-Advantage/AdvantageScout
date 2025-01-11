@@ -10,7 +10,7 @@
 </script>
 
 <div class="indicator absolute">
-    {#if $gameState==1}
+    {#if $gameState==1 || $gameState==0 }
     <span
     class="indicator-item indicator-middle indicator-center indicator-start badge badge-primary text-xl"
     >{location}</span>

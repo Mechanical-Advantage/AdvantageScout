@@ -184,9 +184,9 @@
         stroke-width={strokeWidth}
         id="svg_2"
         x1={(height / defaultHeight) * 10}
-        y1={(width / defaultWidth) * 10}
+        y1={(width / defaultWidth) * 20}
         x2={(height / defaultHeight) * 210}
-        y2={(width / defaultWidth) * 10}
+        y2={(width / defaultWidth) * 20}
         stroke={strokeColor}
         fill="none"
     /> 
@@ -195,7 +195,7 @@
         stroke-width={strokeWidth}
         id="svg_3"
         x1={(height / defaultHeight) * 210}
-        y1={(width / defaultWidth) * 10}
+        y1={(width / defaultWidth) * 20}
         x2={(height / defaultHeight) * 210}
         y2={(width / defaultWidth) * 320}
         stroke={strokeColor}
@@ -207,37 +207,38 @@
         id="svg_4"
         x1={(height / defaultHeight) * 210}
         y1={(width / defaultWidth) * 320}
-        x2={(height / defaultHeight) * 15}
+        x2={(height / defaultHeight) * 10}
         y2={(width / defaultWidth) * 320}
         stroke={strokeColor}
-        fill="none"
+        fill="none" 
     />
-    <line
+     <line
         id="svg_5"
-        x1={(height / defaultHeight) * 15}
+        x1={(height / defaultHeight) * 10}
         y1={(width / defaultWidth) * 320}
         x2={(height / defaultHeight) * 10}
-        y2={(width / defaultWidth) * 10}
+        y2={(width / defaultWidth) * 20}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
     />
+    <!-- Reef -->
     <line
         id="svg_6"
         x1={(height / defaultHeight) * 60}
-        y1={(width / defaultWidth) * 105}
+        y1={(width / defaultWidth) * 120}
         x2={(height / defaultHeight) * 100}
-        y2={(width / defaultWidth) * 130}
+        y2={(width / defaultWidth) * 145}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none" 
-    /> 
-     <line
+    />  
+      <line
         id="svg_7"
         x1={(height / defaultHeight) * 100}
-        y1={(width / defaultWidth) * 130}
+        y1={(width / defaultWidth) * 145}
         x2={(height / defaultHeight) * 100}
-        y2={(width / defaultWidth) * 170}
+        y2={(width / defaultWidth) * 185}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
@@ -245,9 +246,9 @@
      <line
         id="svg_8"
         x1={(height / defaultHeight) * 100}
-        y1={(width / defaultWidth) * 170}
+        y1={(width / defaultWidth) * 185}
         x2={(height / defaultHeight) * 60}
-        y2={(width / defaultWidth) * 190}
+        y2={(width / defaultWidth) * 205}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
@@ -255,9 +256,9 @@
     <line
         id="svg_9"
         x1={(height / defaultHeight) * 60}
-        y1={(width / defaultWidth) * 190}
+        y1={(width / defaultWidth) * 205}
         x2={(height / defaultHeight) * 20}
-        y2={(width / defaultWidth) * 170}
+        y2={(width / defaultWidth) * 185}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
@@ -265,9 +266,9 @@
     <line 
         id ="svg_10"
         x1={(height / defaultHeight) * 20}
-        y1={(width / defaultWidth) * 170}
+        y1={(width / defaultWidth) * 185}
         x2={(height / defaultHeight) * 20}
-        y2={(width / defaultWidth) * 130}
+        y2={(width / defaultWidth) * 145}
         stroke-width={strokeWidth}
         stroke={strokeColor}
         fill="none"
@@ -275,24 +276,25 @@
     <line 
     id ="svg_11"
     x1={(height / defaultHeight) * 20}
-    y1={(width / defaultWidth) * 130}
+    y1={(width / defaultWidth) * 145}
     x2={(height / defaultHeight) * 60}
-    y2={(width / defaultWidth) * 105}
+    y2={(width / defaultWidth) * 120}
     stroke-width={strokeWidth}
     stroke={strokeColor}
     fill="none"
-    />
+    /> 
+    <!-- Starting Line -->
     <line 
     id ="svg_12"
     x1={(height / defaultHeight) * 180}
-    y1={(width / defaultWidth) * 10}
+    y1={(width / defaultWidth) * 20}
     x2={(height / defaultHeight) * 180}
     y2={(width / defaultWidth) * 320}
     stroke-width={strokeWidth}
     stroke="#808080"
     fill="none"
     />
-    /g>
+/g>
     <text
         x={robotX}
         y={robotY}

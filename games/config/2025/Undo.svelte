@@ -68,6 +68,7 @@
     function handleClick() {
         if ($gameState === 0 && $autoDataLog.length > 0) {
             tempUndoData = $autoDataLog.pop();
+            console.log(tempUndoData)
             UpdateLists(autoList)
         } else if ($gameState === 1 && $teleDataLog.length > 0) {
             tempUndoData = $teleDataLog.pop();
@@ -81,9 +82,9 @@
 }
     
     }
-
 </script>
 
 {#if ($gameState === 0 && $autoDataLog.length > 0) || ($gameState === 1 && $teleDataLog.length > 0)}
     <button class="btn btn-primary" on:click={handleClick}> Undo </button>
 {/if}
+
