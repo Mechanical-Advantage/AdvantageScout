@@ -1,32 +1,28 @@
 <script>
   import { gameState } from "./stores";
   import { liveGamepiece, liveLocation, gameData } from "./stores";
-  export let gamePiece = "Coral";
-  export let location = "Floor";
-  export let gamePieceLocation = "Floor";
-  export let btnstate = "";
-  export let gpColor = "#ff0000";
-  export let btnsize;
-  console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
-  console.log("btnstate" + btnstate);
-  console.log("gamePieceLocation" + gamePieceLocation);
-  console.log(gamePiece);
+  export let activeGamePiece = "Coral";
+  console.log(activeGamePiece);
   console.log(liveGamepiece);
   let coneSVG = "";
-  function updateGameObject() {
-    $liveGamepiece = gamePiece;
-    $liveLocation = gamePieceLocation;
+  function activeObject() {
+    console.log("Don't have a good day, have a great day!");
   }
 </script>
 
 <button
-  class="btn btn-square btn-outline w-24 h-24 {gamePiece === 'Cube'
+  class="btn btn-square btn-outline w-12 h-12 {activeGamePiece === 'Cube'
     ? 'btn-accent'
     : 'btn-secondary'}  "
-  on:click={updateGameObject}
+  on:click={activeObject}
 >
-  {#if gamePiece === "Coral"}
-    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#FF7F50"
+  {#if activeGamePiece === "Coral"}
+    <svg
+      height="35px"
+      width="35px"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#FF7F50"
       ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
         id="SVGRepo_tracerCarrier"
         stroke-linecap="round"
@@ -41,8 +37,8 @@
   {:else}
     <svg
       fill="#5f8347"
-      height="75px"
-      width="75px"
+      height="35px"
+      width="35px"
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

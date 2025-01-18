@@ -6,6 +6,8 @@
   import Parked from "./Parked.svelte";
   import { teleDataLog } from "./stores";
   import CurrentTeam from "./CurrentTeam.svelte";
+  import ActiveGamePiece from "./ActiveGamePiece.svelte";
+  import { liveGamepiece } from "./stores";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -74,6 +76,26 @@
     <Undo />
   </div>
 </div>
+
+{#if $liveGamepiece == "Coral"}
+<div>
+  <div class="absolute ml-[750px] mt-[175px]">
+    
+    <ActiveGamePiece activeGamePiece = "Coral" />
+  
+  </div>
+</div>
+{/if}
+
+{#if $liveGamepiece == "Algae"}
+<div>
+  <div class="absolute ml-[750px] mt-[225px]">
+    
+    <ActiveGamePiece activeGamePiece = "Algae" />
+  
+  </div>
+</div>
+{/if}
 
 <div class="flex flex-row gap-x-[50px] absolute left-[425px] top-[350px]">
   <div>
