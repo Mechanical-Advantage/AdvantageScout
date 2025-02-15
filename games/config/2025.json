@@ -37,7 +37,11 @@
 		"AutoPreLoadedCoralCollect INTEGER DEFAULT 0",
 		"TelePreLoadedCoralCollect INTEGER DEFAULT 0",
         "TeleFloorAlgaeCollect INTEGER DEFAULT 0",
-		"TeleFloorCoralCollect INTEGER DEFAULT 0",
+        "AutoNearFloorCoralCollect INTEGER DEFAULT 0",
+        "AutoNearStationCoralCollect INTEGER DEFAULT 0",
+        "AutoFarFloorCoralCollect INTEGER DEFAULT 0",
+        "AutoFarStationCoralCollect INTEGER DEFAULT 0",
+        "TeleFloorCoralCollect INTEGER DEFAULT 0",
         "TeleStationCoralCollect INTEGER DEFAULT 0",
         "AutoFloorAlgaeCollect INTEGER DEFAULT 0",
 		"AutoFloorCoralCollect INTEGER DEFAULT 0",
@@ -69,6 +73,7 @@
     ],
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
+        "DriveSpeed INTEGER DEFAULT 0",
         "Width INTEGER DEFAULT 0",
         "Length INTEGER DEFAULT 0",
         "Height INTEGER DEFAULT 0",
@@ -77,8 +82,10 @@
         "BuildQuality INTEGER DEFAULT 0",
         "ProgrammingLanguage TEXT DEFAULT ''",
         "BumperQuality INTEGER DEFAULT 0",
+        "ElectricalQuality INTEGER DEFAULT 0",
         "CanShallowClimb INTEGER DEFAULT 0",
-        "CanDeepClimb INTEGER DEFAULT 0"
+        "CanDeepClimb INTEGER DEFAULT 0",
+        "CanFloorIntake INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -108,6 +115,20 @@
                 "value": "",
                 "message": "Please enter a Programming Language.",
                 "binding": true
+            },
+            {
+                "field": "DriveSpeed",
+                "operator": ">",
+                "value": 0,
+                "message": "Are you sure this speed is correct?",
+                "binding": true
+            },
+            {
+                "field": "DriveSpeed",
+                "operator": "<",
+                "value": 20,
+                "message": "Are you sure this speed is correct?",
+                "binding": false
             },
             {
                 "field": "Width",
@@ -147,6 +168,13 @@
                 "operator": ">",
                 "value": 0,
                 "message": "Please enter a build quality rating",
+                "binding": true
+            },
+            {
+                "field": "ElectricalQuality",
+                "operator": ">",
+                "value": 0,
+                "message": "Please enter a electrical quality rating",
                 "binding": true
             },
             {
@@ -200,7 +228,7 @@
                 "binding": true
             },
             {
-                "script": "return data.AutoCoralCollect + data.AutoAlgaeCollect < 12",
+                "script": "return (data.AutoCoralCollect + data.AutoAlgaeCollect > 12)",
                 "message": "They phyically cannot collect that much in Auto",
                 "binding": false
             },
@@ -232,6 +260,11 @@
                     "H-Drive": "H-Drive",
                     "Other": "Other (Please Comment)"
                 }
+            },
+            {
+                "type": "number",
+                "field": "DriveSpeed",
+                "label": "Speed (ft/s)"
             },
             {
                 "type": "number",
@@ -289,6 +322,16 @@
                 }
             },
             {
+                "type": "chooser",
+                "field": "ElectricalQuality",
+                "label": "Electrical Quality?",
+                "options": {
+                    "NA": 0,
+                    "Need someone else to check this out.": 1,
+                    "This looks good!": 5
+                }
+            },
+            {
                 "type": "break"
             },
             {
@@ -300,6 +343,11 @@
                 "type": "checkbox",
                 "field": "CanDeepClimb",
                 "label": "Can Deep Climb?"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanFloorIntake",
+                "label": "Can Floor Intake?"
             },
             {
                 "type": "text",

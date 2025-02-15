@@ -20,7 +20,7 @@
 </script>
 
 <button
-  class="btn btn-square btn-outline w-24 h-24 {gamePiece === 'Cube'
+  class="btn btn-square btn-outline w-22 h-22 {gamePiece === 'Cube'
     ? 'btn-accent'
     : 'btn-secondary'}  "
   on:click={updateGameObject}
@@ -41,8 +41,8 @@
   {:else}
     <svg
       fill="#5f8347"
-      height="75px"
-      width="75px"
+      height="50px"
+      width="50px"
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

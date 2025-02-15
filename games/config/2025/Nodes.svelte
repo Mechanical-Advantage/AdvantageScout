@@ -6,6 +6,8 @@
     autoDataLog,
     teleDataLog,
     liveLocation,
+    reversedAlliance,
+    AllianceColor
   } from "./stores";
 
   export let level = 1;
@@ -17,6 +19,21 @@
 
   let displayConeValue = 0;
   let displayCubeValue = 0;
+
+
+
+  let driveMap = {
+    0: {0: {"near": "driveleft",
+            "far": "driveright"},
+        1: {"near": "driveright",
+            "far": "driveleft"}},
+    1: {0: {"near": "driveright",
+            "far": "driveleft"},
+        1: {"near": "driveleft",
+            "far": "driveright"}}
+        }
+
+        //  driveMap{reversedAlliance}{AllianceColor}{locationField}
 
   function update() {
     if ((level < 5 && $liveGamepiece == "Coral") || (level >= 5 && $liveGamepiece == "Algae")) {
@@ -58,6 +75,7 @@
 
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
+    console.log("LocationField" + locationField)
     $gameData[dataField] = $gameData[dataField] + 1;
     console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
@@ -67,6 +85,7 @@
     console.log("LiveLocation " + $liveLocation);
     console.log("GameMode" + gameMode);
     console.log("GameData" + $gameData)
+  
     // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
     //   $gameData["AutoPath"].push(locationField);
     //   $gameData["AutoPathWithResult"].push(

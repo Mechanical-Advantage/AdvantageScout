@@ -8,6 +8,8 @@
     import Mobility from "./Mobility.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
     import GamePiece from "./GamePiece.svelte";
+    import ActiveGamePiece from "./ActiveGamePiece.svelte";
+    import { liveGamepiece } from "./stores";
 
     function handleClick() {
         $autoState = 0;
@@ -66,6 +68,25 @@
   <Nodes level="4" type="Success" gameMode="Tele" />
 </div> -->
 
+<!-- {#if $liveGamepiece == "Coral"}
+<div>
+  <div class="absolute ml-[750px] mt-[175px]">
+    
+    <ActiveGamePiece activeGamePiece = "Coral" />
+  
+  </div>
+</div>
+{/if}
+
+{#if $liveGamepiece == "Algae"}
+<div>
+  <div class="absolute ml-[750px] mt-[225px]">
+    
+    <ActiveGamePiece activeGamePiece = "Algae" />
+  
+  </div>
+</div>
+{/if} -->
 <div class="absolute left-[500px]">
   <LocationSelector gameMode="Auto" />
 </div>
