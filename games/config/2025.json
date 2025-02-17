@@ -228,8 +228,8 @@
                 "binding": true
             },
             {
-                "script": "return (data.AutoCoralCollect + data.AutoAlgaeCollect > 12)",
-                "message": "They phyically cannot collect that much in Auto",
+                "script": "return ((data.AutoFloorCoralCollect + data.AutoFloorAlgaeCollect + data.AutoStationCoralCollect) < 12)",
+                "message": "They physically cannot collect that much in Auto",
                 "binding": false
             },
             {
