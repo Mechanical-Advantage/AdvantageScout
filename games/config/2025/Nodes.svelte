@@ -7,7 +7,6 @@
     teleDataLog,
     liveLocation,
     reversedAlliance,
-    AllianceColor
   } from "./stores";
 
   export let level = 1;
@@ -16,6 +15,7 @@
 
   let dataField = " ";
   let locationField = " ";
+  let driverField = " ";
 
   let displayConeValue = 0;
   let displayCubeValue = 0;
@@ -23,17 +23,25 @@
 
 
   let driveMap = {
-    0: {0: {"near": "driveleft",
-            "far": "driveright"},
-        1: {"near": "driveright",
-            "far": "driveleft"}},
-    1: {0: {"near": "driveright",
-            "far": "driveleft"},
-        1: {"near": "driveleft",
-            "far": "driveright"}}
+    0: {1: {"NearStation": "DriverLeftStation",
+            "FarStation": "DriverRightStatiom",
+            "NearFloor": "DriverLeftFloor",
+            "FarFloor": "DriverRightFloor"},
+        0: {"NearStation": "DriverRightFloor",
+            "FarStation": "DriverLeftStation",
+            "NearFloor": "DriverRightFloor",
+            "FarFloor": "DriverLeftFloor"}},
+    1: {0: {"NearStation": "DriverLeftStation",
+            "FarStation": "DriverRightStation",
+            "NearFloor": "DriverLeftFLoor",
+            "FarFloor": "DriverRightFloor"},
+        1: {"NearStation": "DriverRightStation",
+            "FarStation": "DriverLeftStation",
+            "NearFloor": "DriverRightFloor",
+            "FarFloor": "DriverLeftFloor"}}
         }
-
-        //  driveMap{reversedAlliance}{AllianceColor}{locationField}
+ 
+        // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
 
   function update() {
     if ((level < 5 && $liveGamepiece == "Coral") || (level >= 5 && $liveGamepiece == "Algae")) {
@@ -45,33 +53,11 @@
     } else {
       $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
     }
-    // if (
-    //   gameMode === "Tele" &&
-    //   ($liveLocation.includes("Spike") ||
-    //     $liveLocation.includes("Centerline") ||
-    //     $liveLocation.includes("PreLoaded"))
-    // ) {
-    //   if (level < 3) {
-    //     dataField = "Auto" + gameLevelMap[level] + $liveGamepiece + type;
-    //   } else {
-    //     dataField = "Tele" + gameLevelMap[level] + $liveGamepiece + type;
-    //   }
-    //   console.log("Datafield " + dataField);
-    //   locationField = "Auto" + $liveLocation + $liveGamepiece + "Collect";
-    //   console.log("LocationField " + locationField);
-    //   $gameData["AutoPath"].push(locationField);
-    //   // $gameData["AutoPathWithResult"].push(locationField);
-    //   // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
-    //   $gameData["AutoPathWithResult"].push(
-    //     locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
-    //   );
-    //   // if (level < 3) {
-    //   //   //$gameData[dataField] = $gameData[dataField] + 1;
-    //   //   dataField = "TeleFloorNoteCollect";
-    //   //   $gameData[dataField] = $gameData[dataField] - 1;
-    //   // }
-    //   $liveLocation = "Floor";
-    // }
+    if ($liveLocation == "NearStation" || $liveLocation == "FarStation" || $liveLocation == "NearFloor" || $liveLocation == "FarFloor"){
+      driverField = driveMap[$reversedAlliance][$gameData["AllianceColor"]][$liveLocation];
+      $gameData[driverField] ++;
+    }
+
 
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
@@ -83,8 +69,11 @@
     console.log("Datafield " + dataField);
     console.log("LiveGamePiece " + $liveGamepiece);
     console.log("LiveLocation " + $liveLocation);
+    console.log("driverField " + driverField)
     console.log("GameMode" + gameMode);
     console.log("GameData" + $gameData)
+    console.log("locationfield" + $liveLocation)
+    console.log("DriverReference " + driveMap[$reversedAlliance][$gameData["AllianceColor"]][$liveLocation])
   
     // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
     //   $gameData["AutoPath"].push(locationField);
