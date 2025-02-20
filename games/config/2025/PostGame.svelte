@@ -64,7 +64,7 @@
       <textarea
         id="message"
         rows="4"
-        class="block p-2.5 w-full text-sm rounded-lg border border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+        class="block p-2.5 w-full text-base rounded-lg border border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
         placeholder="15 characters or more..."
         bind:value={$gameData["Comment"]}
       />
