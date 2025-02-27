@@ -13,7 +13,7 @@
       gamePieceLocation="Mark2"
       gamePiece="Coral"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
   <div>
@@ -22,7 +22,7 @@
       gamePieceLocation="Mark2"
       gamePiece="Algae"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
 </div>
@@ -33,7 +33,7 @@
       gamePieceLocation="FarStation"
       gamePiece="Coral"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
   <div>
@@ -42,7 +42,7 @@
       gamePieceLocation="NearStation"
       gamePiece="Coral"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
   <div>
@@ -51,7 +51,7 @@
       gamePieceLocation="FarFloor"
       gamePiece="Coral"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
   <div>
@@ -60,7 +60,7 @@
       gamePieceLocation="NearFloor"
       gamePiece="Coral"
       {gameMode}
-      btnsize=" w-[40px] h-[40px]"
+      btnsize=" w-[50px] h-[50px]"
     />
   </div>
 </div>

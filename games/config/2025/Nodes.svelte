@@ -24,16 +24,16 @@
 
   let driveMap = {
     0: {1: {"NearStation": "DriverLeftStation",
-            "FarStation": "DriverRightStatiom",
+            "FarStation": "DriverRightStation",
             "NearFloor": "DriverLeftFloor",
             "FarFloor": "DriverRightFloor"},
-        0: {"NearStation": "DriverRightFloor",
+        0: {"NearStation": "DriverRightStation",
             "FarStation": "DriverLeftStation",
             "NearFloor": "DriverRightFloor",
             "FarFloor": "DriverLeftFloor"}},
     1: {0: {"NearStation": "DriverLeftStation",
             "FarStation": "DriverRightStation",
-            "NearFloor": "DriverLeftFLoor",
+            "NearFloor": "DriverLeftFloor",
             "FarFloor": "DriverRightFloor"},
         1: {"NearStation": "DriverRightStation",
             "FarStation": "DriverLeftStation",
@@ -75,22 +75,7 @@
     console.log("locationfield" + $liveLocation)
     console.log("DriverReference " + driveMap[$reversedAlliance][$gameData["AllianceColor"]][$liveLocation])
   
-    // if ($gameState === 0 && locationField !== "AutoPreLoadedNoteCollect") {
-    //   $gameData["AutoPath"].push(locationField);
-    //   $gameData["AutoPathWithResult"].push(
-    //     locationField + ";" + (type === "Success" ? "2" : "1") + ";-1"
-    //   );
-      // $gameData["AutoPathWithResult"].push(locationField);
-      // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
-   // }
-  //   if ($gameState === 0 && locationField == "AutoPreLoadedNoteCollect") {
-  //     // $gameData["AutoPathWithResult"].push(type === "Success" ? "2" : "1");
-  //     $gameData["AutoPathWithResult"][0] =
-  //       $gameData["AutoPathWithResult"][0] +
-  //       ";" +
-  //       (type === "Success" ? "2" : "1" + ";-1");
-  //   }
-  // 
+
     }
   }
 
@@ -187,68 +172,7 @@
           </g></svg
         >
       {/if}
-      <!-- {#if level == 2}
-        <svg
-          width="96px"
-          height="96px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-          <g id="SVGRepo_iconCarrier">
-            <path
-              d="M16 9C16.5 9.5 17 10.5 17 12C17 13.5 16.5 14.5 16 15M19 6C20.5 7.5 21 10 21 12C21 14 20.5 16.5 19 18M13 3L7 8H5C3.89543 8 3 8.89543 3 10V14C3 15.1046 3.89543 16 5 16H7L13 21V3Z"
-              stroke="#00ff00"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </g>
-        </svg>
-      {/if}
-      {#if level == 3}
-        <svg
-          version="1.1"
-          id="Icons"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 32 32"
-          xml:space="preserve"
-          fill="#00ff00"
-          ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g><g id="SVGRepo_iconCarrier">
-            <style type="text/css">
-              .st0 {
-                fill: none;
-                stroke: #000000;
-                stroke-width: 2;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                stroke-miterlimit: 10;
-              }
-            </style>
-            <g>
-              <path
-                d="M29,12H3c-1.1,0-2,0.9-2,2v8.5V23v6c0,0.6,0.4,1,1,1s1-0.4,1-1v-5h26v5c0,0.6,0.4,1,1,1s1-0.4,1-1v-6v-0.5V14 C31,12.9,30.1,12,29,12z M15,17h-5v-3h5V17z M17,14h5v3h-5V14z M15,19v3h-5v-3H15z M17,19h5v3h-5V19z M24,19h5v3h-5V19z M29,17h-5 v-3h5V17z M8,14v3H3v-3H8z M3,19h5v3H3V19z"
-              ></path>
-              <path
-                d="M22,10c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S19.8,10,22,10z"
-              ></path>
-            </g>
-          </g></svg
-        >
-      {/if} -->
       {#if level == 6}
       <svg
       width="64px"
@@ -382,33 +306,7 @@
       </g></svg
     >
       {/if}
-      <!-- {#if level == 2}
-        <svg
-          width="96px"
-          height="96px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-          <g id="SVGRepo_iconCarrier">
-            <path
-              d="M16 9C16.5 9.5 17 10.5 17 12C17 13.5 16.5 14.5 16 15M19 6C20.5 7.5 21 10 21 12C21 14 20.5 16.5 19 18M13 3L7 8H5C3.89543 8 3 8.89543 3 10V14C3 15.1046 3.89543 16 5 16H7L13 21V3Z"
-              stroke="#ff0000"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </g>
-        </svg>
-      {/if} -->
       {#if level == 6}
         <svg
           width="64px"

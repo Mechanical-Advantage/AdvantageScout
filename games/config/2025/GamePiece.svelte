@@ -20,7 +20,7 @@
 </script>
 
 <button
-  class="btn btn-square btn-outline w-22 h-22 {gamePiece === 'Cube'
+  class="btn btn-square btn-outline {btnsize} {gamePiece === 'Cube'
     ? 'btn-accent'
     : 'btn-secondary'}  "
   on:click={updateGameObject}
