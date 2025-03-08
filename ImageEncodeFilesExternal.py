@@ -5,6 +5,12 @@ from PIL import Image
 import io
 import psycopg2
 import sqlite3 as sql
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-n', '--newonly', action='store_true')
+args = parser.parse_args()
+newonly = args
+print(args)
 db_global = "global.db"
 db_games = "data_$GAME.db"
 conn_global = sql.connect(db_global)
@@ -17,11 +23,16 @@ conn_global.close()
 # cur_game = conn_game.cursor()
 # TeamImage = cur_game.execute("SELECT Team, Image FROM pit WHERE Event=?", (event,)).fetchall()
 conn_grafana = psycopg2.connect(database="Grafana-Output",
-                        host="8.tcp.ngrok.io",
+                        host="5.tcp.ngrok.io",
                         user="postgres",
                         password="MA6328",
-                        port="14888")
+                        port="23010")
 cur_grafana = conn_grafana.cursor()
+sql_text = 'SELECT "Team" FROM "Images"'
+cur_grafana.execute(sql_text)
+processed = cur_grafana.fetchall()
+processed = [x[0] for x in processed]
+print(processed)
 print(event)
 path = "c://mascout//advantagescout//images//"
 dir_list = os.listdir(path)
@@ -48,30 +59,32 @@ for row in eventImages:
     SplitRow = row.split("-")
     img_name = row[1]
     img_name = "images//" + row
-    if currentTeam != SplitRow[1]:
-        count = 0
-        sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
-        sql_data = (event, currentTeam,)
-        cur_grafana.execute(sql_text, sql_data)
-        conn_grafana.commit()
-        sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
-        sql_data = (event, currentTeam, data[0],data[1],data[2],)
-        currentTeam = SplitRow[1]
-        data=[" "," "," "]  
-    # cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
-    #                     (event, row[0], data))
-        cur_grafana.execute(sql_text, sql_data)
-        conn_grafana.commit()
-    else:
-        count = count + 1
+    if currentTeam not in processed or newonly == False:
+        if currentTeam != SplitRow[1]:
+            count = 0
+            sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
+            sql_data = (event, currentTeam,)
+            cur_grafana.execute(sql_text, sql_data)
+            conn_grafana.commit()
+            sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
+            sql_data = (event, currentTeam, data[0],data[1],data[2],)
+            currentTeam = SplitRow[1]
+            data=[" "," "," "]  
+        # cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
+        #                     (event, row[0], data))
+            cur_grafana.execute(sql_text, sql_data)
+            conn_grafana.commit()
+        else:
+            count = count + 1
 
-    if os.path.isfile(img_name):
+        if os.path.isfile(img_name):
 
-        with open(img_name, "rb") as image_file:
-            tempData = base64.b64encode(image_file.read()).decode('utf-8')
-            print ("Processing image")
-            print(count)
-            data[count] = tempData     
+            with open(img_name, "rb") as image_file:
+                tempData = base64.b64encode(image_file.read()).decode('utf-8')
+                print ("Processing image")
+                print(count)
+                if count < 3: 
+                    data[count] = tempData     
 sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
 sql_data = (event, currentTeam,)
 cur_grafana.execute(sql_text, sql_data)
