@@ -6,12 +6,12 @@
 </script>
 
 {#if $gameState == 0}
-<div class="flex flex-col absolute ml-[300px] mt-[140px] gap-y-[100px]">
+<div class="flex flex-col absolute ml-[300px] mt-[40px] gap-y-[100px]">
   <div>
     <GamePieceLocation
-      location="Mark2"
-      gamePieceLocation="Mark2"
-      gamePiece="Coral"
+      location="Reef"
+      gamePieceLocation="Reef"
+      gamePiece="Algae"
       {gameMode}
       btnsize=" w-[50px] h-[50px]"
     />
@@ -21,6 +21,15 @@
       location="Mark2"
       gamePieceLocation="Mark2"
       gamePiece="Algae"
+      {gameMode}
+      btnsize=" w-[50px] h-[50px]"
+    />
+  </div>
+  <div>
+    <GamePieceLocation
+      location="Mark2"
+      gamePieceLocation="Mark2"
+      gamePiece="Coral"
       {gameMode}
       btnsize=" w-[50px] h-[50px]"
     />
@@ -67,14 +76,14 @@
 {/if}
 
 {#if $gameState == 1}
-  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[150px]">
+  <div class="flex flex-col absolute ml-[400px] mt-[40px] gap-y-[100px]">
     <div>
       <GamePieceLocation
         location="Station"
         gamePieceLocation="Station"
         gamePiece="Coral"
         {gameMode}
-        btnsize=" w-[84px] h-[84px]"
+        btnsize=" w-[62px] h-[62px]"
       />
     </div>
     <div>
@@ -83,7 +92,16 @@
         gamePieceLocation="Floor"
         gamePiece="Coral"
         {gameMode}
-        btnsize=" w-[84px] h-[84px]"
+        btnsize=" w-[62px] h-[62px]"
+      />
+    </div>
+    <div>
+      <GamePieceLocation
+        location="Reef"
+        gamePieceLocation="Reef"
+        gamePiece="Algae"
+        {gameMode}
+        btnsize=" w-[62px] h-[62px]"
       />
     </div>
     <div>
@@ -92,7 +110,7 @@
         gamePieceLocation="Floor"
         gamePiece="Algae"
         {gameMode}
-        btnsize=" w-[84px] h-[84px]"
+        btnsize=" w-[62px] h-[62px]"
       />
     </div>
   </div>

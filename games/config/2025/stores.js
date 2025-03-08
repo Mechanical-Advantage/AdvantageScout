@@ -70,6 +70,8 @@ export const gameData = writable({
 	TeleFarStationCoralCollect: 0,
     TeleFloorAlgaeCollect: 0,
 	TeleFloorCoralCollect: 0,
+	AutoReefAlgaeCollect: 0,
+    TeleReefAlgaeCollect: 0,
     TeleStationCoralCollect: 0,
 	AutoFloorAlgaeCollect: 0,
 	AutoFloorCoralCollect: 0,
