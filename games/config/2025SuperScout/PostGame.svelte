@@ -9,6 +9,11 @@
   function handleClick(event) {
     $gameData["EndgameBotState"] = event.currentTarget.value;
   }
+  function handleClicked() {
+        $gameData["DNP"] = $gameData["DNP"] === 0 ? 1 : 0;
+
+        buttonColor = $gameData["DNP"] === 0 ? "btn-primary" : "btn-error";
+    }
 
   function upload() {
     $gameData["EndgameComment"] = $gameData["EndgameComment"].replace(
@@ -148,6 +153,25 @@
       class="block p-2.5 w-[300px] h-[85px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
       placeholder="15 characters or more..."
       bind:value={$gameData["DisabledComment"]}
+    />
+  </div>
+{/if}
+<div class="absolute top-[550px] left-[325px]">
+  <button class="btn {buttonColor}" on:click={handleClicked}
+      >DNP?</button
+  >
+</div>
+{#if $gameData["DNP"] > 0}
+  <div class=" absolute top-[750px] left-[515px] ">
+    <label for="message" class="block mb-2 text-sm font-bold text-white"
+      >DNP Comment</label
+    >
+    <textarea
+      id="message"
+      rows="4"
+      class="block p-2.5 w-[300px] h-[85px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="15 characters or more..."
+      bind:value={$gameData["DNPComment"]}
     />
   </div>
 {/if}

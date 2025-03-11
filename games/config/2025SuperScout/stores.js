@@ -31,11 +31,13 @@ export const gameData = writable({
 	TeamRating1: 0,
 	TeamRating2: 0,
 	TeamRating3: 0,
+	DNP: 0,
 	PlayingDefenseDuration: 0,
     UnderDefenseDuration: 0,
 	AutoComment: " ",
 	TeleComment: " ",
 	EndgameComment: " ",
 	DisabledComment: " ",
+	DNPComment: " ",
     Comment: " "
 })
