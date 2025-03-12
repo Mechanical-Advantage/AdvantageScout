@@ -97,7 +97,9 @@
         "ElectricalQuality INTEGER DEFAULT 0",
         "CanShallowClimb INTEGER DEFAULT 0",
         "CanDeepClimb INTEGER DEFAULT 0",
-        "CanFloorIntake INTEGER DEFAULT 0"
+        "CanFloorIntake INTEGER DEFAULT 0",
+        "HasAdvantageKit INTEGER DEFAULT 0",
+        "HasAdvantageScope INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -260,6 +262,12 @@
     "classic": {
         "pit": [
             {
+                "type": "break"
+            },
+            {
+                "type": "break"
+            },
+            {
                 "type": "chooser",
                 "field": "DriveTrain",
                 "label": "Drive Train Type",
@@ -344,9 +352,6 @@
                 }
             },
             {
-                "type": "break"
-            },
-            {
                 "type": "checkbox",
                 "field": "CanShallowClimb",
                 "label": "Can Shallow Climb?"
@@ -358,8 +363,13 @@
             },
             {
                 "type": "checkbox",
-                "field": "CanFloorIntake",
-                "label": "Can Floor Intake?"
+                "field": "HasAdvantageScope",
+                "label": "Has Advantage Scope?"
+            },
+            {
+                "type": "checkbox",
+                "field": "HasAdvantageKit",
+                "label": "Has Advantage Kit?"
             },
             {
                 "type": "text",

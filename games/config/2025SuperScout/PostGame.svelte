@@ -35,7 +35,7 @@
     placeholder="15 characters or more..."
     bind:value={$gameData["EndgameComment"]}
   />
-  <div class="p-2.5 w-full h-[200px]">
+  <div class="p-2.5 w-full h-[150px]">
     <div class="inline-flex bg-gray-700">
       <span
         class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
@@ -49,7 +49,7 @@
         min="0"
       />
     </div>
-    <div class="p-2.5 w-full h-[200px]">
+    <div class="p-2.5 w-full h-[150px]">
       <div class="inline-flex bg-gray-700">
         <span
           class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
@@ -63,7 +63,7 @@
           min="0"
         />
       </div>
-      <div class="p-2.5 w-full h-[200px]">
+      <div class="p-2.5 w-full h-[150px]">
         <div class="inline-flex bg-gray-700">
           <span
             class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
@@ -81,7 +81,7 @@
     </div>
   </div>
 </div>
-<div class="absolute left-[515px] top-[25px] ">
+<!-- <div class="absolute left-[515px] top-[25px] ">
   <input
     type="radio"
     name="Bot State"
@@ -140,9 +140,9 @@
     on:change={handleClick}
   />
   <span class="label-text">Did Not Show</span>
-</div>
+</div> -->
 <div class="absolute top-[300px] left-[325px] p-2.5 w-full h-[200px]"></div>
-{#if $gameData["EndgameBotState"] > 1}
+<!-- {#if $gameData["EndgameBotState"] > 1}
   <div class=" absolute top-[300px] left-[515px] ">
     <label for="message" class="block mb-2 text-sm font-bold text-white"
       >Disabled Comment</label
@@ -155,28 +155,28 @@
       bind:value={$gameData["DisabledComment"]}
     />
   </div>
-{/if}
-<div class="absolute top-[550px] left-[325px]">
-  <button class="btn {buttonColor}" on:click={handleClicked}
+{/if} -->
+<div class="absolute left-[550px] top-[50px] ">
+  <button class="w-[250px] h-[80px] btn {buttonColor}" on:click={handleClicked}
       >DNP?</button
   >
 </div>
 {#if $gameData["DNP"] > 0}
-  <div class=" absolute top-[750px] left-[515px] ">
+  <div class="absolute top-[175px] left-[550px]">
     <label for="message" class="block mb-2 text-sm font-bold text-white"
       >DNP Comment</label
     >
     <textarea
       id="message"
       rows="4"
-      class="block p-2.5 w-[300px] h-[85px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
-      placeholder="15 characters or more..."
+      placeholder="Need a lot of points to be able to consider the team(s) DNP..."
+      class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
       bind:value={$gameData["DNPComment"]}
     />
   </div>
 {/if}
     <button
-      class="absolute left-[300] top-[350] btn {$gameData['EndgameComment'].length < 14
+      class="absolute left-[300px] top-[300px] btn {$gameData['EndgameComment'].length < 14
         ? 'btn-disabled'
         : 'btn-primary'}"
       on:click={upload}>Upload</button

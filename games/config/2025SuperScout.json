@@ -21,9 +21,9 @@
         "TeleSynergyRating NUMERIC DEFAULT 0",
         "DefenseRating NUMERIC DEFAULT 0",
         "DNP INTEGER DEFAULT 0",
-        "TeamRating1 NUMERIC DEFAULT 0",
-        "TeamRating2 NUMERIC DEFAULT 0",
-        "TeamRating3 NUMERIC DEFAULT 0"
+        "TeamRating1 INTEGER DEFAULT 0",
+        "TeamRating2 INTEGER DEFAULT 0",
+        "TeamRating3 INTEGER DEFAULT 0"
     ],
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
