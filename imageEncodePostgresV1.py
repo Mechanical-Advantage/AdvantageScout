@@ -9,8 +9,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-n', '--newonly', action='store_true')
 args = parser.parse_args()
-newonly = args
-print(args)
+newonly = args.newonly
+print(newonly)
 db_global = "global.db"
 db_games = "data_$GAME.db"
 conn_global = sql.connect(db_global)
@@ -32,6 +32,7 @@ cur_grafana.execute(sql_text,sqldata)
 processed = cur_grafana.fetchall()
 processed = [x[0] for x in processed]
 print(processed)
+print("Event ",event)
 path = "c://mascout//advantagescout//images//"
 dir_list = os.listdir(path)
 # print("Files and directories in '", path, "' :")
@@ -72,7 +73,7 @@ for row in eventImages:
             tempData = base64.b64encode(image_file.read()).decode('utf-8')
             teamData.append(tempData)
 
-print(len(imageData))   
+print("Teams with images ",len(imageData))   
 uploadData=[]
 for images in imageData:
     # print("Team "+images[0]+ " images " + str(len(images)-1))
@@ -83,7 +84,7 @@ for images in imageData:
         imageCount=3
     count=0
     while count< imageCount:
-        print("Team "+teamNumber+" - "+str(count)+" - "+str(imageCount))
+        #print("Team "+teamNumber+" - "+str(count)+" - "+str(imageCount))
         data[count]=images[count+1]
         count=count+1
     sqldata=(event,teamNumber,data[0],data[1],data[2])
@@ -91,10 +92,11 @@ for images in imageData:
     uploadData.append(sqldata)
         #print(sqldata)
 # print("Upload data before",uploadData)
+# print("New only ",newonly==True)
 if newonly == True:
     for item in processed:
         x=0
-        print("team "+str(item))
+        #print("team "+str(item))
         while x<len(uploadData):
             #print("Data ",uploadData[x][1])
             if str(item) == uploadData[x][1]:
@@ -102,7 +104,7 @@ if newonly == True:
                 uploadData.remove(uploadData[x])
             x=x+1
 
-# print("Upload data",uploadData)
+#print("Upload data",uploadData)
 
 for row in uploadData:
     currentTeam=row[1]
@@ -115,49 +117,3 @@ for row in uploadData:
     print("Uploading images for team - ",currentTeam)
     cur_grafana.execute(sql_text, sql_data)
     conn_grafana.commit()
-
-
-
-
-# for row in eventImages:
-#     SplitRow = row.split("-")
-#     img_name = row[1]
-#     img_name = "images//" + row
-#     if currentTeam not in processed or newonly == False:
-#         if currentTeam != SplitRow[1]:
-#             count = 0
-#             sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
-#             sql_data = (event, currentTeam,)
-#             cur_grafana.execute(sql_text, sql_data)
-#             conn_grafana.commit()
-#             sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
-#             sql_data = (event, currentTeam, data[0],data[1],data[2],)
-#             currentTeam = SplitRow[1]
-#             data=[" "," "," "]  
-#         # cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
-#         #                     (event, row[0], data))
-#             cur_grafana.execute(sql_text, sql_data)
-#             conn_grafana.commit()
-#         else:
-#             count = count + 1
-
-#         if os.path.isfile(img_name):
-
-#             with open(img_name, "rb") as image_file:
-#                 tempData = base64.b64encode(image_file.read()).decode('utf-8')
-#                 print ("Processing image")
-#                 print(count)
-#                 if count < 3: 
-#                     data[count] = tempData     
-# sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
-# sql_data = (event, currentTeam,)
-# cur_grafana.execute(sql_text, sql_data)
-# conn_grafana.commit()      
-# sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
-# sql_data = (event, currentTeam, data[0],data[1],data[2],)
-# currentTeam = SplitRow[1]
-# data=[" "," "," "]  
-#     # cur_grafana.execute("INSERT INTO Images (Event, Team, Image) VALUES (?, ?, ?)",
-#     #                     (event, row[0], data))
-# cur_grafana.execute(sql_text, sql_data)
-# conn_grafana.commit()
