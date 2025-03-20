@@ -1,16 +1,17 @@
 import GameComponent from "./GameComponent.svelte";
 
 import { get } from "svelte/store";
-import { gameState, gameData, reversedAlliance,uploadState, currentTeam } from "./stores";
+import { gameState, gameData, reversedAlliance,uploadState, currentTeam,currentSchedule } from "./stores";
 
 
 export default class Game {
     #gameComponent = null;
  
     constructor(root, appManager, reversed) {
-        console.log("Hello, this is the module for the 2023 game!", root);
+        console.log("Hello, this is the module for the 2025 Supes game!", root);
         reversedAlliance.update(n => reversed)
         currentTeam.update(n => appManager.team)
+        currentSchedule.update(n => appManager.schedule)
         uploadState.subscribe(uploadState => {
             if (uploadState > 0){
                 appManager.scoutManager.upload()
@@ -26,6 +27,7 @@ export default class Game {
         gameState.update(n => appManager.state - 1);
         console.log("Updates state", get(gameState))
         console.log("Team ", appManager.team)
+        console.log("Schedule ", appManager.schedule)
         
     }
     // setReverseAlliance(reversed) {

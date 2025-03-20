@@ -169,7 +169,7 @@
     <textarea
       id="message"
       rows="4"
-      placeholder="Need a lot of points to be able to consider the team(s) DNP..."
+      placeholder="Need a lot of words to be able to consider the team(s) DNP..."
       class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
       bind:value={$gameData["DNPComment"]}
     />

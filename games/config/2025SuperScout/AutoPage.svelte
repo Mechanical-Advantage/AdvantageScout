@@ -2,10 +2,16 @@
   //import ButtonGroup from "./ButtonGroup.svelte";
   import { gameData } from "./stores";
   import Ratings from "./Ratings.svelte";
+  let buttonColor = "btn-primary";
 
   function handleClick(event) {
     $gameData["AutoBotState"] = event.currentTarget.value;
   }
+  function handleClicked() {
+        $gameData["AllianceColor"] = $gameData["AllianceColor"] === 0 ? 1 : 0;
+
+        buttonColor = $gameData["AllianceColor"] === 0 ? "btn-primary" : "btn-error";
+    }
 </script>
 
 <main>
@@ -98,5 +104,9 @@
       />
     </div>
   {/if}
+  <div class="absolute left-[215px] top-[265px] ">
+    <button class="w-[75px] h-[35px] btn {buttonColor}" on:click={handleClicked}
+        >Alliance Color</button
+    >
   <div class="p-2.5 w-full h-[200px]"></div>
 </main>

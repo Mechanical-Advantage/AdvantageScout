@@ -99,7 +99,8 @@
         "CanDeepClimb INTEGER DEFAULT 0",
         "CanFloorIntake INTEGER DEFAULT 0",
         "HasAdvantageKit INTEGER DEFAULT 0",
-        "HasAdvantageScope INTEGER DEFAULT 0"
+        "HasAdvantageScope INTEGER DEFAULT 0",
+        "HaveAuto INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -370,6 +371,11 @@
                 "type": "checkbox",
                 "field": "HasAdvantageKit",
                 "label": "Has Advantage Kit?"
+            },
+            {
+                "type": "checkbox",
+                "field": "HaveAuto",
+                "label": "Have Auto?"
             },
             {
                 "type": "text",
