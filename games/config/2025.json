@@ -364,6 +364,11 @@
             },
             {
                 "type": "checkbox",
+                "field": "CanFloorIntake",
+                "label": "Can Floor Intake?"
+            },
+            {
+                "type": "checkbox",
                 "field": "HasAdvantageScope",
                 "label": "Has Advantage Scope?"
             },
