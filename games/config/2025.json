@@ -174,7 +174,7 @@
                 "binding": false
             },
             {
-                "script": "return (((data.Length * 2) + (data.Width * 2)) < 120)",
+                "script": "return (((data.Length * 2) + (data.Width * 2)) <= 120)",
                 "message": "Their length and width exceed frame perimeter",
                 "binding": false
             },
