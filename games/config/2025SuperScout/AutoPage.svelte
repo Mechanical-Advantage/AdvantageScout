@@ -1,6 +1,6 @@
 <script>
   //import ButtonGroup from "./ButtonGroup.svelte";
-  import { gameData } from "./stores";
+  import { gameData, autoState } from "./stores";
   import Ratings from "./Ratings.svelte";
   let buttonColor = "btn-primary";
 
@@ -11,6 +11,11 @@
         $gameData["AllianceColor"] = $gameData["AllianceColor"] === 0 ? 1 : 0;
 
         buttonColor = $gameData["AllianceColor"] === 0 ? "btn-primary" : "btn-error";
+    }
+    function handledClick() {
+        $autoState = 0;
+        $gameData["DefenseOnly"] = 0;
+
     }
 </script>
 
@@ -109,4 +114,10 @@
         >Alliance Color</button
     >
   <div class="p-2.5 w-full h-[200px]"></div>
+</div>
+<div class="absolute top-[265px] left-[675px]">
+  <div class="flex flex-col gap-y-[25px]">
+      <button class="btn btn-primary" on:click={handledClick}>Back</button>
+     
+  </div>
 </main>

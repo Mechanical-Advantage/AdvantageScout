@@ -13,6 +13,8 @@
         AutoSynergyRating: ["range-success", "Synergy Rating", 1],
         TeleSynergyRating: ["range-success", "Synergy Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
+        DriverSkill: ["range-primary", "Driver Skill", 1],
+        DriverSpeed: ["range-success", "Driver Speed", 1]
     };
     console.log("pop" + name)
     console.log("ratings " + displayValues[name])

@@ -21,6 +21,10 @@
         "TeleSynergyRating NUMERIC DEFAULT 0",
         "DefenseRating NUMERIC DEFAULT 0",
         "DNP INTEGER DEFAULT 0",
+        "DriverTeam INTEGER DEFAULT 0",
+        "DriverSkill NUMERIC DEFAULT 0",
+        "DriverSpeed NUMERIC DEFAULT 0",
+        "DefenseOnly INTEGER DEFAULT 0",
         "TeamRating1 INTEGER DEFAULT 0",
         "TeamRating2 INTEGER DEFAULT 0",
         "TeamRating3 INTEGER DEFAULT 0"
