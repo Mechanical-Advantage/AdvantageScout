@@ -53,8 +53,8 @@ print(4925 in alliance_teams)
 conn_global.close()
 
 
-slackUid = "#frc_scouting_training"
-slackUid2 = "#frc_scouting_training"
+slackUid = "#frc_aa"
+slackUid2 = "#frc_aaa"
 # slackUid="U025R21C61M"
 while (True):
     print("Waiting for 5 minutes")

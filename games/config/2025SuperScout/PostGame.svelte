@@ -157,7 +157,7 @@
   </div>
 {/if} -->
 <div class="absolute left-[550px] top-[50px] ">
-  <button class="w-[250px] h-[80px] btn {buttonColor}" on:click={handleClicked}
+  <button class="w-[250px] h-[80px] btn {$gameData["DNP"] === 0 ? "btn-primary" : "btn-error"}" on:click={handleClicked}
       >DNP?</button
   >
 </div>
