@@ -8,20 +8,25 @@ export default class Game {
     #gameComponent = null;
  
     constructor(root, appManager, reversed) {
+        currentSchedule.set(JSON.parse(JSON.stringify(appManager.schedule)))
+        console.log("First thing " , get(currentSchedule))
+        console.log("Second thing " , appManager.schedule["teams"])
         console.log("Hello, this is the module for the 2025 Supes game!", root);
         reversedAlliance.update(n => reversed)
         currentTeam.update(n => appManager.team)
-        currentSchedule.update(n => appManager.schedule)
         uploadState.subscribe(uploadState => {
             if (uploadState > 0){
                 appManager.scoutManager.upload()
             }
             
+
         });
         this.#gameComponent = new GameComponent({
             target: root
         });
+
     }
+    
     setMode(mode) {
         console.log("app state", appManager.state)
         gameState.update(n => appManager.state - 1);

@@ -33,8 +33,7 @@ conn_global.close()
 conn_game = sql.connect(db_match)
 cur_game = conn_game.cursor()
 
-
-slackUid = "#frc_scouting_training"
+slackUid = "#frc_aa"
 # slackUid="U025R21C61M"
 while (True):
     print("Waiting for 5 minutes")

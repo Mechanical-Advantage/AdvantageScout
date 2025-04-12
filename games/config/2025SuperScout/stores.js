@@ -14,7 +14,7 @@ export const undoDisplayCondition = writable(false)
 export const uploadState = writable(0)
 export const currentTeam = writable(0)
 export const onStageButton = writable(0)
-export const currentSchedule = writable(0)
+export const currentSchedule = writable([])
 
 
 
@@ -44,5 +44,11 @@ export const gameData = writable({
 	EndgameComment: " ",
 	DisabledComment: " ",
 	DNPComment: " ",
-    Comment: " "
+    Comment: " ",
+	Team1Comment: " ",
+	Team2Comment: " ",
+	Team3Comment: " ",
+	Team1: 571,
+	Team2: 6328,
+	Team3: 2910
 })

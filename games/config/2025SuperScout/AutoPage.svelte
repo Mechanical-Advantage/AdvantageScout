@@ -1,6 +1,6 @@
 <script>
   //import ButtonGroup from "./ButtonGroup.svelte";
-  import { gameData, autoState } from "./stores";
+  import { gameData, autoState, currentSchedule } from "./stores";
   import Ratings from "./Ratings.svelte";
   let buttonColor = "btn-primary";
 
@@ -17,23 +17,48 @@
         $gameData["DefenseOnly"] = 0;
 
     }
+
+    console.log("current schedule: " , currentSchedule)
+    console.log((currentSchedule["teams"]))
 </script>
 
 <main>
   <div class=" absolute top-[25px] left-[60px] ">
     <label for="message" class="block mb-2 text-sm font-bold text-white"
-      >Auto Comment</label
+      >{$gameData["Team1"]} Comment</label
     >
     <textarea
       id="message"
       rows="4"
       class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
       placeholder="15 characters or more..."
-      bind:value={$gameData["AutoComment"]}
+      bind:value={$gameData["Team1Comment"]}
     />
-    <div class="mt-[60px] ">
-      <Ratings name="AutoSynergyRating" />
     </div>
+    
+  <div class=" absolute top-[265px] left-[60px] ">
+  <label for="message" class="block mb-2 text-sm font-bold text-white"
+    >{$gameData["Team2"]} Comment</label
+  >
+    <textarea
+      id="message"
+      rows="4"
+      class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="15 characters or more..."
+      bind:value={$gameData["Team2Comment"]}
+  />
+  </div>
+  <div class=" absolute top-[505px] left-[60px] ">
+    <label for="message" class="block mb-2 text-sm font-bold text-white"
+      >{$gameData["Team3"]} Comment</label
+    >
+    <textarea
+      id="message"
+      rows="4"
+      class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="15 characters or more..."
+      bind:value={$gameData["Team3Comment"]}
+    />
   </div>
   <div class="absolute left-[515px] top-[25px] ">
     <input
@@ -109,10 +134,13 @@
       />
     </div>
   {/if}
-  <div class="absolute left-[215px] top-[265px] ">
+  <div class="absolute left-[975px] top-[75px] ">
     <button class="w-[75px] h-[35px] btn {$gameData["AllianceColor"] === 0 ? "btn-primary" : "btn-error"}" on:click={handleClicked}
         >Alliance Color</button
     >
+    <div class="mt-[30px] ml-[-90px] ">
+      <Ratings name="AutoSynergyRating" />
+    </div>
   <div class="p-2.5 w-full h-[200px]"></div>
 </div>
 <div class="absolute top-[265px] left-[675px]">

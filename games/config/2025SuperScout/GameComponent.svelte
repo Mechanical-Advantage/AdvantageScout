@@ -2,9 +2,11 @@
     import AutoPage from "./AutoPage.svelte";
     import PrematchConfig from "./PrematchConfig.svelte";
     import TeleopPage from "./TeleopPage.svelte";
-    import { autoState, gameState, gameData } from "./stores";
+    import { autoState, gameState, gameData, currentSchedule } from "./stores";
     import PostGame from "./PostGame.svelte";
     import TeleopDefensePage from "./TeleopDefensePage.svelte"
+
+    console.log("Current Schedule: ", (currentSchedule))
 </script>
 
 

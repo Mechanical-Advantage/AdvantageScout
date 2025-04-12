@@ -26,40 +26,53 @@
 
 <div class=" absolute top-[25px] left-[60px] ">
   <label for="message" class="block mb-2 text-sm font-bold text-white"
-    >Endgame Comment</label
+    >{$gameData["Team1"]} Comment</label
   >
   <textarea
     id="message"
     rows="4"
     class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
     placeholder="15 characters or more..."
-    bind:value={$gameData["EndgameComment"]}
+    bind:value={$gameData["Team1Comment"]}
   />
-  <div class="p-2.5 w-full h-[150px]">
-    <div class="inline-flex bg-gray-700">
-      <span
-        class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
-      >
-        TeamRating1
-      </span>
-      <input
-        type="number"
-        class="rounded-none rounded-r-lg w-[90px] p-2.5 text-sm bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-        bind:value={$gameData["TeamRating1"]}
-        min="0"
-      />
-    </div>
-    <div class="p-2.5 w-full h-[150px]">
+  </div>
+  
+<div class=" absolute top-[265px] left-[60px] ">
+<label for="message" class="block mb-2 text-sm font-bold text-white"
+  >{$gameData["Team2"]} Comment</label
+>
+  <textarea
+    id="message"
+    rows="4"
+    class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+    placeholder="15 characters or more..."
+    bind:value={$gameData["Team2Comment"]}
+/>
+</div>
+<div class=" absolute top-[505px] left-[60px] ">
+  <label for="message" class="block mb-2 text-sm font-bold text-white"
+    >{$gameData["Team3"]} Comment</label
+  >
+  <textarea
+    id="message"
+    rows="4"
+    class="block p-2.5 w-[400px] h-[200px] text-base rounded-lg border-gray-300 placeholder-gray-400 text-gray-50 bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+    placeholder="15 characters or more..."
+    bind:value={$gameData["Team3Comment"]}
+  />
+</div>
+  
+    <div class="absolute left-[975px] top-[25px] mt-[10px] ">
       <div class="inline-flex bg-gray-700">
         <span
           class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
         >
-          TeamRating2
+          TeamRating1
         </span>
         <input
           type="number"
           class="rounded-none rounded-r-lg w-[90px] p-2.5 text-sm bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-          bind:value={$gameData["TeamRating2"]}
+          bind:value={$gameData["TeamRating1"]}
           min="0"
         />
       </div>
@@ -68,18 +81,31 @@
           <span
             class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
           >
-            TeamRating3
+            TeamRating2
           </span>
           <input
             type="number"
             class="rounded-none rounded-r-lg w-[90px] p-2.5 text-sm bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-            bind:value={$gameData["TeamRating3"]}
+            bind:value={$gameData["TeamRating2"]}
             min="0"
           />
         </div>
+        <div class="p-2.5 w-full h-[150px]">
+          <div class="inline-flex bg-gray-700">
+            <span
+              class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
+            >
+              TeamRating3
+            </span>
+            <input
+              type="number"
+              class="rounded-none rounded-r-lg w-[90px] p-2.5 text-sm bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              bind:value={$gameData["TeamRating3"]}
+              min="0"
+            />
+        </div>
       </div>
     </div>
-  </div>
 </div>
 <!-- <div class="absolute left-[515px] top-[25px] ">
   <input
@@ -176,7 +202,7 @@
   </div>
 {/if}
     <button
-      class="absolute left-[300px] top-[300px] btn {$gameData['EndgameComment'].length < 14
+      class="absolute left-[1250px] top-[50px] btn {$gameData['Team1Comment'].length < 1
         ? 'btn-disabled'
         : 'btn-primary'}"
       on:click={upload}>Upload</button

@@ -5,10 +5,10 @@ import tbapy
 tba = tbapy.TBA('xwLB4UY3L9BUHcEbzB0phRviy7qtRnRFI0D2cdemxweyyQBIMqTJaHwEA4H8xO3Y')
 
 # Fetch match data
-teamInfo = tba.event_teams('2025necmp1')
+teamInfo = tba.event_teams('2025new')
 main_list = []
 target_word = "true"
-event="2025necmp1"
+event="2025new"
 tempData=[]
 # Loop through each match
 for team in teamInfo:

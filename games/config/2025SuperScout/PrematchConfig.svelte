@@ -1,7 +1,7 @@
 <script>
     import { autoState, gameData, gameState } from "./stores";
     import CurrentTeam from "./CurrentTeam.svelte";
-    import { reversedAlliance} from "./stores";
+    import { reversedAlliance, currentSchedule } from "./stores";
     import DefenseOnly from "./DefenseOnly.svelte";
     let topMargin = "top-[42px]";
 if ($reversedAlliance === 0) {
@@ -14,6 +14,8 @@ if ($reversedAlliance === 0) {
     function handleClick() {
         $autoState = 1;
     }
+console.log("current schedule: " , currentSchedule)
+
 </script>
 <DefenseOnly />
 

@@ -11,6 +11,9 @@
         "EndgameComment TEXT DEFAULT ''",
         "DisabledComment TEXT DEFAULT ''",
         "DNPComment TEXT DEFAULT ''",
+        "Team1Comment TEXT DEFAULT ''",
+        "Team2Comment TEXT DEFAULT ''",
+        "Team3Comment TEXT DEFAULT ''",
         "PlayingDefenseDuration NUMERIC DEFAULT 0",
         "UnderDefenseDuration NUMERIC DEFAULT 0",
         "BotState NUMERIC DEFAULT 0",
@@ -27,7 +30,10 @@
         "DefenseOnly INTEGER DEFAULT 0",
         "TeamRating1 INTEGER DEFAULT 0",
         "TeamRating2 INTEGER DEFAULT 0",
-        "TeamRating3 INTEGER DEFAULT 0"
+        "TeamRating3 INTEGER DEFAULT 0",
+        "Team1 INTEGER DEFAULT 0",
+        "Team2 INTEGER DEFAULT 0",
+        "Team3 INTEGER DEFAULT 0"
     ],
     "pitFields": [
         "DriveTrain TEXT DEFAULT ''",
@@ -145,39 +151,24 @@
         ],
         "match": [
             {
-                "field": "AutoComment",
+                "field": "Team1Comment",
                 "operator": "!=",
                 "value": "",
                 "message": "You must enter a comment.",
-                "binding": true
-            },
-            {
-                "field": "TeleComment",
-                "operator": "!=",
-                "value": "",
-                "message": "You must enter a comment.",
-                "binding": true
-            },
-            {
-                "field": "EndgameComment",
-                "operator": "!=",
-                "value": "",
-                "message": "You must enter a comment.",
-                "binding": true
-            },
-            {
-                "script": "return (data.AutoComment.length > 15) || (data.AutoComment.length == 0)",
-                "message": "Your comment is very short. Would you still like to continue?",
                 "binding": false
             },
             {
-                "script": "return (data.TeleComment.length > 15) || (data.TeleComment.length == 0)",
-                "message": "Your comment is very short. Would you still like to continue?",
+                "field": "Team2Comment",
+                "operator": "!=",
+                "value": "",
+                "message": "You must enter a comment.",
                 "binding": false
             },
             {
-                "script": "return (data.EndgameComment.length > 15) || (data.EndgameComment.length == 0)",
-                "message": "Your comment is very short. Would you still like to continue?",
+                "field": "Team3Comment",
+                "operator": "!=",
+                "value": "",
+                "message": "You must enter a comment.",
                 "binding": false
             }
         ]
