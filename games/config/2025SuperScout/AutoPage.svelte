@@ -1,16 +1,31 @@
 <script>
   //import ButtonGroup from "./ButtonGroup.svelte";
-  import { gameData, autoState, currentSchedule } from "./stores";
+  import { gameData, autoState, currentSchedule, Team1, Team2, Team3 } from "./stores";
   import Ratings from "./Ratings.svelte";
   let buttonColor = "btn-primary";
 
   function handleClick(event) {
     $gameData["AutoBotState"] = event.currentTarget.value;
   }
+  $gameData["Team1"] = $currentSchedule["teams"][0]
+  $gameData["Team2"] = $currentSchedule["teams"][1]
+  $gameData["Team3"] = $currentSchedule["teams"][2]
+  
   function handleClicked() {
         $gameData["AllianceColor"] = $gameData["AllianceColor"] === 0 ? 1 : 0;
 
         buttonColor = $gameData["AllianceColor"] === 0 ? "btn-primary" : "btn-error";
+
+        if ($gameData["AllianceColor"] == 0) {
+          $gameData["Team1"] = $currentSchedule["teams"][0]
+          $gameData["Team2"] = $currentSchedule["teams"][1]
+          $gameData["Team3"] = $currentSchedule["teams"][2]
+        } else {
+          $gameData["Team1"] = $currentSchedule["teams"][3]
+          $gameData["Team2"] = $currentSchedule["teams"][4]
+          $gameData["Team3"] = $currentSchedule["teams"][5]
+        }
+
     }
     function handledClick() {
         $autoState = 0;
@@ -18,8 +33,8 @@
 
     }
 
-    console.log("current schedule: " , currentSchedule)
-    console.log((currentSchedule["teams"]))
+    console.log("current schedule: " , $currentSchedule)
+    console.log(($currentSchedule["teams"]))
 </script>
 
 <main>
