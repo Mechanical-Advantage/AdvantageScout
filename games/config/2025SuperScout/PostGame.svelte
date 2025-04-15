@@ -1,9 +1,19 @@
 <script>
   import Ratings from "./Ratings.svelte";
   import { gameData, uploadState } from "./stores";
+  import SortableList from "./SortableList.svelte";
+  import Component from "./Component.svelte";
+  
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["EndgameBotState"] == 2);
+
+  let list = [
+	{id: 1, name: $gameData["Team1"], content: ''},
+	{id: 2, name: $gameData["Team2"], content: ''},
+	{id: 3, name: $gameData["Team3"], content: ''}
+];
+const sortList = ev => {list = ev.detail};
 
   let buttonColor = "btn-primary";
   function handleClick(event) {
@@ -16,6 +26,9 @@
     }
 
   function upload() {
+    $gameData["TeamRating1"]=list[0]["name"]
+    $gameData["TeamRating2"]=list[1]["name"]
+    $gameData["TeamRating3"]=list[2]["name"]
     $gameData["EndgameComment"] = $gameData["EndgameComment"].replace(
       /[^\x20-\x7E]+/g,
       ""
@@ -105,7 +118,22 @@
             />
         </div>
       </div>
+
     </div>
+</div>
+<div class=" absolute top-[505px] left-[560px] ">
+  <div class="  h-full">
+    <Ratings name="DefenseRating" />
+ </div>
+<SortableList 
+{list} 
+key="id" 
+on:sort={sortList}
+let:item
+let:index
+>
+<Component {item} {index}/>
+</SortableList>
 </div>
 <!-- <div class="absolute left-[515px] top-[25px] ">
   <input
@@ -200,7 +228,9 @@
       bind:value={$gameData["DNPComment"]}
     />
   </div>
+   
 {/if}
+
     <button
       class="absolute left-[1250px] top-[50px] btn {$gameData['Team1Comment'].length < 1
         ? 'btn-disabled'
