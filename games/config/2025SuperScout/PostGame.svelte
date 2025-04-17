@@ -75,7 +75,7 @@ const sortList = ev => {list = ev.detail};
   />
 </div>
   
-    <div class="absolute left-[975px] top-[25px] mt-[10px] ">
+    <!-- <div class="absolute left-[975px] top-[25px] mt-[10px] ">
       <div class="inline-flex bg-gray-700">
         <span
           class="inline-flex items-center p-2.5 text-sm border border-r-0 border-gray-300 rounded-l-md bg-gray-600 text-gray-200 border-gray-600"
@@ -120,8 +120,8 @@ const sortList = ev => {list = ev.detail};
       </div>
 
     </div>
-</div>
-<div class=" absolute top-[505px] left-[560px] ">
+</div> -->
+<div class=" absolute left-[975px] top-[25px] mt-[10px]">
   <div class="  h-full">
     <Ratings name="DefenseRating" />
  </div>
@@ -232,7 +232,7 @@ let:index
 {/if}
 
     <button
-      class="absolute left-[1250px] top-[50px] btn {$gameData['Team1Comment'].length < 1
+      class="absolute left-[1350px] top-[50px] btn {$gameData['Team1Comment'].length < 1
         ? 'btn-disabled'
         : 'btn-primary'}"
       on:click={upload}>Upload</button
