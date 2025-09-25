@@ -2,6 +2,7 @@ cordova/platforms
 cordova/www/src
 *.db
 __pycache__
+venv
 images
 block_schedule.xlsx
 schedule.csv

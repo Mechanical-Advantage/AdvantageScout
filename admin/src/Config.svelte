@@ -17,7 +17,6 @@
         { id: 1, text: "disabled" },
         { id: 2, text: "enabled" },
     ];
-
     let schedulingMethodAnswer = "";
     let schedulingMethodSelected;
     let SchedulingMethodChoices = [
@@ -153,7 +152,6 @@
         </div>
     </Hidden>
 </div>
-
 <button class="btn btn-outline">Button</button>
 <button class="btn btn-outline btn-primary">Button</button>
 <button class="btn btn-outline btn-secondary">Button</button>
