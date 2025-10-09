@@ -52,7 +52,7 @@
       </div> -->
     </div>
     <div class="  h-full">
-      <Ratings name="CellIntakeRating" />
+      <Ratings name="CellsIntakeRating" />
       <Ratings name="DefenseRating" />
       <Ratings name="UnderDefenseRating" />
     </div>

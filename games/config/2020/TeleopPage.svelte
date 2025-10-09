@@ -70,47 +70,47 @@
 </div>
 
 <div>
-  {#if $liveGamepiece[0] == "Cell"}
+  {#if $liveGamepiece[0] == "Cells"}
   <div>
     <div class="absolute ml-[750px] mt-[75px]">
       
-      <ActiveGamePiece activeGamePiece = "Cell" />
+      <ActiveGamePiece activeGamePiece = "Cells" />
     
     </div>
   </div>
   {/if}
-  {#if $liveGamepiece[1] == "Cell"}
+  {#if $liveGamepiece[1] == "Cells"}
   <div>
     <div class="absolute ml-[750px] mt-[125px]">
       
-      <ActiveGamePiece activeGamePiece = "Cell" />
+      <ActiveGamePiece activeGamePiece = "Cells" />
     
     </div>
   </div>
   {/if}
-  {#if $liveGamepiece[2] == "Cell"}
+  {#if $liveGamepiece[2] == "Cells"}
   <div>
     <div class="absolute ml-[750px] mt-[175px]">
       
-      <ActiveGamePiece activeGamePiece = "Cell" />
+      <ActiveGamePiece activeGamePiece = "Cells" />
     
     </div>
   </div>
   {/if}
-  {#if $liveGamepiece[3] == "Cell"}
+  {#if $liveGamepiece[3] == "Cells"}
   <div>
     <div class="absolute ml-[700px] mt-[75px]">
       
-      <ActiveGamePiece activeGamePiece = "Cell" />
+      <ActiveGamePiece activeGamePiece = "Cells" />
     
     </div>
   </div>
   {/if}
-  {#if $liveGamepiece[4] == "Cell"}
+  {#if $liveGamepiece[4] == "Cells"}
   <div>
     <div class="absolute ml-[700px] mt-[125px]">
       
-      <ActiveGamePiece activeGamePiece = "Cell" />
+      <ActiveGamePiece activeGamePiece = "Cells" />
     
     </div>
   </div>

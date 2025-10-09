@@ -11,7 +11,7 @@
     <GamePieceLocation
       location="Chute"
       gamePieceLocation="Chute"
-      gamePiece="Cell"
+      gamePiece="Cells"
       {gameMode}
       btnsize=" w-[62px] h-[62px]"
     />
@@ -20,7 +20,7 @@
     <GamePieceLocation
       location="FarFloor"
       gamePieceLocation="FarFloor"
-      gamePiece="Cell"
+      gamePiece="Cells"
       {gameMode}
       btnsize=" w-[62px] h-[62px]"
     />
@@ -29,7 +29,7 @@
     <GamePieceLocation
       location="NearFloor"
       gamePieceLocation="NearFloor"
-      gamePiece="Cell"
+      gamePiece="Cells"
       {gameMode}
       btnsize=" w-[62px] h-[62px]"
     />
@@ -43,7 +43,7 @@
       <GamePieceLocation
         location="Chute"
         gamePieceLocation="Chute"
-        gamePiece="Cell"
+        gamePiece="Cells"
         {gameMode}
         btnsize=" w-[62px] h-[62px]"
       />
@@ -52,7 +52,7 @@
       <GamePieceLocation
         location="Floor"
         gamePieceLocation="Floor"
-        gamePiece="Cell"
+        gamePiece="Cells"
         {gameMode}
         btnsize=" w-[62px] h-[62px]"
       />

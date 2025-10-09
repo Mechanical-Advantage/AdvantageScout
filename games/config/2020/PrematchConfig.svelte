@@ -14,7 +14,9 @@ if ($reversedAlliance === 0) {
 
     function handleClick() {
         $autoState = 1;
-        $liveGamepiece.push("Cell");
+        $liveGamepiece.push("Cells");
+        $liveGamepiece.push("Cells");
+        $liveGamepiece.push("Cells");
         $liveLocation = "PreLoaded"
     }
 </script>

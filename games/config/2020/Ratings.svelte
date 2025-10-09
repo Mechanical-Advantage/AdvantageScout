@@ -6,7 +6,7 @@
 
     // if (
     //     $gameData["DriverRating"] == 0 &&
-    //     $gameData["CellIntakeRating"] == 0 &&
+    //     $gameData["CellsIntakeRating"] == 0 &&
     //     $gameData["AlgaeIntakeRating"] == 0 &&
     //     $gameData["DefenseRating"] == 0 &&
     //     $gameData["UnderDefenseRating"] == 0 &&
@@ -30,7 +30,7 @@
         UnderDefenseDuration: ["range-error", "Under Defense Duration", 2],
         BotState: ["range-primary", "Disabled", "Inoperable", "No Issue", 2],
         DriverRating: ["range-primary", "Driver Rating", 1],
-        CellIntakeRating: ["range-primary", "Cell Intake Rating", 1],
+        CellsIntakeRating: ["range-primary", "Cells Intake Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
         UnderDefenseRating: ["range-error", "Under Defense Rating", 1]
     };
