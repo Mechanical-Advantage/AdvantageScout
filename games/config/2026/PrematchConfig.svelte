@@ -2,7 +2,7 @@
     import { autoState, gameData } from "./stores";
     import FullField from "./FullField.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
-    import AutoSpikeSVG from "./AutoSpikeSVG.svelte";
+    // import AutoSpikeSVG from "./AutoSpikeSVG.svelte";
     import { reversedAlliance, liveGamepiece, liveLocation } from "./stores";
     let topMargin = "top-[42px]";
 if ($reversedAlliance === 0) {
@@ -20,28 +20,6 @@ if ($reversedAlliance === 0) {
 </script>
 
 <FullField />
-
-<!-- <div class="flex flex-col absolute left-[300px] {topMargin} gap-y-[45px]">
-    <div> <AutoSpikeSVG/>
-    </div>
-
-    <div> <AutoSpikeSVG/>
-    </div>
-
-    <div> <AutoSpikeSVG/>
-    </div>
-    </div>
-
-    <div class="flex flex-col absolute left-[685px] {topMargin} gap-y-[45px]">
-        <div> <AutoSpikeSVG/>
-        </div>
-    
-        <div> <AutoSpikeSVG/>
-        </div>
-    
-        <div> <AutoSpikeSVG/>
-        </div>
-        </div> -->
 
 <div class="absolute left-[350px] -mt-[450px]">
     <CurrentTeam />

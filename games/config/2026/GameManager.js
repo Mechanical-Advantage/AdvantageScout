@@ -8,7 +8,7 @@ export default class Game {
     #gameComponent = null;
  
     constructor(root, appManager, reversed) {
-        console.log("Hello, this is the module for the 2023 game!", root);
+        console.log("Hello, this is the module for the 2026 game!", root);
         reversedAlliance.update(n => reversed)
         currentTeam.update(n => appManager.team)
         uploadState.subscribe(uploadState => {

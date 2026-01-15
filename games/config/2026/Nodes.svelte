@@ -7,8 +7,8 @@
     teleDataLog,
     liveLocation,
     reversedAlliance,
-    //fuelCycleCountFail,
-    //fuelCycleCountSuccess
+    fuelCycleCountFail,
+    fuelCycleCountSuccess
   } from "./stores";
 
   export let level = 1;
@@ -18,6 +18,7 @@
   let dataField = " ";
   let locationField = " ";
   let driverField = " ";
+  let intervalId;
 
   let driveMap = {
     0: {1: {"NearStation": "DriverLeftStation",
@@ -59,18 +60,20 @@
     $gameData[dataField] = $gameData[dataField] + 1;
     console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
+
     intervalId = setInterval(() => {
     $gameData[driverField] =$gameData[driverField] +1;
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
-    console.log("LocationField" + locationField)
+    // console.log("LocationField" + locationField)
     $gameData[dataField] = $gameData[dataField] + 1;
-    console.log("LiveGamePiece " + $liveGamepiece);
+    // console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
     }, 250);
   }
   function stopPress() {
     // Clear the interval when the mouse button is released
+    console.log("Clearing ")
     clearInterval(intervalId);
     intervalId=null;
   }
@@ -101,12 +104,12 @@
       <span class="indicator-item indicator-left indicator-left indicator-start badge badge-primary">
         {gameLevelMap[level]}
       </span>
-      <span class="badge badge-accent text-green-600">
+      <span class="badge badge-accent ">
         {$gameData[gameMode + gameLevelMap[level] + "Fuel" + type]}
       </span>
     {:else}
       {#if level == 1 || level == 2}
-        <span class="badge badge-accent text-red-600">
+        <span class="badge badge-accent ">
           {$gameData[gameMode + gameLevelMap[level] + "Fuel" + type]}
         </span>
       {/if}

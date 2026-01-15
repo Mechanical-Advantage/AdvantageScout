@@ -1,5 +1,5 @@
 <script>
-  import { gameState } from "./stores";ion
+  import { gameState } from "./stores";
   import { liveGamepiece, liveLocation, gameData, fuelCycleCountSuccess, fuelCycleCountFail } from "./stores";
   export let gamePiece = "Fuel";
   export let location = "Floor";
@@ -7,24 +7,28 @@
   export let btnstate = "";
   export let gpColor = "#ff0000";
   export let btnsize;
-  console.log("collectstate" + $gameData["AutoFloorCenterline0NoteCollect"]);
-  console.log("btnstate" + btnstate);
-  console.log("gamePieceLocation" + gamePieceLocation);
-  console.log(gamePiece);
-  console.log(liveGamepiece);
+  let hubSuccess;
+  let hubFail;
+  // console.log("btnstate" + btnstate);
+  // console.log("gamePieceLocation" + gamePieceLocation);
+  // console.log(gamePiece);
+  // console.log(liveGamepiece);
+  console.log("entering gamepiece")
   let coneSVG = "";
   function updateGameObject() {
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
-    $gameData[$gameState == 0 ? "Auto" : "Tele" + "HubFuelSuccess"].push($fuelCycleCountSuccess);
-    $gameData[$gameState == 0 ? "Auto" : "Tele" + "HubFuelFail"].push($fuelCycleCountFail);
+    hubSuccess=($gameState == 0 ? "Auto" : "Tele" + "HubFuelSuccess")
+    hubFail=($gameState == 0 ? "Auto" : "Tele" + "HubFuelFail")
+    $gameData[hubSuccess].push($fuelCycleCountSuccess);
+    $gameData[hubFail].push($fuelCycleCountFail);
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
   }
 </script>
 
 <button
-  class="btn btn-square btn-outline {btnsize} {gamePiece === 'Cube'
+  class="btn btn-square btn-outline {btnsize} {gamePiece === 'Fuel'
     ? 'btn-accent'
     : 'btn-secondary'}  "
   on:click={updateGameObject}

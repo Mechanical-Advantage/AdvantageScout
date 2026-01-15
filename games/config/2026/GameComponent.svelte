@@ -7,14 +7,14 @@
 </script>
 
 
-<!-- {#if $gameState === 0}
+{#if $gameState === 0}
     {#if $autoState === 0}
     <PrematchConfig />
-{:else} -->
+{:else}
     <AutoPage />
-<!-- {/if} -->
-<!-- {:else if $gameState === 1}
+{/if}
+{:else if $gameState === 1}
 <TeleopPage/>
 {:else if $gameState === 2}
     <PostGame />
-{/if} -->
+{/if} 

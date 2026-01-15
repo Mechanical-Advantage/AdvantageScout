@@ -6,13 +6,13 @@
   export let location;
   export let gamePieceLocation;
   export let gamePiece;
-
+  console.log("Entering gamepiecelocation")
 </script>
 
 <div class="indicator absolute">
     {#if $gameState==1 || $gameState==0 }
     <span
-    class="indicator-item indicator-middle indicator-center indicator-start badge badge-primary text-xl"
+    class="indicator-item indicator-middle indicator-center  badge badge-primary text-xl"
     >{location}</span>
     {/if}
   <div class="absolute focus:animate-bounce">

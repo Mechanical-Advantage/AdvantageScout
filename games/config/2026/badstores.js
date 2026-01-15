@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export const liveGamepiece = writable("Fuel");
+export const liveGamepiece = writable(0);
 export const liveLocation = writable(0);
 export const floorPickup = writable(0);
 export const gameState = writable(0)
@@ -9,7 +9,7 @@ export const autoDataLog = writable([])
 export const teleDataLog = writable([])
 export const reversedAlliance = writable(0)
 export const selectedCommunity = writable(0) //blue is 0, red is 1
-export const displayText = writable(["x", " "]) //idek
+export const displayText = writable([x,  ]) //idek
 export const undoDisplayCondition = writable(false)
 export const uploadState = writable(0)
 export const currentTeam = writable(0)
@@ -18,12 +18,13 @@ export const fuelCycleCountSuccess = writable(0);
 export const fuelCycleCountFail = writable(0);
 
 
+
 export const gameData = writable({
 	AllianceColor: 0,
 	ReversedAlliance: 0,
 	StartPosition: 0,
-	StartGamePiece: " ",
-	StartConfig: " ",
+	StartGamePiece: '',
+	StartConfig: '',
 	TeleHubFuelSuccess: 0,
 	AutoHubFuelSuccess: 0,
 	TeleHubFuelFail: 0,
@@ -33,12 +34,12 @@ export const gameData = writable({
 	TeleClimbL1: 0,
 	AutoClimbL1: 0,
 	AutoClimbDismount: 0,
-	AutoPassFuelSuccess: 0,
-	TelePassFuelSuccess: 0,
-	AutoPassFuelFail: 0,
-	TelePassFuelFail: 0,
-	AutoFerryFuelSuccess: 0,
-	TeleFerryFuelSuccess: 0,
+	AutoFuelPassSuccess: 0,
+	TeleFuelPassSuccess: 0,
+	AutoFuelPassFail: 0,
+	TeleFuelPassFail: 0,
+	AutoFuelFerry: 0,
+	TeleFuelFerry: 0,
 	AutoPreLoadedFuelCollect: 0,
 	TelePreLoadedFuelCollect: 0,
 	AutoOutpostFuelCollect: 0,
@@ -58,5 +59,5 @@ export const gameData = writable({
 	DefenseRating: 0,
 	UnderDefenseRating: 0,
 	BotState: 0,
-	Comment: " ",
+	Comment: '',
 })

@@ -1,8 +1,9 @@
 <script>
-  import GamePiece from "../2023/GamePiece.svelte";
+  import GamePiece from "./GamePiece.svelte";
   import GamePieceLocation from "./GamePieceLocation.svelte";
   import { gameState, gameData } from "./stores";
   export let gameMode = "Auto";
+  console.log("Entering locationselector - game mode",gameMode);
 </script>
 
 {#if $gameState == 0}
