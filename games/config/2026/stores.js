@@ -16,7 +16,7 @@ export const currentTeam = writable(0)
 export const onStageButton = writable(0)
 export const fuelCycleCountSuccess = writable(0);
 export const fuelCycleCountFail = writable(0);
-
+export const fuelButtonSpeed = writable(200);
 
 export const gameData = writable({
 	AllianceColor: 0,

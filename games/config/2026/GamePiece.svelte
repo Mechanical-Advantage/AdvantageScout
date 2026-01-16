@@ -18,8 +18,8 @@
   function updateGameObject() {
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
-    hubSuccess=($gameState == 0 ? "Auto" : "Tele" + "HubFuelSuccess")
-    hubFail=($gameState == 0 ? "Auto" : "Tele" + "HubFuelFail")
+    hubSuccess=($gameState == 0 ? "Auto" : "Tele" + "HubFuelCyclesSuccess")
+    hubFail=($gameState == 0 ? "Auto" : "Tele" + "HubFuelCyclesFail")
     $gameData[hubSuccess].push($fuelCycleCountSuccess);
     $gameData[hubFail].push($fuelCycleCountFail);
     $fuelCycleCountSuccess = 0;

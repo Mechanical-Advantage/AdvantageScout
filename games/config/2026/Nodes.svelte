@@ -8,7 +8,9 @@
     liveLocation,
     reversedAlliance,
     fuelCycleCountFail,
-    fuelCycleCountSuccess
+    fuelCycleCountSuccess,
+    fuelButtonSpeed
+
   } from "./stores";
 
   export let level = 1;
@@ -41,13 +43,6 @@
  
         // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
   function update() {
-    if (level == 1) {
-      if (type == "Success") {
-        $fuelCycleCountSuccess++;
-      } else {
-        $fuelCycleCountFail++;
-      }
-    }
     if ($gameState === 0) {
       $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
     } else {
@@ -61,7 +56,14 @@
     console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
 
-    intervalId = setInterval(() => {
+    intervalId = setInterval(() => {  
+    if (level == 1) {
+      if (type == "Success") {
+        $fuelCycleCountSuccess++;
+      } else {
+        $fuelCycleCountFail++;
+      }
+    }
     $gameData[driverField] =$gameData[driverField] +1;
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
@@ -69,7 +71,7 @@
     $gameData[dataField] = $gameData[dataField] + 1;
     // console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
-    }, 250);
+    }, $fuelButtonSpeed);
   }
   function stopPress() {
     // Clear the interval when the mouse button is released
@@ -86,12 +88,10 @@
 
 <div class="indicator">
 
-  {#if level == 1 || level == 2 || level == 3}
-
+  {#if level == 1}
   <span class="indicator-item badge badge-accent text-2xl">
-    {$gameData[gameMode + gameLevelMap[level] + "Fuel" + type]}
-  </span
-  >
+    {type == "Success" ? $fuelCycleCountSuccess : $fuelCycleCountFail}
+  </span>
   {/if}
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"

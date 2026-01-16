@@ -6,6 +6,7 @@
     import CurrentTeam from "./CurrentTeam.svelte";
     import TowerClimb from "./TowerClimb.svelte";
     import AutoClimbDismount from "./AutoClimbDismount.svelte";
+    import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -33,6 +34,9 @@
 </div>
 <div class="absolute left-[800px] top-[250px]">
   <Nodes level="1" type="Fail" gameMode="Auto" />
+</div>
+<div class="absolute left-[400px] top-[250px]">
+  <ButtonRepeatSpeed />
 </div>
 <div class="absolute left-[100px] top-[40px]">
   <LocationSelector gameMode="Auto" />

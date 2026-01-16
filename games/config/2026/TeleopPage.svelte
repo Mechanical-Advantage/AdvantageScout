@@ -4,6 +4,7 @@
   import Undo from "./Undo.svelte";
   import CurrentTeam from "./CurrentTeam.svelte";
   import AutoClimbDismount from "./AutoClimbDismount.svelte";
+  import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -33,7 +34,9 @@
     <Undo />
   </div>
 </div>
-
+<div class="absolute left-[400px] top-[250px]">
+  <ButtonRepeatSpeed />
+</div>
 <div class="ml-[425px] mt-[30px]">
   <CurrentTeam />
 </div>
