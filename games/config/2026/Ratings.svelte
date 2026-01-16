@@ -4,40 +4,17 @@
 
     let ratingValue = $gameData[name] * 2;
 
-    // if (
-    //     $gameData["DriverRating"] == 0 &&
-    //     $gameData["FuelIntakeRating"] == 0 &&
-    //     $gameData["AlgaeIntakeRating"] == 0 &&
-    //     $gameData["DefenseRating"] == 0 &&
-    //     $gameData["UnderDefenseRating"] == 0 &&
-    //     $gameData["PlayingDefenseDuration"] == 0 &&
-    //     $gameData["UnderDefenseRating"] == 0
-    // ) {
-
- 
-    // } else {
-    //     ratingValue = 4;
-    //     console.log("Name " + name)
-    //     console.log("Rating" + $gameData[name])
-    // }
-
     $: ratingValue, ($gameData[name] = ratingValue / 2);
-        // console.log("Name " + name)
-        // console.log("Rating" + $gameData[name])
-        // console.log("AlgaeIntakeRating" + $gameData["AlgaeIntakeRating"])
     let displayValues = {
         PlayingDefenseDuration: ["range-success","Playing Defense Duration",2],
         UnderDefenseDuration: ["range-error", "Under Defense Duration", 2],
         BotState: ["range-primary", "Disabled", "Inoperable", "No Issue", 2],
         DriverRating: ["range-primary", "Driver Rating", 1],
         FuelIntakeRating: ["range-primary", "Fuel Intake Rating", 1],
-        AlgaeIntakeRating: ["range-primary", "Algae Intake Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
-        UnderDefenseRating: ["range-error", "Under Defense Rating", 1]
+        UnderDefenseRating: ["range-error", "Under Defense Rating", 1],
+        CrossBumpRating: ["range-secondary", "Cross Bump Rating", 1]
     };
-    // console.log("Name " + name)
-    // console.log("Rating" + $gameData[name])
-    // console.log("ratingvalue", ratingValue) 
 </script>
 
 <div class="flex flex-col items-center justify-center">

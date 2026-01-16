@@ -5,6 +5,7 @@
     import Undo from "./Undo.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
     import TowerClimb from "./TowerClimb.svelte";
+    import AutoClimbDismount from "./AutoClimbDismount.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -18,22 +19,22 @@
     </div>
 
     <!-- <ScoringGrid /> -->
-<div class="absolute left-[60px] top-[140px]">
+<div class="absolute left-[60px] top-[40px]">
   <Nodes level="3" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[60px] top-[240px]">
+<div class="absolute left-[60px] top-[140px]">
   <Nodes level="2" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[200px] top-[240px]">
+<div class="absolute left-[800px] top-[140px]">
   <Nodes level="2" type="Fail" gameMode="Auto" />
 </div>
-<div class="absolute left-[60px] top-[350px]">
+<div class="absolute left-[60px] top-[250px]">
   <Nodes level="1" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[200px] top-[350px]">
+<div class="absolute left-[800px] top-[250px]">
   <Nodes level="1" type="Fail" gameMode="Auto" />
 </div>
-<div class="absolute left-[500px]">
+<div class="absolute left-[100px] top-[40px]">
   <LocationSelector gameMode="Auto" />
 </div>
     <div class="absolute top-[10px] left-[607px]">
@@ -45,9 +46,7 @@
         <Undo />
 </div>
   <div class="absolute ml-[400px] mt-[350px]">
-        <div class="flex flex-row gap-x-3">
-          <TowerClimb buttonType="L1" />
-        </div>
+    <TowerClimb buttonType="L1" />
   </div>  
 </main>
 

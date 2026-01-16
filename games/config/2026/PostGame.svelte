@@ -51,9 +51,9 @@
     </div>
     <div class="  h-full">
       <Ratings name="FuelIntakeRating" />
-      <Ratings name="AlgaeIntakeRating" />
       <Ratings name="DefenseRating" />
       <Ratings name="UnderDefenseRating" />
+      <Ratings name="CrossBumpRating" />
     </div>
     <div class=" mt-[25px] h-full">
       <label for="message" class="block mb-2 text-sm font-bold text-white"

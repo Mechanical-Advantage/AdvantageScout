@@ -57,6 +57,7 @@ export const gameData = writable({
 	FuelIntakeRating: 0,
 	DefenseRating: 0,
 	UnderDefenseRating: 0,
+	CrossBumpRating: 0,
 	BotState: 0,
 	Comment: " ",
 })

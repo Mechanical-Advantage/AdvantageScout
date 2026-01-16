@@ -14,7 +14,7 @@
       gamePieceLocation="Outpost"
       gamePiece="Fuel"
       {gameMode}
-      btnsize=" w-[50px] h-[50px]"
+      btnsize=" w-[62px] h-[62px]"
     />
   </div>
   <div>
@@ -23,7 +23,7 @@
       gamePieceLocation="Floor"
       gamePiece="Fuel"
       {gameMode}
-      btnsize=" w-[50px] h-[50px]"
+      btnsize=" w-[62px] h-[62px]"
     />
   </div>
 </div>

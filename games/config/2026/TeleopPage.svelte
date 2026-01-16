@@ -1,34 +1,30 @@
 <script>
   import Nodes from "./Nodes.svelte";
   import LocationSelector from "./LocationSelector.svelte";
-  //import TrashCan from "./TrashCan.svelte";
   import Undo from "./Undo.svelte";
-  //import Parked from "./Parked.svelte";
-  import { teleDataLog } from "./stores";
   import CurrentTeam from "./CurrentTeam.svelte";
-  //import ActiveGamePiece from "./ActiveGamePiece.svelte";
-  import { liveGamepiece } from "./stores";
+  import AutoClimbDismount from "./AutoClimbDismount.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
-<div class="absolute left-[60px] top-[140px]">
+<div class="absolute left-[60px] top-[40px]">
   <Nodes level="3" type="Success" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[60px] top-[240px]">
+<div class="absolute left-[60px] top-[140px]">
   <Nodes level="2" type="Success" gameMode="Tele" />
 </div>
-<div class="absolute left-[200px] top-[240px]">
+<div class="absolute left-[800px] top-[140px]">
   <Nodes level="2" type="Fail" gameMode="Tele" />
 </div>
-<div class="absolute left-[60px] top-[350px]">
+<div class="absolute left-[60px] top-[250px]">
   <Nodes level="1" type="Success" gameMode="Tele" />
 </div>
-<div class="absolute left-[200px] top-[350px]">
+<div class="absolute left-[800px] top-[250px]">
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[500px]">
+<div class="absolute left-[100px] top-[40px]">
   <LocationSelector gameMode="Tele" />
 </div>
 
@@ -38,6 +34,9 @@
   </div>
 </div>
 
-<div class="ml-[775px] mt-[30px]">
+<div class="ml-[425px] mt-[30px]">
   <CurrentTeam />
 </div>
+<div class="absolute ml-[400px] mt-[300px]">
+  <AutoClimbDismount />
+</div>  
