@@ -1,11 +1,8 @@
 
 <script>
     import { gameData, gameState } from "./stores";
-    export let buttonType = "L1";
-    let prefix = gameState == 0 ? "AutoClimb" : "TeleClimb";
-    let dockButton = prefix + buttonType;
-    let otherButtonTypes = ["L1", "L2", "L3"]; 
-    otherButtonTypes = otherButtonTypes.filter(type => type !== buttonType);
+    let dockButton = gameState == 0 ? "AutoClimbPosition" : "TeleClimbPosition";
+    let positions = ["Left", "Middle", "Right"];
     function handleClick() {
 
         if ($gameData[dockButton] === 2) {
@@ -40,8 +37,10 @@
     }
   </style>
 
-<button class="btn {$gameData[dockButton] === 0
-    ? "btn-primary"
-    : $gameData[dockButton] === 1
-    ? "btn-secondary"
-    : "btn-success"}" on:click={handleClick}>Climb {buttonType}?</button>
+<button class="btn 
+    {($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL1"] == 2) || 
+    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL2"] == 2) || 
+    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL3"] == 2) 
+    ? "" : "btn-disabled"}
+    btn-primary"
+     on:click={handleClick}>Climb {positions[$gameData[dockButton]]}?</button>

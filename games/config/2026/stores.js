@@ -33,6 +33,8 @@ export const gameData = writable({
 	TeleClimbL1: 0,
 	AutoClimbL1: 0,
 	AutoClimbDismount: 0,
+	AutoClimbPosition: 0,
+	TeleClimbPosition: 0,
 	AutoPassFuelSuccess: 0,
 	TelePassFuelSuccess: 0,
 	AutoPassFuelFail: 0,
