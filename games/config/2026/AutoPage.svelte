@@ -1,14 +1,10 @@
 <script>
-    //import ButtonGroup from "./ButtonGroup.svelte";
     import Nodes from "./Nodes.svelte";
     import LocationSelector from "./LocationSelector.svelte";
-    //import TrashCan from "./TrashCan.svelte";
     import { autoState, autoDataLog } from "./stores";
     import Undo from "./Undo.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
-    //import GamePiece from "./GamePiece.svelte";
-    //import ActiveGamePiece from "./ActiveGamePiece.svelte";
-    import { liveGamepiece } from "./stores";
+    import TowerClimb from "./TowerClimb.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -47,8 +43,12 @@
     </div>
       <div class="absolute top-[375px] left-[750px]">
         <Undo />
-    </div>
-    
+</div>
+  <div class="absolute ml-[400px] mt-[350px]">
+        <div class="flex flex-row gap-x-3">
+          <TowerClimb buttonType="L1" />
+        </div>
+  </div>  
 </main>
 
 

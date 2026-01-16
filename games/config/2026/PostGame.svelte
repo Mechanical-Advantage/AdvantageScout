@@ -2,9 +2,7 @@
   import Ratings from "./Ratings.svelte";
   import { gameData, uploadState } from "./stores";
   import Nodes from "./Nodes.svelte";
-  import Parked from "./Parked.svelte";
-  import TeleClimbShallow from "./ShallowClimb.svelte";
-  import TeleClimbDeep from "./DeepClimb.svelte";
+  import TowerClimb from "./TowerClimb.svelte";
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["BotState"] == 2);
@@ -35,14 +33,14 @@
       <Ratings name="UnderDefenseDuration" />
       <div class="absolute ml-[10px] mt-[30px]">
         <div class="flex flex-row gap-x-3">
-          <Parked />
-          <TeleClimbDeep />
-          <TeleClimbShallow />
+          <TowerClimb buttonType="L1" />
+          <TowerClimb buttonType="L2" />
+          <TowerClimb buttonType="L3" />
         </div>
       </div>
       <!-- <div class="absolute ml-[125px] mt-[30px]">
         <div class="flex flex-col gap-y-2">
-          <TeleClimbDeep />
+          <TeleClimbTower />
         </div>
       </div>
       <div class="absolute ml-[200px] mt-[30px]">
