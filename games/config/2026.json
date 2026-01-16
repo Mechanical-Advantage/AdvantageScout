@@ -18,6 +18,8 @@
         "TeleClimbL1 INTEGER DEFAULT 0",
         "AutoClimbL1 INTEGER DEFAULT 0",
         "AutoClimbDismount INTEGER DEFAULT 0",
+        "AutoClimbPosition INTEGER DEFAULT 0",
+        "TeleClimbPosition INTEGER DEFAULT 0",
         "AutoFuelPassSuccess INTEGER DEFAULT 0",
         "TeleFuelPassSuccess INTEGER DEFAULT 0",
         "AutoFuelPassFail INTEGER DEFAULT 0",
