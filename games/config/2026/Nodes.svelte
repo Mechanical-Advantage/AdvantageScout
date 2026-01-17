@@ -177,7 +177,7 @@
   </button>
   {#if type === "Success"}
     <button 
-      class="btn btn-primary min-h-[20px] h-[20px] text-xs absolute ml-[90px] mt-[30px] px-[10px] py-[0px]"
+      class="btn btn-primary min-h-[20px] h-[20px] text-2xl absolute ml-[130px] mt-[20px] px-[20px] py-[20px] place-content-center"
       on:pointerdown={reverseUpdate}
       on:pointerup={reverseStopPress}
       on:pointerleave={reverseStopPress}>
@@ -185,7 +185,7 @@
     </button>
   {:else}
     <button 
-      class="btn btn-primary min-h-[20px] h-[20px] text-xs absolute -ml-[35px] mt-[30px] px-[10px] py-[0px]"
+      class="btn btn-primary min-h-[20px] h-[20px] text-2xl absolute -ml-[95px] mt-[20px] px-[20px] py-[20px] place-content-center"
       on:pointerdown={reverseUpdate}
       on:pointerup={reverseStopPress}
       on:pointerleave={reverseStopPress}>
