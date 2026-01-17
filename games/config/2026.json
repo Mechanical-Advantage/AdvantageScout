@@ -396,11 +396,6 @@
                 "label": "Comment"
             },
             {
-                "type": "image",
-                "field": "Image",
-                "label": "Robot Image"
-            },
-            {
                 "type": "uploadButton"
             }
         ],
