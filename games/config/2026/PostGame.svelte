@@ -19,11 +19,17 @@
   function upload() {
     $gameData["TeleHubFuelCyclesSuccess"].push($fuelCycleCountSuccess);
     $gameData["TeleHubFuelCyclesFail"].push($fuelCycleCountFail);
+
+    $gameData["TeleHubFuelCyclesSuccess"] = JSON.stringify($gameData["TeleHubFuelCyclesSuccess"]);
+    $gameData["TeleHubFuelCyclesFail"] = JSON.stringify($gameData["TeleHubFuelCyclesFail"]);
+    $gameData["AutoHubFuelCyclesSuccess"] = JSON.stringify($gameData["AutoHubFuelCyclesSuccess"]);
+    $gameData["AutoHubFuelCyclesFail"] = JSON.stringify($gameData["AutoHubFuelCyclesFail"]);
+    
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
     $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "");
     $gameData["Penalties"] =
-      $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
+    $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
     $uploadState += 1;
   }
 </script>

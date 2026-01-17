@@ -16,6 +16,8 @@
         "AutoClimbL1 INTEGER DEFAULT 0",
         "AutoClimbDismount INTEGER DEFAULT 0",
         "AutoClimbPosition INTEGER DEFAULT 0",
+        "AutoHubFuelCyclesSuccess TEXT DEFAULT ''",
+        "AutoHubFuelCyclesFail TEXT DEFAULT ''",
         "TeleHubFuelCyclesSuccess TEXT DEFAULT ''",
         "TeleHubFuelCyclesFail TEXT DEFAULT ''",
         "TelePreLoadedFuelCollect INTEGER DEFAULT 0",
