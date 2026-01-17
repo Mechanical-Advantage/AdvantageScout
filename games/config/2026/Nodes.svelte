@@ -23,7 +23,7 @@
   let driverField = " ";
   let intervalId;
   let reverseIntervalId;
-  let shiftNames = ["", "S1", "S2", "S3", "S4", "SE"];
+  let shiftNames = ["ST", "S1", "S2", "S3", "S4", "SE"];
   let shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
   
   let driveMap = {
