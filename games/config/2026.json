@@ -60,7 +60,6 @@
         "AutoFuelPassFail INTEGER DEFAULT 0",
         "TeleFuelPassFail INTEGER DEFAULT 0",
         "TeleFuelFerry INTEGER DEFAULT 0",
-        "TeleFuelFerry INTEGER DEFAULT 0",
         "AutoPreLoadedFuelCollect INTEGER DEFAULT 0",
         "TelePreLoadedFuelCollect INTEGER DEFAULT 0",
         "AutoOutpostFuelCollect INTEGER DEFAULT 0",
