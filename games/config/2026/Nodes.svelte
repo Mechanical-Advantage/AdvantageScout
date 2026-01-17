@@ -25,25 +25,7 @@
   let reverseIntervalId;
   let shiftNames = ["ST", "S1", "S2", "S3", "S4", "SE"];
   let shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
-  
-  let driveMap = {
-    0: {1: {"NearStation": "DriverLeftStation",
-            "FarStation": "DriverRightStation",
-            "NearFloor": "DriverLeftFloor",
-            "FarFloor": "DriverRightFloor"},
-        0: {"NearStation": "DriverRightStation",
-            "FarStation": "DriverLeftStation",
-            "NearFloor": "DriverRightFloor",
-            "FarFloor": "DriverLeftFloor"}},
-    1: {0: {"NearStation": "DriverLeftStation",
-            "FarStation": "DriverRightStation",
-            "NearFloor": "DriverLeftFloor",
-            "FarFloor": "DriverRightFloor"},
-        1: {"NearStation": "DriverRightStation",
-            "FarStation": "DriverLeftStation",
-            "NearFloor": "DriverRightFloor",
-            "FarFloor": "DriverLeftFloor"}}
-        }
+
   $: shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
         // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
   function update() {
@@ -59,11 +41,11 @@
         $fuelCycleCountFail++;
       }
     }
-    console.log("Shift Name: " + shiftName);
+    console.log("DataField " + dataField);
     $gameData[driverField] = $gameData[driverField] + 1;
     dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-    console.log("LocationField" + locationField)
+    console.log("LocationField " + locationField)
     $gameData[dataField] = $gameData[dataField] + 1;
     console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
@@ -102,8 +84,7 @@
         $fuelCycleCountFail--;
       }
     }
-    console.log("Shift Name: " + shiftName);
-    $gameData[driverField] = $gameData[driverField] - 1;
+    console.log("DataField" + dataField);
     console.log("LocationField" + locationField)
     $gameData[dataField] = $gameData[dataField] - 1;
     console.log("LiveGamePiece " + $liveGamepiece);

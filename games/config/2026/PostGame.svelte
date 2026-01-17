@@ -1,6 +1,6 @@
 <script>
   import Ratings from "./Ratings.svelte";
-  import { gameData, uploadState } from "./stores";
+  import { gameData, uploadState, fuelCycleCountSuccess, fuelCycleCountFail } from "./stores";
   import Nodes from "./Nodes.svelte";
   import TowerClimb from "./TowerClimb.svelte";
   import ClimbPositions from "./ClimbPositions.svelte";
@@ -17,6 +17,10 @@
   }
 
   function upload() {
+    $gameData["TeleHubFuelCyclesSuccess"].push($fuelCycleCountSuccess);
+    $gameData["TeleHubFuelCyclesFail"].push($fuelCycleCountFail);
+    $fuelCycleCountSuccess = 0;
+    $fuelCycleCountFail = 0;
     $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "");
     $gameData["Points"] =
       $gameData["Points"] === null ? 0 : $gameData["Points"];

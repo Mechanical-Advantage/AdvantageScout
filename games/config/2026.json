@@ -5,10 +5,27 @@
         "StartPosition INTEGER DEFAULT 0",
         "StartGamePiece TEXT DEFAULT ''",
         "StartConfig TEXT DEFAULT ''",
-        "TeleSTHubFuelSuccess INTEGER DEFAULT 0",
+        "AutoPreLoadedFuelCollect INTEGER DEFAULT 0",
         "AutoHubFuelSuccess INTEGER DEFAULT 0",
-        "TeleSTHubFuelFail INTEGER DEFAULT 0",
         "AutoHubFuelFail INTEGER DEFAULT 0",
+        "AutoPassFuelSuccess INTEGER DEFAULT 0",
+        "AutoPassFuelFail INTEGER DEFAULT 0",
+        "AutoFerryFuelSuccess INTEGER DEFAULT 0",
+        "AutoFloorFuelCollect INTEGER DEFAULT 0",
+        "AutoOutpostFuelCollect INTEGER DEFAULT 0",
+        "AutoClimbL1 INTEGER DEFAULT 0",
+        "AutoClimbDismount INTEGER DEFAULT 0",
+        "AutoClimbPosition INTEGER DEFAULT 0",
+        "TeleHubFuelCyclesSuccess TEXT DEFAULT ''",
+        "TeleHubFuelCyclesFail TEXT DEFAULT ''",
+        "TelePreLoadedFuelCollect INTEGER DEFAULT 0",
+        "TeleSTFloorFuelCollect INTEGER DEFAULT 0",
+        "TeleSTOutpostFuelCollect INTEGER DEFAULT 0",
+        "TeleSTHubFuelSuccess INTEGER DEFAULT 0",
+        "TeleSTHubFuelFail INTEGER DEFAULT 0",
+        "TeleSTPassFuelSuccess INTEGER DEFAULT 0",
+        "TeleSTPassFuelFail INTEGER DEFAULT 0",
+        "TeleSTFerryFuelSuccess INTEGER DEFAULT 0",
         "TeleS1HubFuelSuccess INTEGER DEFAULT 0",
         "TeleS1HubFuelFail INTEGER DEFAULT 0",
         "TeleS1FerryFuelSuccess INTEGER DEFAULT 0",
@@ -44,29 +61,10 @@
         "TeleSEPassFuelFail INTEGER DEFAULT 0",
         "TeleSEOutpostFuelCollect INTEGER DEFAULT 0",
         "TeleSEFloorFuelCollect INTEGER DEFAULT 0",
-        "DriverLeftStation INTEGER DEFAULT 0",
-        "DriverRightStation INTEGER DEFAULT 0",
-        "DriverLeftFloor INTEGER DEFAULT 0",
-        "DriverRightFloor INTEGER DEFAULT 0",
         "TeleClimbL3 INTEGER DEFAULT 0",
         "TeleClimbL2 INTEGER DEFAULT 0",
         "TeleClimbL1 INTEGER DEFAULT 0",
-        "AutoClimbL1 INTEGER DEFAULT 0",
-        "AutoClimbDismount INTEGER DEFAULT 0",
-        "AutoClimbPosition INTEGER DEFAULT 0",
         "TeleClimbPosition INTEGER DEFAULT 0",
-        "AutoFuelPassSuccess INTEGER DEFAULT 0",
-        "TeleSTFuelPassSuccess INTEGER DEFAULT 0",
-        "AutoFuelPassFail INTEGER DEFAULT 0",
-        "TeleSTFuelPassFail INTEGER DEFAULT 0",
-        "TeleSTFuelFerrySuccess INTEGER DEFAULT 0",
-        "TeleSTFuelFerryFail INTEGER DEFAULT 0",
-        "AutoPreLoadedFuelCollect INTEGER DEFAULT 0",
-        "TelePreLoadedFuelCollect INTEGER DEFAULT 0",
-        "AutoOutpostFuelCollect INTEGER DEFAULT 0",
-        "TeleSTOutpostFuelCollect INTEGER DEFAULT 0",
-        "TeleSTFloorFuelCollect INTEGER DEFAULT 0",
-        "AutoFloorFuelCollect INTEGER DEFAULT 0",
         "PlayingDefenseDuration NUMERIC DEFAULT 0",
         "UnderDefenseDuration NUMERIC DEFAULT 0",
         "Penalties INTEGER DEFAULT 0",
@@ -94,6 +92,9 @@
         "ClimbLevel INTEGER DEFAULT 0",
         "ClimbPosition INTEGER DEFAULT 0",
         "CanFloorIntake INTEGER DEFAULT 0",
+        "CanOutpostIntake INTEGER DEFAULT 0",
+        "CanCrossBump INTEGER DEFAULT 0",
+        "HopperCapacity INTEGER DEFAULT 0",
         "HasAdvantageKit INTEGER DEFAULT 0",
         "HasAdvantageScope INTEGER DEFAULT 0",
         "HaveAuto INTEGER DEFAULT 0"
@@ -194,6 +195,20 @@
                 "value": 0,
                 "message": "Please enter a bumper quality rating",
                 "binding": true
+            },
+            {
+                "field": "HopperCapacity",
+                "operator": ">",
+                "value": 0,
+                "message": "Are you sure this hopper capacity is correct?",
+                "binding": true
+            },
+            {
+                "field": "HopperCapacity",
+                "operator": "<",
+                "value": 80,
+                "message": "Are you sure this hopper capacity is correct?",
+                "binding": true
             }
         ],
         "match": [
@@ -239,7 +254,7 @@
                 "binding": true
             },
             {
-                "script": "return ((data.AutoFloorFuelCollect + data.AutoFloorAlgaeCollect + data.AutoStationFuelCollect) < 12)",
+                "script": "return ((data.AutoFloorFuelCollect + data.AutoOutpostFuelCollect) < 100)",
                 "message": "They physically cannot collect that much in Auto",
                 "binding": false
             },
@@ -371,9 +386,29 @@
                 }
             },
             {
-                "type": "checkbox",
+                "type": "chooser",
                 "field": "CanFloorIntake",
-                "label": "Can Floor Intake?"
+                "label": "Can Floor Intake?",
+                "options": {
+                    "NA": 0,
+                    "OTB": 1,
+                    "Through": 2
+                }
+            },
+            {
+                "type": "checkbox",
+                "field": "CanOutpostIntake",
+                "label": "Can Outpost Intake?"
+            },
+            {
+                "type": "checkbox",
+                "field": "CanCrossBump",
+                "label": "Can Cross Bump?"
+            },
+            {
+                "type": "number",
+                "field": "HopperCapacity",
+                "label": "Hopper Capacity"
             },
             {
                 "type": "checkbox",

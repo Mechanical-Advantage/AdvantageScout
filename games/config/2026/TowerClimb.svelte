@@ -2,7 +2,7 @@
 <script>
     import { gameData, gameState } from "./stores";
     export let buttonType = "L1";
-    let prefix = gameState == 0 ? "AutoClimb" : "TeleClimb";
+    let prefix = $gameState == 0 ? "AutoClimb" : "TeleClimb";
     let dockButton = prefix + buttonType;
     let otherButtonTypes = ["L1", "L2", "L3"]; 
     otherButtonTypes = otherButtonTypes.filter(type => type !== buttonType);

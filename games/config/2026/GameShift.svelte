@@ -1,6 +1,6 @@
 
 <script>
-    import { gameData, gameState, gameShift } from "../2026/stores";
+    import { gameData, gameState, gameShift } from "./stores";
     let shifts = ["Transition", "Shift 1", "Shift 2", "Shift 3", "Shift 4", "Endgame"];
     let colors = ["btn-red", "btn-orange", "btn-yellow", "btn-green", "btn-blue", "btn-purple"];
     function handleClick() {
