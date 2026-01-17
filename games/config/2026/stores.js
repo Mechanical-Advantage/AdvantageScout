@@ -45,7 +45,7 @@ export const gameData = writable({
 	AutoPreLoadedFuelCollect: 0,
 	TelePreLoadedFuelCollect: 0,
 	AutoOutpostFuelCollect: 0,
-	TeleOutpostFuelCollect: 0,
+	TeleSTOutpostFuelCollect: 0,
 	TeleSTFloorFuelCollect: 0,
 	AutoFloorFuelCollect: 0,
 
