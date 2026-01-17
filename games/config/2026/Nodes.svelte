@@ -165,12 +165,12 @@
       <span class="indicator-item indicator-left indicator-start badge badge-primary">
         {gameLevelMap[level]}
       </span>
-      <span class="badge badge-success">
+      <span class="badge badge-success text-2xl p-3">
         {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
       </span>
     {:else}
       {#if level == 1 || level == 2}
-        <span class="badge badge-error">
+        <span class="badge badge-error text-2xl p-3">
           {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
         </span>
       {/if}

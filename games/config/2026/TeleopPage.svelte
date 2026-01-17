@@ -34,9 +34,9 @@
 <div class="ml-[425px] mt-[30px]">
   <CurrentTeam />
 </div>
-<div class="absolute ml-[400px] mt-[300px]">
+<!-- <div class="absolute ml-[400px] mt-[300px]">
   <AutoClimbDismount />
-</div>  
+</div>  -->
 <div class="absolute ml-[300px] mt-[00px]">
   <GameShift />
 </div>  
