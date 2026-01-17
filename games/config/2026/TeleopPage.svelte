@@ -1,10 +1,10 @@
 <script>
   import Nodes from "./Nodes.svelte";
   import LocationSelector from "./LocationSelector.svelte";
-  import Undo from "./Undo.svelte";
   import CurrentTeam from "./CurrentTeam.svelte";
   import AutoClimbDismount from "./AutoClimbDismount.svelte";
   import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
+  import GameShift from "./GameShift.svelte";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -28,12 +28,6 @@
 <div class="absolute left-[100px] top-[40px]">
   <LocationSelector gameMode="Tele" />
 </div>
-
-<div>
-  <div class="flex flex-row gap-x-[50px] absolute left-[750px] top-[375px]">
-    <Undo />
-  </div>
-</div>
 <div class="absolute left-[400px] top-[250px]">
   <ButtonRepeatSpeed />
 </div>
@@ -42,4 +36,7 @@
 </div>
 <div class="absolute ml-[400px] mt-[300px]">
   <AutoClimbDismount />
+</div>  
+<div class="absolute ml-[300px] mt-[00px]">
+  <GameShift />
 </div>  

@@ -2,10 +2,8 @@
     import Nodes from "./Nodes.svelte";
     import LocationSelector from "./LocationSelector.svelte";
     import { autoState, autoDataLog } from "./stores";
-    import Undo from "./Undo.svelte";
     import CurrentTeam from "./CurrentTeam.svelte";
     import TowerClimb from "./TowerClimb.svelte";
-    import AutoClimbDismount from "./AutoClimbDismount.svelte";
     import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
 
     function handleClick() {
@@ -41,17 +39,14 @@
 <div class="absolute left-[100px] top-[40px]">
   <LocationSelector gameMode="Auto" />
 </div>
-    <div class="absolute top-[10px] left-[607px]">
-      <div class="flex flex-col gap-y-[25px]">
-        <button class="btn btn-primary" on:click={handleClick}>Back</button>
-      </div>
-    </div>
-      <div class="absolute top-[375px] left-[750px]">
-        <Undo />
+<div class="absolute top-[10px] left-[607px]">
+  <div class="flex flex-col gap-y-[25px]">
+    <button class="btn btn-primary" on:click={handleClick}>Back</button>
+  </div>
 </div>
-  <div class="absolute ml-[400px] mt-[350px]">
-    <TowerClimb buttonType="L1" />
-  </div>  
+<div class="absolute ml-[400px] mt-[350px]">
+  <TowerClimb buttonType="L1" />
+</div>  
 </main>
 
 

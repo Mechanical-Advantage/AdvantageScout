@@ -17,6 +17,7 @@ export const onStageButton = writable(0)
 export const fuelCycleCountSuccess = writable(0);
 export const fuelCycleCountFail = writable(0);
 export const fuelButtonSpeed = writable(200);
+export const gameShift = writable(0);
 
 export const gameData = writable({
 	AllianceColor: 0,
@@ -47,6 +48,47 @@ export const gameData = writable({
 	TeleOutpostFuelCollect: 0,
 	TeleFloorFuelCollect: 0,
 	AutoFloorFuelCollect: 0,
+
+	TeleS1HubFuelSuccess: 0,
+	TeleS1HubFuelFail: 0,
+	TeleS1FerryFuelSuccess: 0,
+	TeleS1PassFuelSuccess: 0,
+	TeleS1PassFuelFail: 0,
+	TeleS1OutpostFuelCollect: 0,
+	TeleS1FloorFuelCollect: 0,
+
+	TeleS2HubFuelSuccess: 0,
+	TeleS2HubFuelFail: 0,
+	TeleS2FerryFuelSuccess: 0,
+	TeleS2PassFuelSuccess: 0,
+	TeleS2PassFuelFail: 0,
+	TeleS2OutpostFuelCollect: 0,
+	TeleS2FloorFuelCollect: 0,
+
+	TeleS3HubFuelSuccess: 0,
+	TeleS3HubFuelFail: 0,
+	TeleS3FerryFuelSuccess: 0,
+	TeleS3PassFuelSuccess: 0,
+	TeleS3PassFuelFail: 0,
+	TeleS3OutpostFuelCollect: 0,
+	TeleS3FloorFuelCollect: 0,
+
+	TeleS4HubFuelSuccess: 0,
+	TeleS4HubFuelFail: 0,
+	TeleS4FerryFuelSuccess: 0,
+	TeleS4PassFuelSuccess: 0,
+	TeleS4PassFuelFail: 0,
+	TeleS4OutpostFuelCollect: 0,
+	TeleS4FloorFuelCollect: 0,
+
+	TeleSEHubFuelSuccess: 0,
+	TeleSEHubFuelFail: 0,
+	TeleSEFerryFuelSuccess: 0,
+	TeleSEPassFuelSuccess: 0,
+	TeleSEPassFuelFail: 0,
+	TeleSEOutpostFuelCollect: 0,
+	TeleSEFloorFuelCollect: 0,
+
 	AutoHubFuelCyclesSuccess: [],
 	AutoHubFuelCyclesFail: [],
 	TeleHubFuelCyclesSuccess: [],
