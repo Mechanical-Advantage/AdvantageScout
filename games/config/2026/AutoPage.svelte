@@ -44,7 +44,7 @@
     <button class="btn btn-primary" on:click={handleClick}>Back</button>
   </div>
 </div>
-<div class="absolute ml-[400px] mt-[350px]">
+<div class="absolute ml-[300px] mt-[150px]">
   <TowerClimb buttonType="L1" />
 </div>  
 </main>
