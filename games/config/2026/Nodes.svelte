@@ -18,9 +18,9 @@
   export let type = "Success";
   export let gameMode = "Auto";
 
-  let dataField = " ";
-  let locationField = " ";
-  let driverField = " ";
+  let dataField = "";
+  let locationField = "";
+  let driverField = "";
   let intervalId;
   let reverseIntervalId;
   let shiftNames = ["ST", "S1", "S2", "S3", "S4", "SE"];
@@ -41,12 +41,15 @@
         $fuelCycleCountFail++;
       }
     }
-    console.log("DataField " + dataField);
-    $gameData[driverField] = $gameData[driverField] + 1;
-    dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
-    locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-    console.log("LocationField " + locationField)
-    $gameData[dataField] = $gameData[dataField] + 1;
+  // compute the field names before using them so we don't accidentally
+  // read/write the placeholder " " key and create malformed values
+  dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
+  locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
+  driverField = gameMode + shiftName + "Driver" + $liveGamepiece;
+  console.log("DataField " + dataField);
+  $gameData[driverField] = ($gameData[driverField] || 0) + 1;
+  console.log("LocationField " + locationField)
+  $gameData[dataField] = ($gameData[dataField] || 0) + 1;
     console.log("LiveGamePiece " + $liveGamepiece);
     $gameData[locationField] = $gameData[locationField] + 1;
 
@@ -58,11 +61,13 @@
           $fuelCycleCountFail++;
         }
       }
-      $gameData[driverField] = $gameData[driverField] + 1;
-      dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
-      locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-      $gameData[dataField] = $gameData[dataField] + 1;
-      $gameData[locationField] = $gameData[locationField] + 1;
+  // recompute on each tick before mutating so fields are valid
+  dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
+  locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
+  driverField = gameMode + shiftName + "Driver" + $liveGamepiece;
+  $gameData[driverField] = ($gameData[driverField] || 0) + 1;
+  $gameData[dataField] = ($gameData[dataField] || 0) + 1;
+  $gameData[locationField] = ($gameData[locationField] || 0) + 1;
     }, $fuelButtonSpeed);
   }
   function reverseUpdate() {
