@@ -21,22 +21,22 @@
 <div class="absolute left-[60px] top-[40px]">
   <Nodes level="3" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[60px] top-[140px]">
+<div class="absolute left-[60px] top-[190px]">
   <Nodes level="2" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[800px] top-[140px]">
+<div class="absolute left-[900px] top-[190px]">
   <Nodes level="2" type="Fail" gameMode="Auto" />
 </div>
-<div class="absolute left-[60px] top-[250px]">
+<div class="absolute left-[60px] top-[340px]">
   <Nodes level="1" type="Success" gameMode="Auto" />
 </div>
-<div class="absolute left-[800px] top-[250px]">
+<div class="absolute left-[900px] top-[340px]">
   <Nodes level="1" type="Fail" gameMode="Auto" />
 </div>
-<div class="absolute left-[400px] top-[250px]">
+<div class="absolute left-[400px] top-[280px]">
   <ButtonRepeatSpeed />
 </div>
-<div class="absolute left-[100px] top-[40px]">
+<div class="absolute left-[280px] top-[40px]">
   <LocationSelector gameMode="Auto" />
 </div>
 <div class="absolute top-[10px] left-[607px]">

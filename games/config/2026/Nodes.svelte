@@ -130,10 +130,14 @@
 
 <div class="indicator">
 
-  {#if level == 1}
-  <span class="indicator-item badge badge-accent text-2xl">
-    {type == "Success" ? $fuelCycleCountSuccess : $fuelCycleCountFail}
-  </span>
+  {#if level == 1 && type == "Success"}
+    <span class="indicator-item badge badge-accent text-2xl py-3">
+      {$fuelCycleCountSuccess}
+    </span>
+  {:else if level == 1 && type == "Fail"}
+    <span class="indicator-item indicator-left indicator-start badge badge-accent text-2xl py-3">
+    {$fuelCycleCountFail}
+    </span>
   {/if}
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"
@@ -144,6 +148,15 @@
     on:pointerleave={stopPress}
 
   >
+    {#if (level == 2 || level == 3) && type == "Success"}
+      <span class="indicator-item badge badge-success text-2xl py-3">
+        {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
+      </span>
+    {:else if (level == 2 || level == 3) && type == "Fail"}
+      <span class="indicator-item indicator-left indicator-start badge badge-error text-2xl py-3">
+        {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
+      </span>
+    {/if}
     {#if type === "Success"}
       <span class="indicator-item indicator-left indicator-start badge badge-primary">
         {gameLevelMap[level]}
@@ -152,6 +165,9 @@
         {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
       </span>
     {:else}
+      <span class="indicator-item indicator-right indicator-end badge badge-primary">
+        {gameLevelMap[level]}
+      </span>
       {#if level == 1 || level == 2}
         <span class="badge badge-error text-2xl p-3">
           {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
@@ -162,17 +178,17 @@
   {#if type === "Success"}
     <button 
       class="btn btn-primary min-h-[20px] h-[20px] text-xs absolute ml-[90px] mt-[30px] px-[10px] py-[0px]"
-      on:mousedown={reverseUpdate}
-      on:mouseup={reverseStopPress}
-      on:mouseleave={reverseStopPress}>
+      on:pointerdown={reverseUpdate}
+      on:pointerup={reverseStopPress}
+      on:pointerleave={reverseStopPress}>
       -
     </button>
   {:else}
     <button 
       class="btn btn-primary min-h-[20px] h-[20px] text-xs absolute -ml-[35px] mt-[30px] px-[10px] py-[0px]"
-      on:mousedown={reverseUpdate}
-      on:mouseup={reverseStopPress}
-      on:mouseleave={reverseStopPress}>
+      on:pointerdown={reverseUpdate}
+      on:pointerup={reverseStopPress}
+      on:pointerleave={reverseStopPress}>
       -
     </button>
   {/if}
