@@ -138,9 +138,11 @@
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"
     disabled={$liveGamepiece == 0}
-    on:mousedown={update}
-    on:mouseup={stopPress}
-    on:mouseleave={stopPress}
+
+    on:pointerup={stopPress}
+    on:pointerdown={update}
+    on:pointerleave={stopPress}
+
   >
     {#if type === "Success"}
       <span class="indicator-item indicator-left indicator-start badge badge-primary">
