@@ -91,8 +91,8 @@
         "ProgrammingLanguage TEXT DEFAULT ''",
         "BumperQuality INTEGER DEFAULT 0",
         "ElectricalQuality INTEGER DEFAULT 0",
-        "CanShallowClimb INTEGER DEFAULT 0",
-        "CanDeepClimb INTEGER DEFAULT 0",
+        "ClimbLevel INTEGER DEFAULT 0",
+        "ClimbPosition INTEGER DEFAULT 0",
         "CanFloorIntake INTEGER DEFAULT 0",
         "HasAdvantageKit INTEGER DEFAULT 0",
         "HasAdvantageScope INTEGER DEFAULT 0",
@@ -349,14 +349,26 @@
                 }
             },
             {
-                "type": "checkbox",
-                "field": "CanShallowClimb",
-                "label": "Can Shallow Climb?"
+                "type": "chooser",
+                "field": "ClimbLevel",
+                "label": "Climb Level",
+                "options": {
+                    "NA": 0,
+                    "L1": 1,
+                    "L2": 2,
+                    "L3": 3
+                }
             },
             {
-                "type": "checkbox",
-                "field": "CanDeepClimb",
-                "label": "Can Deep Climb?"
+                "type": "chooser",
+                "field": "ClimbPosition",
+                "label": "Climb Location",
+                "options": {
+                    "NA": 0,
+                    "Center": 1,
+                    "Edge": 2,
+                    "Pegs": 3
+                }
             },
             {
                 "type": "checkbox",
