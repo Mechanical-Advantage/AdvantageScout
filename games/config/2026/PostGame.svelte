@@ -22,8 +22,6 @@
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
     $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "");
-    $gameData["Points"] =
-      $gameData["Points"] === null ? 0 : $gameData["Points"];
     $gameData["Penalties"] =
       $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
     $uploadState += 1;
