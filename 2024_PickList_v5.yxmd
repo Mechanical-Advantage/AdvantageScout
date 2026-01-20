@@ -1,0 +1,1417 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2023.2" RunE2="T">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="438" y="54" width="100" height="40" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Summary Table Data Dictionary</Text>
+          <Font name="Arial" size="8.25" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="174" y="198" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="[NormalizedAutoSpeakerSuccess]*2 + [NormalizedTeleSpeakerSuccess]*6 +&#xA;[NormalizedAmpSuccess] * 5 + &#xA;[NormalizedOnstageSuccess]*3 +&#xA;[NormalizedTrapSuccess] * 3 +&#xA;[NormalizedDisabled] * -2" field="FirstPickScore" size="4" type="Float" />
+            <FormulaField expression="[NormalizedDisabled]*-10 + &#xA;[NormalizedAutoSpeakerSuccess] * 3 + [NormalizedTeleSpeakerSuccess] * 2 +&#xA;[NormalizedAmpSuccess] *4 +&#xA;[NormalizedOnstageSuccess]*4 + &#xA;[NormalizedTrapSuccess]*2 + &#xA;[NormalizedTotalCycles] *2 +&#xA;[NormalizedFerry] *2" field="SecondPickScore" size="4" type="Float" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>FirstPickScore = [NormalizedAutoSpeakerSuccess]*2 + [NormalizedTeleSpeakerSucces...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="390" y="198" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="FirstPickScore" selected="True" />
+            <SelectField field="SecondPickScore" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="654" y="138" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="PickScore" order="Descending" />
+            <Field field="Team" order="Ascending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>PickScore - Descending
+Team - Ascending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sample.Sample">
+        <Position x="810" y="378" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>First</Mode>
+          <N>16</N>
+          <GroupFields orderChanged="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>First 16 rows</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSample" />
+    </Node>
+    <Node ToolID="7">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sample.Sample">
+        <Position x="750" y="138" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>First</Mode>
+          <N>16</N>
+          <GroupFields orderChanged="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>First 16 rows</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSample" />
+    </Node>
+    <Node ToolID="8">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="834" y="138" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="&quot;First&quot;" field="PickType" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText><![CDATA[PickType = "First"
+]]></DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="990" y="378" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="&quot;Second&quot;" field="PickType" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText><![CDATA[PickType = "Second"
+]]></DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="10">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Union.Union">
+        <Position x="1074" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ByName_ErrorMode>Warning</ByName_ErrorMode>
+          <ByName_OutputMode>All</ByName_OutputMode>
+          <Mode>ByName</Mode>
+          <SetOutputOrder value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnion" />
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1602" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_7228fb50ff9f444282a2015186889bc8~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="12">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="546" y="138" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="FirstPickScore" selected="True" rename="PickScore" />
+            <SelectField field="SecondPickScore" selected="False" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="13">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="702" y="378" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="FirstPickScore" selected="False" />
+            <SelectField field="SecondPickScore" selected="True" rename="PickScore" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="14">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1266" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="PickType" order="Ascending" />
+            <Field field="PickScore" order="Descending" />
+            <Field field="Team" order="Ascending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>PickType - Ascending
+PickScore - Descending
+Team - Ascending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="15">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.MultiRowFormula.MultiRowFormula">
+        <Position x="1362" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <UpdateField value="False" />
+          <UpdateField_Name>TargetEvent</UpdateField_Name>
+          <CreateField_Name>PickOrder</CreateField_Name>
+          <CreateField_Type>Int64</CreateField_Type>
+          <CreateField_Size>8</CreateField_Size>
+          <OtherRows>Empty</OtherRows>
+          <NumRows value="1" />
+          <Expression>[Row-1:PickOrder]+1</Expression>
+          <GroupByFields>
+            <Field field="PickType" />
+          </GroupByFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[Row-1:PickOrder]+1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMultiRowFormula" />
+    </Node>
+    <Node ToolID="16">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1458" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="36">c:\mascout\advantagescout\global.db|||PickList</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <TransactionSize>0</TransactionSize>
+            <PostSQL />
+            <PreSQL />
+            <TransactionMessages>False</TransactionMessages>
+            <OutputOption>Delete</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>global.db
+Query=PickList</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="17">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1170" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="PickScore" selected="True" type="Double" size="8" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="18">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="30" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords>4AB0D8F118E67599FEA52FF383F2373BB</Passwords>
+          <File RecordLimit="" FileFormat="23">odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||"public"."summary"</File>
+          <FormatSpecificOptions>
+            <PreSQL />
+            <ReadCentroids>False</ReadCentroids>
+            <PreSQLOnConfig>True</PreSQLOnConfig>
+            <NoProgress>True</NoProgress>
+            <SessionReadOnly>True</SessionReadOnly>
+            <CacheData>False</CacheData>
+            <TableStyle>Quoted</TableStyle>
+            <ReadUncommitted>False</ReadUncommitted>
+            <PostSQL />
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=PostgreSQL30
+Query="public"."summary"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Team" size="16777216" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="V_String" />
+            <Field name="Count" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Leave" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleTrapNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleTrapNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_AutoSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleTrapNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleTrapNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_AutoSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_AutoSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_AutoAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_AutoAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleSpeakerNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleSpeakerNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleAmpNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleAmpNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleTrapNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleTrapNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorSpike0NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorSpike1NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorSpike2NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorCenterline0NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorCenterline1NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorCenterline2NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorCenterline3NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoFloorCenterline4NoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleFloorNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleSourceNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_TeleFloorNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleSourceNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_TeleFloorNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleSourceNoteCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_AutoNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Max_TeleNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="AvgNo0_PlayingDefenseDuration" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="AvgNo0_UnderDefenseDuration" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Sum_Park" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Penalties" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Disabled" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="AvgNo0_DriverRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="AvgNo0_NoteIntakeRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="AvgNo0_DefenseRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="AvgNo0_UnderDefenseRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Concat_Comment" size="16777216" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="V_String" />
+            <Field name="Sum_OnStageSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_OnStageAttempt" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_AutoNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_AutoNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_AutoNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_TeleNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_TeleNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Sum_AutoTotalFloorSpikeCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoTotalFloorCenterlineCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_AutoTotalFloorCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleTotalCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_AutoTotalFloorSpikeCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoTotalFloorCenterlineCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_AutoTotalFloorCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleTotalCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_AutoTotalFloorSpikeCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_AutoTotalFloorCenterlineCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_AutoTotalFloorCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_TeleTotalCollect" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Sum_TotalNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TotalNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_TotalNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TotalNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_TotalNoteSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_TotalNoteFail" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Sum_TotalNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleTotalAttempts" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Avg_TotalNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Avg_TeleTotalAttempts" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="Max_TotalNoteDrop" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Max_TeleTotalAttempts" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int16" />
+            <Field name="Sum_AutoPoints" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TelePoints" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TotalPoints" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Centerline0Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Centerline1Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Centerline2Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Centerline3Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Centerline4Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Spike0Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Spike1Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_Spike2Normal" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Sum_TeleFerryNoteSuccess" scale="6" size="19" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="FixedDecimal" />
+            <Field name="Sum_TotalCycles" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="Left_Right_Team" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="SoureFar" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="SourceNear" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Int64" />
+            <Field name="TeleSpeakerNoteSucessPercentile" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="TextLeave" size="64" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="String" />
+            <Field name="TextPark" size="16777216" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="V_String" />
+            <Field name="TextOnstage" size="16777216" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="V_String" />
+            <Field name="Right_Team" size="16777216" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="V_String" />
+            <Field name="NormalizedTeleSpeakerSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedAutoSpeakerSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedOnstageSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedDriverRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedPlayingDefenseDuration" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedDefenseRating" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedTotalCycles" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedFerry" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedAmpSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedDisabled" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+            <Field name="NormalizedTrapSuccess" source="File: odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||&quot;public&quot;.&quot;summary&quot;" type="Double" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="19">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="366" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_54afc0ee2401cb43bdc94f6ea2967096~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="20">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="210" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Team" selected="True" />
+            <SelectField field="Avg_AutoSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleSpeakerNoteSuccess" selected="True" />
+            <SelectField field="Avg_TeleAmpNoteSuccess" selected="True" />
+            <SelectField field="AvgNo0_PlayingDefenseDuration" selected="True" />
+            <SelectField field="AvgNo0_DriverRating" selected="True" />
+            <SelectField field="AvgNo0_DefenseRating" selected="True" />
+            <SelectField field="FirstPickScore" selected="True" />
+            <SelectField field="SecondPickScore" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="24">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1122" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_94778b96fa42b94483d06655d3778bac~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="26">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="942" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_ac349eb0bab89b429ffef1adadd6893e~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="27">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="750" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_bbfa0cc04adefb40ade0c1b63a22c4ff~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="28">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sample.Sample">
+        <Position x="606" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Skip</Mode>
+          <N>16</N>
+          <GroupFields orderChanged="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Skip 1st 16 rows</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSample" />
+    </Node>
+    <Node ToolID="29">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="510" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="FirstPickScore" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>FirstPickScore - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="30">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="618" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_3fed1fd4ead03c40bc43259806651a19~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="31">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="906" y="378" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="PickScore" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>PickScore - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="32">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="498" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_8dc9f8efecf39549a3d2ec6b5acb17cd~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="33">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="462" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="25">C:\mascout\AdvantageScout\second-list.xlsx|||Sheet1</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <PreserveFormat>False</PreserveFormat>
+            <UNCLocal>False</UNCLocal>
+            <SkipFieldNames>False</SkipFieldNames>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>second-list.xlsx
+Query=Sheet1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="34">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1506" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="23">odbc:DSN=PostgreSQL30;UID=postgres;PWD=__EncPwd1__|||PickList</File>
+          <Passwords>4AB0D8F118E67599FEA52FF383F2373BB</Passwords>
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <TransactionMessages>False</TransactionMessages>
+            <Projection />
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <SpatialObjSize>8000</SpatialObjSize>
+            <OutputOption>Overwrite</OutputOption>
+            <PostSQL />
+            <TransactionSize>0</TransactionSize>
+            <TableStyle>Quoted</TableStyle>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=PostgreSQL30
+Query=PickList</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="35">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1434" y="450" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File />
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions UseDcm="true" MaxRecords="" Format="23">
+            <SpatialObjSize>8000</SpatialObjSize>
+            <TableStyle>Quoted</TableStyle>
+            <TransactionMessages>False</TransactionMessages>
+            <Table>PickList</Table>
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <OutputOption>Overwrite</OutputOption>
+            <Connection DcmType="ConnectionId">5e08602f-c0ac-4df6-85c3-a2982f5300a2</Connection>
+            <Projection />
+            <PostSQL />
+            <TransactionSize>10000</TransactionSize>
+            <PreSQL />
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>dcm:ExternalGrafana — Postgresexternal
+Table=PickList</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="38">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="294" y="198" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>[Team] NOT IN ("1307","501","151")</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[Team] NOT IN ("1307","501","151")</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="39">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="294" y="162" width="100" height="40" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Edit the filter for DNPs</Text>
+          <Font name="Arial" size="8.25" style="0" />
+          <TextColor name="Black" />
+          <FillColor name="White" />
+          <Shape shape="0" />
+          <Justification Justification="4" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="40">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="1614" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="Team" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Team" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Left_Team" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_AutoSpeakerNoteSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_TeleSpeakerNoteSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_TeleAmpNoteSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Avg_TeleTrapNoteSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_Disabled" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_OnStageSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_TeleFerryNoteSuccess" selected="True" input="Left_" />
+                <SelectField field="Left_Sum_TotalCycles" selected="True" input="Left_" />
+                <SelectField field="Left_Right_Team" selected="False" rename="Left_Right_Team" input="Left_" />
+                <SelectField field="Right_Team" selected="False" rename="Right_Team" input="Right_" />
+                <SelectField field="Right_PickScore" selected="True" input="Right_" />
+                <SelectField field="Right_PickType" selected="True" input="Right_" />
+                <SelectField field="Right_PickOrder" selected="True" input="Right_" />
+                <SelectField field="*Unknown" selected="False" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="41">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1734" y="174" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="Sum_Disabled" selected="False" />
+            <SelectField field="Sum_TeleFerryNoteSuccess" selected="False" />
+            <SelectField field="Sum_TotalCycles" selected="False" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="42">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1734" y="270" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="43">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2022" y="162" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="25">C:\mascout\AdvantageScout\picklist-details.xlsx|||FirstPick</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <PreserveFormat>False</PreserveFormat>
+            <UNCLocal>False</UNCLocal>
+            <SkipFieldNames>False</SkipFieldNames>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>picklist-details.xlsx
+Query=FirstPick</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="44">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="1830" y="174" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Operator>=</Operator>
+            <Field>PickType</Field>
+            <Operands>
+              <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+              <DateType>fixed</DateType>
+              <PeriodDate>2024-03-30 16:04:54</PeriodDate>
+              <PeriodType>
+              </PeriodType>
+              <PeriodCount>0</PeriodCount>
+              <Operand>First</Operand>
+              <StartDate>2024-03-30 16:04:54</StartDate>
+              <EndDate>2024-03-30 16:04:54</EndDate>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[PickType] = "First"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="45">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="1830" y="270" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Operator>=</Operator>
+            <Field>PickType</Field>
+            <Operands>
+              <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+              <DateType>fixed</DateType>
+              <PeriodDate>2024-03-30 16:04:54</PeriodDate>
+              <PeriodType>
+              </PeriodType>
+              <PeriodCount>0</PeriodCount>
+              <Operand>Second</Operand>
+              <StartDate>2024-03-30 16:04:54</StartDate>
+              <EndDate>2024-03-30 16:04:54</EndDate>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[PickType] = "Second"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="46">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2130" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="25">C:\mascout\AdvantageScout\picklist-details.xlsx|||SecondPick</File>
+          <Passwords />
+          <Disable>False</Disable>
+          <FormatSpecificOptions>
+            <PreserveFormat>False</PreserveFormat>
+            <UNCLocal>False</UNCLocal>
+            <SkipFieldNames>False</SkipFieldNames>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>picklist-details.xlsx
+Query=SecondPick</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="47">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1926" y="162" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="PickScore" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>PickScore - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="48">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2022" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_ce1d5c3cc733c8489d9563f431760d4a~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="49">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1926" y="258" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="1033">
+            <Field field="PickScore" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>PickScore - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="50">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2118" y="378" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\mascout\AppData\Local\Temp\Engine_22096_b42dbce0ad3e1c4fbbd1cdb2eb793f40_\Engine_22096_3b93baf7343ee6438fd7226990226069~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="51">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BlockUntilDone.BlockUntilDone">
+        <Position x="2022" y="354" />
+      </GuiSettings>
+      <Properties>
+        <Configuration />
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBlockUntilDone" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="2" Connection="Output" />
+      <Destination ToolID="20" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="2" Connection="Output" />
+      <Destination ToolID="38" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="29" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="32" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="33" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="7" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="27" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="31" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Output" />
+      <Destination ToolID="8" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="8" Connection="Output" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="17" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="24" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="13" Connection="Output" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="14" Connection="Output" />
+      <Destination ToolID="15" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="11" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="35" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="40" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output" />
+      <Destination ToolID="40" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="17" Connection="Output" />
+      <Destination ToolID="14" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="20" Connection="Output" />
+      <Destination ToolID="19" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="28" Connection="Output" />
+      <Destination ToolID="13" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="28" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="30" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Output" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Output" />
+      <Destination ToolID="26" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="38" Connection="True" />
+      <Destination ToolID="3" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="40" Connection="Join" />
+      <Destination ToolID="42" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="40" Connection="Join" />
+      <Destination ToolID="41" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="41" Connection="Output" />
+      <Destination ToolID="44" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="42" Connection="Output" />
+      <Destination ToolID="45" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="44" Connection="True" />
+      <Destination ToolID="47" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="45" Connection="True" />
+      <Destination ToolID="49" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="47" Connection="Output" />
+      <Destination ToolID="48" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="47" Connection="Output" />
+      <Destination ToolID="43" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="49" Connection="Output" />
+      <Destination ToolID="51" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="51" Connection="Output2" />
+      <Destination ToolID="50" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="51" Connection="Output" />
+      <Destination ToolID="46" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <RunWithE2 value="True" />
+    <PredictiveToolsCodePage value="1252" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>2024_PickList_v5</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+      <WorkflowId value="999ac410-7447-4f00-a052-47c855c63221" />
+      <Telemetry>
+        <PreviousWorkflowId value="244a14a6-ea5d-4c32-8c25-20ff413181bc" />
+        <OriginWorkflowId value="ac223680-2397-48e5-895e-aa9a4ecb0ca5" />
+      </Telemetry>
+      <PlatformWorkflowId value="" />
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

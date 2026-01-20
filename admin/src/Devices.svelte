@@ -41,12 +41,15 @@
         } else if (status == 2) {
             return "Teleop";
         } else if (status == 3) {
-            return "Endgame";
+            return "Postgame";
         } else if (status == 4) {
             return "Offline";
         } else if (status == 5) {
             return "Pit Scout";
-        } else {
+        } else if (status == 0) {
+            return "Idle";
+        }
+        else {
             return "Offline"
         }
 

@@ -39,6 +39,7 @@ class SvelteInterface:
         if is_game:
             node = subprocess.Popen("npm run build -- \"" + game + "\"",
                                     cwd=self._get_absolute_path("games"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                                    # cwd=self._get_absolute_path("games"),  shell=True)
         else:
             node = subprocess.Popen("npm run build",
                                     cwd=self._get_absolute_path("admin"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)

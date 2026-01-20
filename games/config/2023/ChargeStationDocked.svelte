@@ -1,5 +1,5 @@
 <script>
-    import { gameData, gameState } from "../../current/stores";
+    import { gameData, gameState } from "./stores";
 
     let dockButton = "";
     if ($gameState === 0) {

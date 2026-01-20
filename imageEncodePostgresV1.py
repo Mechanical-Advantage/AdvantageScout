@@ -1,0 +1,119 @@
+import base64
+import binascii
+import os
+from PIL import Image
+import io
+import psycopg2
+import sqlite3 as sql
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-n', '--newonly', action='store_true')
+args = parser.parse_args()
+newonly = args.newonly
+print(newonly)
+db_global = "global.db"
+db_games = "data_$GAME.db"
+conn_global = sql.connect(db_global)
+cur_global = conn_global.cursor()
+event = cur_global.execute("SELECT value FROM config WHERE key='event'").fetchall()[0][0]
+cur_global.execute("SELECT value FROM config WHERE key = 'game'")
+game = str(cur_global.fetchall()[0][0])
+conn_global.close()
+
+conn_grafana = psycopg2.connect(database="Grafana-Output",
+                        host="5.tcp.ngrok.io",
+                        user="postgres",
+                        password="MA6328",
+                        port="23010")
+cur_grafana = conn_grafana.cursor()
+sql_text = 'SELECT "Team" FROM "Images" WHERE "Event"=%s'
+sqldata=(event,)
+cur_grafana.execute(sql_text,sqldata)
+processed = cur_grafana.fetchall()
+processed = [x[0] for x in processed]
+print(processed)
+print("Event ",event)
+path = "c://mascout//advantagescout//images//"
+dir_list = os.listdir(path)
+# print("Files and directories in '", path, "' :")
+eventImages = []
+for img_name in range(len(dir_list)):
+    if event in dir_list[img_name]:
+        # print(event in (dir_list[img_name]))
+        eventImages.append(dir_list[img_name])
+
+# cur_grafana.execute("DELETE FROM Images WHERE Event=?", (event,))
+# sql_text = 'DELETE FROM "Images" WHERE "Event"=%s;'
+# sql_data = (event,)
+# cur_grafana.execute(sql_text, sql_data)
+# conn_grafana.commit()
+count=-1
+data=[" "," "," "]  
+eventImages.sort()
+firstImage = eventImages[0].split("-")
+currentTeam = firstImage[1]
+imageData=[]
+teamData=[]
+teamsProcessed=[]
+firstPass=True
+for row in eventImages:
+    SplitRow = row.split("-")
+    img_name = row[1]
+    img_name = "images//" + row
+    if SplitRow[1] not in teamsProcessed:
+        if not firstPass:
+            imageData.append(teamData)
+            teamData=[]
+        firstPass=False
+        teamData.append(SplitRow[1])
+        teamsProcessed.append(SplitRow[1])
+
+    if os.path.isfile(img_name):
+        with open(img_name, "rb") as image_file:
+            tempData = base64.b64encode(image_file.read()).decode('utf-8')
+            teamData.append(tempData)
+
+print("Teams with images ",len(imageData))   
+uploadData=[]
+for images in imageData:
+    # print("Team "+images[0]+ " images " + str(len(images)-1))
+    tempImages=[" "," "," "] 
+    teamNumber=images[0]
+    imageCount=len(images)-1
+    if imageCount>3:
+        imageCount=3
+    count=0
+    while count< imageCount:
+        #print("Team "+teamNumber+" - "+str(count)+" - "+str(imageCount))
+        data[count]=images[count+1]
+        count=count+1
+    sqldata=(event,teamNumber,data[0],data[1],data[2])
+    #sqldata=(event,teamNumber)
+    uploadData.append(sqldata)
+        #print(sqldata)
+# print("Upload data before",uploadData)
+# print("New only ",newonly==True)
+if newonly == True:
+    for item in processed:
+        x=0
+        #print("team "+str(item))
+        while x<len(uploadData):
+            #print("Data ",uploadData[x][1])
+            if str(item) == uploadData[x][1]:
+                print("Found exising image data",uploadData[x][1])
+                uploadData.remove(uploadData[x])
+            x=x+1
+
+#print("Upload data",uploadData)
+
+for row in uploadData:
+    currentTeam=row[1]
+    sql_text = 'DELETE FROM "Images" WHERE "Event"=%s And "Team" = %s;'
+    sql_data = (event, currentTeam,)
+    cur_grafana.execute(sql_text, sql_data)
+    conn_grafana.commit()
+    sql_text = 'INSERT INTO "Images" ("Event", "Team", "Image", "Image2","Image3") VALUES (%s,%s,%s,%s,%s)'    
+    sql_data = row
+    print("Uploading images for team - ",currentTeam)
+    cur_grafana.execute(sql_text, sql_data)
+    conn_grafana.commit()
