@@ -2,6 +2,7 @@
 function AppManager(web) {
     this.web = web
     this.state = 0
+    this.shift = 1
     this.team
     this.match
     this.config
@@ -24,7 +25,6 @@ function AppManager(web) {
         this.notificationManager = new AppNotificationManager(this)
         this.serverManager = new AppServerManager(this)
     }
-
     // Respond to back button on mobile app
     this.backButton = function () {
         if (this.state == 0) {
@@ -59,6 +59,7 @@ function AppManager(web) {
 
     // Get current battery level
     function getBattery() {
+        
         navigator.getBattery().then(function (battery) {
             appManager.battery = battery.level * 100
             appManager.charging = battery.charging ? 1 : 0

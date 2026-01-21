@@ -24,13 +24,13 @@ function DevicesManager(adminManager) {
                 status = "Idle"
                 color = "yellow"
             } else if (devices[i].last_status == 1) {
-                status = devices[i].last_scoutname + "<br>Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Auto<br>" + devices[i].last_team + ", M" + devices[i].last_match + ", Shift " + devices[i].last_shift
                 color = "green"
             } else if (devices[i].last_status == 2) {
-                status = devices[i].last_scoutname + "<br>Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Tele-op<br>" + devices[i].last_team + ", M" + devices[i].last_match + ", Shift " + devices[i].last_shift
                 color = "green"
             } else if (devices[i].last_status == 3) {
-                status = devices[i].last_scoutname + "<br>Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match
+                status = devices[i].last_scoutname + "<br>Endgame<br>" + devices[i].last_team + ", M" + devices[i].last_match + ", Shift " + devices[i].last_shift
                 color = "green"
             } else if (devices[i].last_status == 4) {
                 status = "Offline Warning"

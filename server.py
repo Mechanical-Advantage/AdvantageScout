@@ -73,7 +73,8 @@ def init_global():
         last_status INTEGER,
         last_team INTEGER,
         last_match INTEGER,
-        last_scoutname TEXT
+        last_scoutname TEXT,
+        last_shift TEXT
         ); """)
     cur_global.execute("DROP TABLE IF EXISTS messages")
     cur_global.execute("""CREATE TABLE messages (
@@ -522,7 +523,7 @@ document.body.innerHTML = window.localStorage.getItem(
         return (jsmin(output))
 
     @cherrypy.expose
-    def heartbeat(self, device_name, state, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
+    def heartbeat(self, device_name, state, shift, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
         if route == None:
             route = cherrypy.request.remote.ip
 
@@ -533,11 +534,11 @@ document.body.innerHTML = window.localStorage.getItem(
         for i in range(len(names)):
             names[i] = names[i][0]
         if device_name not in names:
-            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_charging, last_status, last_scoutname) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                               (device_name, currentTime(), route, battery, charging, state, scoutname))
+            cur_global.execute("INSERT INTO devices (name, last_heartbeat, last_route, last_battery, last_charging, last_status, last_scoutname, last_shift) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                               (device_name, currentTime(), route, battery, charging, state, scoutname, shift))
         else:
-            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_charging = ?, last_status = ?, last_scoutname = ? WHERE name = ?",
-                               (currentTime(), route, battery, charging, state, scoutname, device_name))
+            cur_global.execute("UPDATE devices SET last_heartbeat = ?, last_route = ?, last_battery=?, last_charging = ?, last_status = ?, last_scoutname = ?, last_shift = ? WHERE name = ?",
+                               (currentTime(), route, battery, charging, state, scoutname, shift, device_name))
         if team != -1:
             cur_global.execute(
                 "UPDATE devices SET last_team = ? WHERE name = ?", (team, device_name))
@@ -1005,7 +1006,7 @@ document.body.innerHTML = window.localStorage.getItem(
         data = []
         for i in range(len(raw)):
             data.append({"name": raw[i][0], "last_heartbeat": raw[i][1], "last_route": raw[i][2], "last_battery": raw[i]
-                         [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8]})
+                         [3], "last_charging": raw[i][4], "last_status": raw[i][5], "last_team": raw[i][6], "last_match": raw[i][7], "last_scoutname": raw[i][8], "last_shift": raw[i][9]})
         conn_global.close()
         return (json.dumps(data))
     

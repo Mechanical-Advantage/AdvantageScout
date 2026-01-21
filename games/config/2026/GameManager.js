@@ -1,7 +1,7 @@
 import GameComponent from "./GameComponent.svelte";
 
 import { get } from "svelte/store";
-import { gameState, gameData, reversedAlliance,uploadState, currentTeam } from "./stores";
+import { gameState, gameData, reversedAlliance,uploadState, currentTeam, gameShift } from "./stores";
 
 
 export default class Game {
@@ -12,11 +12,12 @@ export default class Game {
         reversedAlliance.update(n => reversed)
         currentTeam.update(n => appManager.team)
         uploadState.subscribe(uploadState => {
-            if (uploadState > 0){
+            if (uploadState > 0) {
                 appManager.scoutManager.upload()
             }
             
         });
+        gameShift.subscribe(n => appManager.shift = n);
         this.#gameComponent = new GameComponent({
             target: root
         });
