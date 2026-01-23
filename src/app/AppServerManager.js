@@ -25,6 +25,7 @@ function AppServerManager(appManager) {
                 addToSerialQueue("heartbeat", function () {
                     var data = {
                         "state": appManager.state,
+                        "shift": appManager.shift,
                         "battery": appManager.battery,
                         "charging": appManager.charging
                     }
