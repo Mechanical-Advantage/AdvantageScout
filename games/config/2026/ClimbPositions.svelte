@@ -38,9 +38,9 @@
   </style>
 
 <button class="btn 
-    {($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL1"] == 2) || 
-    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL2"] == 2) || 
-    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL3"] == 2) 
+    {($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL1"] != 0) || 
+    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL2"] != 0) || 
+    ($gameData[gameState == 0 ? "Auto" : "Tele" + "ClimbL3"] != 0) 
     ? "" : "btn-disabled"}
     btn-primary"
      on:click={handleClick}>Climb {positions[$gameData[dockButton]]}?</button>
