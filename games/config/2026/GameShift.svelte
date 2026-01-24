@@ -13,16 +13,35 @@
         }
 
     }
+    function playBeep() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.type = 'square';
+      oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.2);
+    }
+
     if (!$shiftTimerStarted) {
       setTimeout(() => {
         animateButton = true;
-        setTimeout(() => animateButton = false, 2000);
+        setTimeout(() => animateButton = false, 5000)
+        playBeep();
       }, 10000)
       
       const interval = setInterval(() => {
         animateButton = true;
-        setTimeout(() => animateButton = false, 2000);
-      }, 30000)
+        setTimeout(() => animateButton = false, 5000);
+        playBeep();
+      }, 25000)
     }
     $shiftTimerStarted = true;
     let buttonSize = 'btn-small';
