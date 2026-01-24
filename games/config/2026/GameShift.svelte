@@ -1,6 +1,8 @@
 
 <script>
     import { gameData, gameState, gameShift, shiftTimerStarted } from "./stores";
+    import { onDestroy } from 'svelte';
+    
     let shifts = ["Transition", "Shift 1", "Shift 2", "Shift 3", "Shift 4", "Endgame"];
     let colors = ["btn-red", "btn-orange", "btn-yellow", "btn-green", "btn-blue", "btn-purple"];
     let animateButton = false;
