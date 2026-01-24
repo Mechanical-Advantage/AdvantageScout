@@ -2,10 +2,10 @@
 <script>
     import { gameData, gameState } from "./stores";
     let dockButton = gameState == 0 ? "AutoClimbPosition" : "TeleClimbPosition";
-    let positions = ["Left", "Middle", "Right"];
+    let positions = ["Left", "Middle", "Right", "Edge"];
     function handleClick() {
 
-        if ($gameData[dockButton] === 2) {
+        if ($gameData[dockButton] === 3) {
             $gameData[dockButton] = 0;
         } else {
             $gameData[dockButton] = $gameData[dockButton] + 1;

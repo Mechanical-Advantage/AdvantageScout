@@ -1,14 +1,14 @@
 <script>
     import { fuelButtonSpeed } from "./stores.js";
 
-    let sliderValue = $fuelButtonSpeed / 100;
+    let sliderValue = 1;
 
-    $: sliderValue, ($fuelButtonSpeed = sliderValue * 100);
+    $: sliderValue, ($fuelButtonSpeed = (0.2 / sliderValue) * 1000);
 </script>
 
 <div class="flex flex-col items-center justify-center">
     <div class="text-xl mt-2 font-bold">
-        Scoring Speed
+        BPS
     </div>
     <div class="w-64 mt-2">
         <input
@@ -18,13 +18,14 @@
             class="range range-primary"
             step="1"
             bind:value={sliderValue}
+            onchange={console.log($fuelButtonSpeed)}
         />
         <div class="w-full flex justify-between text-s px-2">
-            <span>0.1s</span>
-            <span>0.2s</span>
-            <span>0.3s</span>
-            <span>0.4s</span>
-            <span>0.5s</span>
+            <span>5</span>
+            <span>10</span>
+            <span>15</span>
+            <span>20</span>
+            <span>25</span>
         </div>
     </div>
 </div>
