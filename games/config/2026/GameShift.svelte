@@ -17,8 +17,8 @@
   
   <style>
     .btn {
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 12px 24px;
+      font-size: 24px;
     }
   
     .btn-disabled {

@@ -5,6 +5,9 @@
   import AutoClimbDismount from "./AutoClimbDismount.svelte";
   import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
   import GameShift from "./GameShift.svelte";
+  import { liveLocation } from "./stores";
+  
+  $liveLocation = "Floor";
 </script>
 
 <!-- <ScoringGrid /> -->
@@ -36,6 +39,6 @@
 <!-- <div class="absolute ml-[400px] mt-[300px]">
   <AutoClimbDismount />
 </div>  -->
-<div class="absolute ml-[300px] mt-[00px]">
+<div class="absolute ml-[300px] mt-[75px]">
   <GameShift />
 </div>  
