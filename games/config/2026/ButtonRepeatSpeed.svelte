@@ -1,7 +1,7 @@
 <script>
     import { fuelButtonSpeed } from "./stores.js";
 
-    let sliderValue = 1;
+    let sliderValue = 200 / $fuelButtonSpeed;
 
     $: sliderValue, ($fuelButtonSpeed = (0.2 / sliderValue) * 1000);
 </script>

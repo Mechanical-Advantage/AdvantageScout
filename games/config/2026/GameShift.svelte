@@ -29,7 +29,7 @@
       oscillator.start(audioCtx.currentTime);
       oscillator.stop(audioCtx.currentTime + 0.2);
     }
-
+    
     if (!$shiftTimerStarted) {
       setTimeout(() => {
         animateButton = true;
@@ -42,6 +42,9 @@
         setTimeout(() => animateButton = false, 5000);
         playBeep();
       }, 25000)
+      onDestroy(() => {
+        clearInterval(interval);
+      });
     }
     $shiftTimerStarted = true;
     let buttonSize = 'btn-small';
