@@ -34,7 +34,11 @@
       method: "POST",
       body: formData,
     });
-    alert("UPDATED ORDER!");
+    if (res.ok) {
+      alert("UPDATED ORDER!");
+    } else {
+      alert("ERROR UPDATING ORDER!");
+    }
   }
 
   function handleClick() {
