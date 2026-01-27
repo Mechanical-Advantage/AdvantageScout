@@ -42,8 +42,11 @@
             }
             else {returnValue = "Auto"}
         }
-
-        alert("UPDATED " + key.toUpperCase() + " TO " + returnValue.toUpperCase() + "!")
+        if (res.ok) {
+            alert("UPDATED " + key.toUpperCase() + " TO " + returnValue.toUpperCase() + "!");
+        } else {
+            alert("ERROR UPDATING " + key.toUpperCase() + " TO " + returnValue.toUpperCase() + "!");
+        }
     }
 
     onMount(async () => {
