@@ -16,7 +16,7 @@
             min="1"
             max="5"
             class="range range-primary"
-            step="1"
+            step="0.5"
             bind:value={sliderValue}
             onchange={console.log($fuelButtonSpeed)}
         />
