@@ -9,6 +9,11 @@
             method: "POST",
             body: formData,
         });
+        if (res.ok) {
+            alert("REFRESHED SCHEDULE!");
+        } else {
+            alert("ERROR REFRESHING SCHEDULE!");
+        }
     }
 
     async function ForceSchedule(matchNumber) {
@@ -18,12 +23,22 @@
             method: "POST",
             body: formData,
         });
+        if (res.ok) {
+            alert("FORCED SCHEDULE!");
+        } else {
+            alert("ERROR FORCING SCHEDULE!");
+        }
     }
 
     async function ReSchedule() {
         const res = await fetch(actionurl2, {
             method: "GET",
         });
+        if (res.ok) {
+            alert("RESCHEDULED NEXT MATCH!");
+        } else {
+            alert("ERROR RESCHEDULING NEXT MATCH!");
+        }
     }
 </script>
 
@@ -37,12 +52,12 @@
         >
         <button
             class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-blue-700"
-            on:click={RefreshSchedule("tba")}>Refresh From TBA</button
+            on:click={() => RefreshSchedule("tba")}>Refresh From TBA</button
         >
         <br />
         <button
             class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-blue-700"
-            on:click={RefreshSchedule("csv")}>Refresh from CSV</button
+            on:click={() => RefreshSchedule("csv")}>Refresh from CSV</button
         >
         <br />
         <button
@@ -52,7 +67,7 @@
         <div>
         <button
             class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-blue-700"
-            on:click={ForceSchedule(matchNumber)}>Force Schedule</button
+            on:click={() => ForceSchedule(matchNumber)}>Force Schedule</button
         >
         
         <input class="input w-[100px] " type="number" bind:value={matchNumber} />

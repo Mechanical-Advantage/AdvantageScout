@@ -25,7 +25,7 @@
             body: formData,
         });
 
-        if (res.status == "200") {
+        if (res.ok) {
             alert("Block Schedule Created!");
         } else {
             alert("Block Schedule Failed!");
