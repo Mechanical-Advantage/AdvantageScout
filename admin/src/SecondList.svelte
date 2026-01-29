@@ -3,6 +3,7 @@
   import { secondPickList } from "./PicklistStores.js";
   import SortableList from "./SortableList.svelte";
   import Component from "./Component.svelte";
+  export let picklistVisibility = false;
   let headerText = "First Pick";
   export let picklist = "";
   export let list = [];
@@ -64,25 +65,25 @@
     console.log("sort list" + list);
   };
 
-
 </script>
-
-<div class="flex flex-col gap-x-40">
-  <h1>
-    {pickType}
-    <button
-      class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-purple-800"
-      on:click={handleClick}>Save</button
+{#if picklistVisibility}
+  <div class="flex flex-col gap-x-40">
+    <h1>
+      {pickType}
+      <button
+        class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-purple-800"
+        on:click={handleClick}>Save</button
+      >
+    </h1>
+    <SortableList
+      {list}
+      key="id"
+      on:sort={sortList}
+      let:item
+      let:index
+      {pickType}
     >
-  </h1>
-  <SortableList
-    {list}
-    key="id"
-    on:sort={sortList}
-    let:item
-    let:index
-    {pickType}
-  >
-    <Component {item} {index} />
-  </SortableList>
-</div>
+      <Component {item} {index} />
+    </SortableList>
+  </div>
+{/if}

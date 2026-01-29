@@ -3,6 +3,7 @@
   import SortableList from "./SortableList.svelte";
   import Component from "./Component.svelte";
   import { firstPickList } from "./PicklistStores.js";
+  export let picklistVisibility = true;
   export let picklist = "";
   export let list = [];
   export let pickType = "";
@@ -10,7 +11,7 @@
     promise = (async () => {
       const response = await fetch("/get_firstlistpg", { method: "GET" });
       const data = await response.json();
-      list = data;
+      list = data;  
     })();
   });
 
@@ -36,23 +37,24 @@
     list = ev.detail;
   };
 </script>
-
-<div class="flex flex-col gap-x-40">
-  <h1>
-    {pickType}
-    <button
-      class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-green-700"
-      on:click={handleClick}>Save</button
+{#if picklistVisibility}
+  <div class="flex flex-col gap-x-40">
+    <h1>
+      {pickType}
+      <button
+        class="h-12 px-6 m-2 text-xl rounded-lg bg-yellow-500 text-green-700"
+        on:click={handleClick}>Save</button
+      >
+    </h1>
+    <SortableList
+      {list}
+      key="id"
+      on:sort={sortList}
+      let:item
+      let:index
+      {pickType}
     >
-  </h1>
-  <SortableList
-    {list}
-    key="id"
-    on:sort={sortList}
-    let:item
-    let:index
-    {pickType}
-  >
-    <Component {item} {index} />
-  </SortableList>
-</div>
+      <Component {item} {index} />
+    </SortableList>
+  </div>
+{/if}

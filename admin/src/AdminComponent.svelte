@@ -12,9 +12,9 @@
     import CurrentMatchDisplay from "./CurrentMatchDisplay.svelte";
     import FirstList from "./FirstList.svelte";
     import SecondList from "./SecondList.svelte";
-
+    import HidePicklist from "./HidePicklist.svelte";
       
-
+    let picklistVisibility = false;
 </script>
 
 <div class="absolute mt-0 ml-[750px] z-5">
@@ -53,7 +53,8 @@
     <Devices />
 </div>
 
-<div class="flex flex-row gap-x-40 absolute top-450 ml-[650px]">
-    <FirstList picklist="1" pickType="First"/>
-    <SecondList picklist="2" pickType="Second"/>
+<div class="flex flex-row gap-x-10 absolute top-450 ml-[650px]">
+    <HidePicklist bind:picklistVisibility/>
+    <FirstList picklistVisibility={picklistVisibility} picklist="1" pickType="First"/>
+    <SecondList picklistVisibility={picklistVisibility} picklist="2" pickType="Second"/>
 </div>
