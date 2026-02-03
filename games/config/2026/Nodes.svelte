@@ -50,8 +50,8 @@
   $gameData[driverField] = ($gameData[driverField] || 0) + 1;
   console.log("LocationField " + locationField)
   $gameData[dataField] = ($gameData[dataField] || 0) + 1;
-    console.log("LiveGamePiece " + $liveGamepiece);
-    $gameData[locationField] = $gameData[locationField] + 1;
+  console.log("LiveGamePiece " + $liveGamepiece);
+  $gameData[locationField] = $gameData[locationField] + 1;
 
     intervalId = setInterval(() => {  
       if (level == 1) {
@@ -64,8 +64,8 @@
   // recompute on each tick before mutating so fields are valid
   dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
   locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-  driverField = gameMode + shiftName + "Driver" + $liveGamepiece;
-  $gameData[driverField] = ($gameData[driverField] || 0) + 1;
+  //driverField = gameMode + shiftName + "Driver" + $liveGamepiece;
+  //$gameData[driverField] = ($gameData[driverField] || 0) + 1;
   $gameData[dataField] = ($gameData[dataField] || 0) + 1;
   $gameData[locationField] = ($gameData[locationField] || 0) + 1;
     }, $fuelButtonSpeed);

@@ -25,6 +25,7 @@ our_team = 6328
 default_port = 8000  # can override w/ command line argument
 admin_socket_port = 8001  # port for admin web socket
 forward_socket_port = 8002  # port for forwarding server
+forward_socket_port_2 = 8003  # port for second forwarding server
 host = "0.0.0.0"
 bt_enable = True
 bt_ports_incoming = ["COM12"]  # not current, only for app versions < 1.4.0
