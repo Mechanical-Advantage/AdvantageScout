@@ -2,7 +2,7 @@
 <script>
     import { gameData, gameState } from "./stores";
     let dockButton = gameState == 0 ? "AutoClimbPosition" : "TeleClimbPosition";
-    let positions = ["Left", "Middle", "Right", "Edge"];
+    let positions = ["Far", "Middle", "Near", "Edge"];
     function handleClick() {
 
         if ($gameData[dockButton] === 3) {
