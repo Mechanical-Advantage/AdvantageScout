@@ -36,7 +36,7 @@
   on:click={updateGameObject}
 >
   {#if location === "Floor"}
-    <svg fill="#b71f1f" height="80px" width="80px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" xml:space="preserve" stroke="#b71f1f">
+    <svg fill="#91c5cf" height="80px" width="80px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" xml:space="preserve" stroke="#b71f1f">
     <g id="SVGRepo_iconCarrier" transform="translate(50, -50)"> <g> <g> <path d="M0,0v512h512V0H0z M460.075,30.417l-43.548,43.547L372.98,30.417H460.075z M481.583,51.925v117.512L336.264,314.755 l-58.756-58.756L481.583,51.925z M395.02,95.472L95.472,395.019l-58.756-58.756L336.264,36.717L395.02,95.472z M299.547,30.417 L175.736,154.228L116.98,95.472l65.055-65.055H299.547z M30.417,30.417H139.02L30.417,139.02V30.417z M30.417,182.036 l65.055-65.055l58.756,58.756L30.417,299.546V182.036z M30.417,372.979l43.547,43.547l-43.547,43.547V372.979z M51.925,481.583 L256,277.508l58.756,58.756L169.437,481.583H51.925z M212.453,481.583l269.13-269.129v117.51L329.964,481.583H212.453z M372.981,481.583l43.546-43.547l43.547,43.547H372.981z M481.583,460.075l-43.547-43.547l43.547-43.547V460.075z"/> </g> </g> </g>
     </svg>
   {:else}

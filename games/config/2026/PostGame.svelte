@@ -20,10 +20,10 @@
     $gameData["TeleHubFuelCyclesSuccess"].push($fuelCycleCountSuccess);
     $gameData["TeleHubFuelCyclesFail"].push($fuelCycleCountFail);
 
-    $gameData["TeleHubFuelCyclesSuccess"] = JSON.stringify($gameData["TeleHubFuelCyclesSuccess"]);
-    $gameData["TeleHubFuelCyclesFail"] = JSON.stringify($gameData["TeleHubFuelCyclesFail"]);
-    $gameData["AutoHubFuelCyclesSuccess"] = JSON.stringify($gameData["AutoHubFuelCyclesSuccess"]);
-    $gameData["AutoHubFuelCyclesFail"] = JSON.stringify($gameData["AutoHubFuelCyclesFail"]);
+    // $gameData["TeleHubFuelCyclesSuccess"] = JSON.stringify($gameData["TeleHubFuelCyclesSuccess"]);
+    // $gameData["TeleHubFuelCyclesFail"] = JSON.stringify($gameData["TeleHubFuelCyclesFail"]);
+    // $gameData["AutoHubFuelCyclesSuccess"] = JSON.stringify($gameData["AutoHubFuelCyclesSuccess"]);
+    // $gameData["AutoHubFuelCyclesFail"] = JSON.stringify($gameData["AutoHubFuelCyclesFail"]);
     
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
