@@ -100,7 +100,7 @@
         "HopperCapacity INTEGER DEFAULT 0",
         "HasAdvantageKit INTEGER DEFAULT 0",
         "HasAdvantageScope INTEGER DEFAULT 0",
-        "HaveAuto INTEGER DEFAULT 0"
+        "ShooterType INTEGER DEFAULT 0"
     ],
     "forceClassic": {
         "auto": false,
@@ -361,7 +361,8 @@
                 "label": "Electrical Quality?",
                 "options": {
                     "NA": 0,
-                    "Need someone else to check this out.": 1,
+                    "Bad": 1,
+                    "Need someone else to check this out.": 2,
                     "This looks good!": 5
                 }
             },
@@ -423,9 +424,18 @@
                 "label": "Has Advantage Kit?"
             },
             {
-                "type": "checkbox",
-                "field": "HaveAuto",
-                "label": "Have Auto?"
+                "type": "chooser",
+                "field": "ShooterType",
+                "label": "Shooter Type",
+                "options": {
+                    "NA": 0,
+                    "Single Turret": 1,
+                    "Double Turret": 2,
+                    "Single": 3,
+                    "Double": 4,
+                    "Drum": 5,
+                    "Other": 6
+                }
             },
             {
                 "type": "text",
