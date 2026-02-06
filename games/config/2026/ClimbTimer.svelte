@@ -21,20 +21,24 @@
     elapsed = 0;
   }
   onMount(() => {
-    let last_time = performance.now();
+  let last_time = performance.now();
+  let frame;
 
-    let frame = requestAnimationFrame(function update(time) {
-      frame = requestAnimationFrame(update);
-      if (isRunning) {
-        elapsed += time - last_time;
-        last_time = time;
-      }
-    });
+  function update(time) {
+    const delta = time - last_time;
+    last_time = time;
 
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  });
+    if (isRunning) {
+      elapsed += delta;
+    }
+    
+    frame = requestAnimationFrame(update);
+  }
+
+  frame = requestAnimationFrame(update);
+
+  return () => cancelAnimationFrame(frame);
+});
 </script>
 <button on:click={toggleTimer} class="btn {isRunning ? 'btn-success' : 'btn-primary'}">
   Climb time:<strong> {(Math.round(elapsed) / 1000)}s</strong>
