@@ -4,6 +4,7 @@
   import Nodes from "./Nodes.svelte";
   import TowerClimb from "./TowerClimb.svelte";
   import ClimbPositions from "./ClimbPositions.svelte";
+  import ClimbTimer from "./ClimbTimer.svelte";
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["BotState"] == 2);
@@ -47,6 +48,9 @@
           <TowerClimb buttonType="L3" />
           <ClimbPositions />
         </div>
+      </div>
+      <div class="absolute ml-[300px] mt-[100px]">
+          <ClimbTimer />
       </div>
       
       <!-- <div class="absolute ml-[125px] mt-[30px]">
