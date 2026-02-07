@@ -28,7 +28,6 @@ export const gameData = writable({
 	StartConfig: " ",
 	TeleSTHubFuelSuccess: 0,
 	AutoHubFuelSuccess: 0,
-	AutoHubPreLoadedFuelSuccess: 0,
 	TeleSTHubFuelFail: 0,
 	AutoHubFuelFail: 0,
 	TeleClimbL3: 0,
@@ -93,6 +92,7 @@ export const gameData = writable({
 	TeleSEFloorFuelCollect: 0,
 
 	AutoHubFuelCyclesSuccess: [],
+	AutoHubFuelLocationCyclesSuccess: [],
 	AutoHubFuelCyclesFail: [],
 	TeleHubFuelCyclesSuccess: [],
 	TeleHubFuelCyclesFail: [],

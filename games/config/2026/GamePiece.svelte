@@ -22,11 +22,13 @@
     console.log("hubFail" + hubFail);
     $gameData[hubSuccess].push($fuelCycleCountSuccess);
     $gameData[hubFail].push($fuelCycleCountFail);
+    if ($gameState == 0) {
+      $gameData["AutoHubFuelLocationCyclesSuccess"].push(lastLocation);
+      console.log($gameData["AutoHubFuelLocationCyclesSuccess"]);
+    }
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
-    if (lastLocation === "PreLoaded" && gamePieceLocation === "Neutral" && $gameState == 0) {
-      $gameData["AutoHubPreLoadedFuelSuccess"] = $gameData["AutoHubFuelSuccess"];
-    }
+    
   }
 </script>
 
