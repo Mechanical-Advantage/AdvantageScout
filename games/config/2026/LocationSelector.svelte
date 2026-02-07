@@ -26,6 +26,15 @@
       btnsize=" w-[62px] h-[62px]"
     />
   </div>
+  <div>
+    <GamePieceLocation
+      location="Neutral"
+      gamePieceLocation="Neutral"
+      gamePiece="Fuel"
+      {gameMode}
+      btnsize=" w-[62px] h-[62px]"
+    />
+  </div>
 </div>
 {/if}
 

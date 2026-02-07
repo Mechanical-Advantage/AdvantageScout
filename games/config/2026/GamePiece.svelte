@@ -9,13 +9,11 @@
   export let btnsize;
   let hubSuccess;
   let hubFail;
-  // console.log("btnstate" + btnstate);
-  // console.log("gamePieceLocation" + gamePieceLocation);
-  // console.log(gamePiece);
-  // console.log(liveGamepiece);
+  let lastLocation;
   console.log("entering gamepiece")
   let coneSVG = "";
   function updateGameObject() {
+    lastLocation = $liveLocation;
     $liveGamepiece = gamePiece;
     $liveLocation = gamePieceLocation;
     hubSuccess=($gameState == 0 ? "Auto" : "Tele") + "HubFuelCyclesSuccess";
@@ -26,6 +24,9 @@
     $gameData[hubFail].push($fuelCycleCountFail);
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
+    if (lastLocation === "PreLoaded" && gamePieceLocation === "Neutral" && $gameState == 0) {
+      $gameData["AutoHubPreLoadedFuelSuccess"] = $gameData["AutoHubFuelSuccess"];
+    }
   }
 </script>
 

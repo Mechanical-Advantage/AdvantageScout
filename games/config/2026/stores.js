@@ -28,6 +28,7 @@ export const gameData = writable({
 	StartConfig: " ",
 	TeleSTHubFuelSuccess: 0,
 	AutoHubFuelSuccess: 0,
+	AutoHubPreLoadedFuelSuccess: 0,
 	TeleSTHubFuelFail: 0,
 	AutoHubFuelFail: 0,
 	TeleClimbL3: 0,

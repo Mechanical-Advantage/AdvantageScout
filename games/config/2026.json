@@ -7,6 +7,7 @@
         "StartConfig TEXT DEFAULT ''",
         "AutoPreLoadedFuelCollect INTEGER DEFAULT 0",
         "AutoHubFuelSuccess INTEGER DEFAULT 0",
+        "AutoHubPreLoadedFuelSuccess INTEGER DEFAULT 0",
         "AutoHubFuelFail INTEGER DEFAULT 0",
         "AutoPassFuelSuccess INTEGER DEFAULT 0",
         "AutoPassFuelFail INTEGER DEFAULT 0",
