@@ -22,13 +22,6 @@
   let buttonColor = "btn-primary";
 
   function upload() {
-    $gameData["TeamRating1"] = list[0]["name"];
-    $gameData["TeamRating2"] = list[1]["name"];
-    $gameData["TeamRating3"] = list[2]["name"];
-    $gameData["EndgameComment"] = $gameData["EndgameComment"].replace(
-      /[^\x20-\x7E]+/g,
-      "",
-    );
     $uploadState += 1;
   }
 </script>
