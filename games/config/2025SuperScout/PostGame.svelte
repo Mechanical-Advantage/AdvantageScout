@@ -37,7 +37,7 @@ const sortList = ev => {list = ev.detail};
   }
 </script>
 
-<div class=" absolute top-[25px] left-[60px] ">
+<div class="absolute top-[25px] left-[60px] ">
   <label for="message" class="block mb-2 text-sm font-bold text-white"
     >{$gameData["Team1"]} Comment</label
   >
