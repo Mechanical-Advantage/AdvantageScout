@@ -13,6 +13,7 @@
         "AutoFerryFuelSuccess INTEGER DEFAULT 0",
         "AutoFloorFuelCollect INTEGER DEFAULT 0",
         "AutoOutpostFuelCollect INTEGER DEFAULT 0",
+        "AutoNeutralFuelCollect INTEGER DEFAULT 0",
         "AutoClimbL1 INTEGER DEFAULT 0",
         "AutoClimbDismount INTEGER DEFAULT 0",
         "AutoClimbPosition INTEGER DEFAULT 0",

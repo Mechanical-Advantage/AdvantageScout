@@ -50,6 +50,7 @@ export const gameData = writable({
 	TeleSTOutpostFuelCollect: 0,
 	TeleSTFloorFuelCollect: 0,
 	AutoFloorFuelCollect: 0,
+	AutoNeutralFuelCollect: 0,
 
 	TeleS1HubFuelSuccess: 0,
 	TeleS1HubFuelFail: 0,
