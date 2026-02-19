@@ -1,8 +1,6 @@
 <script>
   import Ratings from "./Ratings.svelte";
   import { gameData, uploadState } from "./stores";
-  import SortableList from "./SortableList.svelte";
-  import Component from "./Component.svelte";
   import BotState from "./BotState.svelte";
   import PickSelection from "./PickSelection.svelte";
   import Watch from "./Watch.svelte";
@@ -15,11 +13,6 @@
     { id: 2, name: $gameData["Team2"], content: "" },
     { id: 3, name: $gameData["Team3"], content: "" },
   ];
-  const sortList = (ev) => {
-    list = ev.detail;
-  };
-
-  let buttonColor = "btn-primary";
 
   function upload() {
     $uploadState += 1;
@@ -50,7 +43,7 @@
       <PickSelection team="1" />
       <Watch team="1" />
     </div>
-    <BotState teamState="1" />
+    <BotState teamIndex="1" />
   </div>
 
   <div class="flex flex-col gap-y-[20px]">
@@ -76,7 +69,7 @@
       <PickSelection team="2" />
       <Watch team="2" />
     </div>
-    <BotState teamState="2" />
+    <BotState teamIndex="2" />
   </div>
   <div class="flex flex-col gap-y-[20px]">
     <label for="message" class="block mb-2 text-sm font-bold text-white"
@@ -101,7 +94,7 @@
       <PickSelection team="3" />
       <Watch team="3" />
     </div>
-    <BotState teamState="3" />
+    <BotState teamIndex="3" />
   </div>
 </div>
 <button
