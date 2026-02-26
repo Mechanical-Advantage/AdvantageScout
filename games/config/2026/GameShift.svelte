@@ -1,55 +1,62 @@
 
 <script>
-    import { gameData, gameState, gameShift, shiftTimerStarted } from "./stores";
-    import { onDestroy } from 'svelte';
+    import { gameShift, currentMessages, realGameShift } from "./stores";
+    import { onDestroy, onMount } from 'svelte';
     
     let shifts = ["Transition", "Shift 1", "Shift 2", "Shift 3", "Shift 4", "Endgame"];
     let colors = ["btn-red", "btn-orange", "btn-yellow", "btn-green", "btn-blue", "btn-purple"];
     let animateButton = false;
-    function handleClick() {
-
-        if ($gameShift === 5) {
-            $gameShift = 0;
-        } else {
-            $gameShift = $gameShift + 1;
-        }
-
-    }
-    function playBeep() {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-
-      oscillator.type = 'square';
-      oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
-      gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
-
-      oscillator.start(audioCtx.currentTime);
-      oscillator.stop(audioCtx.currentTime + 0.2);
-    }
     
-    if (!$shiftTimerStarted) {
-      setTimeout(() => {
-        animateButton = true;
-        setTimeout(() => animateButton = false, 5000)
-        playBeep();
-      }, 10000)
-      
-      const interval = setInterval(() => {
-        animateButton = true;
-        setTimeout(() => animateButton = false, 5000);
-        playBeep();
-      }, 25000)
-      onDestroy(() => {
-        clearInterval(interval);
-      });
+    $: teleopStartStr = $currentMessages[$currentMessages.length - 1]?.substring(6);
+    
+    let timerInterval;
+    let triggeredShifts = new Set();
+
+    function handleClick() {
+        $gameShift = ($gameShift + 1) % shifts.length;
     }
-    $shiftTimerStarted = true;
-    let buttonSize = 'btn-small';
+
+    function playBeep() {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.2);
+    }
+
+    function triggerAlert() {
+        animateButton = true;
+        playBeep();
+        setTimeout(() => animateButton = false, 5000);
+    }
+
+    onMount(() => {
+        timerInterval = setInterval(() => {
+            if (!teleopStartStr) return;
+            const startTime = new Date(+teleopStartStr).getTime();
+            const currentTime = Date.now();
+            const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
+
+            const shifts = [10, 35, 60, 85, 110, 135]; 
+
+            const shiftIndex = shifts.indexOf(secondsElapsed);
+
+            if (shiftIndex !== -1 && !triggeredShifts.has(secondsElapsed)) {
+                triggerAlert();
+                $realGameShift = shiftIndex;
+                triggeredShifts.add(secondsElapsed);
+            }
+        }, 500);
+    });
+
+    onDestroy(() => {
+        clearInterval(timerInterval);
+    });
 </script>
 
 <style>
@@ -131,6 +138,12 @@
     color: white;
   }
 </style>
-
+<div class="indicator absolute ml-[100px]">
+  <span class="indicator-item badge badge-accent w-[250px] text-l py-5">
+     {!teleopStartStr ? "No Teleop start recived" : "Current Game Shift: " + shifts[$realGameShift]}
+  </span>
+</div>
+<div class="mt-10">
 <button class="btn {animateButton ? "animate-bounce" : ""} {colors[$gameShift]}"
      on:click={handleClick}>{shifts[$gameShift]}</button>
+</div>

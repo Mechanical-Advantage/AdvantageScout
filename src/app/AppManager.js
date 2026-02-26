@@ -10,7 +10,8 @@ function AppManager(web) {
     this.schedule
     this.battery = -1
     this.charging = 0
-
+    this.dataMessages = []
+    
     // Instantiate managers
     this.settingsManager = new SettingsManager(this)
     this.scoutManager = new ScoutManager(this)
@@ -79,10 +80,12 @@ function AppManager(web) {
     this.showMessages = function (messages) {
         if (messages.length > 0) {
             this.notificationManager.beep(1)
-            if (messages.length == 1) {
-                this.notificationManager.alert("New Message", messages[0])
-            } else {
-                this.notificationManager.alert(messages.length.toString() + " New Messages", messages.join("\n\n"))
+            this.dataMessages = messages.filter(message => message.startsWith("*data:"));
+            const notificationMessages = messages.filter(message => !message.startsWith("*data:"));
+            if (notificationMessages.length == 1) {
+                this.notificationManager.alert("New Message", notificationMessages[0])
+            } else if (notificationMessages.length > 0) {
+                this.notificationManager.alert(notificationMessages.length.toString() + " New Messages", notificationMessages.join("\n\n"))
             }
         }
     }

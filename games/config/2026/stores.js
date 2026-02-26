@@ -18,7 +18,8 @@ export const fuelCycleCountSuccess = writable(0);
 export const fuelCycleCountFail = writable(0);
 export const fuelButtonSpeed = writable(200);
 export const gameShift = writable(0);
-export const shiftTimerStarted = writable(false);
+export const realGameShift = writable(0);
+export const currentMessages = writable([]);
 
 export const gameData = writable({
 	AllianceColor: 0,

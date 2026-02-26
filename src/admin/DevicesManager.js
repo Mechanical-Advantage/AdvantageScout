@@ -137,6 +137,17 @@ function DevicesManager(adminManager) {
         }
     }
 
+    this.sendShiftMessage = function () {
+        var text = "*data:" + Date.now();
+
+        for (var i = 0; i < devices.length; i++) {
+            adminManager.request("POST", "/send_message", function () { 
+            }, {
+                target: devices[i].name,
+                text: text
+            }, "Failed to queue message for " + devices[i].name);
+        }
+    };
     //Web socket code
     this.createSocket = function () {
         var socket = new WebSocket("ws://" + window.location.hostname + ":8001")

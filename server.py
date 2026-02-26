@@ -735,6 +735,12 @@ document.body.innerHTML = window.localStorage.getItem(
             Admin - Advantage Scout
         </h1>
         <div class="section">
+            <button onclick="javascript:adminManager.devicesManager.sendShiftMessage()">
+                <strong>Start Teleop</strong>
+            </button>
+        </div>
+        <br>
+        <div class="section">
             <h3>
                 Config
             </h3>
@@ -835,7 +841,7 @@ document.body.innerHTML = window.localStorage.getItem(
             </button>
             <table id="scoutlist" style="margin-top: 7px;"></table>
         </div>
-
+        
         <div class="section">
             <h3>
                 Devices
