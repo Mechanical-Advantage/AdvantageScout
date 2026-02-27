@@ -3,17 +3,21 @@
     import { gameShift, currentMessages, realGameShift } from "./stores";
     import { onDestroy, onMount } from 'svelte';
     
-    let shifts = ["Transition", "Shift 1", "Shift 2", "Shift 3", "Shift 4", "Endgame"];
+    let shifts = ["Transition", "Shift 1", "Shift 2", "Shift 3", "Shift 4", "Endgame", "End of Match"];
     let colors = ["btn-red", "btn-orange", "btn-yellow", "btn-green", "btn-blue", "btn-purple"];
     let animateButton = false;
-    
-    $: teleopStartStr = $currentMessages[$currentMessages.length - 1]?.substring(6);
+    let teleopStartStr = "";
+    $: {
+      if ($currentMessages.length > 0) {
+        teleopStartStr = $currentMessages[$currentMessages.length - 1]?.substring(6);
+      }
+    }
     
     let timerInterval;
     let triggeredShifts = new Set();
 
     function handleClick() {
-        $gameShift = ($gameShift + 1) % shifts.length;
+        $gameShift = ($gameShift + 1) % (shifts.length - 1);
     }
 
     function playBeep() {
@@ -42,15 +46,18 @@
             const currentTime = Date.now();
             const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
 
-            const shifts = [10, 35, 60, 85, 110, 135]; 
+            const shiftsTimes = [0, 10, 35, 60, 85, 110, 135]; 
 
-            const shiftIndex = shifts.indexOf(secondsElapsed);
+            const shiftIndex = shiftsTimes.indexOf(secondsElapsed);
 
-            if (shiftIndex !== -1 && !triggeredShifts.has(secondsElapsed)) {
+            if (shiftIndex != -1 && !triggeredShifts.has(secondsElapsed)) {
+              if (shiftIndex < shiftsTimes.length - 1) {
                 triggerAlert();
-                $realGameShift = shiftIndex + 1;
-                triggeredShifts.add(secondsElapsed);
+              }
+              $realGameShift = shiftIndex;
+              triggeredShifts.add(secondsElapsed);
             }
+            console.log(secondsElapsed)
         }, 500);
     });
 
@@ -140,7 +147,7 @@
 </style>
 <div class="indicator absolute ml-[100px]">
   <span class="indicator-item badge badge-accent w-[250px] text-l py-5">
-     {!teleopStartStr ? "No Teleop start recived" : "Current Game Shift: " + shifts[$realGameShift]}
+     {!teleopStartStr ? "No Teleop Start Recived" : "Current Game Shift: " + shifts[$realGameShift]}
   </span>
 </div>
 <div class="mt-10">

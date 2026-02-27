@@ -23,16 +23,17 @@ export default class Game {
         });
 
         this.messageInterval = setInterval(() => {
-        if (get(currentMessages) !== appManager.dataMessages) {
+        if (get(currentMessages) !== appManager.dataMessages && appManager.dataMessages.length > 0) {
             currentMessages.set(appManager.dataMessages);
         }
     }, 200);
     }
     setMode(mode) {
-        console.log("app state", appManager.state)
+        console.log("app state", appManager.state);
+        appManager.dataMessages = [];
         gameState.update(n => appManager.state - 1);
-        console.log("Updates state", get(gameState))
-        console.log("Team ", appManager.team)
+        console.log("Updates state", get(gameState));
+        console.log("Team ", appManager.team);
         
     }
     // setReverseAlliance(reversed) {
