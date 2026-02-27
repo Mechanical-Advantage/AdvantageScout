@@ -26,7 +26,7 @@ export default class Game {
         if (get(currentMessages) !== appManager.dataMessages) {
             currentMessages.set(appManager.dataMessages);
         }
-    }, 500);
+    }, 200);
     }
     setMode(mode) {
         console.log("app state", appManager.state)

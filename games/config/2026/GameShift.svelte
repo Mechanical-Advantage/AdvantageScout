@@ -48,7 +48,7 @@
 
             if (shiftIndex !== -1 && !triggeredShifts.has(secondsElapsed)) {
                 triggerAlert();
-                $realGameShift = shiftIndex;
+                $realGameShift = shiftIndex + 1;
                 triggeredShifts.add(secondsElapsed);
             }
         }, 500);
