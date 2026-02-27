@@ -151,6 +151,6 @@
   </span>
 </div>
 <div class="mt-10">
-<button class="btn {animateButton ? "animate-bounce" : ""} {colors[$gameShift]}"
+<button class="btn w-[200px] {animateButton ? "animate-bounce" : ""} {colors[$gameShift]}"
      on:click={handleClick}>{shifts[$gameShift]}</button>
 </div>
