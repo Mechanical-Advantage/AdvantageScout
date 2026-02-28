@@ -6,7 +6,10 @@
   import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
   import GameShift from "./GameShift.svelte";
   import { liveLocation } from "./stores";
-  
+  import TowerClimb from "./TowerClimb.svelte";
+  import ClimbPositions from "./ClimbPositions.svelte";
+  import ClimbTimer from "./ClimbTimer.svelte";
+
   $liveLocation = "Floor";
 </script>
 
@@ -27,7 +30,7 @@
   <Nodes level="1" type="Fail" gameMode="Tele" />
 </div>
 
-<div class="absolute left-[280px] top-[40px]">
+<div class="absolute left-[280px] top-[60px]">
   <LocationSelector gameMode="Tele" />
 </div>
 <div class="absolute left-[400px] top-[280px]">
@@ -42,3 +45,14 @@
 <div class="absolute ml-[300px] mt-[75px]">
   <GameShift />
 </div>  
+<div class="absolute ml-[600px] mt-[-40px]">
+  <div class="flex flex-row gap-x-3">
+    <TowerClimb buttonType="L1" />
+    <TowerClimb buttonType="L2" />
+    <TowerClimb buttonType="L3" />
+    <ClimbPositions />
+  </div>
+  <div class="absolute ml-[300px] mt-[30px]">
+      <ClimbTimer />
+  </div>
+</div>

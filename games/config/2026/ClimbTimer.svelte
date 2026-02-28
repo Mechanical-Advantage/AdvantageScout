@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { gameData } from "./stores";
+  import { gameData, teleDataLog } from "./stores";
   let elapsed = 0;
   let isRunning = false;
 
@@ -21,24 +21,24 @@
     elapsed = 0;
   }
   onMount(() => {
-  let last_time = performance.now();
-  let frame;
+    let last_time = performance.now();
+    let frame;
 
-  function update(time) {
-    const delta = time - last_time;
-    last_time = time;
+    function update(time) {
+      const delta = time - last_time;
+      last_time = time;
 
-    if (isRunning) {
-      elapsed += delta;
+      if (isRunning) {
+        elapsed += delta;
+      }
+      
+      frame = requestAnimationFrame(update);
     }
-    
+    elapsed = $gameData["TeleClimbTime"];
     frame = requestAnimationFrame(update);
-  }
 
-  frame = requestAnimationFrame(update);
-
-  return () => cancelAnimationFrame(frame);
-});
+    return () => cancelAnimationFrame(frame);
+  });
 </script>
 <button on:click={toggleTimer} class="btn {isRunning ? 'btn-success' : 'btn-primary'}">
   Climb time:<strong> {(Math.round(elapsed) / 1000)}s</strong>

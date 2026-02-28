@@ -73,7 +73,7 @@
   function reverseUpdate() {
     dataField = gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-    if ($gameData[dataField] == 0 || $gameData[locationField] == 0) {
+    if ($gameData[dataField] == 0) {
       reverseStopPress();
       return;
     }
