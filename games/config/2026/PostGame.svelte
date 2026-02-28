@@ -10,7 +10,6 @@
   console.log($gameData["BotState"] == 2);
 
   let buttonColor = "btn-primary";
-  let beach = "\u{1F3D6}"
   function handleClick(event) {
     $gameData["BotState"] = event.currentTarget.value;
   }
@@ -34,7 +33,7 @@
       <Rating name="DriverRating" displayName="Driver Rating" rangeType="range-primary" />
       <Rating name="PlayingDefenseDuration" displayName="Playing Defense Duration" rangeType="range-success" step=2 isDuration={true} />
       <Rating name="UnderDefenseDuration" displayName="Under Defense Duration" rangeType="range-error" step=2 isDuration={true} />
-      <Rating name="BeachedDuration"displayName="{beach} Beached Duration" rangeType="range-error" step=2 isDuration={true} />
+      <Rating name="BeachedDuration"displayName="Beached Duration" rangeType="range-error" step=2 isDuration={true} />
     </div>
     <div class="h-full">
       <Rating name="FuelIntakeRating" displayName="Fuel Intake Rating" rangeType="range-primary" />
