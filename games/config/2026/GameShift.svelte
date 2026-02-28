@@ -43,7 +43,7 @@
         timerInterval = setInterval(() => {
             if (!teleopStartStr) return;
             const startTime = new Date(+teleopStartStr).getTime();
-            const currentTime = Date.now();
+            const currentTime = performance.now();
             const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
 
             const shiftsTimes = [0, 10, 35, 60, 85, 110, 135]; 
