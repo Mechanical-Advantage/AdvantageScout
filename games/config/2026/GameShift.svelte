@@ -80,7 +80,7 @@
           const shiftIndex = shiftsTimes.indexOf(secondsElapsed);
 
           if (shiftIndex != -1 && !triggeredShifts.has(secondsElapsed)) {
-            if (shiftIndex < shiftsTimes.length - 1) {
+            if (shiftIndex < shiftsTimes.length - 1 && shiftIndex > 0) {
               triggerAlert();
             }
             $realGameShift = shiftIndex;
