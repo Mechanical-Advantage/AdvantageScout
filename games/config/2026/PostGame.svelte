@@ -33,17 +33,6 @@
       <Ratings name="DriverRating" />
       <Ratings name="PlayingDefenseDuration" />
       <Ratings name="UnderDefenseDuration" />
-      <div class="absolute ml-[10px] mt-[30px]">
-        <div class="flex flex-row gap-x-3">
-          <TowerClimb buttonType="L1" />
-          <TowerClimb buttonType="L2" />
-          <TowerClimb buttonType="L3" />
-          <ClimbPositions />
-        </div>
-      </div>
-      <div class="absolute ml-[300px] mt-[100px]">
-          <ClimbTimer />
-      </div>
     </div>
     <div class="  h-full">
       <Ratings name="FuelIntakeRating" />

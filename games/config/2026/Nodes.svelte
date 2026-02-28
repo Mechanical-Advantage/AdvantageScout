@@ -131,6 +131,11 @@
     2: "Pass",
     3: "Ferry"
   };
+  let nameLevelMap = {
+    1: "Hub",
+    2: "Pass",
+    3: "Plow"
+  };
 </script>
 
 <div class="indicator">
@@ -164,14 +169,14 @@
     {/if}
     {#if type === "Success"}
       <span class="indicator-item indicator-left indicator-start badge badge-primary">
-        {gameLevelMap[level]}
+        {nameLevelMap[level]}
       </span>
       <span class="badge badge-success text-2xl p-3">
         {$gameData[gameMode + shiftName + gameLevelMap[level] + "Fuel" + type]}
       </span>
     {:else}
       <span class="indicator-item indicator-right indicator-end badge badge-primary">
-        {gameLevelMap[level]}
+        {nameLevelMap[level]}
       </span>
       {#if level == 1 || level == 2}
         <span class="badge badge-error text-2xl p-3">
