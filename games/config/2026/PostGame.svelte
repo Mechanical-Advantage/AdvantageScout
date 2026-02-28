@@ -1,5 +1,5 @@
 <script>
-  import Ratings from "./Ratings.svelte";
+  import Rating from "./Rating.svelte";
   import { gameData, uploadState, fuelCycleCountSuccess, fuelCycleCountFail } from "./stores";
   import Nodes from "./Nodes.svelte";
   import TowerClimb from "./TowerClimb.svelte";
@@ -29,18 +29,19 @@
 
 <div class="flex flex-col h-full">
   <div class="grid grid-cols-3 w-full h-full">
-    <div class="  h-full">
-      <Ratings name="DriverRating" />
-      <Ratings name="PlayingDefenseDuration" />
-      <Ratings name="UnderDefenseDuration" />
+    <div class="h-full">
+      <Rating name="DriverRating" displayName="Driver Rating" rangeType="range-primary" />
+      <Rating name="PlayingDefenseDuration" displayName="Playing Defense Duration" rangeType="range-success" step=2 isDuration={true} />
+      <Rating name="UnderDefenseDuration" displayName="Under Defense Duration" rangeType="range-error" step=2 isDuration={true} />
+      <Rating name="BeachedDuration"displayName="Beached Duration" rangeType="range-error" step=2 isDuration={true} />
     </div>
-    <div class="  h-full">
-      <Ratings name="FuelIntakeRating" />
-      <Ratings name="DefenseRating" />
-      <Ratings name="UnderDefenseRating" />
-      <Ratings name="CrossBumpRating" />
-    </div>
-    <div class=" mt-[25px] h-full">
+    <div class="h-full">
+      <Rating name="FuelIntakeRating" displayName="Fuel Intake Rating" rangeType="range-primary" />
+      <Rating name="DefenseRating" displayName="Defense Rating" rangeType="range-success" />
+      <Rating name="UnderDefenseRating" displayName="Under Defense Rating"  rangeType="range-error" />
+      <Rating name="CrossBumpRating" displayName="Cross Rating" rangeType="range-secondary" />
+    </div>  
+    <div class="mt-[25px] h-full">
       <label for="message" class="block mb-2 text-sm font-bold text-white"
         >Comment</label
       >

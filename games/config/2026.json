@@ -79,6 +79,7 @@
         "DefenseRating NUMERIC DEFAULT 0",
         "UnderDefenseRating NUMERIC DEFAULT 0",
         "CrossBumpRating NUMERIC DEFAULT 0",
+        "BeachedDuration NUMERIC DEFAULT 0",
         "BotState NUMERIC DEFAULT 0",
         "Comment TEXT DEFAULT ''"
     ],
