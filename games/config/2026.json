@@ -89,6 +89,7 @@
         "Width INTEGER DEFAULT 0",
         "Length INTEGER DEFAULT 0",
         "Height INTEGER DEFAULT 0",
+        "Weight INTEGER DEFAULT 0",
         "Comment TEXT DEFAULT ''",
         "Image TEXT DEFAULT ''",
         "BuildQuality INTEGER DEFAULT 0",
@@ -212,7 +213,7 @@
             {
                 "field": "HopperCapacity",
                 "operator": "<",
-                "value": 80,
+                "value": 100,
                 "message": "Are you sure this hopper capacity is correct?",
                 "binding": true
             }
@@ -317,6 +318,11 @@
                 "type": "number",
                 "field": "Height",
                 "label": "Height (in)"
+            },
+            {
+                "type": "number",
+                "field": "Weight",
+                "label": "Weight (lb)"
             },
             {
                 "type": "chooser",
