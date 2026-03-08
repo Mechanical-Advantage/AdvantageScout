@@ -22,10 +22,14 @@
   ];
   let animateButton = false;
   let teleopStartStr = "";
+  let forceShift = false;
+  let message = "";
   $: {
     if ($currentMessages.length > 0) {
-      teleopStartStr =
-        $currentMessages[$currentMessages.length - 1]?.substring(6);
+      message = $currentMessages[$currentMessages.length - 1]?.substring(6).split(",");
+      teleopStartStr = message[0];
+      forceShift = message[1] === "t";
+      console.log(message);
     }
   }
 
@@ -99,9 +103,13 @@
 
       if (shiftIndex != -1 && !triggeredShifts.has(secondsElapsed)) {
         if (shiftIndex < shiftsTimes.length - 1 && shiftIndex > 0) {
+          if (forceShift) {
+            $gameShift = shiftIndex;
+          }
           triggerAlert();
         }
         $realGameShift = shiftIndex;
+
         triggeredShifts.add(secondsElapsed);
       }
       console.log(secondsElapsed);
@@ -126,7 +134,7 @@
 </div>
 <div class="mt-10">
   <button
-    class="btn w-[200px] {animateButton ? 'animate-bounce' : ''} {colors[
+    class="btn w-[200px]{forceShift ? ' btn-disabled' : ''}{!animateButton || forceShift ? '' : ' animate-bounce'} {colors[
       $gameShift
     ]}"
     on:click={handleClick}>{shifts[$gameShift]}</button

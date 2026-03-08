@@ -1,10 +1,6 @@
 <script>
   import Rating from "./Rating.svelte";
   import { gameData, uploadState, fuelCycleCountSuccess, fuelCycleCountFail } from "./stores";
-  import Nodes from "./Nodes.svelte";
-  import TowerClimb from "./TowerClimb.svelte";
-  import ClimbPositions from "./ClimbPositions.svelte";
-  import ClimbTimer from "./ClimbTimer.svelte";
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["BotState"] == 2);

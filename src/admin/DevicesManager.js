@@ -138,7 +138,8 @@ function DevicesManager(adminManager) {
     }
 
     this.sendShiftMessage = function () {
-        var text = "*data:" + Date.now();
+        var forceShiftToggle = document.getElementById("force_shift").value;
+        var text = `*data:${Date.now()},${forceShiftToggle ? "t" : "f"}`;
 
         for (var i = 0; i < devices.length; i++) {
             adminManager.request("POST", "/send_message", function () { 

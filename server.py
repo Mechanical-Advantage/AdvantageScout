@@ -735,9 +735,20 @@ document.body.innerHTML = window.localStorage.getItem(
             Admin - Advantage Scout
         </h1>
         <div class="section">
+            <h3>
+                Game Shifts
+            </h3>
+            <br>
             <button onclick="javascript:adminManager.devicesManager.sendShiftMessage()">
                 <strong>Start Teleop</strong>
             </button>
+            <br>
+            <span>Force Shift:</span>
+            <br>
+            <label class="switch">
+                <input type="checkbox" id="force_shift">
+                <span class="slider round"></span>
+            </label>
         </div>
         <br>
         <div class="section">
