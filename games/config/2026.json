@@ -442,6 +442,7 @@
                     "Double Turret": 2,
                     "Single": 3,
                     "Double": 4,
+                    "Triple":7,
                     "Drum": 5,
                     "Other": 6
                 }
