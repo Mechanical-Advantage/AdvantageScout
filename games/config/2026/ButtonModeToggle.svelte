@@ -1,18 +1,16 @@
 <script>
-  import {
-    gameData,
-    gameState,
-    fuelButtonAmount,
-    fuelButtonTap,
-  } from "./stores";
+  import { track } from "./tracker.js";
+  import { fuelButtonTap } from "./stores";
 
   function handleClick() {
     $fuelButtonTap = !$fuelButtonTap;
   }
-  let buttonSize = "btn-small";
 </script>
 
-<button class="btn btn-primary" on:click={handleClick}
+<button
+  class="btn btn-primary"
+  on:click={handleClick}
+  use:track={"ButtonModeToggle"}
   >{$fuelButtonTap ? "Switch to BPS" : "Switch to BPT"}</button
 >
 

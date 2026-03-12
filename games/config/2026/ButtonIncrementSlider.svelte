@@ -1,6 +1,6 @@
 <script>
     import { fuelButtonAmount } from "./stores.js";
-
+    import { track } from "./tracker.js"
     let sliderValue = $fuelButtonAmount;
 
     $: sliderValue, $fuelButtonAmount = sliderValue;
@@ -18,6 +18,7 @@
             class="range range-primary"
             step="2"
             bind:value={sliderValue}
+            use:track={"ButtonIncrementSlider"}
         />
         <div class="w-full flex justify-between text-s px-2">
             <span>2</span>

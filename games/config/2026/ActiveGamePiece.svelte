@@ -1,6 +1,6 @@
 <script>
-  import { gameState } from "./stores";
-  import { liveGamepiece, liveLocation, gameData } from "./stores";
+  import { track } from "./tracker.js";
+  import { liveGamepiece } from "./stores";
   export let activeGamePiece = "Fuel";
   console.log(activeGamePiece);
   console.log(liveGamepiece);
@@ -15,6 +15,7 @@
     ? 'btn-accent'
     : 'btn-secondary'}  "
   on:click={activeObject}
+  use:track={"ActiveGamePiece" + activeGamePiece}
 >
   {#if activeGamePiece === "Fuel"}
     <svg

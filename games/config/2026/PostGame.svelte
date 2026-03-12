@@ -1,11 +1,16 @@
 <script>
   import Rating from "./Rating.svelte";
-  import { gameData, uploadState, fuelCycleCountSuccess, fuelCycleCountFail } from "./stores";
+  import {
+    gameData,
+    uploadState,
+    fuelCycleCountSuccess,
+    fuelCycleCountFail,
+  } from "./stores";
+  import { track } from "./tracker.js";
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["BotState"] == 2);
 
-  let buttonColor = "btn-primary";
   function handleClick(event) {
     $gameData["BotState"] = event.currentTarget.value;
   }
@@ -13,12 +18,12 @@
   function upload() {
     $gameData["TeleHubFuelCyclesSuccess"].push($fuelCycleCountSuccess);
     $gameData["TeleHubFuelCyclesFail"].push($fuelCycleCountFail);
-    
+
     $fuelCycleCountSuccess = 0;
     $fuelCycleCountFail = 0;
     $gameData["Comment"] = $gameData["Comment"].replace(/[^\x20-\x7E]+/g, "");
     $gameData["Penalties"] =
-    $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
+      $gameData["Penalties"] === null ? 0 : $gameData["Penalties"];
     $uploadState += 1;
   }
 </script>
@@ -26,17 +31,55 @@
 <div class="flex flex-col h-full">
   <div class="grid grid-cols-3 w-full h-full">
     <div class="h-full">
-      <Rating name="DriverRating" displayName="Driver Rating" rangeType="range-primary" />
-      <Rating name="PlayingDefenseDuration" displayName="Playing Defense Duration" rangeType="range-success" step=2 isDuration={true} />
-      <Rating name="UnderDefenseDuration" displayName="Under Defense Duration" rangeType="range-error" step=2 isDuration={true} />
-      <Rating name="BeachedDuration"displayName="Beached Duration" rangeType="range-error" step=2 isDuration={true} />
+      <Rating
+        name="DriverRating"
+        displayName="Driver Rating"
+        rangeType="range-primary"
+      />
+      <Rating
+        name="PlayingDefenseDuration"
+        displayName="Playing Defense Duration"
+        rangeType="range-success"
+        step="2"
+        isDuration={true}
+      />
+      <Rating
+        name="UnderDefenseDuration"
+        displayName="Under Defense Duration"
+        rangeType="range-error"
+        step="2"
+        isDuration={true}
+      />
+      <Rating
+        name="BeachedDuration"
+        displayName="Beached Duration"
+        rangeType="range-error"
+        step="2"
+        isDuration={true}
+      />
     </div>
     <div class="h-full">
-      <Rating name="FuelIntakeRating" displayName="Fuel Intake Rating" rangeType="range-primary" />
-      <Rating name="DefenseRating" displayName="Defense Rating" rangeType="range-success" />
-      <Rating name="UnderDefenseRating" displayName="Under Defense Rating"  rangeType="range-error" />
-      <Rating name="CrossBumpRating" displayName="Cross Rating" rangeType="range-secondary" />
-    </div>  
+      <Rating
+        name="FuelIntakeRating"
+        displayName="Fuel Intake Rating"
+        rangeType="range-primary"
+      />
+      <Rating
+        name="DefenseRating"
+        displayName="Defense Rating"
+        rangeType="range-success"
+      />
+      <Rating
+        name="UnderDefenseRating"
+        displayName="Under Defense Rating"
+        rangeType="range-error"
+      />
+      <Rating
+        name="CrossBumpRating"
+        displayName="Cross Rating"
+        rangeType="range-secondary"
+      />
+    </div>
     <div class="mt-[25px] h-full">
       <label for="message" class="block mb-2 text-sm font-bold text-white"
         >Comment</label
@@ -56,6 +99,7 @@
           value="1"
           checked={$gameData["BotState"] == 1}
           on:change={handleClick}
+          use:track={"BotStateNoIssues"}
         />
         <span class="label-text">No Issues</span>
         <input
@@ -65,6 +109,7 @@
           value="2"
           checked={$gameData["BotState"] == 2}
           on:change={handleClick}
+          use:track={"BotStateCommsIssue"}
         />
         <span class="label-text">Comms Issue</span>
       </div>
@@ -76,6 +121,7 @@
           value="3"
           checked={$gameData["BotState"] == 3}
           on:change={handleClick}
+          use:track={"BotStatePowerIssue"}
         />
         <span class="label-text">Power Issues</span>
         <input
@@ -85,6 +131,7 @@
           value="4"
           checked={$gameData["BotState"] == 4}
           on:change={handleClick}
+          use:track={"BotStateMajorMalfunction"}
         />
         <span class=" label-text">Major Malfunction</span>
       </div>
@@ -96,6 +143,7 @@
           value="5"
           checked={$gameData["BotState"] == 5}
           on:change={handleClick}
+          use:track={"BotStateFellOver"}
         />
         <span class="label-text">Fell Over</span>
         <input
@@ -105,6 +153,7 @@
           value="6"
           checked={$gameData["BotState"] == 6}
           on:change={handleClick}
+          use:track={"BotStateDidNotShow"}
         />
         <span class="label-text">Did Not Show</span>
       </div>
@@ -128,7 +177,8 @@
       class="btn {$gameData['Comment'].length < 14
         ? 'btn-disabled'
         : 'btn-primary'}"
-      on:click={upload}>Upload</button
+      on:click={upload}
+      use:track={"Upload"}>Upload</button
     >
   </div>
 </div>

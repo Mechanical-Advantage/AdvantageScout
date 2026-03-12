@@ -6,7 +6,6 @@
     autoDataLog,
     teleDataLog,
     liveLocation,
-    reversedAlliance,
     fuelCycleCountFail,
     fuelCycleCountSuccess,
     fuelButtonSpeed,
@@ -14,6 +13,7 @@
     gameShift,
     fuelButtonTap,
   } from "./stores";
+  import { track } from "./tracker.js";
 
   export let level = 1;
   export let type = "Success";
@@ -28,7 +28,6 @@
   let shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
 
   $: shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
-  // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
   function update() {
     if ($gameState === 0) {
       $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
@@ -40,7 +39,7 @@
       gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
     locationField =
       gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-    
+
     if ($fuelButtonTap) {
       console.log("DataField " + dataField);
       $gameData[dataField] = ($gameData[dataField] || 0) + $fuelButtonAmount;
@@ -181,6 +180,7 @@
     on:pointerup={stopPress}
     on:pointerdown={update}
     on:pointerleave={stopPress}
+    use:track={"Nodes" + nameLevelMap[level]}
   >
     {#if (level == 2 || level == 3) && type == "Success"}
       <span class="indicator-item badge badge-success text-2xl py-3">
@@ -223,6 +223,7 @@
       on:pointerdown={reverseUpdate}
       on:pointerup={reverseStopPress}
       on:pointerleave={reverseStopPress}
+      use:track={"NodesSubtract" + nameLevelMap[level]}
     >
       -
     </button>
@@ -232,6 +233,7 @@
       on:pointerdown={reverseUpdate}
       on:pointerup={reverseStopPress}
       on:pointerleave={reverseStopPress}
+      use:track={"NodesSubtract" + nameLevelMap[level]}
     >
       -
     </button>
