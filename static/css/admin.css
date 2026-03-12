@@ -124,3 +124,18 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.btn-large {
+  padding: 16px;
+  margin: 4px;
+  border-radius: 4px;
+  border-color: rgb(16, 16, 16);
+  border-width: 2px;
+  transition: 0.2s;
+}
+
+.btn-large:active {
+  scale: 0.9;
+  background-color: green;
+  border-radius: 6px;
+}

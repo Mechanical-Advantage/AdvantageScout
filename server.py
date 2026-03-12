@@ -738,8 +738,7 @@ document.body.innerHTML = window.localStorage.getItem(
             <h3>
                 Game Shifts
             </h3>
-            <br>
-            <button onclick="javascript:adminManager.devicesManager.sendShiftMessage()">
+            <button class="btn-large" onclick="javascript:adminManager.devicesManager.sendShiftMessage()">
                 <strong>Start Teleop</strong>
             </button>
             <br>
