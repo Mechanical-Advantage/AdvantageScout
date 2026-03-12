@@ -1,10 +1,12 @@
 <script>
     import Nodes from "./Nodes.svelte";
     import LocationSelector from "./LocationSelector.svelte";
-    import { autoState, autoDataLog } from "./stores";
+    import { autoState, autoDataLog, fuelButtonTap } from "./stores";
     import CurrentTeam from "./CurrentTeam.svelte";
     import TowerClimb from "./TowerClimb.svelte";
     import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
+    import ButtonIncrementSlider from "./ButtonIncrementSlider.svelte";
+    import ButtonModeToggle from "./ButtonModeToggle.svelte";
 
     function handleClick() {
         $autoState = 0;
@@ -34,7 +36,12 @@
   <Nodes level="1" type="Fail" gameMode="Auto" />
 </div>
 <div class="absolute left-[400px] top-[280px]">
-  <ButtonRepeatSpeed />
+  <ButtonModeToggle />
+  {#if $fuelButtonTap}
+    <ButtonIncrementSlider />
+  {:else if !$fuelButtonTap}
+    <ButtonRepeatSpeed />
+  {/if}
 </div>
 <div class="absolute left-[280px] top-[40px]">
   <LocationSelector gameMode="Auto" />

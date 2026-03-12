@@ -5,10 +5,12 @@
   import AutoClimbDismount from "./AutoClimbDismount.svelte";
   import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
   import GameShift from "./GameShift.svelte";
-  import { liveLocation } from "./stores";
+  import { liveLocation, fuelButtonTap } from "./stores";
   import TowerClimb from "./TowerClimb.svelte";
   import ClimbPositions from "./ClimbPositions.svelte";
   import ClimbTimer from "./ClimbTimer.svelte";
+  import ButtonIncrementSlider from "./ButtonIncrementSlider.svelte";
+  import ButtonModeToggle from "./ButtonModeToggle.svelte";
 
   $liveLocation = "Floor";
 </script>
@@ -34,7 +36,12 @@
   <LocationSelector gameMode="Tele" />
 </div>
 <div class="absolute left-[400px] top-[280px]">
-  <ButtonRepeatSpeed />
+  <ButtonModeToggle />
+  {#if $fuelButtonTap}
+    <ButtonIncrementSlider />
+  {:else if !$fuelButtonTap}
+    <ButtonRepeatSpeed />
+  {/if}
 </div>
 <div class="ml-[425px] mt-[30px]">
   <CurrentTeam />
@@ -44,7 +51,7 @@
 </div>  -->
 <div class="absolute ml-[300px] mt-[75px]">
   <GameShift />
-</div>  
+</div>
 <div class="absolute ml-[600px] mt-[-40px]">
   <div class="flex flex-row gap-x-3">
     <TowerClimb buttonType="L1" />
@@ -53,6 +60,6 @@
     <ClimbPositions />
   </div>
   <div class="absolute ml-[300px] mt-[30px]">
-      <ClimbTimer />
+    <ClimbTimer />
   </div>
 </div>
