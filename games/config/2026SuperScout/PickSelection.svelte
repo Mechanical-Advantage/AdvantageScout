@@ -2,12 +2,12 @@
   import { gameData } from "./stores";
   export let team;
   let dockButton = "TeamPick" + team;
-  let values = ["1st Pick", "2nd Pick", "2nd Pick Steal", "DNP"];
+  let values = ["Not DNP", "2nd Pick", "2nd Pick Steal", "DNP"];
   function handleClick() {
     if ($gameData[dockButton] === 3) {
       $gameData[dockButton] = 0;
     } else {
-      $gameData[dockButton] = $gameData[dockButton] + 1;
+      $gameData[dockButton] = 3;
     }
   }
 </script>
