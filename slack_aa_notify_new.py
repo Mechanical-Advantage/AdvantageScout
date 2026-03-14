@@ -48,7 +48,7 @@ team_matches = {}
 team_list = cur_grafana.fetchall()
 for match in team_list:
     match_number = match[0]
-    teams = [match[1], match[2], match[3]]
+    teams = [str(match[1]), str(match[2]), str(match[3])]
     if "6328" in teams:
         team_matches[match_number] = teams.remove("6328")
 while (True):
@@ -57,8 +57,7 @@ while (True):
     nextMatch = str(cur_global.fetchall()[0][0])
     for team in teamInfo:
         print(str(team[0]) )
-        print(team_matches[team[1]])
-        if str(team[0]) in team_matches[team[1]:]:
+        if str(team[0]) in [k for k, v in team_matches.items() if int(v) > team[1]]:
             print("Sending message for team ", team[0])
             botMsg = botStateMap[team[3]]
             msgText = "Team "+ str(team[0]) + "  Match " + \
