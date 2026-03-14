@@ -8,12 +8,6 @@
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["EndgameBotState"] == 2);
 
-  let list = [
-    { id: 1, name: $gameData["Team1"], content: "" },
-    { id: 2, name: $gameData["Team2"], content: "" },
-    { id: 3, name: $gameData["Team3"], content: "" },
-  ];
-
   function upload() {
     $uploadState += 1;
   }

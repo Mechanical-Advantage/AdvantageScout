@@ -6,6 +6,7 @@
     $gameData[fieldName] = event.currentTarget.value;
   }
 </script>
+
 <div class="mx-[15px] my-[5px]">
   <input
     type="radio"

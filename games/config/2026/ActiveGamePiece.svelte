@@ -1,10 +1,5 @@
 <script>
-  import { gameState } from "./stores";
-  import { liveGamepiece, liveLocation, gameData } from "./stores";
   export let activeGamePiece = "Fuel";
-  console.log(activeGamePiece);
-  console.log(liveGamepiece);
-  let coneSVG = "";
   function activeObject() {
     console.log("Don't have a good day, have a great day!");
   }

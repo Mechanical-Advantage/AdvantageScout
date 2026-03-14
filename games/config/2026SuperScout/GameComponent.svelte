@@ -1,22 +1,21 @@
 <script>
-    import AutoPage from "./AutoPage.svelte";
-    import PrematchConfig from "./PrematchConfig.svelte";
-    import TeleopPage from "./TeleopPage.svelte";
-    import { autoState, gameState, gameData, currentSchedule } from "./stores";
-    import PostGame from "./PostGame.svelte";
+  import AutoPage from "./AutoPage.svelte";
+  import PrematchConfig from "./PrematchConfig.svelte";
+  import TeleopPage from "./TeleopPage.svelte";
+  import { autoState, gameState, gameData, currentSchedule } from "./stores";
+  import PostGame from "./PostGame.svelte";
 
-    console.log("Current Schedule: ", (currentSchedule))
+  console.log("Current Schedule: ", currentSchedule);
 </script>
 
-
 {#if $gameState === 0}
-    {#if $autoState === 0}
+  {#if $autoState === 0}
     <PrematchConfig />
-{:else}
+  {:else}
     <AutoPage />
-{/if}
+  {/if}
 {:else if $gameState === 1}
-    <TeleopPage />
+  <TeleopPage />
 {:else if $gameState === 2}
-    <PostGame />
+  <PostGame />
 {/if}

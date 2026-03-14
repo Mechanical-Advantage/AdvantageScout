@@ -2,7 +2,6 @@
   import Nodes from "./Nodes.svelte";
   import LocationSelector from "./LocationSelector.svelte";
   import CurrentTeam from "./CurrentTeam.svelte";
-  import AutoClimbDismount from "./AutoClimbDismount.svelte";
   import ButtonRepeatSpeed from "./ButtonRepeatSpeed.svelte";
   import GameShift from "./GameShift.svelte";
   import { liveLocation, fuelButtonTap } from "./stores";

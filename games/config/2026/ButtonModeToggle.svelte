@@ -1,15 +1,9 @@
 <script>
-  import {
-    gameData,
-    gameState,
-    fuelButtonAmount,
-    fuelButtonTap,
-  } from "./stores";
+  import { fuelButtonTap } from "./stores";
 
   function handleClick() {
     $fuelButtonTap = !$fuelButtonTap;
   }
-  let buttonSize = "btn-small";
 </script>
 
 <button class="btn btn-primary" on:click={handleClick}

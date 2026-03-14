@@ -6,7 +6,6 @@
     autoDataLog,
     teleDataLog,
     liveLocation,
-    reversedAlliance,
     fuelCycleCountFail,
     fuelCycleCountSuccess,
     fuelButtonSpeed,
@@ -27,7 +26,6 @@
   let shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
 
   $: shiftName = gameMode == "Auto" ? "" : shiftNames[$gameShift];
-  // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
   function update() {
     if ($gameState === 0) {
       $autoDataLog.push(JSON.parse(JSON.stringify($gameData)));
@@ -39,7 +37,7 @@
       gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
     locationField =
       gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-    
+
     if ($fuelButtonTap) {
       console.log("DataField " + dataField);
       $gameData[dataField] = ($gameData[dataField] || 0) + $fuelButtonAmount;
