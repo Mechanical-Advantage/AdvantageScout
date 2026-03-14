@@ -21,7 +21,7 @@
 
   let dataField = "";
   let locationField = "";
-  let driverField = "";
+  //let driverField = "";
   let intervalId;
   let reverseIntervalId;
   let shiftNames = ["ST", "S1", "S2", "S3", "S4", "SE"];
@@ -82,8 +82,6 @@
         gameMode + shiftName + gameLevelMap[level] + $liveGamepiece + type;
       locationField =
         gameMode + shiftName + $liveLocation + $liveGamepiece + "Collect";
-      //driverField = gameMode + shiftName + "Driver" + $liveGamepiece;
-      //$gameData[driverField] = ($gameData[driverField] || 0) + 1;
       $gameData[dataField] = ($gameData[dataField] || 0) + 1;
       $gameData[locationField] = ($gameData[locationField] || 0) + 1;
     }, $fuelButtonSpeed);
@@ -133,7 +131,6 @@
           $fuelCycleCountFail--;
         }
       }
-      $gameData[driverField] = $gameData[driverField] - 1;
       $gameData[dataField] = $gameData[dataField] - 1;
       $gameData[locationField] = $gameData[locationField] - 1;
     }, $fuelButtonSpeed);
