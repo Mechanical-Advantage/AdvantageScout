@@ -58,7 +58,7 @@ while (True):
     for team in teamInfo:
         print(str(team[0]) )
         print(team_matches[team[1]])
-        if str(team[0]) in team_matches[team[1]] and team[1] < 99999:
+        if str(team[0]) in team_matches[team[1]:]:
             print("Sending message for team ", team[0])
             botMsg = botStateMap[team[3]]
             msgText = "Team "+ str(team[0]) + "  Match " + \
