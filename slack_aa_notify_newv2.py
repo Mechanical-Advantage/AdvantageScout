@@ -62,12 +62,14 @@ while (True):
     teamInfo = cur_game.execute("select Team,Match,UploadTime,BotState,Comment from match where UploadTime > ? and Event = ? and BotState>1", (uploadTime,event,)).fetchall()
     cur_global.execute("SELECT value FROM config WHERE key = 'schedule_match'")
     nextMatch = int(cur_global.fetchall()[0][0])
+    
     for team in teamInfo:
+        botMsg = botStateMap[team[3]]
+        msgText = "Team "+ str(team[0]) + "  Match " + \
+        str(team[1]) + " had the following issue - "+botMsg +" - " + team[4]
         if playing_with_team(str(team[0]), nextMatch):
             print("Sending message for team ", team[0])
-            botMsg = botStateMap[team[3]]
-            msgText = "Team "+ str(team[0]) + "  Match " + \
-            str(team[1]) + " had the following issue - "+botMsg +" - " + team[4]
+
             print(msgText)
             if team[2] > uploadTime:
                 uploadTime=team[2]
@@ -75,6 +77,9 @@ while (True):
                 channel = slackUid,
                 text = msgText
             )
+            response = client.chat_postMessage(
+            channel=slackUid2,
+            text=msgText)
     print("Waiting for 5 minutes")
     time.sleep(300)
     # if len(offBreakScouts) > 0:
