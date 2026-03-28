@@ -31,6 +31,13 @@ conn_global = sql.connect(db_global)
 cur_global = conn_global.cursor()
 event = cur_global.execute("SELECT value FROM config WHERE key='event'").fetchall()[0][0]
 
+team_matches = {}
+
+def playing_with_team(team, nextMatch):
+    for match in [v for k, v in team_matches.items() if int(k) > nextMatch]:
+        if team in match:
+            return True
+    return False
 conn_game = sql.connect(db_match)
 cur_game = conn_game.cursor()
 
@@ -41,23 +48,22 @@ conn_grafana = psycopg2.connect(database="Grafana-Output",
                         port="23010")
 cur_grafana = conn_grafana.cursor()
 slackUid = "#frc_aa"
+slackUid2 = "#frc_aaa"
 # slackUid="U025R21C61M"
-cur_grafana.execute('SELECT Match,team1,team2,team3 FROM "Schedule"')
-print()
-team_matches = {}
+cur_grafana.execute('SELECT Match,team1,team2,team3 FROM "Schedule" WHERE team1=6328 OR team2=6328 OR team3=6328')
+
 team_list = cur_grafana.fetchall()
 for match in team_list:
     match_number = match[0]
     teams = [str(match[1]), str(match[2]), str(match[3])]
-    if "6328" in teams:
-        team_matches[match_number] = teams.remove("6328")
+    team_matches[match_number] = teams
+
 while (True):
     teamInfo = cur_game.execute("select Team,Match,UploadTime,BotState,Comment from match where UploadTime > ? and Event = ? and BotState>1", (uploadTime,event,)).fetchall()
     cur_global.execute("SELECT value FROM config WHERE key = 'schedule_match'")
-    nextMatch = str(cur_global.fetchall()[0][0])
+    nextMatch = int(cur_global.fetchall()[0][0])
     for team in teamInfo:
-        print(str(team[0]) )
-        if str(team[0]) in [k for k, v in team_matches.items() if int(v) > team[1]]:
+        if playing_with_team(str(team[0]), nextMatch):
             print("Sending message for team ", team[0])
             botMsg = botStateMap[team[3]]
             msgText = "Team "+ str(team[0]) + "  Match " + \
@@ -65,7 +71,7 @@ while (True):
             print(msgText)
             if team[2] > uploadTime:
                 uploadTime=team[2]
-            response = client.chat_postMessage(
+                response = client.chat_postMessage(
                 channel = slackUid,
                 text = msgText
             )
