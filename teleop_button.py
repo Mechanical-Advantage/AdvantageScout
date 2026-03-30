@@ -5,8 +5,8 @@ from playsound3 import playsound
 import threading
 
 def click():
-    playsound("sounds/Beep.mp3", block=False)
     response = requests.post("http://localhost:8000/send_shift_message", data={"forceShiftToggle": "true", "ts": int(round(time.time() * 1000))})
+    playsound("sounds/Beep.mp3", block=False)
     print(f"Server Status: {response.status_code}")
     print("*" * 20 + "Starting Teleop" + "*" * 20)
 
