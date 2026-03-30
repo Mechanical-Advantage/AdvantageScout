@@ -1166,8 +1166,7 @@ document.body.innerHTML = window.localStorage.getItem(
         return ()
     
     @cherrypy.expose
-    def send_shift_message(self, forceShiftToggle="true"):
-        ts = int(round(time.time() * 1000))
+    def send_shift_message(self, forceShiftToggle="true", ts=""):
         flag = "t" if str(forceShiftToggle).lower() == "true" else "f"
         text = f"*data:{ts},{flag}"
 

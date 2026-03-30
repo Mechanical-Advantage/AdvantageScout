@@ -1,17 +1,16 @@
 import hid
 import time 
-import threading
 import requests
 from playsound3 import playsound
 
 
 def click():
     playsound("sounds/Beep.mp3", block=False)
-    response = requests.post("http://localhost:8000/send_shift_message", data={"forceShiftToggle": "true"})
+    response = requests.post("http://localhost:8000/send_shift_message", data={"forceShiftToggle": "true", "ts": int(round(time.time() * 1000))})
     print(f"Server Status: {response.status_code}")
     print("*" * 20 + "Starting Teleop" + "*" * 20)
 
-class PowerMateScanner(threading.Thread):
+class PowerMateScanner():
     def __init__(self, callback):
         super().__init__()
         self.callback = callback
