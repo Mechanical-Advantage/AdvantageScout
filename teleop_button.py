@@ -2,7 +2,7 @@ import hid
 import time 
 import requests
 from playsound3 import playsound
-
+import threading
 
 def click():
     playsound("sounds/Beep.mp3", block=False)
@@ -10,7 +10,7 @@ def click():
     print(f"Server Status: {response.status_code}")
     print("*" * 20 + "Starting Teleop" + "*" * 20)
 
-class PowerMateScanner():
+class PowerMateScanner(threading.Thread):
     def __init__(self, callback):
         super().__init__()
         self.callback = callback
@@ -46,5 +46,6 @@ class PowerMateScanner():
 
 if __name__ == "__main__":
     scanner = PowerMateScanner(callback=click)
+    scanner.start()
     while True:
         time.sleep(1)
