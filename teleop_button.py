@@ -46,6 +46,5 @@ class PowerMateScanner():
 
 if __name__ == "__main__":
     scanner = PowerMateScanner(callback=click)
-    scanner.start()
     while True:
         time.sleep(1)
