@@ -1164,7 +1164,22 @@ document.body.innerHTML = window.localStorage.getItem(
         conn_global.commit()
         conn_global.close()
         return ()
+    
+    @cherrypy.expose
+    def send_shift_message(self, forceShiftToggle="true"):
+        ts = int(round(time.time() * 1000))
+        flag = "t" if str(forceShiftToggle).lower() == "true" else "f"
+        text = f"*data:{ts},{flag}"
 
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT name FROM devices")
+        names = [row[0] for row in cur_global.fetchall()]
+        for name in names:
+            self.send_message(name, text)
+        conn_global.close()
+        return ()
+    
     @cherrypy.expose
     def get_config(self):
         conn_global = sql.connect(db_global)
@@ -1909,7 +1924,6 @@ def schedule_match(cur_game, cur_global, conn_global, force_match=None):
             "INSERT INTO schedule_next(team,scout) VALUES (?,?)", (team, schedule[team]))
     conn_global.commit()
     return ("Successfully created schedule for match " + str(to_schedule))
-
 
 if __name__ == "__main__":
     # Start svelte thread
