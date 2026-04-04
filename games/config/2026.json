@@ -261,7 +261,7 @@
                 "binding": true
             },
             {
-                "script": "return ((data.AutoFloorFuelCollect + data.AutoOutpostFuelCollect) < 100)",
+                "script": "return ((data.AutoFloorFuelCollect + data.AutoOutpostFuelCollect) < 300)",
                 "message": "They physically cannot collect that much in Auto",
                 "binding": false
             },
