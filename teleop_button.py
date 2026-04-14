@@ -1,12 +1,24 @@
 import hid
 import time 
 import requests
-from playsound3 import playsound
 import threading
+import os
+import random
+from playsound3 import playsound
+
+SOUNDS_DIR = "sounds/"
+
+def get_random_sound():
+    try:
+        files = [f for f in os.listdir(SOUNDS_DIR) if f.lower().endswith(".mp3")] 
+        return os.path.join(SOUNDS_DIR, random.choice(files))
+    except:
+        pass
 
 def click():
     try:
-        playsound("sounds/Beep.mp3", block=False)
+        random_path = get_random_sound()
+        playsound(random_path, block=False)
     except:
         pass
     
