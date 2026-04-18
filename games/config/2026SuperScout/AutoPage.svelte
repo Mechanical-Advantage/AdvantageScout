@@ -2,9 +2,15 @@
   import { gameData, autoState, currentSchedule } from "./stores";
   let buttonColor = "btn-primary";
 
-  $gameData["Team1"] = $currentSchedule["teams"][0];
-  $gameData["Team2"] = $currentSchedule["teams"][1];
-  $gameData["Team3"] = $currentSchedule["teams"][2];
+  if ($gameData["AllianceColor"] == 0) {
+    $gameData["Team1"] = $currentSchedule["teams"][0];
+    $gameData["Team2"] = $currentSchedule["teams"][1];
+    $gameData["Team3"] = $currentSchedule["teams"][2];
+  } else {
+    $gameData["Team1"] = $currentSchedule["teams"][3];
+    $gameData["Team2"] = $currentSchedule["teams"][4];
+    $gameData["Team3"] = $currentSchedule["teams"][5];
+  }
 
   function handleClicked() {
     $gameData["AllianceColor"] = $gameData["AllianceColor"] === 0 ? 1 : 0;
