@@ -524,7 +524,7 @@ document.body.innerHTML = window.localStorage.getItem(
         return (jsmin(output))
 
     @cherrypy.expose
-    def heartbeat(self, device_name, state, shift, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
+    def heartbeat(self, device_name, state, shift=1, battery=-1, charging=0, scoutname="John Doe", team=-1, match=-1, route=None):
         if route == None:
             route = cherrypy.request.remote.ip
 

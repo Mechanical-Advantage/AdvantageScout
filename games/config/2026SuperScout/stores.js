@@ -46,7 +46,7 @@ export const gameData = writable({
 	TeamPick1: 0,
 	TeamPick2: 0,
 	TeamPick3: 0,
-	Team1Comment: " ",
-	Team2Comment: " ",
-	Team3Comment: " "
+	Team1Comment: "",
+	Team2Comment: "",
+	Team3Comment: ""
 })
