@@ -106,7 +106,9 @@
         "BuildQuality INTEGER DEFAULT 0",
         "ProgrammingLanguage TEXT DEFAULT ''",
         "BumperQuality INTEGER DEFAULT 0",
-        "CanClimb INTEGER DEFAULT 0"
+        "CanClimb INTEGER DEFAULT 0",
+        "CanCrossMoat INTEGER DEFAULT 0"
+        
     ],
     "forceClassic": {
         "auto": false,
