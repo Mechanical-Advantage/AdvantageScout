@@ -32,11 +32,8 @@
     import { gameData, gameState } from "./stores";
 
 let dockButton = "";
-if ($gameState === 0) {
-    dockButton = "AutoClimbShallow";
-} else {
-    dockButton = "TeleClimbShallow";
-}
+
+    dockButton = "TeleClimb";
 
 function handleClick() {
 
@@ -80,5 +77,5 @@ function handleClick() {
     ? "btn-primary"
     : $gameData[dockButton] === 1
     ? "btn-secondary"
-    : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : "" || $gameData["TeleClimbDeep"] === 2 ? "btn-disabled" : "" }" on:click={handleClick}>Shallow Climb?</button>
+    : "btn-success"} {$gameData["Park"] === 1 ? "btn-disabled" : "" }" on:click={handleClick}>Climb?</button>
 

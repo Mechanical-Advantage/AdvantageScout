@@ -30,8 +30,8 @@
         UnderDefenseDuration: ["range-error", "Under Defense Duration", 2],
         BotState: ["range-primary", "Disabled", "Inoperable", "No Issue", 2],
         DriverRating: ["range-primary", "Driver Rating", 1],
-        CoralIntakeRating: ["range-primary", "Coral Intake Rating", 1],
-        AlgaeIntakeRating: ["range-primary", "Algae Intake Rating", 1],
+        BoulderIntakeRating: ["range-primary", "Boulder Intake Rating", 1],
+        MoatCrossRating: ["range-primary", "Moat Cross Rating", 1],
         DefenseRating: ["range-success", "Defense Rating", 1],
         UnderDefenseRating: ["range-error", "Under Defense Rating", 1]
     };
