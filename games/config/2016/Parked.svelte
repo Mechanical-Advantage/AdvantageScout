@@ -41,6 +41,6 @@
     }
   </style>
   
-  <button class="btn {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {($gameData["TeleClimbShallow"] ===2 || $gameData["TeleClimbDeep"]  === 2) ? "btn-disabled" : ''}" on:click={handleClick}>Parked?</button>
+  <button class="btn {$gameData["Park"] === 0 ? "btn-primary" : "btn-success"} {($gameData["TeleClimb"] ===2 ) ? "btn-disabled" : ''}" on:click={handleClick}>Challenge?</button>
 
 
