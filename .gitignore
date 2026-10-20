@@ -13,3 +13,4 @@ admin/build
 .env
 !.vscode/settings.json
 ./vscode
+.vscode/settings.json
