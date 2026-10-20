@@ -12,3 +12,4 @@ admin/build
 **/node_modules
 .env
 !.vscode/settings.json
+./vscode
