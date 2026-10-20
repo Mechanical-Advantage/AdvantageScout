@@ -6,7 +6,7 @@
     let robotY = 1000;
     let screenOffset = 0;
     export let flippedH = true;
-    export let flippedV = false;
+    export let flippedV = true;
     let orientString = "transform: ";
     let yRobotOffset = 0;
     let strokeWidth = 5;
@@ -14,10 +14,13 @@
     let blue = "#002eff";
     export let AllianceColor = "red";
     export let strokeColor = AllianceColor === "red" ? red : blue; //Red is #ff0000 Blue is #002eff
+    export let reversestrokeColor = AllianceColor === "red" ? blue : red; //Red is #ff0000 Blue is #002eff
     export let width = 410;
     export let height = 660;
     let defaultWidth = 210; //Dont Touch
     let defaultHeight = 330; //Dont Touch
+    let inSpyBox = false;
+    let inStartBox = false;
     export let xOffset = 0;
     export let yOffset = 60;
     export let robotSize = 30;
@@ -29,7 +32,8 @@
         1: [160, 10, 210, 10, 210, 87, 160, 87],
         2: [160, 87, 210, 87, 210, 164, 160, 164],
         3: [160, 164, 210, 164, 210, 241, 160, 241],
-        4: [160, 241, 210, 241, 210, 320, 160, 320]
+        4: [160, 241, 210, 241, 210, 320, 160, 320],
+        5: [20, 320, 20, 270, 100, 270, 100, 320]
         // 5: [190, 145, 190, 223, 90, 223, 90, 145],
         // 6: [190, 223, 190, 315, 90, 296, 90, 223 ],
         // 7: [90, 223, 90, 296, 5, 270, 5, 223]
@@ -117,6 +121,40 @@
             (width / defaultWidth) * 160,
             (height / defaultHeight) * 10
         );
+
+        ctx.closePath();
+        
+        inStartBox = ctx.isPointInPath(x, y);
+        ctx.beginPath(); //draws the shape of the svg on a 2d canvas
+        ctx.moveTo((width / defaultWidth) * 20, (height / defaultHeight) * 320);
+        ctx.lineTo(
+            (width / defaultWidth) * 20,
+            (height / defaultHeight) * 270
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 100,
+            (height / defaultHeight) * 270
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 100,
+            (height / defaultHeight) * 320
+        );
+        ctx.lineTo(
+            (width / defaultWidth) * 20,
+            (height / defaultHeight) * 320
+        );
+
+        ctx.closePath();
+        inSpyBox = ctx.isPointInPath(x, y);
+    
+        if (inStartBox || inSpyBox)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
         // ctx.lineTo(
         //     (width / defaultWidth) * 200,
         //     (height / defaultHeight) * 10
@@ -131,7 +169,8 @@
         // );
         // ctx.lineTo((width / defaultWidth) * 5, (height / defaultHeight) * 270);
 
-        ctx.closePath();
+
+
         return ctx.isPointInPath(x, y); //checks if the point is within the drawn canvas shape
     }
 
@@ -294,6 +333,37 @@
     stroke="#808080"
     fill="none"
     />
+    <!--spybox-->
+    <line
+    id="svg_13"
+    x1={(height / defaultHeight) * 20}
+    y1={(width / defaultWidth) * 320}
+    x2={(height / defaultHeight) * 20}
+    y2={(width / defaultWidth) * 270}
+    stroke-width={strokeWidth}
+    stroke={reversestrokeColor}
+    fill="none"
+/>  
+<line
+    id="svg_14"
+    x1={(height / defaultHeight) * 20}
+    y1={(width / defaultWidth) * 270}
+    x2={(height / defaultHeight) * 100}
+    y2={(width / defaultWidth) * 270}
+    stroke-width={strokeWidth}
+    stroke={reversestrokeColor}
+    fill="none"
+/>  
+<line
+    id="svg_15"
+    x1={(height / defaultHeight) * 100}
+    y1={(width / defaultWidth) * 270}
+    x2={(height / defaultHeight) * 100}
+    y2={(width / defaultWidth) * 320}
+    stroke-width={strokeWidth}
+    stroke={reversestrokeColor}
+    fill="none"
+/>  
 /g>
     <text
         x={robotX}
