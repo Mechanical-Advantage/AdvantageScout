@@ -4,6 +4,7 @@
   import Nodes from "./Nodes.svelte";
   import Parked from "./Parked.svelte";
   import TeleClimb from "./TeleClimb.svelte";
+  import PmbRating from "./PmbRating.svelte";
 
   console.log("Bot State", $gameData["BotState"]);
   console.log($gameData["BotState"] == 2);
@@ -29,7 +30,11 @@
 <div class="flex flex-col h-full">
   <div class="grid grid-cols-3 w-full h-full">
     <div class="  h-full">
-      <Ratings name="DriverRating" />
+      <PmbRating
+        name="DriverRating"
+        displayName="Drive Rating"
+        buttonType="btn-primary"
+      />
       <Ratings name="PlayingDefenseDuration" />
       <Ratings name="UnderDefenseDuration" />
       <div class="absolute ml-[10px] mt-[30px]">
@@ -38,23 +43,62 @@
           <TeleClimb />
         </div>
       </div>
-      <!-- <div class="absolute ml-[125px] mt-[30px]">
-        <div class="flex flex-col gap-y-2">
-          <TeleClimbDeep />
-        </div>
-      </div>
-      <div class="absolute ml-[200px] mt-[30px]">
-        <div class="flex flex-col gap-y-2">
-          <TeleClimbShallow />
-        </div>
-      </div> -->
     </div>
-    <div class="  h-full">
-      <Ratings name="BoulderIntakeRating" />
-      <Ratings name="MoatCrossRating" />
-      <Ratings name="DefenseRating" />
-      <Ratings name="UnderDefenseRating" />
+    <div class="h-full">
+      <PmbRating
+        name="BoulderIntakeRating"
+        displayName="Boulder Intake Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="MoatCrossRating"
+        displayName="Moat Cross Rating"
+        buttonType="btn-secondary"
+      />
+      <PmbRating
+        name="DefenseRating"
+        displayName="Defense Rating"
+        buttonType="btn-success"
+      />
+      <PmbRating
+        name="UnderDefenseRating"
+        displayName="Under Defense Rating"
+        buttonType="btn-error"
+      />
     </div>
+    <div class="h-full">
+      <PmbRating
+        name="LowbarCrossRating"
+        displayName="Lowbar Cross Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="PortCrossRating"
+        displayName="Port Cross Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="ChevalCrossRating"
+        displayName="Cheval Cross Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="RampartsCrossRating"
+        displayName="Ramparts Cross Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="DrawCrossRating"
+        displayName="Draw Cross Rating"
+        buttonType="btn-primary"
+      />
+      <PmbRating
+        name="WallCrossRating"
+        displayName="Wall Cross Rating"
+        buttonType="btn-primary"
+      />
+    </div>
+
     <div class=" mt-[25px] h-full">
       <label for="message" class="block mb-2 text-sm font-bold text-white"
         >Comment</label
